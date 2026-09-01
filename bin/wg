@@ -33,7 +33,7 @@ cmd_start() {
   fi
   kubectl config use-context k3d-$CLUSTER >/dev/null
   kubectl wait --for=condition=Ready nodes --all --timeout=120s >/dev/null
-  echo "pre-pulling images…"; for img in nginx:1.27-alpine busybox:1.36 python:3.12-alpine rancher/kubectl:v1.31.0; do
+  echo "pre-pulling images…"; for img in nginx:1.27-alpine busybox:1.36 python:3.12-alpine bitnamilegacy/kubectl:1.31; do
     k3d image import -c $CLUSTER "$img" >/dev/null 2>&1 || docker pull -q "$img" >/dev/null && k3d image import -c $CLUSTER "$img" >/dev/null 2>&1 || true; done
   echo "ready. → wg level 1"
 }
@@ -41,6 +41,7 @@ cmd_stop() { k3d cluster delete $CLUSTER; }
 
 wipe_ns() {
   kubectl delete ns $NS --ignore-not-found --wait=true >/dev/null 2>&1 || true
+  local i=0; while kubectl get ns $NS >/dev/null 2>&1; do sleep 1; i=$((i+1)); [ $i -gt 90 ] && { echo "namespace $NS stuck terminating" >&2; exit 1; }; done
   kubectl create ns $NS >/dev/null
   kubectl config set-context --current --namespace=$NS >/dev/null
 }

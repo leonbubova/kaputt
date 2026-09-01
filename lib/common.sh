@@ -24,7 +24,7 @@ in_cluster_get() { # url [extra kubectl run args]
 stable_for() { # label-selector seconds
   local before after
   before=$($K get pods -l "$1" -o jsonpath='{.items[*].status.containerStatuses[*].restartCount}')
-  [ -n "${WG_FAST:-}" ] && set -- "$1" 2
+  [ -n "${WG_FAST:-}" ] && set -- "$1" 6
   sleep "$2"
   after=$($K get pods -l "$1" -o jsonpath='{.items[*].status.containerStatuses[*].restartCount}')
   [ "$before" = "$after" ]

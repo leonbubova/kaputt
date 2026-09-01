@@ -19,7 +19,7 @@ spec:
         image: nginx:1.27-alpine
         livenessProbe:
           httpGet: {path: /healthz, port: 80}
-          initialDelaySeconds: 3
-          periodSeconds: 5
-          failureThreshold: 2
+          initialDelaySeconds: 1
+          periodSeconds: 2
+          failureThreshold: 1
 Y

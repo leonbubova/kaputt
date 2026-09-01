@@ -31,6 +31,6 @@ spec:
       serviceAccountName: reporter
       containers:
       - name: kubectl
-        image: rancher/kubectl:v1.31.0
+        image: bitnamilegacy/kubectl:1.31
         command: ["sh","-c","while true; do kubectl get pods -n wg || exit 1; sleep 60; done"]
 Y
