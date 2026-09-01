@@ -1,0 +1,12 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/git/gitlib.sh"
+need_repo
+[ "$(h release/1.2)" = "$(exp rel)" ] || fail "release/1.2 was changed"
+no_op_in_progress || fail "cherry-pick still in progress"
+g merge-base --is-ancestor "$(exp main)" main || fail "main's previous history is gone"
+[ "$(g rev-list --count "$(exp main)"..main)" = 1 ] || fail "expected exactly 1 new commit on main, got $(g rev-list --count "$(exp main)"..main)"
+[ -z "$(g rev-list --merges "$(exp main)"..main)" ] || fail "merge commit on main — cherry-pick, don't merge"
+g show main:parser.py | grep -q 'if data is None' || fail "parser fix not on main"
+[ "$(g show main:VERSION)" = "1.2.0" ] || fail "VERSION on main changed — the bump was not wanted"
+g cat-file -e main:docs.md 2>/dev/null || fail "docs.md lost from main"
+clean_tree || fail "working tree not clean"
+ok "fix cherry-picked onto main"

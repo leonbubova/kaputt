@@ -1,0 +1,12 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/git/gitlib.sh"
+need_repo
+[ "$(h main)" = "$(exp main)" ] || fail "main moved — rebase the feature, not main"
+h feature/payments >/dev/null || fail "feature/payments is gone"
+no_op_in_progress || fail "rebase still in progress"
+g merge-base --is-ancestor main feature/payments || fail "feature/payments is not on top of main"
+[ "$(g rev-list --count main..feature/payments)" = 2 ] || fail "expected exactly 2 commits on top of main, got $(g rev-list --count main..feature/payments)"
+[ -z "$(g rev-list --merges main..feature/payments)" ] || fail "merge commit found — history must be linear"
+g cat-file -e feature/payments:payments.py 2>/dev/null && g cat-file -e feature/payments:test_payments.py 2>/dev/null || fail "payment files missing on feature/payments"
+g show feature/payments:README.md | grep -q 'make run' || fail "README fix from main missing on feature/payments"
+clean_tree || fail "working tree not clean"
+ok "feature/payments rebased, linear"

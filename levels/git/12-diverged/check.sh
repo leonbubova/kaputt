@@ -1,0 +1,10 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/git/gitlib.sh"
+need_repo
+no_op_in_progress || fail "rebase still in progress"
+[ "$(og rev-parse --verify -q main)" = "$(h main)" ] || fail "remote main != local main"
+g merge-base --is-ancestor "$(exp theirs)" main || fail "colleague's commit is missing from main"
+[ "$(g rev-list --count "$(exp base)"..main)" = 2 ] || fail "expected 2 commits above the common base, got $(g rev-list --count "$(exp base)"..main)"
+[ -z "$(g rev-list --merges "$(exp base)"..main)" ] || fail "merge commit on main — policy says linear"
+g cat-file -e main:ratelimit.py 2>/dev/null && g cat-file -e main:metrics.py 2>/dev/null || fail "one of the two changes is missing"
+clean_tree || fail "working tree not clean"
+ok "rebased and pushed, linear"

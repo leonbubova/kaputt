@@ -1,0 +1,10 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/git/gitlib.sh"
+need_repo
+g ls-files --error-unmatch .env >/dev/null 2>&1 && fail ".env is still tracked"
+[ -z "$(g rev-list HEAD -- .env)" ] || fail ".env is still in the history of HEAD"
+g cat-file -e HEAD:config.py 2>/dev/null || fail "config.py is no longer committed"
+[ -f "$REPO/.env" ] || fail ".env was deleted from disk — the dev still needs it"
+[ "$(h HEAD^)" = "$(exp base)" ] || fail "the first commit changed"
+[ "$(g rev-list --count HEAD)" = 2 ] || fail "expected 2 commits, got $(g rev-list --count HEAD)"
+[ -z "$(g status --porcelain | grep -v '^?? .env$')" ] || fail "working tree not clean (apart from the untracked .env)"
+ok ".env out of history, still on disk"
