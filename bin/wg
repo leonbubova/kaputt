@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+# k8s-wargame CLI
+set -euo pipefail
+ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
+STATE=${WG_STATE:-$HOME/.k8s-wargame}; mkdir -p "$STATE"
+CLUSTER=wargame; NS=wg
+export KUBECONFIG=${KUBECONFIG:-$HOME/.kube/config}
+
+usage() { cat <<U
+wg — kubernetes wargame
+
+  wg start            create the k3d cluster (1 server, 2 agents, :8080 → ingress)
+  wg stop             delete the cluster
+  wg list             all levels + your status
+  wg level N          load level N (wipes namespace $NS, breaks something)
+  wg brief            show the briefing of the current level again
+  wg check            am i done?
+  wg hint             next hint (3 per level, counted)
+  wg spoil            show the solution (marks level as spoiled)
+  wg reset            reload current level from scratch
+  wg next             load the next level
+  wg progress         scoreboard
+U
+}
+levels() { ls -d "$ROOT"/levels/[0-9]* | xargs -n1 basename | sort; }
+level_dir() { ls -d "$ROOT"/levels/$(printf '%02d' "$1")-* 2>/dev/null | head -1; }
+cur() { cat "$STATE/current" 2>/dev/null || { echo "no level loaded — wg level 1" >&2; exit 1; }; }
+need_cluster() { kubectl cluster-info >/dev/null 2>&1 || { echo "cluster not reachable — wg start" >&2; exit 1; }; }
+
+cmd_start() {
+  if k3d cluster list 2>/dev/null | grep -q "^$CLUSTER "; then echo "cluster exists"; else
+    k3d cluster create $CLUSTER --servers 1 --agents 2 -p "8080:80@loadbalancer" --wait
+  fi
+  kubectl config use-context k3d-$CLUSTER >/dev/null
+  kubectl wait --for=condition=Ready nodes --all --timeout=120s >/dev/null
+  echo "pre-pulling images…"; for img in nginx:1.27-alpine busybox:1.36 python:3.12-alpine rancher/kubectl:v1.31.0; do
+    k3d image import -c $CLUSTER "$img" >/dev/null 2>&1 || docker pull -q "$img" >/dev/null && k3d image import -c $CLUSTER "$img" >/dev/null 2>&1 || true; done
+  echo "ready. → wg level 1"
+}
+cmd_stop() { k3d cluster delete $CLUSTER; }
+
+wipe_ns() {
+  kubectl delete ns $NS --ignore-not-found --wait=true >/dev/null 2>&1 || true
+  kubectl create ns $NS >/dev/null
+  kubectl config set-context --current --namespace=$NS >/dev/null
+}
+cmd_level() {
+  need_cluster; local d; d=$(level_dir "$1") || true
+  [ -n "$d" ] || { echo "no level $1"; exit 1; }
+  local prev; prev=$(cat "$STATE/current" 2>/dev/null || true)
+  [ -n "$prev" ] && [ -x "$ROOT/levels/$prev/clean.sh" ] && (cd "$ROOT/levels/$prev" && bash clean.sh >/dev/null 2>&1 || true)
+  echo "loading $(basename "$d")…"; wipe_ns
+  (cd "$d" && bash break.sh)
+  basename "$d" > "$STATE/current"; date +%s > "$STATE/$(basename "$d").start"; : > "$STATE/$(basename "$d").hints"
+  echo; cat "$d/README.md"; echo; echo "→ fix it, then: wg check   (stuck? wg hint)"
+}
+cmd_brief() { cat "$ROOT/levels/$(cur)/README.md"; }
+cmd_check() {
+  need_cluster; local l; l=$(cur); echo "checking ${l}…"
+  if (cd "$ROOT/levels/$l" && bash check.sh); then
+    local s h sp start
+    start=$(cat "$STATE/$l.start"); s=$(( $(date +%s) - start ))
+    h=$(wc -l < "$STATE/$l.hints" | tr -d ' '); sp=""
+    [ -f "$STATE/$l.spoiled" ] && sp=" spoiled"
+    grep -v "^$l " "$STATE/progress" 2>/dev/null > "$STATE/progress.tmp" || true
+    echo "$l solved ${s}s hints=$h$sp" >> "$STATE/progress.tmp"; mv "$STATE/progress.tmp" "$STATE/progress"
+    printf '\n\033[1;32mLEVEL SOLVED\033[0m  %ss, %s hints%s\n→ wg next\n' "$s" "$h" "$sp"
+  else printf '\n\033[1;31mnot yet.\033[0m\n'; exit 1; fi
+}
+cmd_hint() {
+  local l; l=$(cur); local n; n=$(( $(wc -l < "$STATE/$l.hints" | tr -d ' ') + 1 ))
+  local txt; txt=$(awk -v n="$n" '/^## /{c++} c==n && !/^## /' "$ROOT/levels/$l/hints.md")
+  [ -n "$txt" ] || { echo "no more hints. → wg spoil"; exit 0; }
+  echo "$n" >> "$STATE/$l.hints"; printf '\033[33mhint %s:\033[0m%s\n' "$n" "$txt"
+}
+cmd_spoil() { local l; l=$(cur); touch "$STATE/$l.spoiled"; cat "$ROOT/levels/$l/solution.md"; }
+cmd_reset() { local l; l=$(cur); cmd_level "${l%%-*}"; }
+cmd_next()  { local l; l=$(cur); cmd_level "$(( ${l%%-*} + 1 ))"; }
+cmd_list()  { for l in $(levels); do local st="  "; grep -q "^$l " "$STATE/progress" 2>/dev/null && st="✔ "; [ "$l" = "$(cat "$STATE/current" 2>/dev/null)" ] && st="▶ "; printf '%s%s  %s\n' "$st" "$l" "$(head -1 "$ROOT/levels/$l/README.md" | sed 's/^# //')"; done; }
+cmd_progress() { [ -f "$STATE/progress" ] && sort "$STATE/progress" || echo "nothing solved yet"; echo; echo "solved: $(wc -l < "$STATE/progress" 2>/dev/null || echo 0) / $(levels | wc -l | tr -d ' ')"; }
+
+case "${1:-}" in
+  start|stop|brief|check|hint|spoil|reset|next|list|progress) "cmd_$1" ;;
+  level) cmd_level "${2:?level number}" ;;
+  *) usage ;;
+esac

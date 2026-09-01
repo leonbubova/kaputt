@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: shop}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector: {matchLabels: {app: shop}}
+  template:
+    metadata: {labels: {app: shop}}
+    spec:
+      containers:
+      - {name: shop, image: {{ .Values.image }}, ports: [{containerPort: 80}]}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: shop}
+spec: {selector: {app: shop}, ports: [{port: 80, targetPort: 80}]}
