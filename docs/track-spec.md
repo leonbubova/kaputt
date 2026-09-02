@@ -17,6 +17,7 @@ levels/<track>/NN-slug/
 `track.sh` must define: `track_start` (idempotent), `track_stop`, `track_ready` (exit 0 if env usable), `track_wipe` (reset the play area before each level, fast), optional `track_shell` (interactive shell into the broken machine).
 
 ## Design rules
+- **Beginner → pro.** Every track opens with a "build it" block (levels 01–0N, ~⅓ of the track): the ticket asks to ADD or CREATE something small (a manifest, a route, a config), `break.sh` removes it from the template/env, `check.sh` verifies it exists and works. Hints there teach the concept and the command, not debugging. Then the incident levels, easy → hard. The last 2–3 levels chain two causes.
 - Symptom first, like an incident ticket. Never name the cause in README.
 - One root cause per level, realistic (typo, wrong name, wrong port, missing permission, resource limit…). Ordered easy → hard; later levels may chain two causes.
 - `check.sh` verifies from the outside (curl, exec, query) and guards against cheating shortcuts where the story forbids them (e.g. "don't change the image").
