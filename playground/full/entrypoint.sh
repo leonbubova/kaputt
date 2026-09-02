@@ -8,6 +8,8 @@ dockerd >/var/log/dockerd.log 2>&1 &
 for i in $(seq 1 60); do docker info >/dev/null 2>&1 && break; sleep 0.5; done
 docker info >/dev/null 2>&1 || { echo "inner docker daemon failed to start:"; tail -20 /var/log/dockerd.log; exit 1; }
 if [ "${PREP:-}" = 1 ]; then exec sleep infinity; fi
+# quiet the Ubuntu sudo banner, start in the player home
+touch /home/player/.sudo_as_admin_successful; chown player:player /home/player/.sudo_as_admin_successful; cd /home/player
 # explicit command (tests, automation) runs as the player; default = interactive session
 [ $# -gt 0 ] && exec runuser -u player -- "$@"
 exec runuser -u player -- bash --rcfile /opt/kaputt/playground/full/motd.sh -i
