@@ -1,6 +1,6 @@
 [ -f ~/.bashrc ] && . ~/.bashrc || true
 mkdir -p ~/.k8s-wargame; [ -f ~/.k8s-wargame/track ] || echo shell > ~/.k8s-wargame/track
-export KUBECONFIG=$HOME/.kube/config
+export KUBECONFIG=$HOME/.kube/config WG_K3S_SNAPSHOTTER=native
 __wg_ps1(){ local st; st=$(command wg status --short 2>/dev/null); PS1="\[\e[38;5;183m\]kaputt\[\e[0m\] \[\e[2m\]${st}\[\e[0m\] \w \$ "; }
 PROMPT_COMMAND=__wg_ps1
 wg(){ command wg "$@"; local rc=$?; case "${1:-}" in level|next|random|speedrun|reset|track) local d; d=$(command wg pwd 2>/dev/null) && [ -n "$d" ] && [ -d "$d" ] && cd "$d";; esac; return $rc; }

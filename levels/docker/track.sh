@@ -2,7 +2,7 @@
 WG_DOCKER_WORK=$HOME/.k8s-wargame/docker
 track_start() {
   docker info >/dev/null 2>&1 || { echo "docker daemon not reachable — start colima/docker" >&2; exit 1; }
-  echo "pre-pulling images…"; for img in alpine:3.20 nginx:1.27-alpine busybox:1.36 redis:7-alpine; do docker pull -q "$img" >/dev/null 2>&1 || true; done
+  echo "pre-pulling images…"; for img in alpine:3.20 nginx:1.27-alpine busybox:1.36 redis:7-alpine; do { docker image inspect "$img" >/dev/null 2>&1 || docker pull -q "$img"; } >/dev/null 2>&1 || true; done
   mkdir -p "$WG_DOCKER_WORK"
 }
 track_stop() { track_wipe; }

@@ -31,7 +31,7 @@ track_start() {
   docker info >/dev/null 2>&1 || { echo "docker daemon not reachable" >&2; return 1; }
   command -v openssl >/dev/null || { echo "openssl missing" >&2; return 1; }
   command -v curl >/dev/null || { echo "curl missing" >&2; return 1; }
-  docker pull -q "$WG_TLS_IMG" >/dev/null 2>&1 || true
+  { docker image inspect "$WG_TLS_IMG" >/dev/null 2>&1 || docker pull -q "$WG_TLS_IMG"; } >/dev/null 2>&1 || true
   mkdir -p "$WG_TLS"; tls_bundle
   echo "site: https://127.0.0.1:9443 (Host: shop.local)   http://127.0.0.1:9080"
   echo "certs+config: $WG_TLS/app   CA: $BUNDLE/root.crt"

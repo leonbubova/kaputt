@@ -4,7 +4,7 @@ track_start() {
   docker info >/dev/null 2>&1 || { echo "docker daemon not reachable — start colima/docker" >&2; return 1; }
   if ! docker inspect -f '{{.State.Running}}' "$PGC" 2>/dev/null | grep -q true; then
     docker rm -f "$PGC" >/dev/null 2>&1 || true
-    echo "pulling postgres:16-alpine…"; docker pull -q postgres:16-alpine >/dev/null
+    echo "pulling postgres:16-alpine…"; { docker image inspect postgres:16-alpine >/dev/null 2>&1 || docker pull -q postgres:16-alpine; } >/dev/null
     docker run -d --name "$PGC" -e POSTGRES_PASSWORD="$PGPW" -p "127.0.0.1:$PGPORT_HOST:5432" postgres:16-alpine >/dev/null
   fi
   local i=0; until docker exec "$PGC" pg_isready -U postgres -q 2>/dev/null; do sleep 1; i=$((i+1)); [ $i -gt 60 ] && { echo "postgres did not come up" >&2; return 1; }; done

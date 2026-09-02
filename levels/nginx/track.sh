@@ -7,7 +7,7 @@ track_start() {
   docker info >/dev/null 2>&1 || { echo "docker daemon not reachable — start colima/docker" >&2; return 1; }
   command -v openssl >/dev/null || { echo "openssl missing (brew install openssl)" >&2; return 1; }
   command -v curl >/dev/null || { echo "curl missing" >&2; return 1; }
-  echo "pulling ${WG_NGX_IMG}…"; docker pull -q "$WG_NGX_IMG" >/dev/null 2>&1 || true
+  echo "pulling ${WG_NGX_IMG}…"; { docker image inspect "$WG_NGX_IMG" >/dev/null 2>&1 || docker pull -q "$WG_NGX_IMG"; } >/dev/null 2>&1 || true
   mkdir -p "$WG_NGX"; ngx_certs
   echo "config: $WG_NGX/app/conf.d/   site: http://127.0.0.1:8082  https://127.0.0.1:8443 (Host: shop.local)"
   echo "apply:  docker exec wg-nginx nginx -s reload   (dead container: docker start wg-nginx)"
