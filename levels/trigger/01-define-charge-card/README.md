@@ -1,0 +1,2 @@
+# ticket: implement the charge-card task
+"`src/api/checkout.ts` and `src/api/stripe-webhook.ts` already import `chargeCard` from `src/trigger/charge-card.ts` — the file doesn't exist yet, `tsc` is red." Goal: create task id `charge-card` with a zod payload schema `{ orderId: string, amountCents: positive integer }` (bad payloads must be rejected at trigger time); `run` records the charge via `charges.push(...)` from `src/lib/db.ts` and returns `{ charged: amountCents, orderId }`.

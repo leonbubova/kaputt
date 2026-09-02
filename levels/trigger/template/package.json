@@ -1,0 +1,21 @@
+{
+  "name": "wg-shop-jobs",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "dev": "trigger.dev dev",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@trigger.dev/sdk": "^4.5.15",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@trigger.dev/build": "^4.5.15",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0",
+    "@types/node": "^24.0.0"
+  }
+}
