@@ -1,4 +1,4 @@
-# kaputt playground — the browser demo image. Only the Docker-free tracks (git, bash).
+# kaputt playground — the browser demo image. Only the Docker-free tracks (shell, git, bash).
 FROM debian:bookworm-slim
 RUN apt-get update -q && apt-get install -y -q --no-install-recommends \
       bash git coreutils findutils grep sed gawk less nano vim-tiny ca-certificates procps python3 \
@@ -8,6 +8,7 @@ RUN apt-get update -q && apt-get install -y -q --no-install-recommends \
 COPY --chown=root:root bin/ /opt/kaputt/bin/
 COPY --chown=root:root lib/ /opt/kaputt/lib/
 COPY --chown=root:root test/ /opt/kaputt/test/
+COPY --chown=root:root levels/shell/ /opt/kaputt/levels/shell/
 COPY --chown=root:root levels/git/  /opt/kaputt/levels/git/
 COPY --chown=root:root levels/bash/ /opt/kaputt/levels/bash/
 RUN chmod +x /opt/kaputt/bin/wg /opt/kaputt/test/*.sh

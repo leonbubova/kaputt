@@ -23,9 +23,10 @@ in_cluster_get() { # url [extra kubectl run args]
 # no restarts over a window → stable
 stable_for() { # label-selector seconds
   local before after
-  before=$($K get pods -l "$1" -o jsonpath='{.items[*].status.containerStatuses[*].restartCount}')
+  # only Running pods: a Terminating pod from the previous rollout must not count as "still restarting"
+  before=$($K get pods -l "$1" --field-selector=status.phase=Running -o jsonpath='{.items[*].status.containerStatuses[*].restartCount}')
   [ -n "${WG_FAST:-}" ] && set -- "$1" 6
   sleep "$2"
-  after=$($K get pods -l "$1" -o jsonpath='{.items[*].status.containerStatuses[*].restartCount}')
+  after=$($K get pods -l "$1" --field-selector=status.phase=Running -o jsonpath='{.items[*].status.containerStatuses[*].restartCount}')
   [ "$before" = "$after" ]
 }

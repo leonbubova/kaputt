@@ -1232,6 +1232,83 @@
    ]
   },
   {
+   "track": "shell",
+   "blurb": "The terminal from zero \u2014 for absolute beginners",
+   "count": 14,
+   "levels": [
+    {
+     "n": "01",
+     "slug": "first-command",
+     "title": "your first command"
+    },
+    {
+     "n": "02",
+     "slug": "arguments",
+     "title": "commands take arguments"
+    },
+    {
+     "n": "03",
+     "slug": "where-am-i",
+     "title": "where am I? \u2014 pwd, ls, cd"
+    },
+    {
+     "n": "04",
+     "slug": "paths",
+     "title": "paths \u2014 the address of a file"
+    },
+    {
+     "n": "05",
+     "slug": "reading-files",
+     "title": "reading files \u2014 cat and less"
+    },
+    {
+     "n": "06",
+     "slug": "making-things",
+     "title": "making things \u2014 mkdir and touch"
+    },
+    {
+     "n": "07",
+     "slug": "copy-move-delete",
+     "title": "copy, move, rename, delete \u2014 cp, mv, rm"
+    },
+    {
+     "n": "08",
+     "slug": "wildcards",
+     "title": "wildcards \u2014 * means \"anything\""
+    },
+    {
+     "n": "09",
+     "slug": "redirection",
+     "title": "redirection \u2014 > and >>"
+    },
+    {
+     "n": "10",
+     "slug": "pipes",
+     "title": "pipes \u2014 snap commands together with |"
+    },
+    {
+     "n": "11",
+     "slug": "variables",
+     "title": "variables, export, PATH \u2014 and \"command not found\""
+    },
+    {
+     "n": "12",
+     "slug": "help-yourself",
+     "title": "help yourself \u2014 --help, man, Tab, \u2191"
+    },
+    {
+     "n": "13",
+     "slug": "permissions",
+     "title": "permissions and chmod \u2014 running your first script"
+    },
+    {
+     "n": "14",
+     "slug": "permission-denied",
+     "title": "\"backup.sh doesn't work \u2014 it says Permission denied\""
+    }
+   ]
+  },
+  {
    "track": "supabase",
    "blurb": "Postgres, RLS, auth, storage",
    "count": 18,
@@ -1597,6 +1674,6 @@
    ]
   }
  ],
- "total": 294,
- "ntracks": 18
+ "total": 308,
+ "ntracks": 19
 }

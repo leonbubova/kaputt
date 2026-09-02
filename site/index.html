@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
 <div class="wrap">
@@ -23,16 +23,9 @@
     <h1>break it. fix it.<span class="it">understand it. <span class="heart">&lt;3</span></span></h1>
     <p class="lede">no slides, no quizzes. we sabotage a real system in a throwaway environment, hand you the incident, and you debug it with the actual tools. <b id="tt"></b></p>
 
-    <div class="demo">
-      <div class="bar"><span><span class="dot">●</span> k8s · level 08 · crashloop</span><span>wg check</span></div>
-      <pre><span class="c">$</span> kubectl get pods
-NAME                  READY   STATUS             RESTARTS
-api-6df77495b-n87ld   0/1     <span class="p">CrashLoopBackOff</span>   5
-<span class="c">$</span> kubectl logs deploy/api --previous
-FATAL: DB_HOST is not set, refusing to start
-<span class="c">$</span> kubectl set env deploy/api DB_HOST=postgres.wg.svc DB_HOTS-
-<span class="c">$</span> wg check
-<span class="g">✔ api is up and stable — LEVEL SOLVED</span> <span class="cur"></span></pre>
+    <div class="demo" style="padding:12px 12px 8px">
+      <div class="bar" style="margin-bottom:10px"><span><span class="dot">●</span> k8s · level 08 · crashloop</span><span>real footage</span></div>
+      <img src="demo.gif?v=8" alt="solving a CrashLoopBackOff level: kubectl get pods, logs, set env, rollout status, wg check → LEVEL SOLVED" style="display:block;width:100%;border-radius:10px" loading="eager">
     </div>
 
     <div class="ctas">
@@ -92,6 +85,6 @@ wg progress       <span class="c"># your scoreboard across every track</span></p
     <div class="fine">kaputt — a break/fix wargame. working name, everything here is a placeholder you can rename.</div>
   </footer>
 </div>
-<script src="app.js?v=7"></script>
+<script src="app.js?v=8"></script>
 </body>
 </html>

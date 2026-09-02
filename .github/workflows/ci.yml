@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        track: [git, bash]
+        track: [shell, git, bash]
     steps:
       - uses: actions/checkout@v4
       - name: run every level (break → must fail → fix → must pass)

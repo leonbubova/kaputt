@@ -1,0 +1,8 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/shell/shelllib.sh"
+have final.txt || fail "no final.txt in the sandbox — rename draft.txt to final.txt with mv"
+have draft.txt && fail "draft.txt is still there — mv renames, it does not leave the old name behind (did you cp instead?)"
+grep -q 'coffee machine' "$WORK/final.txt" || fail "final.txt does not have the text of draft.txt — rename the existing file, do not create a new one"
+have archive/final.txt || fail "archive/ has no final.txt — cp final.txt archive/"
+cmp -s "$WORK/final.txt" "$WORK/archive/final.txt" || fail "archive/final.txt differs from final.txt — it should be an exact copy"
+have old-junk.txt && fail "old-junk.txt is still there — rm deletes it"
+ok "renamed, copied, deleted — the three file movers work for you"

@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/leonbubova/kaputt/actions/workflows/ci.yml/badge.svg)](https://github.com/leonbubova/kaputt/actions/workflows/ci.yml) [![site](https://img.shields.io/badge/site-live-c4b5fd)](https://leonbubova.github.io/kaputt/) ![license](https://img.shields.io/badge/license-MIT-lightgrey)
 
+![a CrashLoopBackOff level being solved: get pods → logs → set env → rollout → wg check → LEVEL SOLVED](docs/demo/crashloop.gif)
+
 
 **Something is broken. You fix it.** No slides, no multiple-choice. Each level spins up a real
 environment, quietly sabotages one thing, and hands you the incident the way a teammate would report
@@ -28,7 +30,7 @@ wg stop                 # tear the environment down
 ```
 git clone https://github.com/leonbubova/kaputt && cd kaputt
 ./install.sh && exec $SHELL     # docker/k3d/kubectl/helm + PATH
-wg track git                    # no Docker needed for this one
+wg track shell                  # never used a terminal? start here (no Docker needed)
 wg level 1                      # read the ticket, fix it, then:
 wg check
 ```
@@ -41,6 +43,7 @@ create the table), then incidents from easy to hard, with the last levels chaini
 
 | Track | Levels | You learn |
 |---|---|---|
+| `shell` | 14 | **start here if you have never used a terminal** — prompt, paths, files, pipes, permissions |
 | `k8s` | 25 | pods, deployments, services, probes, RBAC, network policy, ingress, rollouts, nodes, PVCs |
 | `linux` | 23 | the shell, permissions, processes, disk, cron, a box that won't behave |
 | `git` | 22 | branching, merge conflicts, reflog rescue, rebase, bisect, history surgery |

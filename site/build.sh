@@ -7,6 +7,7 @@ python3 - "$WARGAME" > "$HERE/levels.json" <<'PY'
 import os,sys,json,glob
 root=os.path.join(sys.argv[1],'levels')
 BLURB={
+ 'shell':'The terminal from zero — for absolute beginners',
  'k8s':'Kubernetes on a real 3-node cluster','helm':'Package and release with Helm',
  'docker':'Containers, images, compose','linux':'The command line and a broken box',
  'git':'Version control, recovery, history surgery','nginx':'Reverse proxy and web server',
