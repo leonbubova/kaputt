@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>kaputt — learn a stack by breaking it</title>
+<meta name="description" content="A break/fix wargame. We sabotage a real system, you fix it in your own terminal. 18 tracks, 294 hands-on levels, beginner to pro.">
+<meta property="og:title" content="kaputt — learn a stack by breaking it">
+<meta property="og:description" content="18 tracks, 294 hands-on levels. Break/fix in your own terminal.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <div class="brand">kaputt</div>
+    <div class="links"><a href="#how">how it works</a><a href="#tracks">tracks</a><a href="#play">play</a></div>
+  </nav>
+
+  <header class="hero col">
+    <h1>break it. fix it.<span class="it">understand it. <span class="heart">&lt;3</span></span></h1>
+    <p class="lede">no slides, no quizzes. we sabotage a real system in a throwaway environment, hand you the incident, and you debug it with the actual tools. <b id="tt"></b></p>
+
+    <div class="demo">
+      <div class="bar"><span><span class="dot">●</span> k8s · level 08 · crashloop</span><span>wg check</span></div>
+      <pre><span class="c">$</span> kubectl get pods
+NAME                  READY   STATUS             RESTARTS
+api-6df77495b-n87ld   0/1     <span class="p">CrashLoopBackOff</span>   5
+<span class="c">$</span> kubectl logs deploy/api --previous
+FATAL: DB_HOST is not set, refusing to start
+<span class="c">$</span> kubectl set env deploy/api DB_HOST=postgres.wg.svc DB_HOTS-
+<span class="c">$</span> wg check
+<span class="g">✔ api is up and stable — LEVEL SOLVED</span> <span class="cur"></span></pre>
+    </div>
+
+    <div class="ctas">
+      <a class="go" href="#play">start playing <span class="ar">→</span></a>
+      <a class="go sub" href="#tracks">browse the tracks <span class="ar">→</span></a>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b id="s-tracks">–</b><span>tracks</span></div>
+      <div class="stat"><b id="s-levels">–</b><span>hands-on levels</span></div>
+      <div class="stat"><b>0</b><span>slides</span></div>
+    </div>
+  </header>
+
+  <section id="how">
+    <h2>how it works</h2>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><div><h3>we break it</h3><p>each level spins up a real environment — a Kubernetes cluster, a Postgres box, a running web app — then quietly introduces one realistic fault.</p></div></div>
+      <div class="step"><div class="num">2</div><div><h3>you get the ticket</h3><p>a short incident report, the way a teammate would describe it. no hint of the cause. finding it is the job.</p></div></div>
+      <div class="step"><div class="num">3</div><div><h3>you fix it for real</h3><p>you use <code>kubectl</code>, <code>docker</code>, <code>psql</code>, <code>git</code> — the real tools, in your own terminal. the game never wraps them.</p></div></div>
+      <div class="step"><div class="num">4</div><div><h3>it checks the outcome</h3><p><code>wg check</code> verifies the system works again — not how you got there. green means solved. then you repeat it until it's second nature.</p></div></div>
+    </div>
+  </section>
+
+  <section id="play">
+    <h2>how to play</h2>
+    <pre class="term"><span class="c"># one-time setup — installs docker, k3d, kubectl, helm</span>
+./install.sh
+
+<span class="c"># pick a discipline, bring it up, load a broken level</span>
+wg track k8s
+wg start
+wg level 1
+
+<span class="c"># investigate with real tools, then judge yourself</span>
+kubectl get pods
+wg check          <span class="c"># green = solved → wg next</span>
+wg hint           <span class="c"># stuck? 3 per level, counted</span>
+wg progress       <span class="c"># your scoreboard across every track</span></pre>
+    <p class="lede" style="margin-top:20px">runs on a disposable environment on your own machine, mac or linux. every level resets clean, so you can redo it until it's muscle memory.</p>
+  </section>
+
+  <section id="tracks">
+    <h2>the tracks — beginner to pro</h2>
+    <div class="controls"><input id="q" placeholder="filter tracks and levels… (secret, rollback, xss, rebase)" autocomplete="off"></div>
+    <div class="tracks" id="grid"></div>
+  </section>
+
+  <section id="why">
+    <h2>why it sticks</h2>
+    <blockquote>reading a command while you type it is copying. <span class="it">recalling it under a broken pod is learning.</span>
+      <footer>the whole design in one line</footer></blockquote>
+  </section>
+
+  <footer class="foot">
+    <a href="#how">how it works</a><a href="#tracks">tracks</a><a href="#play">play</a>
+    <div class="fine">kaputt — a break/fix wargame. working name, everything here is a placeholder you can rename.</div>
+  </footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
