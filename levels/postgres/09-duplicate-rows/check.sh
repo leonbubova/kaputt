@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/postgres/lib.sh"
+[ "$(sql "select count(distinct email) from subscribers")" = 5 ] || fail "distinct subscribers changed (want 5) — dedupe, don't wipe"
+[ "$(sql "select count(*) - count(distinct email) from subscribers")" = 0 ] || fail "duplicates still present"
+rejects "insert into subscribers (email) values ('ana@example.com')" || fail "a repeat signup for ana@example.com was accepted"
+ok "subscribers unique, dupes gone"

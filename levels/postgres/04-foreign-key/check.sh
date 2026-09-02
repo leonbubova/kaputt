@@ -1,0 +1,8 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/postgres/lib.sh"
+has_table orders && has_table customers || fail "orders/customers table is gone"
+has_constraint orders f || fail "no foreign key on orders"
+[ "$(sql "select count(*) from orders where customer_id = 42")" = 0 ] || fail "orders for customer 42 still there"
+[ "$(sql "select count(*) from orders")" = 3 ] || fail "want the 3 valid orders, got $(sql 'select count(*) from orders')"
+[ "$(sql "select count(*) from customers")" = 3 ] || fail "customers changed"
+rejects "insert into orders (customer_id, total) values (999, 1)" || fail "an order for customer 999 was accepted"
+ok "orders reference real customers"
