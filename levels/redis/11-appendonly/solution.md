@@ -1,0 +1,1 @@
+    CONFIG SET appendonly yes
