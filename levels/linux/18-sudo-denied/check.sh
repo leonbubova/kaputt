@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/linux/lib.sh"
+X visudo -c >/dev/null 2>&1 || fail "sudoers syntax broken"
+[ "$(X su - alice -c 'sudo -n id -u' 2>/dev/null)" = 0 ] || fail "alice still cannot sudo"
+X su - bob -c 'sudo -n true' >/dev/null 2>&1 && fail "bob can sudo — too broad"
+ok "alice has sudo, bob does not"

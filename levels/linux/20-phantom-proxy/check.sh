@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/linux/lib.sh"
+[ "$(X bash -lc 'echo ${http_proxy:-unset}' 2>/dev/null)" = unset ] || fail "http_proxy still set in login shells"
+X bash -lc 'curl -s --max-time 4 http://127.0.0.1:9300/' 2>/dev/null | grep -q "local ok" || fail "curl in a login shell still fails"
+a=$(X cat /answer 2>/dev/null | tr -d '[:space:]'); [ "$a" = /etc/profile.d/zz-corp.sh ] || fail "/answer does not name the file"
+ok "proxy gone, culprit named"

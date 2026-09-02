@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/linux/lib.sh"
+out=$(X /opt/app/show-config 2>/dev/null) || fail "show-config still fails"
+echo "$out" | grep -q 'release: v2' || fail "config is not v2"
+echo "$out" | grep -q 'listen_port: 9000' || fail "wrong listen_port"
+ok "config.yaml resolves to v2"

@@ -1,0 +1,6 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/linux/lib.sh"
+X getent group svc >/dev/null 2>&1 || fail "group svc missing"
+[ "$(X id -gn runner 2>/dev/null)" = svc ] || fail "user runner missing or primary group is not svc"
+[ "$(X su - runner -c 'echo $HOME:$SHELL' 2>/dev/null)" = /home/runner:/bin/bash ] || fail "runner has no usable home/bash login"
+[ "$(X stat -c %U:%G /srv/data 2>/dev/null)" = runner:svc ] || fail "/srv/data is not runner:svc"
+ok "service account ready"

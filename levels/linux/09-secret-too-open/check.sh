@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/linux/lib.sh"
+X grep -q 'app launcher' /opt/app/start 2>/dev/null || fail "start script was changed"
+[ "$(X cat /etc/app/secret.key 2>/dev/null)" = "k7Qw9zP2mX4rT8vB1nL6" ] || fail "key content changed"
+X su - app -c /opt/app/start 2>/dev/null | grep -q "app started" || fail "app still refuses to start"
+ok "key locked down, app starts"

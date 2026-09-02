@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/linux/lib.sh"
+X grep -q 'http.server 8080' /opt/web/start.sh 2>/dev/null || fail "start.sh was changed"
+wait_out 5 "hello from web" "curl -s --max-time 3 http://127.0.0.1:8080/" || fail "8080 does not serve the web site"
+X pgrep -f '/var/tmp/.x' >/dev/null 2>&1 && fail "the rogue listener is still running"
+ok "web service up on 8080"

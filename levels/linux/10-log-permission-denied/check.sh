@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/linux/lib.sh"
+X grep -q '/var/log/app/app.log' /opt/app/run.sh 2>/dev/null || fail "run.sh was changed"
+X su - app -c /opt/app/run.sh 2>/dev/null | grep -q "run ok" || fail "run.sh still fails as app"
+X grep -q "started by app" /var/log/app/app.log 2>/dev/null || fail "no log entry from app"
+ok "app writes its log"

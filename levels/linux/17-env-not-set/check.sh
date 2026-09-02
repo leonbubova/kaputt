@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/linux/lib.sh"
+X grep -q 'refuses to run without APP_ENV' /opt/app/env-check 2>/dev/null || fail "env-check was changed"
+X grep -q '^\[ -n "\$APP_ENV" \]' /opt/app/env-check 2>/dev/null || fail "env-check was changed"
+X bash -lc /opt/app/env-check 2>/dev/null | grep -q "env=production" || fail "APP_ENV not visible to the process"
+ok "APP_ENV exported"

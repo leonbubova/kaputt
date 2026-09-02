@@ -1,0 +1,6 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/linux/lib.sh"
+X mountpoint -q /var/lib/appdata 2>/dev/null || fail "/var/lib/appdata is no longer the data volume"
+X test -f /var/lib/appdata/db/meta.json 2>/dev/null || fail "db/meta.json is gone"
+X test -d /var/lib/appdata/logs 2>/dev/null || fail "logs/ is gone"
+X /opt/app/write-state 2>/dev/null | grep -q "state written" || fail "write-state still fails"
+ok "space reclaimed, state written"
