@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>systemd track — 8 break/fix levels — kaputt</title>
+<meta name="description" content="Learn systemd by fixing broken systems: 8 hands-on levels, beginner to pro. Units, services, timers.">
+<link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/systemd/">
+<meta property="og:title" content="systemd track — 8 break/fix levels — kaputt"><meta property="og:description" content="Learn systemd by fixing broken systems: 8 hands-on levels, beginner to pro. Units, services, timers.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../style.css?v=6">
+<style>.crumbs{color:var(--faint);font-size:13px;margin:36px 0 18px}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--ink)}
+.meta{color:var(--muted);font-size:14px;margin:-10px 0 28px}.brief{max-width:620px;font-size:17px;color:var(--ink)}.brief p{margin:0 0 16px}
+.lvls{list-style:none;padding:0;margin:0;max-width:680px}.lvls li{border-top:1px solid var(--line);padding:12px 0;display:grid;grid-template-columns:34px 1fr;gap:12px}
+.lvls .ln{color:var(--faint);font-variant-numeric:tabular-nums}.lvls a{color:var(--ink)}.lvls a:hover{color:var(--accent)}.lvls .sl{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.pn{display:flex;justify-content:space-between;gap:20px;margin-top:40px;font-size:14px}.pn a{color:var(--muted)}.pn a:hover{color:var(--ink)}
+h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
+<body><div class="wrap">
+<nav><a class="brand" href="../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../tracks/index.html">all tracks</a><a href="../../index.html#play">play</a></div></nav>
+<div class="crumbs"><a href="../../index.html">home</a> / <a href="../index.html">tracks</a> / systemd</div>
+<h1 class="lvl">systemd <span class="it" style="font-style:italic;color:var(--accent)">— units, services, timers</span></h1>
+<p class="meta">8 levels · the first block builds the basics, then real incidents, easy → hard</p>
+<pre class="term"><span class="c"># play this track</span>
+wg track systemd
+wg primer        <span class="c"># the ~10 commands you'll need</span>
+wg level 1</pre>
+<ul class="lvls" style="margin-top:28px"><li><span class="ln">01</span><span><a href="01-oneshot-marker/index.html">ops wants a &quot;this box was provisioned&quot; marker written by systemd</a><br><span class="sl">oneshot-marker</span></span></li><li><span class="ln">02</span><span><a href="02-simple-service/index.html">heartbeat script only runs while someone keeps a terminal open</a><br><span class="sl">simple-service</span></span></li><li><span class="ln">03</span><span><a href="03-enable-on-boot/index.html">heartbeat is gone after every reboot</a><br><span class="sl">enable-on-boot</span></span></li><li><span class="ln">04</span><span><a href="04-restart-on-failure/index.html">api died at 03:00 and stayed dead until someone noticed at 09:00</a><br><span class="sl">restart-on-failure</span></span></li><li><span class="ln">05</span><span><a href="05-timer/index.html">tmp cleanup exists but nobody runs it</a><br><span class="sl">timer</span></span></li><li><span class="ln">06</span><span><a href="06-environment-file/index.html">api refuses to start: &quot;API_PORT not set&quot;</a><br><span class="sl">environment-file</span></span></li><li><span class="ln">07</span><span><a href="07-wrong-execstart/index.html">report service fails instantly, status shows 203/EXEC</a><br><span class="sl">wrong-execstart</span></span></li><li><span class="ln">08</span><span><a href="08-working-directory/index.html">metrics agent dies with 200/CHDIR</a><br><span class="sl">working-directory</span></span></li></ul>
+<footer class="foot"><a href="../../index.html">home</a><a href="../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
+<div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
+</div></body></html>

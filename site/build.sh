@@ -38,3 +38,5 @@ for td in sorted(glob.glob(root+'/*/')):
 json.dump({'tracks':tracks,'total':sum(t['count'] for t in tracks),'ntracks':len(tracks)},sys.stdout,indent=1)
 PY
 echo "wrote levels.json: $(python3 -c "import json;d=json.load(open('$HERE/levels.json'));print(d['ntracks'],'tracks',d['total'],'levels')")"
+# static SEO pages: one per track + one per level + sitemap (reads level READMEs from the repo)
+python3 "$HERE/gen_pages.py" "$WARGAME" "$HERE" "${SITE_BASE_URL:-https://leonbubova.github.io/kaputt}"
