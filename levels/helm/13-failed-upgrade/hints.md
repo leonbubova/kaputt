@@ -1,5 +1,5 @@
 ## 1
-`helm history shop -n wg-helm` — which revision is `deployed`, which `failed`? `helm get values shop -n wg-helm` shows what the failed one tried.
+Every install or upgrade writes a new numbered revision, and a failed upgrade leaves the previous revision's manifest and values intact — so "undo" is always one command away. `helm history shop -n wg-helm` — which revision is `deployed`, which `failed`? `helm get values shop -n wg-helm` shows what the failed one tried.
 ## 2
 Get healthy first: `helm rollback shop 1 -n wg-helm`. Then fix the tag in `values-launch.yaml` (`1.27-alpine`) and upgrade again.
 ## 3

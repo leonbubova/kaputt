@@ -1,5 +1,5 @@
 ## 1
-Run it and read the error: `cd ~/.k8s-wargame/supabase/project && supabase db reset`. It names the migration file and the failing statement. Fix, re-run, read again — there may be more than one problem.
+`db reset` replays every migration in timestamp order and stops at the first statement Postgres rejects — nothing after it gets applied, so one bad file takes the whole schema down. The error names the migration file and the failing statement. Run it and read: `cd ~/.k8s-wargame/supabase/project && supabase db reset`. Fix, re-run, read again — there may be more than one problem.
 ## 2
 First: `syntax error at or near "NUL"` — typo in `20240902090000_tags.sql`. Second: `insert or update on table "article_tags" violates foreign key constraint` — the seed rows reference an article id that the first migration never inserted (`select id from articles`).
 ## 3

@@ -1,5 +1,5 @@
 ## 1
-`systemctl status wg-metrics` → `status=200/CHDIR`. Exit codes 200+ come from systemd itself: CHDIR = it could not change into the configured directory.
+Exit codes 200+ come from systemd itself, not from the agent: 200/CHDIR means it could not change into the configured directory before starting anything. `systemctl status wg-metrics` → `status=200/CHDIR`.
 ## 2
 `systemctl show wg-metrics -p WorkingDirectory` vs. `ls -d /opt/wg/metrics/*`.
 ## 3

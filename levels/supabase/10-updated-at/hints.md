@@ -1,5 +1,5 @@
 ## 1
-Look at the trigger definition, not just the function: `select tgname, pg_get_triggerdef(oid) from pg_trigger where tgrelid='public.tasks'::regclass;`
+A trigger is two things: the function (*what* to do) and the trigger definition (*when* it fires — BEFORE or AFTER, on which event). A function that runs without error but changes nothing usually points at the *when*. Look at the trigger definition, not just the function: `select tgname, pg_get_triggerdef(oid) from pg_trigger where tgrelid='public.tasks'::regclass;`
 ## 2
 A row-level trigger can only modify `NEW` when it runs *BEFORE* the operation. In an AFTER trigger the row is already written; changing `NEW` there is a no-op.
 ## 3

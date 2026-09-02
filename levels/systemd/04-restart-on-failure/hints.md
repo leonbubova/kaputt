@@ -1,5 +1,5 @@
 ## 1
-`systemctl status wg-api` after a crash says `failed` and nothing else happens: the default is `Restart=no`. `systemctl show wg-api -p Restart -p RestartUSec` shows the current policy.
+systemd only restarts a dead service if the unit asks for it — the default is `Restart=no`, so a crashed unit just sits in `failed` forever. `systemctl status wg-api` after a crash shows exactly that; `systemctl show wg-api -p Restart -p RestartUSec` shows the current policy.
 ## 2
 `[Service]` `Restart=on-failure` restarts on non-zero exit and on signals; `Restart=always` also after a clean exit. `RestartSec=` is the delay (default 100 ms).
 ## 3

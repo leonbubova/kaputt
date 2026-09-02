@@ -1,5 +1,5 @@
 ## 1
-`curl localhost:8080` works but `curl $(hostname -I | awk '{print $1}'):8080` is refused. `ss -ltn` shows 127.0.0.1:8080.
+A listener binds to an *address* as well as a port — bound to 127.0.0.1 it only accepts connections arriving on loopback, and the box's real IP is a different address. `curl localhost:8080` works but `curl $(hostname -I | awk '{print $1}'):8080` is refused. `ss -ltn` shows 127.0.0.1:8080.
 ## 2
 The listen directive is `listen 127.0.0.1:8080;` — loopback only. Change it to all interfaces.
 ## 3

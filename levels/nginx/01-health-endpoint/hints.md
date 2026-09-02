@@ -1,5 +1,5 @@
 ## 1
-Look at conf.d/default.conf on the shop.local server. There is no location for /health, so it falls through to try_files and serves index.html.
+nginx picks one `location` per request — the most specific match. /health has none, so it falls into the catch-all `location /`, where try_files hands out index.html. Confirm in conf.d/default.conf on the shop.local server.
 ## 2
 A location that returns a fixed string uses `return`. Set default_type text/plain so it is served as plain text.
 ## 3

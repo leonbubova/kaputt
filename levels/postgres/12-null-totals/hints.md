@@ -1,5 +1,5 @@
 ## 1
-`select * from invoices where id in (2,5);` — `discount` is NULL there. `\d+ invoice_totals` shows the view does `amount - discount`.
+NULL means "unknown", not zero — and arithmetic with an unknown is unknown, so `amount - discount` is empty wherever `discount` was never filled in. Check: `select * from invoices where id in (2,5);` — `discount` is NULL there. `\d+ invoice_totals` shows the view does `amount - discount`.
 ## 2
 Anything minus NULL is NULL — that's the empty total, and `sum()` silently skips those rows. Treat a missing discount as 0: `coalesce(discount, 0)`.
 ## 3

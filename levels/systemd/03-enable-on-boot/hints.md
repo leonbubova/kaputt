@@ -1,5 +1,5 @@
 ## 1
-`systemctl enable wg-heartbeat` — read the error. A unit can only be enabled if it declares where it hooks into the boot.
+`start` and `enable` are different things: start runs a unit now, enable hooks it into the boot sequence — and a unit can only be enabled if it declares *where* in the boot it hooks in. `systemctl enable wg-heartbeat` — read the error.
 ## 2
 That is the `[Install]` section: `WantedBy=multi-user.target` means "start me when the system reaches multi-user".
 ## 3

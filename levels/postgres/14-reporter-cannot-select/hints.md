@@ -1,5 +1,5 @@
 ## 1
-Reproduce as the role: `psql postgres://wg_reporter:wg@localhost:5433/wg -c 'select * from sales'`. `\dp sales` (as postgres) shows the access privileges — the column is empty.
+Privileges are attached to the table object, not to its name — drop and recreate a table and every GRANT on it is gone, so a role that could read yesterday gets "permission denied" today. Reproduce as the role: `psql postgres://wg_reporter:wg@localhost:5433/wg -c 'select * from sales'`. `\dp sales` (as postgres) shows the access privileges — the column is empty.
 ## 2
 A recreated table has no grants; the old ones died with the old table. Give exactly one privilege back: `GRANT SELECT ON table TO role`.
 ## 3

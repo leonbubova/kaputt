@@ -1,5 +1,5 @@
 ## 1
-`kubectl get pods` — what's the STATUS? Then ask the pod why: `kubectl describe pod <name>` and read the events at the bottom.
+Kubernetes restarts a container whenever it exits; if it keeps exiting, the kubelet waits longer between attempts — that's CrashLoopBackOff. The cause is inside the process, not the cluster. `kubectl get pods` shows the STATUS; `kubectl describe pod <name>` lists the events at the bottom.
 ## 2
 CrashLoopBackOff means the process exits. Read what it said before dying: `kubectl logs <pod>` (add `--previous` if the current container is too young).
 ## 3

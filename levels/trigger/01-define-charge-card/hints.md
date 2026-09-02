@@ -1,5 +1,5 @@
 ## 1
-Look at a sibling for the shape: `cat src/trigger/process-order.ts`. A task = `task({ id, run })` exported from a file under `src/trigger`.
+A task is just an exported `task({ id, run })` object in a file under `src/trigger` — the `id` is how the platform addresses it, `run` is the code that executes. Look at a sibling for the shape: `cat src/trigger/process-order.ts`.
 ## 2
 For a validated payload use `schemaTask` from `@trigger.dev/sdk` with `schema: z.object({...})` — the payload type of `run` is then inferred, and `trigger()` rejects bad payloads before a run exists.
 ## 3

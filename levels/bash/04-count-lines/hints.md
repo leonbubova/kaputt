@@ -1,5 +1,5 @@
 ## 1
-The file to read is `$1`. You need the number of lines in it.
+A shell script rarely counts anything itself — it hands the file to a tool that does and prints the result. The file to read is `$1`. You need the number of lines in it.
 ## 2
 `wc -l < "$1"` prints the count. Redirecting with `<` avoids printing the filename.
 ## 3

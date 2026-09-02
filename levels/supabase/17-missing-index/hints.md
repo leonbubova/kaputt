@@ -1,5 +1,5 @@
 ## 1
-Ask the planner: `explain analyze select * from page_views where user_id = 42;` — a `Seq Scan` over 300k rows is your answer.
+Without an index on the filter column Postgres has to read every row to find the matches — a sequential scan that gets slower as the table grows. The planner tells you which path it chose: `explain analyze select * from page_views where user_id = 42;` — a `Seq Scan` over 300k rows is your answer.
 ## 2
 What indexes exist? `\d page_views` — only the primary key. The filter column is `user_id`.
 ## 3

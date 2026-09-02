@@ -1,5 +1,5 @@
 ## 1
-Where does the name resolve to? `getent hosts api.internal`. Compare with where the service listens: `ss -ltnp`.
+A hostname is resolved on *this* box before DNS is ever asked, so one machine can disagree with the whole network. Where does the name resolve to here? `getent hosts api.internal`. Compare with where the service listens: `ss -ltnp`.
 ## 2
 Name lookup consults `/etc/hosts` before DNS. Read it.
 ## 3

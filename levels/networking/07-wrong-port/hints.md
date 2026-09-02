@@ -1,5 +1,5 @@
 ## 1
-`ss -ltn` shows a listener on :8081, not :8080.
+Clients connect to a fixed port; the server decides which one it opens via its `listen` directive — when the two disagree, the client hits a closed door. `ss -ltn` shows a listener on :8081, not :8080.
 ## 2
 The listen directive in the site config says 8081.
 ## 3

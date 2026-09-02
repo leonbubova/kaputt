@@ -1,5 +1,5 @@
 ## 1
-`systemctl status wg-report` → `status=203/EXEC`. 203 means systemd could not execute the `ExecStart=` binary at all — before your script even ran.
+Exit codes 200+ come from systemd itself, not from your program: 203/EXEC means systemd could not execute the `ExecStart=` binary at all — the script never ran. `systemctl status wg-report` → `status=203/EXEC`.
 ## 2
 Compare the path in `systemctl cat wg-report` with what is actually on disk: `ls -l /opt/wg/report/`.
 ## 3

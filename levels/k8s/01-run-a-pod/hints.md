@@ -1,5 +1,5 @@
 ## 1
-The quickest way to get a single pod: `kubectl run NAME --image=IMAGE`. Your current namespace is already `wg` (`kubectl config view --minify | grep namespace`).
+A Pod is the smallest thing Kubernetes runs — one or more containers sharing an IP — and for a one-off you don't need YAML. `kubectl run NAME --image=IMAGE` creates one directly. Your current namespace is already `wg` (`kubectl config view --minify | grep namespace`).
 ## 2
 Watch it come up: `kubectl get pods -w`. If it stays `ContainerCreating`, `kubectl describe pod hello` shows why (usually the image pull).
 ## 3

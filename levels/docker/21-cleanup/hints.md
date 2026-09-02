@@ -1,5 +1,5 @@
 ## 1
-`docker system df` shows what's reclaimable. Then `docker images -f dangling=true`, `docker ps -a -f status=exited`, `docker volume ls -f dangling=true`.
+Docker keeps everything until you delete it: images from old builds (dangling `<none>` ones once retagged), stopped containers, and volumes no container references any more. Cleanup means listing each kind and removing only what's unused. `docker system df` shows what's reclaimable; `docker images -f dangling=true`, `docker ps -a -f status=exited`, `docker volume ls -f dangling=true` list the candidates.
 ## 2
 `docker image prune` removes dangling (`<none>`) images only. Volumes in use by a container can't be removed — that protects `wg-web-data`.
 ## 3

@@ -1,5 +1,5 @@
 ## 1
-Import the child task object (`notifyUser` from `./notify-user.js`) and call it from inside `run`. `cat src/api/campaign.ts` does the same thing from API code.
+Tasks trigger other tasks the same way API code does: import the child task object and call a method on it from inside `run`. A batch is one API call that creates many runs — that's what separates it from looping over `trigger()`. Import `notifyUser` from `./notify-user.js`; `cat src/api/campaign.ts` does the same thing from API code.
 ## 2
 `notifyUser.batchTrigger(items)` takes `[{ payload: {...} }, ...]` and returns `{ batchId, runCount }`.
 ## 3

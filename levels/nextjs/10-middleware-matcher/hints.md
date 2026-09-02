@@ -1,5 +1,5 @@
 ## 1
-`curl -I localhost:3100/legacy` → 404, so the middleware never ran. Middleware code that never runs usually has a `config.matcher` that doesn't match.
+Middleware runs before routing — but only for the paths its `config.matcher` selects. A path outside the matcher skips the middleware completely and falls through to normal routing, where nothing exists (hence 404). `curl -I localhost:3100/legacy` → 404 confirms the middleware never ran.
 ## 2
 Open `src/middleware.ts`. The `matcher` decides which paths the middleware is invoked for at all — compare it with the paths in the ticket.
 ## 3

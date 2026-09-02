@@ -1,5 +1,5 @@
 ## 1
-`curl --cacert <ca> --resolve shop.local:9443:127.0.0.1 https://shop.local:9443/` fails on the name.
+A certificate is issued for specific hostnames (Subject / SAN), and the client checks the name it connected to against them — a valid, trusted cert for the wrong host is still rejected. `curl --cacert <ca> --resolve shop.local:9443:127.0.0.1 https://shop.local:9443/` fails on the name.
 ## 2
 The served certificate is issued to a different host. Check its subject with `openssl x509 -noout -subject -in`.
 ## 3

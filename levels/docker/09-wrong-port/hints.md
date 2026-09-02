@@ -1,5 +1,5 @@
 ## 1
-`docker port wg-web` — host port → which container port? Is that where nginx listens? (`docker exec wg-web netstat -tln` or `docker logs wg-web`).
+A port mapping is a blind forward: Docker sends host-port traffic to the container port you named, whether or not anything listens there. 'Connection reset' = the forward worked, nobody answered inside. `docker port wg-web` shows the mapping; `docker exec wg-web netstat -tln` or `docker logs wg-web` show where nginx really listens.
 ## 2
 `-p HOST:CONTAINER`. The container side must be the port the process listens on. nginx listens on 80.
 ## 3

@@ -1,5 +1,5 @@
 ## 1
-The `random` provider offers `random_pet`. Its generated value is the `.id` attribute.
+Random values in Terraform are resources: generated once at create time and saved in state, so later plans reuse the stored value instead of rolling again. The `random` provider offers `random_pet`. Its generated value is the `.id` attribute.
 ## 2
 Write `random_pet.n.id` into the file's content and into an output.
 ## 3

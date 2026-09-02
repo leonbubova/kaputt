@@ -1,5 +1,5 @@
 ## 1
-Who owns the port? `ss -ltnp | grep 8080` (or `lsof -i :8080`). Look at the pid and its command line: `ps -fp PID`.
+Only one process can listen on a port; "Address already in use" means someone else got there first, and the kernel knows exactly who. `ss -ltnp | grep 8080` (or `lsof -i :8080`) names the pid; `ps -fp PID` shows its command line.
 ## 2
 Something is serving from a hidden dir under `/var/tmp`. It is not the web service. Stop it.
 ## 3

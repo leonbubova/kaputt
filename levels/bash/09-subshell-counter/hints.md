@@ -1,5 +1,5 @@
 ## 1
-Add `echo "$count"` inside the loop — it climbs, yet the final value is 0.
+Each stage of a pipeline runs in its own process, and a variable set in a child process never flows back to the parent. Add `echo "$count"` inside the loop — it climbs, yet the final value is 0.
 ## 2
 The `while` runs in a pipeline, so it executes in a subshell; its `count` is discarded when the subshell ends.
 ## 3

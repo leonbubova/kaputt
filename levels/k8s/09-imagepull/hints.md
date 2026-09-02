@@ -1,5 +1,5 @@
 ## 1
-`kubectl get pods` — the STATUS column has a name for this. `describe` the pod, events at the bottom.
+Before a container can start, the node's kubelet has to pull the image from a registry. If the registry says that name or tag doesn't exist, nothing runs and the kubelet retries with backoff — the pod's STATUS has a name for that. `kubectl get pods`, then `describe` the pod, events at the bottom.
 ## 2
 ImagePullBackOff / ErrImagePull: the node cannot download the image. Read the exact image reference in the event — every character.
 ## 3

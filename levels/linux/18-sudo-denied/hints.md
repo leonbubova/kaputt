@@ -1,5 +1,5 @@
 ## 1
-Which group grants sudo? `cat /etc/sudoers.d/*`. Which groups is alice in? `id alice`.
+sudo grants rights by matching sudoers rules against the user and the groups they are in — a rule for a group name nobody has does nothing. Which group grants sudo? `cat /etc/sudoers.d/*`. Which groups is alice in? `id alice`.
 ## 2
 `%ops` in sudoers vs `operators` in her groups — a rule for a group nobody is in.
 ## 3
