@@ -1,0 +1,7 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/systemd/lib.sh"
+active wg-api.service || fail "wg-api.service is not active ($(prop wg-api.service Result))"
+prop wg-api.service EnvironmentFiles | grep -q '/etc/wg/api.env' || fail "unit does not reference /etc/wg/api.env via EnvironmentFile="
+prop wg-api.service Environment | grep -Eq 'API_(PORT|TOKEN)=' && fail "values copied into the unit (Environment=) — use the file"
+X grep -qx 'port=9090' /opt/wg/api/state 2>/dev/null || fail "state does not show port=9090"
+X grep -qx 'token=s3cret-rotate-me' /opt/wg/api/state 2>/dev/null || fail "state does not show the token"
+ok "wg-api reads its config from /etc/wg/api.env"

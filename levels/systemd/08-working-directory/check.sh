@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/systemd/lib.sh"
+unchanged /opt/wg/metrics/app/agent.sh agent || fail "agent.sh was modified"
+active wg-metrics.service || fail "wg-metrics.service is not active ($(prop wg-metrics.service Result))"
+X grep -qx 'interval=15' /opt/wg/metrics/app/status 2>/dev/null || fail "/opt/wg/metrics/app/status missing or wrong"
+ok "wg-metrics is up with its config"

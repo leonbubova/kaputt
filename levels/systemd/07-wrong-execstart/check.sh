@@ -1,0 +1,7 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/systemd/lib.sh"
+unchanged /opt/wg/report/bin/report.sh report || fail "report.sh was modified"
+X test -e /opt/wg/report/report.sh && fail "script was copied/linked to /opt/wg/report/report.sh — fix the unit instead"
+active wg-report.service || fail "wg-report.service is not active ($(prop wg-report.service Result))"
+prop wg-report.service ExecStart | grep -q '/opt/wg/report/bin/report.sh' || fail "ExecStart does not point at /opt/wg/report/bin/report.sh"
+sleep 3; a=$(age /opt/wg/report/out/report.txt); [ -n "$a" ] && [ "$a" -le 5 ] || fail "report.txt not fresh (age: ${a:-missing})"
+ok "wg-report is up and writing"

@@ -1,0 +1,11 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/systemd/lib.sh"
+loaded wg-cleanup.timer || fail "wg-cleanup.timer not loaded ($(prop wg-cleanup.timer LoadState))"
+active wg-cleanup.timer || fail "wg-cleanup.timer is not active"
+enabled wg-cleanup.timer || fail "wg-cleanup.timer is not enabled (must survive reboot)"
+prop wg-cleanup.timer Triggers | grep -q '^wg-cleanup.service$' || fail "timer triggers $(prop wg-cleanup.timer Triggers), not wg-cleanup.service"
+gap=$(XS 'n=$(systemctl show wg-cleanup.timer -p NextElapseUSecRealtime --value); [ -n "$n" ] && echo $(( $(date -d "$n" +%s) - $(date +%s) ))')
+[ -n "$gap" ] && [ "$gap" -le 90 ] || fail "next elapse is ${gap:-n/a}s away — not every minute"
+info "waiting for the timer to fire…"
+wait_ok 80 '[ "$(systemctl show wg-cleanup.timer -p LastTriggerUSecMonotonic --value)" != 0 ]' || fail "timer never triggered"
+a=$(age /opt/wg/cleanup/last-run); [ -n "$a" ] && [ "$a" -lt 120 ] || fail "last-run not written by the service"
+ok "wg-cleanup.timer fires every minute"

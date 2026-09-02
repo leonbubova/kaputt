@@ -1,0 +1,6 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/systemd/lib.sh"
+loaded wg-heartbeat.service || fail "wg-heartbeat.service not loaded"
+enabled wg-heartbeat.service || fail "is-enabled says: $(X systemctl is-enabled wg-heartbeat.service 2>&1 | head -1)"
+XS 'ls /etc/systemd/system/*.wants/wg-heartbeat.service' >/dev/null 2>&1 || fail "no *.wants symlink for wg-heartbeat — enabled how?"
+active wg-heartbeat.service || fail "wg-heartbeat.service is not active"
+ok "wg-heartbeat is enabled and running"

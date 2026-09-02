@@ -1,0 +1,6 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/systemd/lib.sh"
+loaded wg-heartbeat.service || fail "wg-heartbeat.service not loaded"
+active wg-heartbeat.service || fail "wg-heartbeat.service is not active"
+prop wg-heartbeat.service ExecStart | grep -q heartbeat.sh || fail "ExecStart does not run /opt/wg/heartbeat/heartbeat.sh"
+sleep 3; a=$(age /opt/wg/heartbeat/log); [ -n "$a" ] && [ "$a" -le 4 ] || fail "log not fresh (age: ${a:-missing})"
+ok "heartbeat runs under systemd"
