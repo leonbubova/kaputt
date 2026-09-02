@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/bash/bashlib.sh"
+have greet.sh || fail "no greet.sh in the sandbox"
+out=$(run greet.sh Ada);   [ "$out" = "hello, Ada" ]   || fail "greet.sh Ada printed: $out"
+out=$(run greet.sh World); [ "$out" = "hello, World" ] || fail "greet.sh World printed: $out"
+ok "greet.sh greets by name"

@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/bash/bashlib.sh"
+have count-matches.sh || fail "no count-matches.sh in the sandbox"
+out=$(run count-matches.sh app.log ERROR); [ "$(trim "$out")" = 3 ] || fail "count-matches app.log ERROR → '$out', want 3"
+out=$(run count-matches.sh app.log INFO);  [ "$(trim "$out")" = 3 ] || fail "count-matches app.log INFO → '$out', want 3"
+ok "count-matches counts correctly"

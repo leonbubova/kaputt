@@ -1,0 +1,6 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/bash/bashlib.sh"
+have sum.sh || fail "no sum.sh in the sandbox"
+out=$(run sum.sh 2 3 4); [ "$(trim "$out")" = 9 ] || fail "sum.sh 2 3 4 → '$out', want 9"
+out=$(run sum.sh 10 20 30 40); [ "$(trim "$out")" = 100 ] || fail "sum.sh 10 20 30 40 → '$out', want 100"
+out=$(run sum.sh); [ "$(trim "$out")" = 0 ] || fail "sum.sh (no args) → '$out', want 0"
+ok "sum.sh totals its arguments"

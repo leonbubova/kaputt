@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/bash/bashlib.sh"
+have even.sh || fail "no even.sh in the sandbox"
+out=$(run even.sh 4); c=$(run_code); [ "$out" = even ] && [ "$c" = 0 ] || fail "even.sh 4 → '$out' (exit $c), want 'even' exit 0"
+out=$(run even.sh 7); c=$(run_code); [ "$out" = odd ] && [ "$c" = 1 ] || fail "even.sh 7 → '$out' (exit $c), want 'odd' exit 1"
+ok "even.sh reports parity via output and exit code"

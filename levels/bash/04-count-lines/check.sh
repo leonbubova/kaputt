@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/bash/bashlib.sh"
+have count-lines.sh || fail "no count-lines.sh in the sandbox"
+have data.txt || fail "data.txt missing (environment problem)"
+out=$(run count-lines.sh data.txt); [ "$(trim "$out")" = 5 ] || fail "count-lines.sh data.txt → '$out', want 5"
+ok "count-lines.sh counts lines"

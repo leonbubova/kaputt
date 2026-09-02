@@ -1,0 +1,6 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/bash/bashlib.sh"
+have maxnum.sh || fail "no maxnum.sh in the sandbox"
+out=$(run maxnum.sh 9 100); [ "$out" = 100 ] || fail "maxnum.sh 9 100 → '$out', want 100"
+out=$(run maxnum.sh 100 9); [ "$out" = 100 ] || fail "maxnum.sh 100 9 → '$out', want 100"
+out=$(run maxnum.sh 5 5);   [ "$out" = 5 ]   || fail "maxnum.sh 5 5 → '$out', want 5"
+ok "maxnum.sh compares numerically"

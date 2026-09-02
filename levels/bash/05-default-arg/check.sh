@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/bash/bashlib.sh"
+have greet2.sh || fail "no greet2.sh in the sandbox"
+out=$(run greet2.sh);     [ "$out" = "hello, world" ] || fail "greet2.sh (no arg) → '$out', want 'hello, world'"
+out=$(run greet2.sh Bob); [ "$out" = "hello, Bob" ]   || fail "greet2.sh Bob → '$out', want 'hello, Bob'"
+ok "greet2.sh defaults to world"
