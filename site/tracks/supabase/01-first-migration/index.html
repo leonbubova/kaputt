@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>first migration — supabase level 01 — kaputt</title>
-<meta name="description" content="supabase exercise: first migration. Fix a real broken supabase system in your own terminal — level 01 of 18, with hints and a checker.">
+<meta name="description" content="supabase exercise: first migration. Fix a real broken supabase system in your own terminal — level 01 of 24, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/supabase/01-first-migration/">
-<meta property="og:title" content="first migration — supabase level 01 — kaputt"><meta property="og:description" content="supabase exercise: first migration. Fix a real broken supabase system in your own terminal — level 01 of 18, with hints and a checker.">
+<meta property="og:title" content="first migration — supabase level 01 — kaputt"><meta property="og:description" content="supabase exercise: first migration. Fix a real broken supabase system in your own terminal — level 01 of 24, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -17,7 +17,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">supabase</a> / level 01</div>
 <h1 class="lvl">first migration</h1>
-<p class="meta">supabase · level 01 of 18 · <code>first-migration</code></p>
+<p class="meta">supabase · level 01 of 24 · <code>first-migration</code></p>
 <div class="brief"><h2>the ticket</h2><p>Ticket: &quot;Start the notes app schema. Add a migration <code>notes</code> in <code>~/.k8s-wargame/supabase/project/supabase/migrations/</code> that creates <code>public.notes</code> with <code>id bigint generated always as identity primary key</code>, <code>body text not null</code>, <code>created_at timestamptz not null default now()</code>. Apply it with the CLI.&quot; Goal: the table exists and the migration shows as applied.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>

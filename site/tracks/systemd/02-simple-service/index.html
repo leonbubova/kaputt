@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>heartbeat script only runs while someone keeps a terminal open — systemd level 02 — kaputt</title>
-<meta name="description" content="systemd exercise: heartbeat script only runs while someone keeps a terminal open. Fix a real broken systemd system in your own terminal — level 02 of 8, with hints and a checker.">
+<meta name="description" content="systemd exercise: heartbeat script only runs while someone keeps a terminal open. Fix a real broken systemd system in your own terminal — level 02 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/systemd/02-simple-service/">
-<meta property="og:title" content="heartbeat script only runs while someone keeps a terminal open — systemd level 02 — kaputt"><meta property="og:description" content="systemd exercise: heartbeat script only runs while someone keeps a terminal open. Fix a real broken systemd system in your own terminal — level 02 of 8, with hints and a checker.">
+<meta property="og:title" content="heartbeat script only runs while someone keeps a terminal open — systemd level 02 — kaputt"><meta property="og:description" content="systemd exercise: heartbeat script only runs while someone keeps a terminal open. Fix a real broken systemd system in your own terminal — level 02 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -17,7 +17,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">systemd</a> / level 02</div>
 <h1 class="lvl">heartbeat script only runs while someone keeps a terminal open</h1>
-<p class="meta">systemd · level 02 of 8 · <code>simple-service</code></p>
+<p class="meta">systemd · level 02 of 12 · <code>simple-service</code></p>
 <div class="brief"><h2>the ticket</h2><p>&quot;<code>/opt/wg/heartbeat/heartbeat.sh</code> appends a timestamp to <code>/opt/wg/heartbeat/log</code> every 2 s. Right now Tom runs it in a tmux. Make systemd run it as <code>wg-heartbeat.service</code>.&quot; Goal: <code>wg-heartbeat.service</code> is active, its main process is the script, and the log keeps getting fresh entries.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>

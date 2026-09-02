@@ -50,7 +50,7 @@ create the table), then incidents from easy to hard, with the last levels chaini
 | `docker` | 27 | images, containers, volumes, networks, compose, healthchecks |
 | `nestjs` | 27 | NestJS dependency injection, modules, pipes, guards, HTTP |
 | `nextjs` | 28 | Next.js 15 App Router, server/client components, actions, caching |
-| `helm` | 20 | charts, values, templates, upgrades, rollbacks |
+| `helm` | 25 | charts, values, templates, upgrades, rollbacks |
 | `trigger` | 24 | Trigger.dev tasks, retries, schedules, idempotency |
 | `supabase` | 24 | Postgres, row-level security, auth, storage, migrations |
 | `postgres` | 20 | schema, constraints, indexes, locks, query plans |

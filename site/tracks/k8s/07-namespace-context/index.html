@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>a namespace for team A — k8s level 07 — kaputt</title>
-<meta name="description" content="k8s exercise: a namespace for team A. Fix a real broken k8s system in your own terminal — level 07 of 25, with hints and a checker.">
+<meta name="description" content="k8s exercise: a namespace for team A. Fix a real broken k8s system in your own terminal — level 07 of 33, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/k8s/07-namespace-context/">
-<meta property="og:title" content="a namespace for team A — k8s level 07 — kaputt"><meta property="og:description" content="k8s exercise: a namespace for team A. Fix a real broken k8s system in your own terminal — level 07 of 25, with hints and a checker.">
+<meta property="og:title" content="a namespace for team A — k8s level 07 — kaputt"><meta property="og:description" content="k8s exercise: a namespace for team A. Fix a real broken k8s system in your own terminal — level 07 of 33, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -17,7 +17,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">k8s</a> / level 07</div>
 <h1 class="lvl">a namespace for team A</h1>
-<p class="meta">k8s · level 07 of 25 · <code>namespace-context</code></p>
+<p class="meta">k8s · level 07 of 33 · <code>namespace-context</code></p>
 <div class="brief"><h2>the ticket</h2><p>Ticket: &quot;Team A gets their own space. Create namespace <code>team-a</code>, deploy <code>web</code> there (image <code>nginx:1.27-alpine</code>, 1 replica is fine), and switch your kubectl context so that <code>team-a</code> is the default namespace — we&#x27;re tired of typing <code>-n</code>.&quot; Goal: deployment <code>web</code> is available in <code>team-a</code>, and <code>kubectl config view --minify</code> shows namespace <code>team-a</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>

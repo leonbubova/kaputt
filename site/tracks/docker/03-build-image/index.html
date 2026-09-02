@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>package the landing page as an image — docker level 03 — kaputt</title>
-<meta name="description" content="docker exercise: package the landing page as an image. Fix a real broken docker system in your own terminal — level 03 of 22, with hints and a checker.">
+<meta name="description" content="docker exercise: package the landing page as an image. Fix a real broken docker system in your own terminal — level 03 of 27, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/docker/03-build-image/">
-<meta property="og:title" content="package the landing page as an image — docker level 03 — kaputt"><meta property="og:description" content="docker exercise: package the landing page as an image. Fix a real broken docker system in your own terminal — level 03 of 22, with hints and a checker.">
+<meta property="og:title" content="package the landing page as an image — docker level 03 — kaputt"><meta property="og:description" content="docker exercise: package the landing page as an image. Fix a real broken docker system in your own terminal — level 03 of 27, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -17,7 +17,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">docker</a> / level 03</div>
 <h1 class="lvl">package the landing page as an image</h1>
-<p class="meta">docker · level 03 of 22 · <code>build-image</code></p>
+<p class="meta">docker · level 03 of 27 · <code>build-image</code></p>
 <div class="brief"><h2>the ticket</h2><p>&quot;Designers finished <code>index.html</code> (in <code>~/.k8s-wargame/docker/03-build-image/</code>). Ship it as an image so every environment gets the same page.&quot; Goal: write a <code>Dockerfile</code> there and build image <code>wg-site:1</code> that serves <code>index.html</code> with nginx on port 80 — <code>docker run --rm -p 18003:80 wg-site:1</code> must show the page at <code>curl localhost:18003</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>

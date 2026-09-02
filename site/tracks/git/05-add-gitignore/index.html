@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>git status is cluttered with log files — git level 05 — kaputt</title>
-<meta name="description" content="git exercise: git status is cluttered with log files. Fix a real broken git system in your own terminal — level 05 of 22, with hints and a checker.">
+<meta name="description" content="git exercise: git status is cluttered with log files. Fix a real broken git system in your own terminal — level 05 of 28, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/git/05-add-gitignore/">
-<meta property="og:title" content="git status is cluttered with log files — git level 05 — kaputt"><meta property="og:description" content="git exercise: git status is cluttered with log files. Fix a real broken git system in your own terminal — level 05 of 22, with hints and a checker.">
+<meta property="og:title" content="git status is cluttered with log files — git level 05 — kaputt"><meta property="og:description" content="git exercise: git status is cluttered with log files. Fix a real broken git system in your own terminal — level 05 of 28, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -17,7 +17,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">git</a> / level 05</div>
 <h1 class="lvl">git status is cluttered with log files</h1>
-<p class="meta">git · level 05 of 22 · <code>add-gitignore</code></p>
+<p class="meta">git · level 05 of 28 · <code>add-gitignore</code></p>
 <div class="brief"><h2>the ticket</h2><p>&quot;Every run writes <code>debug.log</code> and it shows up in <code>git status</code>. Make git ignore all <code>*.log</code> files — for everyone, so it must be committed.&quot; Repo: <code>~/.k8s-wargame/git/repo</code>. Goal: <code>*.log</code> files are ignored via a committed <code>.gitignore</code>; <code>debug.log</code> still exists on disk; <code>git status</code> is clean.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
