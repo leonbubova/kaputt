@@ -4,4 +4,4 @@ App: ~/.k8s-wargame/nestjs/app  (NestJS 11, TypeScript, in-memory data — reset
   npm test              # jest
   npx tsc --noEmit      # type check
 `wg check` boots its own instance on port 3299 (respects PORT), so keep your dev server running.
-Routes: /health · /users · /users/:id · /orders · /orders/:id · /admin/stats (X-Api-Key from .env)
+Routes: /health · /users (?role=) · /users/:id · /orders · /orders/:id · /admin/stats (X-Api-Key from .env)

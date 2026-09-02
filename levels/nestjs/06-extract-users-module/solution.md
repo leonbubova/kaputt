@@ -1,0 +1,1 @@
+`src/users/users.module.ts` with `controllers: [UsersController], providers: [UsersService], exports: [UsersService]`; `AppModule` imports it and drops the direct entries. The export is the part people forget — `OrdersService` (still in `AppModule`) injects `UsersService`.

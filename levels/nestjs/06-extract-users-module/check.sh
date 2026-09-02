@@ -1,0 +1,11 @@
+source "$WG_ROOT/levels/nestjs/nest.sh"
+m="$APP/src/users/users.module.ts"; [ -f "$m" ] || fail "src/users/users.module.ts missing"
+grep -q '@Module' "$m" && grep -q 'UsersController' "$m" && grep -q 'UsersService' "$m" || fail "UsersModule must declare UsersController and UsersService"
+grep -q 'UsersModule' "$APP/src/app.module.ts" || fail "AppModule does not import UsersModule"
+grep -qE 'controllers:.*UsersController' "$APP/src/app.module.ts" && fail "AppModule still lists UsersController directly"
+boot_or_fail
+get /users/1 | grep -q '"orderCount"' || fail "GET /users/1 broken"
+post /orders '{"userId":1,"item":"cable","qty":1}' | grep -q '"item":"cable"' || fail "POST /orders broken (OrdersService needs UsersService)"
+curl -s -m 5 -H 'X-Api-Key: wg-secret-key' $BASE/admin/stats | grep -q '"users":' || fail "GET /admin/stats broken"
+get /health | grep -q '"status":"ok"' || fail "/health broken"
+ok "UsersModule extracted, everything still works"
