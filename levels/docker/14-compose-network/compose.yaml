@@ -1,0 +1,9 @@
+name: wg
+services:
+  web:
+    image: nginx:1.27-alpine
+    container_name: wg-web
+  app:
+    image: busybox:1.36
+    container_name: wg-app
+    command: sleep infinity

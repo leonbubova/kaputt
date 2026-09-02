@@ -1,0 +1,6 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/postgres/lib.sh"
+has_table orders && has_table customers || fail "orders/customers table is gone"
+[ "$(sql "select count(*) from customers")" = 4 ] && [ "$(sql "select count(*) from customers where cancelled")" = 2 ] || fail "customers changed — only their orders go"
+[ "$(sql "select count(*) from orders o join customers c on c.id = o.customer_id where c.cancelled")" = 0 ] || fail "cancelled customers still have orders"
+n=$(sql "select count(*) from orders"); [ "$n" = 3 ] || fail "want the 3 orders of active customers, got $n"
+ok "orders of cancelled customers purged"

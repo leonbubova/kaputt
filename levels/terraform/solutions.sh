@@ -35,6 +35,18 @@ T
 }
 
 s03(){ wf main.tf <<'T'
+variable "word" {
+  type    = string
+  default = "hello"
+}
+resource "local_file" "shout" {
+  filename = "${path.module}/out/shout.txt"
+  content  = "${upper(var.word)}\n"
+}
+T
+}
+
+s04(){ wf main.tf <<'T'
 resource "local_file" "hello" {
   filename = "${path.module}/out/hello.txt"
   content  = "hello, world\n"
@@ -45,7 +57,7 @@ output "file_content" {
 T
 }
 
-s04(){ wf main.tf <<'T'
+s05(){ wf main.tf <<'T'
 resource "random_pet" "n" {
   length = 2
 }
@@ -59,7 +71,7 @@ output "pet" {
 T
 }
 
-s05(){ wf main.tf <<'T'
+s06(){ wf main.tf <<'T'
 resource "local_file" "node" {
   count    = 3
   filename = "${path.module}/out/node-${count.index}.txt"
@@ -68,7 +80,19 @@ resource "local_file" "node" {
 T
 }
 
-s06(){ tf_versions; wf main.tf <<'T'
+s07(){ wf main.tf <<'T'
+resource "local_file" "node" {
+  count    = 3
+  filename = "${path.module}/out/node-${count.index}.txt"
+  content  = "node ${count.index}\n"
+}
+output "last_node" {
+  value = local_file.node[2].filename
+}
+T
+}
+
+s08(){ tf_versions; wf main.tf <<'T'
 resource "random_pet" "p" {
   length = 2
 }
@@ -79,7 +103,18 @@ resource "local_file" "name" {
 T
 }
 
-s07(){ wf main.tf <<'T'
+s09(){ tf_versions; wf main.tf <<'T'
+resource "random_pet" "p" {
+  length = 2
+}
+resource "local_file" "name" {
+  filename = "${path.module}/out/name.txt"
+  content  = random_pet.p.id
+}
+T
+}
+
+s10(){ wf main.tf <<'T'
 resource "random_pet" "n" {
   length = 2
 }
@@ -93,7 +128,7 @@ output "pet" {
 T
 }
 
-s08(){ wf main.tf <<'T'
+s11(){ wf main.tf <<'T'
 resource "local_file" "node" {
   count    = 2
   filename = "${path.module}/out/n-${count.index}.txt"
@@ -105,7 +140,16 @@ output "first" {
 T
 }
 
-s09(){ wf main.tf <<'T'
+s12(){ wf main.tf <<'T'
+resource "local_file" "region" {
+  for_each = { eu = "Europe", us = "United States" }
+  filename = "${path.module}/out/${each.key}.txt"
+  content  = "${each.value}\n"
+}
+T
+}
+
+s13(){ wf main.tf <<'T'
 variable "envs" {
   type    = list(string)
   default = ["dev", "prod"]
@@ -118,7 +162,7 @@ resource "local_file" "env" {
 T
 }
 
-s10(){ wf main.tf <<'T'
+s14(){ wf main.tf <<'T'
 resource "local_file" "app" {
   filename = "${path.module}/out/a.txt"
   content  = "a\n"
@@ -130,7 +174,7 @@ resource "local_file" "app2" {
 T
 }
 
-s11(){ wf main.tf <<'T'
+s15(){ wf main.tf <<'T'
 variable "port" {
   type    = number
   default = 8080
@@ -142,7 +186,7 @@ resource "local_file" "cfg" {
 T
 }
 
-s12(){ tf_versions; wf main.tf <<'T'
+s16(){ tf_versions; wf main.tf <<'T'
 resource "random_pet" "p" {
   length = 2
 }

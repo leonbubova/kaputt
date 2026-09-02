@@ -1,0 +1,10 @@
+source ../../../lib/common.sh; source ../lib.sh
+[ "$(rel_status web)" = deployed ] || fail "release web is not deployed ($(rel_status web))"
+$K get job web-migrate >/dev/null 2>&1 || fail "no Job web-migrate in wg-helm — keep it after it ran"
+$K get job web-migrate -o jsonpath='{.metadata.annotations.helm\.sh/hook}' | grep -q 'pre-install' || fail "Job web-migrate is not a pre-install hook"
+helm get manifest web -n $NS 2>/dev/null | grep -q 'name: web-migrate' && fail "web-migrate is part of the plain manifest — a hook is applied separately"
+[ "$($K get job web-migrate -o jsonpath='{.status.succeeded}' 2>/dev/null)" = 1 ] || fail "Job web-migrate did not succeed"
+$K logs job/web-migrate 2>/dev/null | grep -q "running schema migrations" || fail "Job log does not say 'running schema migrations'"
+wait_available web 1 60 || fail "web has no available replica"
+in_cluster_get http://web.wg-helm.svc/ | grep -q "<h1>web</h1>" || fail "web not reachable"
+ok "pre-install hook ran, web deployed"

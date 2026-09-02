@@ -79,7 +79,7 @@ for t in tracks:
 <p class="meta">{t["count"]} levels · the first block builds the basics, then real incidents, easy → hard</p>
 <pre class="term"><span class="c"># play this track</span>
 wg track {tr}
-wg primer        <span class="c"># the ~10 commands you'll need</span>
+wg help          <span class="c"># the ~10 commands you'll need</span>
 wg level 1</pre>
 <ul class="lvls" style="margin-top:28px">{items}</ul>'''
     write(f"tracks/{tr}/index.html", page(f"{tr} track — {t['count']} break/fix levels — {NAME}", f"Learn {tr} by fixing broken systems: {t['count']} hands-on levels, beginner to pro. {t['blurb']}.", body, 2, f"{BASE}/tracks/{tr}/"))

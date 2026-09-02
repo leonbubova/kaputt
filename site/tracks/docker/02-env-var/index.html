@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>configure the app through the environment — docker level 02 — kaputt</title>
-<meta name="description" content="docker exercise: configure the app through the environment. Fix a real broken docker system in your own terminal — level 02 of 22, with hints and a checker.">
+<meta name="description" content="docker exercise: configure the app through the environment. Fix a real broken docker system in your own terminal — level 02 of 27, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/docker/02-env-var/">
-<meta property="og:title" content="configure the app through the environment — docker level 02 — kaputt"><meta property="og:description" content="docker exercise: configure the app through the environment. Fix a real broken docker system in your own terminal — level 02 of 22, with hints and a checker.">
+<meta property="og:title" content="configure the app through the environment — docker level 02 — kaputt"><meta property="og:description" content="docker exercise: configure the app through the environment. Fix a real broken docker system in your own terminal — level 02 of 27, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -17,7 +17,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">docker</a> / level 02</div>
 <h1 class="lvl">configure the app through the environment</h1>
-<p class="meta">docker · level 02 of 22 · <code>env-var</code></p>
+<p class="meta">docker · level 02 of 27 · <code>env-var</code></p>
 <div class="brief"><h2>the ticket</h2><p>&quot;Our app reads its region from the environment; ops wants to see that this works in a container before we ship.&quot; Goal: a running container <code>wg-app</code> from <code>alpine:3.20</code> that idles (e.g. <code>sleep infinity</code>) and has the environment variable <code>REGION=eu-central</code> — <code>docker exec wg-app printenv REGION</code> prints <code>eu-central</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>

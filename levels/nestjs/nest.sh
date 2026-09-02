@@ -5,10 +5,11 @@ LOG=$HOME/.k8s-wargame/nestjs/check.log
 PORT=3299                      # check boots its own instance here; the player's dev server on 3200 is left alone
 BASE=http://localhost:$PORT
 APP_PID=
+app_cleanup() { :; }              # levels may override: runs once when the check exits (restore files the check changed)
 app_kill() { [ -n "$APP_PID" ] && kill "$APP_PID" 2>/dev/null; local p; p=$(lsof -ti "tcp:$PORT" 2>/dev/null || true); [ -n "$p" ] && kill -9 $p 2>/dev/null; return 0; }
 # boot the app from $APP with ts-node; returns 1 if it crashes or is not listening in time
 app_start() {
-  app_kill; trap app_kill EXIT
+  app_kill; trap 'app_kill; app_cleanup' EXIT
   local t=30; [ -n "${WG_FAST:-}" ] && t=15
   (cd "$APP" && unset API_KEY && PORT=$PORT exec ./node_modules/.bin/ts-node --transpile-only src/main.ts) >"$LOG" 2>&1 &
   APP_PID=$!; disown $APP_PID 2>/dev/null || true

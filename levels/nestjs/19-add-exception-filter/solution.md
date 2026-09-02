@@ -1,0 +1,1 @@
+`src/common/http-exception.filter.ts`: `@Catch() class HttpExceptionFilter implements ExceptionFilter`, status via `exception instanceof HttpException ? exception.getStatus() : 500`, responds `{ statusCode, message, path: req.url }`; bound in `AppModule.providers` as `{ provide: APP_FILTER, useClass: HttpExceptionFilter }`.

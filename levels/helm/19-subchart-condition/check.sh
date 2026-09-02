@@ -1,0 +1,10 @@
+source ../../../lib/common.sh; source ../lib.sh
+c="$WGH/19-subchart-condition/shop"
+helm template shop "$c" 2>/dev/null | grep -q 'shop-cache' && fail "chart defaults still render the cache (helm template shop ./shop) — dev must not get it"
+helm template shop "$c" -f "$WGH/19-subchart-condition/values-prod.yaml" 2>/dev/null | grep -q 'name: shop-cache' || fail "with -f values-prod.yaml the cache is not rendered"
+[ "$(rel_status shop)" = deployed ] || fail "release shop is not deployed"
+helm get manifest shop -n $NS 2>/dev/null | grep -q 'name: shop-cache' || fail "the cache subchart is not part of the live release — install with the prod values"
+wait_available shop-cache 1 60 || fail "shop-cache not available"
+wait_available shop 1 60 || fail "shop has no available replica"
+in_cluster_get http://shop.wg-helm.svc/ | grep -q "<h1>shop</h1>" || fail "shop not reachable"
+ok "cache subchart switched by cache.enabled"

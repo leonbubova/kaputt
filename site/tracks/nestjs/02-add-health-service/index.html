@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ticket: /health should report uptime — nestjs level 02 — kaputt</title>
-<meta name="description" content="nestjs exercise: ticket: /health should report uptime. Fix a real broken nestjs system in your own terminal — level 02 of 21, with hints and a checker.">
+<meta name="description" content="nestjs exercise: ticket: /health should report uptime. Fix a real broken nestjs system in your own terminal — level 02 of 27, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nestjs/02-add-health-service/">
-<meta property="og:title" content="ticket: /health should report uptime — nestjs level 02 — kaputt"><meta property="og:description" content="nestjs exercise: ticket: /health should report uptime. Fix a real broken nestjs system in your own terminal — level 02 of 21, with hints and a checker.">
+<meta property="og:title" content="ticket: /health should report uptime — nestjs level 02 — kaputt"><meta property="og:description" content="nestjs exercise: ticket: /health should report uptime. Fix a real broken nestjs system in your own terminal — level 02 of 27, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -17,7 +17,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nestjs</a> / level 02</div>
 <h1 class="lvl">ticket: /health should report uptime</h1>
-<p class="meta">nestjs · level 02 of 21 · <code>add-health-service</code></p>
+<p class="meta">nestjs · level 02 of 27 · <code>add-health-service</code></p>
 <div class="brief"><h2>the ticket</h2><p>&quot;Move the logic out of the controller: add a <code>HealthService</code> (<code>@Injectable</code>) that remembers when the process started and returns <code>uptime</code> in seconds. Inject it into <code>HealthController</code> via the constructor. <code>GET /health</code> → <code>{ status: &quot;ok&quot;, uptime: &lt;number&gt; }</code>.&quot; Goal: the endpoint returns a numeric <code>uptime</code>, provided by a service. App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>

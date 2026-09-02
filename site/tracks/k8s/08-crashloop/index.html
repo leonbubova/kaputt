@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>the api pod keeps restarting — k8s level 08 — kaputt</title>
-<meta name="description" content="k8s exercise: the api pod keeps restarting. Fix a real broken k8s system in your own terminal — level 08 of 25, with hints and a checker.">
+<meta name="description" content="k8s exercise: the api pod keeps restarting. Fix a real broken k8s system in your own terminal — level 08 of 33, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/k8s/08-crashloop/">
-<meta property="og:title" content="the api pod keeps restarting — k8s level 08 — kaputt"><meta property="og:description" content="k8s exercise: the api pod keeps restarting. Fix a real broken k8s system in your own terminal — level 08 of 25, with hints and a checker.">
+<meta property="og:title" content="the api pod keeps restarting — k8s level 08 — kaputt"><meta property="og:description" content="k8s exercise: the api pod keeps restarting. Fix a real broken k8s system in your own terminal — level 08 of 33, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -17,7 +17,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">k8s</a> / level 08</div>
 <h1 class="lvl">the api pod keeps restarting</h1>
-<p class="meta">k8s · level 08 of 25 · <code>crashloop</code></p>
+<p class="meta">k8s · level 08 of 33 · <code>crashloop</code></p>
 <div class="brief"><h2>the ticket</h2><p>Team says: &quot;we deployed <code>api</code> to namespace <code>wg</code> 10 minutes ago and it&#x27;s been flapping ever since.&quot; Goal: <code>api</code> deployment has 1 ready pod that stays up. Don&#x27;t change the image.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>

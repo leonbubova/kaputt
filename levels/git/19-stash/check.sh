@@ -1,0 +1,10 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/git/gitlib.sh"
+need_repo
+[ "$(h feature/report)" = "$(exp feat)" ] || fail "feature/report moved — don't commit the WIP"
+[ "$(h main^)" = "$(exp main)" ] && [ "$(g rev-list --count "$(exp main)"..main)" = 1 ] || fail "main needs exactly one new commit"
+[ "$(g show main:VERSION)" = "1.4.1" ] || fail "VERSION on main is not 1.4.1"
+[ "$(g symbolic-ref -q HEAD)" = refs/heads/feature/report ] || fail "HEAD is not back on feature/report"
+grep -q 'WIP: group by month' "$REPO/report.py" 2>/dev/null || fail "the in-progress edit is not back in report.py"
+[ "$(g status --porcelain)" = " M report.py" ] || fail "unexpected status: $(g status --porcelain)"
+[ -z "$(g stash list)" ] || fail "stash list is not empty — bring the change back with pop"
+ok "hotfix shipped, WIP restored"
