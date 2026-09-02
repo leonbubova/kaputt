@@ -1,5 +1,6 @@
+NS=${NS:-wg-helm}
 # machine-applied solutions, one function per level — used by run-all.sh only
-WGH=${WG_STATE:-$HOME/.k8s-wargame}/helm; hn(){ helm -n wg-helm "$@"; }; sedi(){ sed -i.bak "$1" "$2" && rm -f "$2.bak"; }
+WGH=${WG_STATE:-$HOME/.k8s-wargame}/helm; hn(){ helm -n $NS "$@"; }; sedi(){ sed -i.bak "$1" "$2" && rm -f "$2.bak"; }
 s01(){ cd "$WGH/01-create-install" && helm create hello >/dev/null && hn install wg-hello ./hello --set image.tag=1.27-alpine --wait --timeout 90s; }
 s02(){ cd "$WGH/02-set-values" && hn upgrade web ./web --set replicas=2 --wait --timeout 90s; }
 s03(){ cd "$WGH/03-values-file" && printf "environment: prod\ndomain: shop.example.com\nreplicas: 2\n" > values-prod.yaml && hn install shop ./shop -f values-prod.yaml --wait --timeout 90s; }
@@ -19,4 +20,4 @@ s16(){ cd "$WGH/16-reuse-values" && hn upgrade shop ./shop -f values-prod.yaml -
 s17(){ cd "$WGH/17-wrong-namespace" && helm uninstall shop -n wg-helm-staging && hn install shop ./shop --wait --timeout 90s; }
 s18(){ cd "$WGH/18-name-in-use" && hn uninstall shop && hn install shop ./shop --wait --timeout 90s; }
 s19(){ cd "$WGH/19-immutable" && sedi '/^tier:/d' values-prod.yaml && hn upgrade shop ./shop -f values-prod.yaml --wait --timeout 90s; }
-s20(){ cd "$WGH/20-secret-in-values" && kubectl -n wg-helm create secret generic shop-db-ext --from-literal=password=s3cret-hunter2 && sedi '/^  password:/d' shop/values.yaml && hn upgrade shop ./shop --set db.existingSecret=shop-db-ext --wait --timeout 90s; }
+s20(){ cd "$WGH/20-secret-in-values" && kubectl -n $NS create secret generic shop-db-ext --from-literal=password=s3cret-hunter2 && sedi '/^  password:/d' shop/values.yaml && hn upgrade shop ./shop --set db.existingSecret=shop-db-ext --wait --timeout 90s; }

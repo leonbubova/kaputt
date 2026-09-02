@@ -1,1 +1,2 @@
-helm uninstall shop -n wg --no-hooks >/dev/null 2>&1 || true
+NS=${NS:-wg}
+helm uninstall shop -n $NS --no-hooks >/dev/null 2>&1 || true

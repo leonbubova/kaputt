@@ -1,3 +1,4 @@
+NS=${NS:-wg-helm}
 # track: helm on the same k3d cluster as the k8s track; play area = namespace wg-helm
 source "$WG_ROOT/levels/k8s/track.sh"
 track_wipe() {  # before each level

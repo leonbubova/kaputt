@@ -32,5 +32,5 @@ spec:
       containers:
       - name: kubectl
         image: bitnamilegacy/kubectl:1.31
-        command: ["sh","-c","while true; do kubectl get pods -n wg || exit 1; sleep 60; done"]
+        command: ["sh","-c","while true; do kubectl get pods -n $NS || exit 1; sleep 60; done"]
 Y
