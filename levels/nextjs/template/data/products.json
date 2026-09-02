@@ -1,0 +1,5 @@
+[
+  { "slug": "regenwurm", "name": "Regenwurm Classic", "price": 4.5 },
+  { "slug": "kompostwurm", "name": "Kompostwurm Deluxe", "price": 7.9 },
+  { "slug": "tauwurm", "name": "Tauwurm XL", "price": 12.0 }
+]

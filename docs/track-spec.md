@@ -29,4 +29,4 @@ levels/<track>/NN-slug/
 `test/run-all.sh <track> [NN]` — for each level: load → `WG_FAST=1 wg check` must fail → `sNN` → `wg check` must pass. Must end with `ALL GREEN`. Do not edit bin/wg, lib/, or test/ while a run is in progress. Do not touch other tracks. Do not git commit.
 
 ## Reference
-`levels/k8s/` is the finished example (18 levels). Read 01, 05, 11, 16, 18 and `track.sh` before starting.
+`levels/k8s/` is the finished example (25 levels: 01–07 build-it, 08–25 incidents). Read 01, 03, 08, 12, 18, 23, 25 and `track.sh` before starting.

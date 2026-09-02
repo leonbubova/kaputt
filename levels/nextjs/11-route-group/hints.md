@@ -1,0 +1,6 @@
+## 1
+`find src/app -name 'page.tsx'`. Which folder holds the products page — and what's special about its name?
+## 2
+Folders in parentheses, `(name)`, are *route groups*: they organise files but are **omitted from the URL**. `app/(products)/page.tsx` is therefore `/`, not `/products`, and `(products)/[slug]` became `/[slug]`.
+## 3
+`mv 'src/app/(products)' src/app/products` — a real URL segment needs a plain folder name.
