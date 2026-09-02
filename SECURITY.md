@@ -43,6 +43,28 @@ are more privilege than a normal container. Run them on disposable hosts.
 - **Community-contributed levels are executable code.** Review every `break.sh`, `check.sh`, and
   `track.sh` in a pull request before merging — a malicious level runs with your privileges.
 
+## The browser playground: one sandbox per player
+
+Every visitor gets **their own Docker daemon and their own Kubernetes cluster**, so no player can see or
+touch another's containers, namespaces, or ports — and every level's text stays literally true. The
+obvious way to do that (Docker-in-Docker) normally needs `--privileged`, which we refuse. Instead:
+
+- **Sysbox runtime** (`--runtime=sysbox-runc`): the sandbox runs the inner `dockerd` and `k3d` in an
+  *unprivileged* container. Root inside the sandbox is an unprivileged uid on the host (user namespaces),
+  and sensitive syscalls are intercepted. No `--privileged`, no host Docker socket inside.
+- **No internet.** The sandbox is attached to an `--internal` Docker network: no route out. Every image
+  and dependency the tracks need is pre-baked into the sandbox image at build time (`playground/full/`).
+  A compromised or abusive session cannot mine, scan, or exfiltrate.
+- **Hard caps** per sandbox: memory (default 4 GB), CPU (2), pids (4096), a 45-minute lifetime, and a
+  ceiling on concurrent sessions. The sandbox is destroyed on disconnect; nothing persists.
+- **Edge:** ttyd is never exposed directly — a reverse proxy with TLS and rate limiting sits in front.
+- **Fallback isolation:** the host has KVM; if Sysbox ever proves insufficient, the same image can run
+  under a microVM runtime (Kata/Firecracker) for VM-grade boundaries.
+
+What this does **not** protect against: a kernel exploit from inside a user namespace (the shared risk of
+all container sandboxes — keep the host kernel and Sysbox current), and resource contention between
+sessions beyond the caps (watch the host; the caps are ceilings, not guarantees).
+
 ## Not a real issue
 
 - **Fake secrets.** Levels contain strings like `password=s3cret`, `token=abc123`, `hunter2`. These
