@@ -9,7 +9,7 @@ PROMPT_COMMAND=__wg_ps1
 wg(){ command wg "$@"; local rc=$?; case "${1:-}" in level|next|random|speedrun|reset|track) local d; d=$(command wg pwd 2>/dev/null) && [ -n "$d" ] && [ -d "$d" ] && cd "$d";; esac; return $rc; }
 printf '\n\033[38;5;183m  kaputt\033[0m — break it. fix it. understand it.\n'
 printf '  this is a throwaway sandbox: nothing here survives the tab.\n\n'
-printf '  \033[2m$\033[0m wg primer      the ~10 commands you need\n'
+printf '  \033[2m$\033[0m wg help        the ~10 commands you need\n'
 printf '  \033[2m$\033[0m wg level 1     load the first broken level\n'
 printf '  \033[2m$\033[0m wg check       am i done?      \033[2m(stuck? wg hint)\033[0m\n'
 printf '  \033[2m$\033[0m wg track git   also here: git · bash   \033[2m(you start in \033[0mshell\033[2m — the terminal from zero)\033[0m\n\n'

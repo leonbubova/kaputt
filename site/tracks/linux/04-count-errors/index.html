@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>how many 500s did we serve yesterday? — linux level 04 — kaputt</title>
-<meta name="description" content="linux exercise: how many 500s did we serve yesterday?. Fix a real broken linux system in your own terminal — level 04 of 23, with hints and a checker.">
+<title>grep -c counts matching lines; the pattern decides what you count — linux level 04 — kaputt</title>
+<meta name="description" content="linux exercise: grep -c counts matching lines; the pattern decides what you count. Fix a real broken linux system in your own terminal — level 04 of 23, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/linux/04-count-errors/">
-<meta property="og:title" content="how many 500s did we serve yesterday? — linux level 04 — kaputt"><meta property="og:description" content="linux exercise: how many 500s did we serve yesterday?. Fix a real broken linux system in your own terminal — level 04 of 23, with hints and a checker.">
+<meta property="og:title" content="grep -c counts matching lines; the pattern decides what you count — linux level 04 — kaputt"><meta property="og:description" content="linux exercise: grep -c counts matching lines; the pattern decides what you count. Fix a real broken linux system in your own terminal — level 04 of 23, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">linux</a> / level 04</div>
-<h1 class="lvl">how many 500s did we serve yesterday?</h1>
+<h1 class="lvl">grep -c counts matching lines; the pattern decides what you count</h1>
 <p class="meta">linux · level 04 of 23 · <code>count-errors</code></p>
-<div class="brief"><h2>the ticket</h2><p>Ticket: &quot;Management wants a number: how many requests in <code>/var/log/app/access.log</code> got HTTP status <code>500</code>? Write just the number to <code>/answer</code>.&quot; (Status is the field after the quoted request. Only 500 — not 502, not 503.) Goal: <code>/answer</code> contains the count.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: <code>grep PATTERN FILE</code> prints every line containing the pattern. <code>grep -c</code> prints only how many lines matched. Counting things in a log is therefore two steps: understand what a line looks like, then write a pattern that matches exactly the lines you mean and nothing else.</p>
+<p>Log lines have a fixed shape. A status code sits in a known position with known neighbours — a space before, a space after, a quote nearby. Those neighbours belong in the pattern. <code>500</code> alone also matches a response size of 1500 or an IP octet; <code>&quot; 500 </code> with its surroundings does not.</p>
+<p>Look at the data before writing the pattern. <code>head</code> shows the first lines, and a quick <code>grep</code> without <code>-c</code> shows what your pattern really catches.</p>
+<pre>head -3 FILE                 see the shape of a line
+grep &#x27; 500 &#x27; FILE | head     check what the pattern hits
+grep -c &#x27; 500 &#x27; FILE         count matching lines
+grep -c PATTERN FILE &gt; /answer   save the number</pre>
+<p>Try it first: <code>grep -c 500 /var/log/app/access.log</code> vs <code>grep -c &#x27; 500 &#x27; /var/log/app/access.log</code> — the numbers differ.</p>
+<p>Your task: &quot;Management wants a number: how many requests in <code>/var/log/app/access.log</code> got HTTP status <code>500</code>? Write just the number to <code>/answer</code>.&quot; (Status is the field after the quoted request. Only 500 — not 502, not 503.)</p>
+<p>Goal: <code>/answer</code> contains the count.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track linux
@@ -26,7 +36,7 @@ wg level 4
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/linux/04-count-errors">level source on github</a>.</p>
-<div class="pn"><a href="../03-find-the-key/index.html">← where did the vendor installer put license.key?</a><a href="../05-service-account/index.html">service account for the runner →</a></div>
+<div class="pn"><a href="../03-find-the-key/index.html">← find walks a whole tree and filters by name</a><a href="../05-service-account/index.html">users and groups: who a process runs as, and who owns a file →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

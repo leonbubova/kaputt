@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">tls</a> / level 07</div>
 <h1 class="lvl">the CDN wants HTTP/2 but the origin only speaks HTTP/1.1 over TLS</h1>
 <p class="meta">tls · level 07 of 10 · <code>http2</code></p>
-<div class="brief"><h2>the ticket</h2><p>Clients negotiate HTTP/2 via ALPN during the TLS handshake, but this server never offers it, so connections fall back to HTTP/1.1. Enable HTTP/2 on the TLS listener.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Clients negotiate HTTP/2 via ALPN during the TLS handshake, but this server never offers it,</p>
+<p>so connections fall back to HTTP/1.1. Enable HTTP/2 on the TLS listener.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track tls

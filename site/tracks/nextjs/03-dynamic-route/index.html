@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>add /posts/[slug] — nextjs level 03 — kaputt</title>
-<meta name="description" content="nextjs exercise: add /posts/[slug]. Fix a real broken nextjs system in your own terminal — level 03 of 21, with hints and a checker.">
+<title>[slug] folders match any value, and the page reads it from params — nextjs level 03 — kaputt</title>
+<meta name="description" content="nextjs exercise: [slug] folders match any value, and the page reads it from params. Fix a real broken nextjs system in your own terminal — level 03 of 21, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nextjs/03-dynamic-route/">
-<meta property="og:title" content="add /posts/[slug] — nextjs level 03 — kaputt"><meta property="og:description" content="nextjs exercise: add /posts/[slug]. Fix a real broken nextjs system in your own terminal — level 03 of 21, with hints and a checker.">
+<meta property="og:title" content="[slug] folders match any value, and the page reads it from params — nextjs level 03 — kaputt"><meta property="og:description" content="nextjs exercise: [slug] folders match any value, and the page reads it from params. Fix a real broken nextjs system in your own terminal — level 03 of 21, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,18 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nextjs</a> / level 03</div>
-<h1 class="lvl">add /posts/[slug]</h1>
+<h1 class="lvl">[slug] folders match any value, and the page reads it from params</h1>
 <p class="meta">nextjs · level 03 of 21 · <code>dynamic-route</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;We need <code>/posts/&lt;anything&gt;</code> to render a page whose <code>&lt;h1 data-testid=&quot;post-slug&quot;&gt;</code> shows the slug from the URL — e.g. <code>/posts/hello-world</code> shows <code>hello-world</code>. Must pass <code>npm run build</code> on Next 15.&quot; App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: <code>/posts/hello-world</code> and <code>/posts/zweiter</code> render their slug; <code>npm run build</code> passes; no <code>params should be awaited</code> warning in the dev log.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: a folder name in square brackets is a dynamic segment. <code>src/app/posts/[slug]/page.tsx</code> serves <code>/posts/hello-world</code>, <code>/posts/zweiter</code>, <code>/posts/anything</code> — one file, every value. The matched part arrives in the page&#x27;s <code>params</code> prop under the name you put in the brackets.</p>
+<p>The Next 15 detail that trips people: <code>params</code> is a Promise, not a plain object. The page must be an <code>async</code> function and <code>await params</code> before reading fields. Reading <code>params.slug</code> directly still appears to work in <code>next dev</code>, but logs a <code>params should be awaited</code> warning and fails <code>npm run build</code> type-checking — so the build, not the dev server, is the real test.</p>
+<pre>src/app/posts/[slug]/page.tsx     dynamic segment; folder name = key in params
+{ params }: { params: Promise&lt;{ slug: string }&gt; }   the prop type in Next 15
+const { slug } = await params;    inside an async component
+npm run build                     type-checks; next dev does not</pre>
+<p>Try it first: <code>cat &#x27;src/app/products/[slug]/page.tsx&#x27;</code> — an existing dynamic route in this app, already written the Next 15 way. Then <code>curl -s localhost:3100/products/regenwurm | head</code>.</p>
+<p>Your task: we need <code>/posts/&lt;anything&gt;</code> to render a page whose <code>&lt;h1 data-testid=&quot;post-slug&quot;&gt;</code> shows the slug from the URL — e.g. <code>/posts/hello-world</code> shows <code>hello-world</code>. Must pass <code>npm run build</code> on Next 15. App: <code>~/.k8s-wargame/nextjs/app</code>.</p>
+<p>Goal: <code>/posts/hello-world</code> and <code>/posts/zweiter</code> render their slug; <code>npm run build</code> passes; no <code>params should be awaited</code> warning in the dev log.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nextjs
@@ -26,7 +35,7 @@ wg level 3
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nextjs/03-dynamic-route">level source on github</a>.</p>
-<div class="pn"><a href="../02-nested-layout/index.html">← dashboard needs its own sub-navigation</a><a href="../04-api-route/index.html">add GET /api/ping →</a></div>
+<div class="pn"><a href="../02-nested-layout/index.html">← layouts nest: a layout.tsx wraps every page below its folder</a><a href="../04-api-route/index.html">route.ts turns a folder into an API endpoint: one exported function per HTTP method →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

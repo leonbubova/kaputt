@@ -18,7 +18,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">shell</a> / level 06</div>
 <h1 class="lvl">making things — mkdir and touch</h1>
 <p class="meta">shell · level 06 of 14 · <code>making-things</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: two commands create things out of nothing: mkdir NAME     make a new, empty folder touch NAME     make a new, empty file (on an existing file it only updates the &quot;last changed&quot; time) And you already know  echo TEXT &gt; NAME  — a file with text in it. Both print nothing when they work; <code>ls</code> shows the result. Avoid spaces in names — the space would split the name into two arguments. Use <code>-</code> or <code>_</code>: <code>my-notes.txt</code>. (To write more than one line, most machines have an editor: <code>nano FILE</code>. Type, Ctrl+O then Enter saves, Ctrl+X leaves.) Try it: cd ~/.k8s-wargame/shell/sandbox mkdir test touch test/empty.txt ls test Your task: in the sandbox, make a folder <code>project</code> and inside it an empty file <code>notes.txt</code>. Then <code>ls project</code> to admire it. Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: two commands create things out of nothing:</p>
+<pre>mkdir NAME     make a new, empty folder
+touch NAME     make a new, empty file (on an existing file it only updates the &quot;last changed&quot; time)</pre>
+<p>And you already know  echo TEXT &gt; NAME  — a file with text in it. Both print nothing when they work; <code>ls</code> shows the result.</p>
+<p>Avoid spaces in names — the space would split the name into two arguments. Use <code>-</code> or <code>_</code>: <code>my-notes.txt</code>.</p>
+<p>(To write more than one line, most machines have an editor: <code>nano FILE</code>. Type, Ctrl+O then Enter saves, Ctrl+X leaves.)</p>
+<p>Try it:</p>
+<pre>cd ~/.k8s-wargame/shell/sandbox
+mkdir test
+touch test/empty.txt
+ls test</pre>
+<p>Your task: in the sandbox, make a folder <code>project</code> and inside it an empty file <code>notes.txt</code>. Then <code>ls project</code> to admire it.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track shell

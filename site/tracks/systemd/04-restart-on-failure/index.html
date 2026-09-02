@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>api died at 03:00 and stayed dead until someone noticed at 09:00 — systemd level 04 — kaputt</title>
-<meta name="description" content="systemd exercise: api died at 03:00 and stayed dead until someone noticed at 09:00. Fix a real broken systemd system in your own terminal — level 04 of 8, with hints and a checker.">
+<title>Restart= is opt-in: a crashed service stays dead until the unit asks to come back — systemd level 04 — kaputt</title>
+<meta name="description" content="systemd exercise: Restart= is opt-in: a crashed service stays dead until the unit asks to come back. Fix a real broken systemd system in your own terminal — level 04 of 8, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/systemd/04-restart-on-failure/">
-<meta property="og:title" content="api died at 03:00 and stayed dead until someone noticed at 09:00 — systemd level 04 — kaputt"><meta property="og:description" content="systemd exercise: api died at 03:00 and stayed dead until someone noticed at 09:00. Fix a real broken systemd system in your own terminal — level 04 of 8, with hints and a checker.">
+<meta property="og:title" content="Restart= is opt-in: a crashed service stays dead until the unit asks to come back — systemd level 04 — kaputt"><meta property="og:description" content="systemd exercise: Restart= is opt-in: a crashed service stays dead until the unit asks to come back. Fix a real broken systemd system in your own terminal — level 04 of 8, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">systemd</a> / level 04</div>
-<h1 class="lvl">api died at 03:00 and stayed dead until someone noticed at 09:00</h1>
+<h1 class="lvl">Restart= is opt-in: a crashed service stays dead until the unit asks to come back</h1>
 <p class="meta">systemd · level 04 of 8 · <code>restart-on-failure</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>wg-api.service</code> (<code>/opt/wg/api/api.sh</code>) got OOM-killed last night. systemd just left it dead. Make systemd bring it back on its own — quickly, within a few seconds.&quot; Goal: <code>wg-api.service</code> is active, and when its main process is killed (<code>kill -9</code>), systemd restarts it automatically within ~10 s. Don&#x27;t touch the script.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: systemd watches the main process, but watching is not restarting. The default is <code>Restart=no</code>: when the process dies, the unit goes to <code>failed</code> and sits there until a human notices. Supervision has to be declared in the unit.</p>
+<p><code>Restart=on-failure</code> restarts after a non-zero exit or a signal (a crash, an OOM kill). <code>Restart=always</code> also restarts after a clean exit. <code>RestartSec=</code> is the pause before the retry; a second or two is kinder to whatever the service depends on.</p>
+<p>It is a unit-file change like any other: edit <code>[Service]</code>, <code>daemon-reload</code>, then <code>restart</code> so the running instance picks up the new policy. <code>NRestarts</code> counts how often systemd brought it back — proof the policy did it.</p>
+<pre>Restart=on-failure                            restart after crash or non-zero exit
+RestartSec=2                                  wait 2 s before the retry
+systemctl show wg-x -p Restart -p RestartUSec the policy currently in effect
+systemctl show wg-x -p MainPID -p NRestarts   which PID runs, how often it came back</pre>
+<p>Try it first: <code>systemctl show wg-api -p Restart</code> — read what is in effect before changing anything.</p>
+<p>Your task: &quot;<code>wg-api.service</code> (<code>/opt/wg/api/api.sh</code>) got OOM-killed last night. systemd just left it dead. Make systemd bring it back on its own — quickly, within a few seconds.&quot;</p>
+<p>Goal: <code>wg-api.service</code> is active, and when its main process is killed (<code>kill -9</code>), systemd restarts it automatically within ~10 s. Don&#x27;t touch the script.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track systemd
@@ -26,7 +36,7 @@ wg level 4
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/systemd/04-restart-on-failure">level source on github</a>.</p>
-<div class="pn"><a href="../03-enable-on-boot/index.html">← heartbeat is gone after every reboot</a><a href="../05-timer/index.html">tmp cleanup exists but nobody runs it →</a></div>
+<div class="pn"><a href="../03-enable-on-boot/index.html">← start runs it now, enable runs it on boot: the [Install] section</a><a href="../05-timer/index.html">tmp cleanup exists but nobody runs it →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

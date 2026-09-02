@@ -18,7 +18,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nginx</a> / level 07</div>
 <h1 class="lvl">medium uploads fail with 413 Request Entity Too Large</h1>
 <p class="meta">nginx · level 07 of 12 · <code>upload-size</code></p>
-<div class="brief"><h2>the ticket</h2><p>Users report the image uploader rejects anything but very small files. The upload goes through /api/upload to the backend, which accepts bodies up to 1 MB. nginx at the edge is rejecting them first. Raise the edge limit so those uploads get through.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Users report the image uploader rejects anything but very small files.</p>
+<p>The upload goes through /api/upload to the backend, which accepts bodies up to 1 MB.</p>
+<p>nginx at the edge is rejecting them first. Raise the edge limit so those uploads get through.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nginx
@@ -26,7 +28,7 @@ wg level 7
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nginx/07-upload-size">level source on github</a>.</p>
-<div class="pn"><a href="../06-spa-fallback/index.html">← deep links 404: /dashboard works from the menu but not on a page reload</a><a href="../08-config-down/index.html">shop.local is completely down — the browser says connection refused →</a></div>
+<div class="pn"><a href="../06-spa-fallback/index.html">← try_files walks a list of candidates, and the last one is what happens when nothing exists</a><a href="../08-config-down/index.html">shop.local is completely down — the browser says connection refused →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

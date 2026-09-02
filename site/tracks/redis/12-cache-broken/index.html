@@ -18,7 +18,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">redis</a> / level 12</div>
 <h1 class="lvl">the homepage cache is broken two ways: wrong type and no expiry</h1>
 <p class="meta">redis · level 12 of 12 · <code>cache-broken</code></p>
-<div class="brief"><h2>the ticket</h2><p><code>cache:home</code> should be a string holding the rendered page that expires so it stays fresh. Right now it&#x27;s the wrong data type, and even once fixed it must carry a TTL (1..600 s). Store the value <code>&lt;html&gt;home&lt;/html&gt;</code> as a string at <code>cache:home</code> with a TTL in that range.</p></div>
+<div class="brief"><h2>the ticket</h2><p><code>cache:home</code> should be a string holding the rendered page that expires so it stays fresh.</p>
+<p>Right now it&#x27;s the wrong data type, and even once fixed it must carry a TTL (1..600 s).</p>
+<p>Store the value <code>&lt;html&gt;home&lt;/html&gt;</code> as a string at <code>cache:home</code> with a TTL in that range.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track redis

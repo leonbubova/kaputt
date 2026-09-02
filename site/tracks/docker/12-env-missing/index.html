@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">docker</a> / level 12</div>
 <h1 class="lvl">api container dies on boot</h1>
 <p class="meta">docker · level 12 of 22 · <code>env-missing</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>wg-api</code> (image <code>wg-api:1.0</code>, built from <code>~/.k8s-wargame/docker/12-env-missing/</code>) exits right after start. Worked on my laptop.&quot; Goal: <code>wg-api</code> runs from <code>wg-api:1.0</code> and stays up. Don&#x27;t change the app code or the image.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>wg-api</code> (image <code>wg-api:1.0</code>, built from <code>~/.k8s-wargame/docker/12-env-missing/</code>) exits right after start. Worked on my laptop.&quot;</p>
+<p>Goal: <code>wg-api</code> runs from <code>wg-api:1.0</code> and stays up. Don&#x27;t change the app code or the image.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track docker
@@ -26,7 +27,7 @@ wg level 12
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/docker/12-env-missing">level source on github</a>.</p>
-<div class="pn"><a href="../11-bind-mount/index.html">← static site returns 403</a><a href="../13-networks/index.html">app can&#x27;t reach web →</a></div>
+<div class="pn"><a href="../11-bind-mount/index.html">← a bind mount never fails: a missing host path is created empty, silently</a><a href="../13-networks/index.html">app can&#x27;t reach web →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

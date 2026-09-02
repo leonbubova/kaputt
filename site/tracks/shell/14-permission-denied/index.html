@@ -18,7 +18,20 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">shell</a> / level 14</div>
 <h1 class="lvl">&quot;backup.sh doesn&#x27;t work — it says Permission denied&quot;</h1>
 <p class="meta">shell · level 14 of 14 · <code>permission-denied</code></p>
-<div class="brief"><h2>the ticket</h2><p>Your first ticket. A colleague writes: &quot;I put <code>backup.sh</code> into the sandbox. It should copy all the notes from <code>notes/</code> into <code>backup/</code>. When I run <code>./backup.sh</code> I get <code>permission denied</code> and nothing is copied. Can you make it run?&quot; Lesson: this is how the rest of the wargame works — you get a symptom, you find the cause, you fix it. The shell&#x27;s error messages are short but literal; read the exact words, they name the category of the problem: No such file or directory    the path or name is wrong — look with ls and pwd command not found            not in PATH, or a typo — lesson 11 Permission denied            you are not allowed to do that to this file — look at its permissions, lesson 13 Try it: cd ~/.k8s-wargame/shell/sandbox ./backup.sh          reproduce the problem — read the message word by word cat backup.sh        the script is fine; do not rewrite it Your task: make <code>./backup.sh</code> run successfully so that <code>backup/</code> contains the copies of the three notes. Check yourself:  wg check      stuck?  wg hint Done? That was track zero. Next stop:  wg track linux  (a real machine to fix)  or  wg track bash  (write your own scripts).</p></div>
+<div class="brief"><h2>the ticket</h2><p>Your first ticket. A colleague writes: &quot;I put <code>backup.sh</code> into the sandbox. It should copy all the notes from</p>
+<p><code>notes/</code> into <code>backup/</code>. When I run <code>./backup.sh</code> I get <code>permission denied</code> and nothing is copied. Can you make it run?&quot;</p>
+<p>Lesson: this is how the rest of the wargame works — you get a symptom, you find the cause, you fix it. The</p>
+<p>shell&#x27;s error messages are short but literal; read the exact words, they name the category of the problem:</p>
+<pre>No such file or directory    the path or name is wrong — look with ls and pwd
+command not found            not in PATH, or a typo — lesson 11
+Permission denied            you are not allowed to do that to this file — look at its permissions, lesson 13</pre>
+<p>Try it:</p>
+<pre>cd ~/.k8s-wargame/shell/sandbox
+./backup.sh          reproduce the problem — read the message word by word
+cat backup.sh        the script is fine; do not rewrite it</pre>
+<p>Your task: make <code>./backup.sh</code> run successfully so that <code>backup/</code> contains the copies of the three notes.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p>
+<p>Done? That was track zero. Next stop:  wg track linux  (a real machine to fix)  or  wg track bash  (write your own scripts).</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track shell

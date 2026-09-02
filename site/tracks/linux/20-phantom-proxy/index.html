@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">linux</a> / level 20</div>
 <h1 class="lvl">curl fails in every login shell: &quot;Could not resolve proxy: proxy.old.corp&quot;</h1>
 <p class="meta">linux · level 20 of 23 · <code>phantom-proxy</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;The old corporate proxy was decommissioned. On this box every <code>curl</code> in a login shell still tries to use it — even for <code>127.0.0.1</code>. Nobody knows where it is configured.&quot; Goal: <code>bash -lc &#x27;curl -s http://127.0.0.1:9300/&#x27;</code> prints <code>local ok</code>, no <code>http_proxy</code> in login shells, and <code>/answer</code> contains the full path of the file that set it.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;The old corporate proxy was decommissioned. On this box every <code>curl</code> in a login shell still tries to use it — even for <code>127.0.0.1</code>. Nobody knows where it is configured.&quot;</p>
+<p>Goal: <code>bash -lc &#x27;curl -s http://127.0.0.1:9300/&#x27;</code> prints <code>local ok</code>, no <code>http_proxy</code> in login shells, and <code>/answer</code> contains the full path of the file that set it.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track linux

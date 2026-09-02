@@ -18,7 +18,17 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">shell</a> / level 09</div>
 <h1 class="lvl">redirection — &gt; and &gt;&gt;</h1>
 <p class="meta">shell · level 09 of 14 · <code>redirection</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: normally a command prints to the screen. <code>&gt;</code> redirects that output into a file — you have used it since lesson 1. Now the detail that bites: command &gt; FILE      REPLACES the file. Whatever was in it before is gone, silently. command &gt;&gt; FILE     APPENDS to the end. The old content stays, the new output goes below it. Any command works: <code>ls &gt; list.txt</code>, <code>date &gt;&gt; log.txt</code>, <code>echo done &gt;&gt; log.txt</code>. Try it: cd ~/.k8s-wargame/shell/sandbox cat diary.txt Your task: add the line  day three: learned redirection  to the END of <code>diary.txt</code>. Days one and two must still be there afterwards. (Lost them? <code>wg reset</code> gives you a fresh diary.) Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: normally a command prints to the screen. <code>&gt;</code> redirects that output into a file — you have used it since</p>
+<p>lesson 1. Now the detail that bites:</p>
+<pre>command &gt; FILE      REPLACES the file. Whatever was in it before is gone, silently.
+command &gt;&gt; FILE     APPENDS to the end. The old content stays, the new output goes below it.</pre>
+<p>Any command works: <code>ls &gt; list.txt</code>, <code>date &gt;&gt; log.txt</code>, <code>echo done &gt;&gt; log.txt</code>.</p>
+<p>Try it:</p>
+<pre>cd ~/.k8s-wargame/shell/sandbox
+cat diary.txt</pre>
+<p>Your task: add the line  day three: learned redirection  to the END of <code>diary.txt</code>. Days one and two must still</p>
+<p>be there afterwards. (Lost them? <code>wg reset</code> gives you a fresh diary.)</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track shell

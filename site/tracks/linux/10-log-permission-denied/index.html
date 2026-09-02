@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>app can&#x27;t write its log — linux level 10 — kaputt</title>
-<meta name="description" content="linux exercise: app can&#x27;t write its log. Fix a real broken linux system in your own terminal — level 10 of 23, with hints and a checker.">
+<title>creating a file needs write permission on the directory, not the file — linux level 10 — kaputt</title>
+<meta name="description" content="linux exercise: creating a file needs write permission on the directory, not the file. Fix a real broken linux system in your own terminal — level 10 of 23, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/linux/10-log-permission-denied/">
-<meta property="og:title" content="app can&#x27;t write its log — linux level 10 — kaputt"><meta property="og:description" content="linux exercise: app can&#x27;t write its log. Fix a real broken linux system in your own terminal — level 10 of 23, with hints and a checker.">
+<meta property="og:title" content="creating a file needs write permission on the directory, not the file — linux level 10 — kaputt"><meta property="og:description" content="linux exercise: creating a file needs write permission on the directory, not the file. Fix a real broken linux system in your own terminal — level 10 of 23, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">linux</a> / level 10</div>
-<h1 class="lvl">app can&#x27;t write its log</h1>
+<h1 class="lvl">creating a file needs write permission on the directory, not the file</h1>
 <p class="meta">linux · level 10 of 23 · <code>log-permission-denied</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>/opt/app/run.sh</code> is started as user <code>app</code> and fails with <code>Permission denied</code> on the log. Worked yesterday, then ops &#x27;cleaned up /var/log&#x27;.&quot; Goal: <code>su - app -c /opt/app/run.sh</code> prints <code>run ok</code> and <code>/var/log/app/app.log</code> gets the entry. Log must stay in <code>/var/log/app/</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: a directory is a list of names. Adding a name to that list — creating a new file — is a write to the directory. So whether <code>app</code> may create <code>/var/log/app/app.log</code> depends on the mode and owner of <code>/var/log/app</code>, not on the file, which does not even exist yet.</p>
+<p><code>755 root:root</code> on a directory means: root may add files, everyone else may only list and enter it. A service that wants to write a fresh log there gets &quot;Permission denied&quot; on the path, and the error looks like it is about the file.</p>
+<p><code>ls -l DIR</code> lists what is *inside*; <code>ls -ld DIR</code> shows the directory entry itself — that is the line you need. Fix by giving the directory to the user (<code>chown</code>) or opening the group (<code>chgrp</code> + <code>chmod 775</code>).</p>
+<pre>su - app -c CMD           reproduce as the affected user
+ls -ld /var/log/app       owner and mode of the directory itself
+chown app:app DIR         hand the directory to the user
+chown -R app:app DIR      same, including everything inside</pre>
+<p>Try it first: <code>ls -ld /tmp /var/log</code> — compare the modes; one is meant for everyone.</p>
+<p>Your task: &quot;<code>/opt/app/run.sh</code> is started as user <code>app</code> and fails with <code>Permission denied</code> on the log. Worked yesterday, then ops &#x27;cleaned up /var/log&#x27;.&quot;</p>
+<p>Goal: <code>su - app -c /opt/app/run.sh</code> prints <code>run ok</code> and <code>/var/log/app/app.log</code> gets the entry. Log must stay in <code>/var/log/app/</code>.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track linux
@@ -26,7 +36,7 @@ wg level 10
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/linux/10-log-permission-denied">level source on github</a>.</p>
-<div class="pn"><a href="../09-secret-too-open/index.html">← app refuses to start: &quot;key file permissions too open&quot;</a><a href="../11-bad-interpreter/index.html">report tool: &quot;bad interpreter: No such file or directory&quot; →</a></div>
+<div class="pn"><a href="../09-secret-too-open/index.html">← secrets are owner-only: programs check a key file&#x27;s mode and refuse it</a><a href="../11-bad-interpreter/index.html">the shebang is a literal path: invisible bytes make it a different file →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

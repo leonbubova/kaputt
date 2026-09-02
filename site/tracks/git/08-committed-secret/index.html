@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a secret ended up in the last commit — git level 08 — kaputt</title>
-<meta name="description" content="git exercise: a secret ended up in the last commit. Fix a real broken git system in your own terminal — level 08 of 22, with hints and a checker.">
+<title>tracked is separate from on-disk: git rm --cached untracks a file without deleting it — git level 08 — kaputt</title>
+<meta name="description" content="git exercise: tracked is separate from on-disk: git rm --cached untracks a file without deleting it. Fix a real broken git system in your own terminal — level 08 of 22, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/git/08-committed-secret/">
-<meta property="og:title" content="a secret ended up in the last commit — git level 08 — kaputt"><meta property="og:description" content="git exercise: a secret ended up in the last commit. Fix a real broken git system in your own terminal — level 08 of 22, with hints and a checker.">
+<meta property="og:title" content="tracked is separate from on-disk: git rm --cached untracks a file without deleting it — git level 08 — kaputt"><meta property="og:description" content="git exercise: tracked is separate from on-disk: git rm --cached untracks a file without deleting it. Fix a real broken git system in your own terminal — level 08 of 22, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">git</a> / level 08</div>
-<h1 class="lvl">a secret ended up in the last commit</h1>
+<h1 class="lvl">tracked is separate from on-disk: git rm --cached untracks a file without deleting it</h1>
 <p class="meta">git · level 08 of 22 · <code>committed-secret</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>.env</code> with the Stripe key was committed together with <code>config.py</code>. Nothing pushed yet.&quot; Repo: <code>~/.k8s-wargame/git/repo</code>. Goal: no commit in <code>main</code>&#x27;s history contains <code>.env</code>; <code>config.py</code> stays committed; the <code>.env</code> file stays on disk (untracked) — the dev still needs it locally. Still 2 commits.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: git has two ideas of a file: the copy on disk, and the staged entry saying &quot;this belongs to the project&quot;. Commits snapshot the entries. <code>git rm</code> removes both. <code>git rm --cached</code> removes only the entry — the file stays on disk, the next commit will not contain it, <code>git status</code> shows it as untracked.</p>
+<p>That is the tool for &quot;this should never have been committed&quot;: secrets, local settings, build output. Combine it with the previous level: amend takes whatever is staged, including a removal. A file that only ever lived in the tip commit vanishes from history.</p>
+<p>If a secret was already pushed, rewriting is not enough: rotate the key.</p>
+<pre>git show --stat HEAD           which files the tip commit contains
+git rm --cached &lt;file&gt;         untrack; keep the file on disk
+git commit --amend --no-edit   fold the staged change into the tip commit
+git log --oneline -- &lt;file&gt;    every commit that touched this file</pre>
+<p>Try it first: <code>git ls-files</code> lists the tracked files; compare with <code>ls -a</code>.</p>
+<p>Your task: &quot;<code>.env</code> with the Stripe key was committed together with <code>config.py</code>. Nothing pushed yet.&quot; Repo: <code>~/.k8s-wargame/git/repo</code>.</p>
+<p>Goal: no commit in <code>main</code>&#x27;s history contains <code>.env</code>; <code>config.py</code> stays committed; the <code>.env</code> file stays on disk (untracked) — the dev still needs it locally. Still 2 commits.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track git
@@ -26,7 +36,7 @@ wg level 8
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/git/08-committed-secret">level source on github</a>.</p>
-<div class="pn"><a href="../07-wrong-message/index.html">← last commit has a garbage message</a><a href="../09-wrong-branch/index.html">committed to main by accident →</a></div>
+<div class="pn"><a href="../07-wrong-message/index.html">← commits are immutable; &quot;editing&quot; the last one means replacing it with --amend</a><a href="../09-wrong-branch/index.html">git reset moves a branch pointer; a commit survives as long as some name points at it →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

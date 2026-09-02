@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>the site serves plain HTTP only — HTTPS on 443 is dead — tls level 01 — kaputt</title>
-<meta name="description" content="tls exercise: the site serves plain HTTP only — HTTPS on 443 is dead. Fix a real broken tls system in your own terminal — level 01 of 10, with hints and a checker.">
+<title>HTTPS is HTTP behind a second listener that presents a certificate — tls level 01 — kaputt</title>
+<meta name="description" content="tls exercise: HTTPS is HTTP behind a second listener that presents a certificate. Fix a real broken tls system in your own terminal — level 01 of 10, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/tls/01-enable-https/">
-<meta property="og:title" content="the site serves plain HTTP only — HTTPS on 443 is dead — tls level 01 — kaputt"><meta property="og:description" content="tls exercise: the site serves plain HTTP only — HTTPS on 443 is dead. Fix a real broken tls system in your own terminal — level 01 of 10, with hints and a checker.">
+<meta property="og:title" content="HTTPS is HTTP behind a second listener that presents a certificate — tls level 01 — kaputt"><meta property="og:description" content="tls exercise: HTTPS is HTTP behind a second listener that presents a certificate. Fix a real broken tls system in your own terminal — level 01 of 10, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">tls</a> / level 01</div>
-<h1 class="lvl">the site serves plain HTTP only — HTTPS on 443 is dead</h1>
+<h1 class="lvl">HTTPS is HTTP behind a second listener that presents a certificate</h1>
 <p class="meta">tls · level 01 of 10 · <code>enable-https</code></p>
-<div class="brief"><h2>the ticket</h2><p>shop.local answers on port 80 but nothing listens on 443. The server certificate and key are already on disk under /etc/nginx/certs (fullchain.crt + server.key). Add a TLS server block on 443 that uses them and returns &quot;tls ok&quot;.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: HTTPS is not a different protocol. It is plain HTTP wrapped in TLS, served by its own listener on port 443. nginx does nothing on 443 until a server block says <code>listen 443 ssl;</code> — a config with only a port-80 server has nothing to connect to there.</p>
+<p>A TLS listener must present a certificate to every client and hold that certificate&#x27;s private key to prove it owns it. So the minimal TLS server block is three lines: the listen, the cert, the key. Paths are as nginx sees them inside the container (/etc/nginx/certs), not on your disk.</p>
+<p>Cert and key changes need a restart, not just a reload — nginx loads them at startup.</p>
+<pre>listen 443 ssl;                                        the TLS listener
+ssl_certificate     /etc/nginx/certs/fullchain.crt;    what the server shows the client
+ssl_certificate_key /etc/nginx/certs/server.key;       the private half that proves it
+curl -k https://127.0.0.1:9443/                        does TLS answer? -k = skip cert checks
+docker restart wg-tls; docker logs wg-tls              apply; if it dies, the reason is here</pre>
+<p>Try it first: <code>curl http://127.0.0.1:9080/</code> works, <code>curl -k https://127.0.0.1:9443/</code> is refused — same nginx, one listener missing.</p>
+<p>Your task: shop.local answers on port 80 but nothing listens on 443. The server certificate and key are already on disk under /etc/nginx/certs (fullchain.crt + server.key). Add a TLS server block on 443 that uses them and returns &quot;tls ok&quot;.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track tls
@@ -26,7 +36,7 @@ wg level 1
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/tls/01-enable-https">level source on github</a>.</p>
-<div class="pn"><span></span><a href="../02-http-redirect/index.html">plain HTTP isn&#x27;t redirected to HTTPS →</a></div>
+<div class="pn"><span></span><a href="../02-http-redirect/index.html">port 80 should not serve content: it answers with a 301 to the https URL →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

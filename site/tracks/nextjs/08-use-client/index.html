@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>dashboard is a 500 — nextjs level 08 — kaputt</title>
-<meta name="description" content="nextjs exercise: dashboard is a 500. Fix a real broken nextjs system in your own terminal — level 08 of 21, with hints and a checker.">
+<title>a render crash on the server usually means browser code lost its &quot;use client&quot; boundary — nextjs level 08 — kaputt</title>
+<meta name="description" content="nextjs exercise: a render crash on the server usually means browser code lost its &quot;use client&quot; boundary. Fix a real broken nextjs system in your own terminal — level 08 of 21, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nextjs/08-use-client/">
-<meta property="og:title" content="dashboard is a 500 — nextjs level 08 — kaputt"><meta property="og:description" content="nextjs exercise: dashboard is a 500. Fix a real broken nextjs system in your own terminal — level 08 of 21, with hints and a checker.">
+<meta property="og:title" content="a render crash on the server usually means browser code lost its &quot;use client&quot; boundary — nextjs level 08 — kaputt"><meta property="og:description" content="nextjs exercise: a render crash on the server usually means browser code lost its &quot;use client&quot; boundary. Fix a real broken nextjs system in your own terminal — level 08 of 21, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nextjs</a> / level 08</div>
-<h1 class="lvl">dashboard is a 500</h1>
+<h1 class="lvl">a render crash on the server usually means browser code lost its &quot;use client&quot; boundary</h1>
 <p class="meta">nextjs · level 08 of 21 · <code>use-client</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>/dashboard</code> shows the red Next.js error overlay since the counter widget was &#x27;cleaned up&#x27;. Every other page works.&quot; App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: <code>GET /dashboard</code> renders 200 with the counter widget (<code>data-testid=&quot;counter&quot;</code>) still interactive.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: the red overlay is not a build error, it is a runtime crash while rendering a request. In the App Router the most common one is a component that reaches for the browser — <code>useState</code>, <code>useEffect</code>, an <code>onClick</code> — while being executed as a Server Component. The server has no state or events, so React throws, and every page that renders that component goes down with it.</p>
+<p>The rule &quot;server by default&quot; has a consequence: the <code>&quot;use client&quot;</code> directive is what makes a file a Client Component, and nothing else. Remove that one line and the file&#x27;s code is unchanged but its meaning flips.</p>
+<p>The error message is specific: it names the hook, the component and the file. Read it from the dev-server terminal (or the overlay) instead of guessing.</p>
+<pre>curl -s localhost:3100/dashboard | head       500 plus the error text
+grep -rn &#x27;useState\|useEffect\|onClick&#x27; src/components    files that need the client boundary
+head -1 src/components/*.tsx                  which of them declare it
+&quot;use client&quot;;                                  must be the very first line, above imports</pre>
+<p>Try it first: <code>head -3 src/components/AddForm.tsx</code> — a component that has the directive, and what it needs it for.</p>
+<p>Your task: <code>/dashboard</code> shows the red Next.js error overlay since the counter widget was &#x27;cleaned up&#x27;. Every other page works. App: <code>~/.k8s-wargame/nextjs/app</code>.</p>
+<p>Goal: <code>GET /dashboard</code> renders 200 with the counter widget (<code>data-testid=&quot;counter&quot;</code>) still interactive.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nextjs
@@ -26,7 +36,7 @@ wg level 8
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nextjs/08-use-client">level source on github</a>.</p>
-<div class="pn"><a href="../07-api-405/index.html">← health endpoint answers 405</a><a href="../09-metadata/index.html">browser tab shows no title →</a></div>
+<div class="pn"><a href="../07-api-405/index.html">← a Route Handler is found by export name; 405 means the name matched nothing</a><a href="../09-metadata/index.html">&lt;head&gt; is generated from a metadata export with an exact, conventional name →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

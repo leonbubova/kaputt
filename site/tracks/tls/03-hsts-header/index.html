@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>security audit: HSTS header is missing on HTTPS responses — tls level 03 — kaputt</title>
-<meta name="description" content="tls exercise: security audit: HSTS header is missing on HTTPS responses. Fix a real broken tls system in your own terminal — level 03 of 10, with hints and a checker.">
+<title>HSTS is a response header that makes the browser refuse plain HTTP — tls level 03 — kaputt</title>
+<meta name="description" content="tls exercise: HSTS is a response header that makes the browser refuse plain HTTP. Fix a real broken tls system in your own terminal — level 03 of 10, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/tls/03-hsts-header/">
-<meta property="og:title" content="security audit: HSTS header is missing on HTTPS responses — tls level 03 — kaputt"><meta property="og:description" content="tls exercise: security audit: HSTS header is missing on HTTPS responses. Fix a real broken tls system in your own terminal — level 03 of 10, with hints and a checker.">
+<meta property="og:title" content="HSTS is a response header that makes the browser refuse plain HTTP — tls level 03 — kaputt"><meta property="og:description" content="tls exercise: HSTS is a response header that makes the browser refuse plain HTTP. Fix a real broken tls system in your own terminal — level 03 of 10, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,17 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">tls</a> / level 03</div>
-<h1 class="lvl">security audit: HSTS header is missing on HTTPS responses</h1>
+<h1 class="lvl">HSTS is a response header that makes the browser refuse plain HTTP</h1>
 <p class="meta">tls · level 03 of 10 · <code>hsts-header</code></p>
-<div class="brief"><h2>the ticket</h2><p>Responses over HTTPS must carry a <code>Strict-Transport-Security</code> header so browsers pin HTTPS. Add it to the TLS server.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: the redirect from the last level still has a gap: the very first request goes out in cleartext before the 301 arrives, and an attacker on that path can intercept it. HSTS (HTTP Strict Transport Security) closes the gap. The HTTPS server sends one header, <code>Strict-Transport-Security: max-age=N</code>, and the browser remembers for N seconds to rewrite every http:// URL for this host to https:// before sending anything.</p>
+<p>It is only meaningful over HTTPS — browsers ignore the header on plain HTTP — so it belongs in the TLS server block, not the port-80 one.</p>
+<p>nginx adds headers with <code>add_header</code>. By default that only applies to 2xx and 3xx responses; the <code>always</code> flag adds it to error responses too, which is what a security audit expects.</p>
+<pre>add_header Strict-Transport-Security &quot;max-age=31536000&quot; always;   one year, on every response
+curl -skI https://127.0.0.1:9443/                                  response headers only
+docker exec wg-tls nginx -s reload                                 apply a header change</pre>
+<p>Try it first: <code>curl -skI https://127.0.0.1:9443/</code> — list the headers; note which security-related ones are there and which are not.</p>
+<p>Your task: responses over HTTPS must carry a <code>Strict-Transport-Security</code> header so browsers pin HTTPS. Add it to the TLS server.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track tls
@@ -26,7 +34,7 @@ wg level 3
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/tls/03-hsts-header">level source on github</a>.</p>
-<div class="pn"><a href="../02-http-redirect/index.html">← plain HTTP isn&#x27;t redirected to HTTPS</a><a href="../04-cert-key-mismatch/index.html">after a cert rotation nginx won&#x27;t start — key does not match the certificate →</a></div>
+<div class="pn"><a href="../02-http-redirect/index.html">← port 80 should not serve content: it answers with a 301 to the https URL</a><a href="../04-cert-key-mismatch/index.html">a certificate and its private key are a pair — nginx refuses to start with a mismatch →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

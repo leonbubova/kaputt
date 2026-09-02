@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">redis</a> / level 09</div>
 <h1 class="lvl">the catalog cache misses — the data is under the wrong key name</h1>
 <p class="meta">redis · level 09 of 12 · <code>rename-key</code></p>
-<div class="brief"><h2>the ticket</h2><p>A deploy wrote the product catalog to <code>catalog:v1</code>, but the app reads it from <code>catalog</code>. The value is correct; the key name is wrong. Make the data available under <code>catalog</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>A deploy wrote the product catalog to <code>catalog:v1</code>, but the app reads it from <code>catalog</code>.</p>
+<p>The value is correct; the key name is wrong. Make the data available under <code>catalog</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track redis

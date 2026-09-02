@@ -4,66 +4,79 @@
    "track": "bash",
    "blurb": "Shell scripting gotchas",
    "count": 12,
+   "learn": 6,
    "levels": [
     {
      "n": "01",
      "slug": "first-script",
-     "title": "we need a tiny greeter script for the onboarding docs"
+     "title": "a script is commands in a file, and $1 is its first argument",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "exit-code",
-     "title": "CI needs a script whose exit code says even or odd"
+     "title": "every command answers with an exit code, and if/else branches on it",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "sum-args",
-     "title": "add up a variable list of numbers"
+     "title": "\"$@\" is all the arguments, and for loops over them",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "count-lines",
-     "title": "how many lines in this export?"
+     "title": "scripts glue tools together: $( ) captures a command's output",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "default-arg",
-     "title": "greeter should not print 'hello, ' when called with no name"
+     "title": "${1:-fallback}: give a variable a default",
+     "learn": true
     },
     {
      "n": "06",
      "slug": "quote-the-argument",
-     "title": "'cat: my: No such file or directory' \u2014 but the file is right there"
+     "title": "quote your variables: unquoted $1 splits on spaces",
+     "learn": true
     },
     {
      "n": "07",
      "slug": "numeric-compare",
-     "title": "'max' picks 9 over 100"
+     "title": "'max' picks 9 over 100",
+     "learn": false
     },
     {
      "n": "08",
      "slug": "off-by-one",
-     "title": "the countdown never reaches 1"
+     "title": "the countdown never reaches 1",
+     "learn": false
     },
     {
      "n": "09",
      "slug": "subshell-counter",
-     "title": "the error counter always reports 0"
+     "title": "the error counter always reports 0",
+     "learn": false
     },
     {
      "n": "10",
      "slug": "pipefail",
-     "title": "script says success even when the file is missing"
+     "title": "script says success even when the file is missing",
+     "learn": false
     },
     {
      "n": "11",
      "slug": "typo-variable",
-     "title": "the report prints 'total: ' with no number"
+     "title": "the report prints 'total: ' with no number",
+     "learn": false
     },
     {
      "n": "12",
      "slug": "range-check",
-     "title": "range check rejects the boundaries and mis-sorts big numbers"
+     "title": "range check rejects the boundaries and mis-sorts big numbers",
+     "learn": false
     }
    ]
   },
@@ -71,116 +84,139 @@
    "track": "docker",
    "blurb": "Containers, images, compose",
    "count": 22,
+   "learn": 11,
    "levels": [
     {
      "n": "01",
      "slug": "run-nginx",
-     "title": "we need a web server, now"
+     "title": "an image is a template, a container is a running copy: docker run starts one",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "env-var",
-     "title": "configure the app through the environment"
+     "title": "a container lives as long as its main process; -e puts config in its environment",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "build-image",
-     "title": "package the landing page as an image"
+     "title": "a Dockerfile builds your own image: FROM a base, COPY your files in",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "bind-mount",
-     "title": "live-edit the page without rebuilding"
+     "title": "a bind mount shares a host directory with the container, live",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "named-volume",
-     "title": "keep the notes when the container is replaced"
+     "title": "a named volume keeps data alive after the container is gone",
+     "learn": true
     },
     {
      "n": "06",
      "slug": "user-network",
-     "title": "two containers must talk by name"
+     "title": "on a user-defined network, containers reach each other by name",
+     "learn": true
     },
     {
      "n": "07",
      "slug": "compose",
-     "title": "one command to start the whole stack"
+     "title": "compose describes a whole stack in one file and starts it with one command",
+     "learn": true
     },
     {
      "n": "08",
      "slug": "exits-immediately",
-     "title": "the worker container is gone right after start"
+     "title": "a container that vanished ran its command and finished: exit code and logs tell you why",
+     "learn": true
     },
     {
      "n": "09",
      "slug": "wrong-port",
-     "title": "website on :18009 resets the connection"
+     "title": "a port mapping is a blind forward: the container side must be where the process listens",
+     "learn": true
     },
     {
      "n": "10",
      "slug": "image-tag",
-     "title": "compose up fails for the cache service"
+     "title": "an image name is repo:tag, and a tag that is not in the registry cannot be pulled",
+     "learn": true
     },
     {
      "n": "11",
      "slug": "bind-mount",
-     "title": "static site returns 403"
+     "title": "a bind mount never fails: a missing host path is created empty, silently",
+     "learn": true
     },
     {
      "n": "12",
      "slug": "env-missing",
-     "title": "api container dies on boot"
+     "title": "api container dies on boot",
+     "learn": false
     },
     {
      "n": "13",
      "slug": "networks",
-     "title": "app can't reach web"
+     "title": "app can't reach web",
+     "learn": false
     },
     {
      "n": "14",
      "slug": "volume-lost",
-     "title": "cache loses everything on redeploy"
+     "title": "cache loses everything on redeploy",
+     "learn": false
     },
     {
      "n": "15",
      "slug": "build-fails",
-     "title": "CI can't build the tool image"
+     "title": "CI can't build the tool image",
+     "learn": false
     },
     {
      "n": "16",
      "slug": "image-bloat",
-     "title": "tiny shell app ships as a 70 MB image"
+     "title": "tiny shell app ships as a 70 MB image",
+     "learn": false
     },
     {
      "n": "17",
      "slug": "healthcheck",
-     "title": "app never starts, waits for the database forever"
+     "title": "app never starts, waits for the database forever",
+     "learn": false
     },
     {
      "n": "18",
      "slug": "restart-policy",
-     "title": "worker stays dead after a crash"
+     "title": "worker stays dead after a crash",
+     "learn": false
     },
     {
      "n": "19",
      "slug": "runs-as-root",
-     "title": "security audit: api runs as root"
+     "title": "security audit: api runs as root",
+     "learn": false
     },
     {
      "n": "20",
      "slug": "find-request",
-     "title": "customer complains about a failed checkout"
+     "title": "customer complains about a failed checkout",
+     "learn": false
     },
     {
      "n": "21",
      "slug": "cleanup",
-     "title": "build host is out of disk"
+     "title": "build host is out of disk",
+     "learn": false
     },
     {
      "n": "22",
      "slug": "oom",
-     "title": "nightly report job dies halfway"
+     "title": "nightly report job dies halfway",
+     "learn": false
     }
    ]
   },
@@ -188,116 +224,139 @@
    "track": "git",
    "blurb": "Version control, recovery, history surgery",
    "count": 22,
+   "learn": 11,
    "levels": [
     {
      "n": "01",
      "slug": "init-first-commit",
-     "title": "new project, not under version control yet"
+     "title": "a repo is a folder with a .git inside, and a commit is a snapshot of staged files",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "stage-one-file",
-     "title": "commit the bugfix, not the half-written notes"
+     "title": "the staging area lets you commit some changes and leave others behind",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "branch-and-switch",
-     "title": "work on a branch, leave main alone"
+     "title": "a branch is a movable name for a commit, so you can work without touching main",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "fast-forward",
-     "title": "bring the finished branch into main"
+     "title": "merging a branch that is directly ahead just moves the pointer: fast-forward",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "add-gitignore",
-     "title": "git status is cluttered with log files"
+     "title": ".gitignore hides untracked files from git \u2014 and is itself a committed file",
+     "learn": true
     },
     {
      "n": "06",
      "slug": "add-remote-push",
-     "title": "publish the repo to the team's server"
+     "title": "a remote is a named address of another repo; push copies your commits there",
+     "learn": true
     },
     {
      "n": "07",
      "slug": "wrong-message",
-     "title": "last commit has a garbage message"
+     "title": "commits are immutable; \"editing\" the last one means replacing it with --amend",
+     "learn": true
     },
     {
      "n": "08",
      "slug": "committed-secret",
-     "title": "a secret ended up in the last commit"
+     "title": "tracked is separate from on-disk: git rm --cached untracks a file without deleting it",
+     "learn": true
     },
     {
      "n": "09",
      "slug": "wrong-branch",
-     "title": "committed to main by accident"
+     "title": "git reset moves a branch pointer; a commit survives as long as some name points at it",
+     "learn": true
     },
     {
      "n": "10",
      "slug": "detached-head",
-     "title": "\"You are in 'detached HEAD' state\" \u2014 and there's a commit on it"
+     "title": "HEAD normally points at a branch; when it points straight at a commit, it is detached",
+     "learn": true
     },
     {
      "n": "11",
      "slug": "merge-conflict",
-     "title": "merge stopped with CONFLICT in config.yaml"
+     "title": "a conflict is git refusing to guess: you write the final lines, add, then commit",
+     "learn": true
     },
     {
      "n": "12",
      "slug": "reset-hard",
-     "title": "two commits vanished after a reset --hard"
+     "title": "two commits vanished after a reset --hard",
+     "learn": false
     },
     {
      "n": "13",
      "slug": "rebase-feature",
-     "title": "feature branch is behind main \u2014 maintainer wants linear history"
+     "title": "feature branch is behind main \u2014 maintainer wants linear history",
+     "learn": false
     },
     {
      "n": "14",
      "slug": "squash-wip",
-     "title": "three \"wip\" commits need to become one before review"
+     "title": "three \"wip\" commits need to become one before review",
+     "learn": false
     },
     {
      "n": "15",
      "slug": "cherry-pick",
-     "title": "the parser fix is only on the release branch"
+     "title": "the parser fix is only on the release branch",
+     "learn": false
     },
     {
      "n": "16",
      "slug": "lost-stash",
-     "title": "stash dropped, hours of writing gone"
+     "title": "stash dropped, hours of writing gone",
+     "learn": false
     },
     {
      "n": "17",
      "slug": "remote-url",
-     "title": "push fails: \"does not appear to be a git repository\""
+     "title": "push fails: \"does not appear to be a git repository\"",
+     "learn": false
     },
     {
      "n": "18",
      "slug": "diverged",
-     "title": "push rejected: \"Updates were rejected because the tip of your current branch is behind\""
+     "title": "push rejected: \"Updates were rejected because the tip of your current branch is behind\"",
+     "learn": false
     },
     {
      "n": "19",
      "slug": "bisect",
-     "title": "./test.sh fails on main, passed two weeks ago"
+     "title": "./test.sh fails on main, passed two weeks ago",
+     "learn": false
     },
     {
      "n": "20",
      "slug": "gitignore-tracked",
-     "title": ".gitignore says build/ but build/out.log keeps showing up in diffs"
+     "title": ".gitignore says build/ but build/out.log keeps showing up in diffs",
+     "learn": false
     },
     {
      "n": "21",
      "slug": "deleted-branch",
-     "title": "branch deleted with -D, never merged"
+     "title": "branch deleted with -D, never merged",
+     "learn": false
     },
     {
      "n": "22",
      "slug": "blame",
-     "title": "who turned off the retries?"
+     "title": "who turned off the retries?",
+     "learn": false
     }
    ]
   },
@@ -305,106 +364,127 @@
    "track": "helm",
    "blurb": "Package and release with Helm",
    "count": 20,
+   "learn": 10,
    "levels": [
     {
      "n": "01",
      "slug": "create-install",
-     "title": "first chart"
+     "title": "a chart is a folder of templates plus values; install turns it into a release",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "set-values",
-     "title": "scale it \u2014 the helm way"
+     "title": "helm owns the release: change it with upgrade, not kubectl",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "values-file",
-     "title": "prod config in a file"
+     "title": "a values file overrides only the keys it contains; render before you install",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "configmap-template",
-     "title": "the chart is missing a ConfigMap"
+     "title": "every file in templates/ becomes an object; .Release and .Values fill the holes",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "upgrade-uninstall",
-     "title": "ship 0.2.0, clean up the old one"
+     "title": "chart version vs release revision; uninstall removes everything a release owns",
+     "learn": true
     },
     {
      "n": "06",
      "slug": "template-syntax",
-     "title": "helm install blows up before anything reaches the cluster"
+     "title": "templates render locally first: a parse error stops before the cluster is touched",
+     "learn": true
     },
     {
      "n": "07",
      "slug": "values-typo",
-     "title": "helm says deployed, pod says no"
+     "title": "deployed means accepted, not working: a missing value renders as nothing",
+     "learn": true
     },
     {
      "n": "08",
      "slug": "lint",
-     "title": "pipeline red at the lint stage"
+     "title": "helm lint is a static check: Chart.yaml metadata and template rendering, no cluster",
+     "learn": true
     },
     {
      "n": "09",
      "slug": "indent",
-     "title": "YAML parse error on install"
+     "title": "templates are text substitution: indent adds spaces, nindent adds a newline first",
+     "learn": true
     },
     {
      "n": "10",
      "slug": "required",
-     "title": "install fails with \"execution error\""
+     "title": "required makes a missing value a loud error instead of a silent empty string",
+     "learn": true
     },
     {
      "n": "11",
      "slug": "quoted-port",
-     "title": "\"got string, expected integer\""
+     "title": "\"got string, expected integer\"",
+     "learn": false
     },
     {
      "n": "12",
      "slug": "hook-fail",
-     "title": "install fails in \"pre-install\""
+     "title": "install fails in \"pre-install\"",
+     "learn": false
     },
     {
      "n": "13",
      "slug": "failed-upgrade",
-     "title": "launch upgrade failed, site degraded"
+     "title": "launch upgrade failed, site degraded",
+     "learn": false
     },
     {
      "n": "14",
      "slug": "pending-upgrade",
-     "title": "\"another operation (install/upgrade/rollback) is in progress\""
+     "title": "\"another operation (install/upgrade/rollback) is in progress\"",
+     "learn": false
     },
     {
      "n": "15",
      "slug": "subchart",
-     "title": "prod shop stuck in Init, waiting for the cache"
+     "title": "prod shop stuck in Init, waiting for the cache",
+     "learn": false
     },
     {
      "n": "16",
      "slug": "reuse-values",
-     "title": "site says localhost after scaling up"
+     "title": "site says localhost after scaling up",
+     "learn": false
     },
     {
      "n": "17",
      "slug": "wrong-namespace",
-     "title": "release exists, helm can't find it"
+     "title": "release exists, helm can't find it",
+     "learn": false
     },
     {
      "n": "18",
      "slug": "name-in-use",
-     "title": "\"cannot re-use a name that is still in use\""
+     "title": "\"cannot re-use a name that is still in use\"",
+     "learn": false
     },
     {
      "n": "19",
      "slug": "immutable",
-     "title": "\"field is immutable\""
+     "title": "\"field is immutable\"",
+     "learn": false
     },
     {
      "n": "20",
      "slug": "secret-in-values",
-     "title": "audit finding: database password in helm"
+     "title": "audit finding: database password in helm",
+     "learn": false
     }
    ]
   },
@@ -412,131 +492,157 @@
    "track": "k8s",
    "blurb": "Kubernetes on a real 3-node cluster",
    "count": 25,
+   "learn": 13,
    "levels": [
     {
      "n": "01",
      "slug": "run-a-pod",
-     "title": "run a pod"
+     "title": "a Pod is the unit Kubernetes runs, and kubectl run starts one",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "deployment",
-     "title": "write a deployment manifest"
+     "title": "a Deployment keeps N pods alive, and labels are what ties them together",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "expose",
-     "title": "expose it"
+     "title": "a Service gives pods a stable name by selecting their labels",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "scale-configmap",
-     "title": "scale up and write it down"
+     "title": "change desired state and the controller catches up; a ConfigMap is plain key/value data",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "configmap-env",
-     "title": "config into the container"
+     "title": "envFrom turns a ConfigMap's keys into a container's environment variables",
+     "learn": true
     },
     {
      "n": "06",
      "slug": "secret-volume",
-     "title": "secret as a file"
+     "title": "a Secret mounted as a volume shows up as one file per key",
+     "learn": true
     },
     {
      "n": "07",
      "slug": "namespace-context",
-     "title": "a namespace for team A"
+     "title": "namespaces split a cluster into rooms, and your context picks the default room",
+     "learn": true
     },
     {
      "n": "08",
      "slug": "crashloop",
-     "title": "the api pod keeps restarting"
+     "title": "CrashLoopBackOff means the process exits \u2014 the logs say why",
+     "learn": true
     },
     {
      "n": "09",
      "slug": "imagepull",
-     "title": "web won't start at all"
+     "title": "a container cannot start until the node has pulled its image",
+     "learn": true
     },
     {
      "n": "10",
      "slug": "pending",
-     "title": "worker is Pending forever"
+     "title": "Pending means no node accepted the pod \u2014 requests must fit a node",
+     "learn": true
     },
     {
      "n": "11",
      "slug": "oomkilled",
-     "title": "cache service dies every few seconds"
+     "title": "a memory limit is a hard ceiling: cross it and the kernel kills the process",
+     "learn": true
     },
     {
      "n": "12",
      "slug": "no-endpoints",
-     "title": "service returns nothing"
+     "title": "a Service with no endpoints selects no pods \u2014 compare selector and labels",
+     "learn": true
     },
     {
      "n": "13",
      "slug": "target-port",
-     "title": "connection refused"
+     "title": "port is what clients dial, targetPort is where traffic lands on the pod",
+     "learn": true
     },
     {
      "n": "14",
      "slug": "missing-secret",
-     "title": "CreateContainerConfigError"
+     "title": "CreateContainerConfigError",
+     "learn": false
     },
     {
      "n": "15",
      "slug": "configmap-typo",
-     "title": "nginx refuses its config"
+     "title": "nginx refuses its config",
+     "learn": false
     },
     {
      "n": "16",
      "slug": "liveness-kills",
-     "title": "healthy app gets killed every 30s"
+     "title": "healthy app gets killed every 30s",
+     "learn": false
     },
     {
      "n": "17",
      "slug": "readiness",
-     "title": "pod Running but 0/1 Ready"
+     "title": "pod Running but 0/1 Ready",
+     "learn": false
     },
     {
      "n": "18",
      "slug": "rbac",
-     "title": "forbidden"
+     "title": "forbidden",
+     "learn": false
     },
     {
      "n": "19",
      "slug": "network-policy",
-     "title": "frontend can't reach backend"
+     "title": "frontend can't reach backend",
+     "learn": false
     },
     {
      "n": "20",
      "slug": "ingress-404",
-     "title": "ingress gives 404"
+     "title": "ingress gives 404",
+     "learn": false
     },
     {
      "n": "21",
      "slug": "stuck-rollout",
-     "title": "deploy stuck at 2/3"
+     "title": "deploy stuck at 2/3",
+     "learn": false
     },
     {
      "n": "22",
      "slug": "node-selector",
-     "title": "gpu job won't schedule"
+     "title": "gpu job won't schedule",
+     "learn": false
     },
     {
      "n": "23",
      "slug": "drain",
-     "title": "node maintenance"
+     "title": "node maintenance",
+     "learn": false
     },
     {
      "n": "24",
      "slug": "pvc-pending",
-     "title": "database pod stuck on storage"
+     "title": "database pod stuck on storage",
+     "learn": false
     },
     {
      "n": "25",
      "slug": "helm-rollback",
-     "title": "helm upgrade went wrong"
+     "title": "helm upgrade went wrong",
+     "learn": false
     }
    ]
   },
@@ -544,121 +650,145 @@
    "track": "linux",
    "blurb": "The command line and a broken box",
    "count": 23,
+   "learn": 12,
    "levels": [
     {
      "n": "01",
      "slug": "release-dir",
-     "title": "prepare the release directory"
+     "title": "the filesystem is a tree: mkdir -p builds a path, > writes a file",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "swap-config",
-     "title": "roll out the new app.conf, keep the old one"
+     "title": "mv renames, cp copies: order matters when a file gets replaced",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "find-the-key",
-     "title": "where did the vendor installer put license.key?"
+     "title": "find walks a whole tree and filters by name",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "count-errors",
-     "title": "how many 500s did we serve yesterday?"
+     "title": "grep -c counts matching lines; the pattern decides what you count",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "service-account",
-     "title": "service account for the runner"
+     "title": "users and groups: who a process runs as, and who owns a file",
+     "learn": true
     },
     {
      "n": "06",
      "slug": "exact-mode",
-     "title": "db.conf: owner reads and writes, group reads, nobody else"
+     "title": "file modes: three digits say what owner, group and others may do",
+     "learn": true
     },
     {
      "n": "07",
      "slug": "top-talker",
-     "title": "which client hammers us the most?"
+     "title": "pipelines: sort | uniq -c | sort -rn answers \"which appears most\"",
+     "learn": true
     },
     {
      "n": "08",
      "slug": "script-wont-run",
-     "title": "deploy hook fails with \"Permission denied\""
+     "title": "running a file needs the execute bit, even for root",
+     "learn": true
     },
     {
      "n": "09",
      "slug": "secret-too-open",
-     "title": "app refuses to start: \"key file permissions too open\""
+     "title": "secrets are owner-only: programs check a key file's mode and refuse it",
+     "learn": true
     },
     {
      "n": "10",
      "slug": "log-permission-denied",
-     "title": "app can't write its log"
+     "title": "creating a file needs write permission on the directory, not the file",
+     "learn": true
     },
     {
      "n": "11",
      "slug": "bad-interpreter",
-     "title": "report tool: \"bad interpreter: No such file or directory\""
+     "title": "the shebang is a literal path: invisible bytes make it a different file",
+     "learn": true
     },
     {
      "n": "12",
      "slug": "config-not-found",
-     "title": "app says config missing, but the file is right there"
+     "title": "a symlink is a name pointing at a path; if the target is gone, the link dangles",
+     "learn": true
     },
     {
      "n": "13",
      "slug": "api-unreachable",
-     "title": "api.internal times out from this box only"
+     "title": "api.internal times out from this box only",
+     "learn": false
     },
     {
      "n": "14",
      "slug": "port-in-use",
-     "title": "web service won't start: \"Address already in use\""
+     "title": "web service won't start: \"Address already in use\"",
+     "learn": false
     },
     {
      "n": "15",
      "slug": "no-space-left",
-     "title": "\"No space left on device\" on the data volume"
+     "title": "\"No space left on device\" on the data volume",
+     "learn": false
     },
     {
      "n": "16",
      "slug": "command-not-found",
-     "title": "deploy user: every command is \"not found\""
+     "title": "deploy user: every command is \"not found\"",
+     "learn": false
     },
     {
      "n": "17",
      "slug": "env-not-set",
-     "title": "app says APP_ENV is not set, but /etc/profile.d sets it"
+     "title": "app says APP_ENV is not set, but /etc/profile.d sets it",
+     "learn": false
     },
     {
      "n": "18",
      "slug": "sudo-denied",
-     "title": "alice is \"not in the sudoers file\""
+     "title": "alice is \"not in the sudoers file\"",
+     "learn": false
     },
     {
      "n": "19",
      "slug": "cpu-hog",
-     "title": "box is sluggish, load average pinned at 1"
+     "title": "box is sluggish, load average pinned at 1",
+     "learn": false
     },
     {
      "n": "20",
      "slug": "phantom-proxy",
-     "title": "curl fails in every login shell: \"Could not resolve proxy: proxy.old.corp\""
+     "title": "curl fails in every login shell: \"Could not resolve proxy: proxy.old.corp\"",
+     "learn": false
     },
     {
      "n": "21",
      "slug": "crash-timestamp",
-     "title": "when exactly did the app crash last week?"
+     "title": "when exactly did the app crash last week?",
+     "learn": false
     },
     {
      "n": "22",
      "slug": "cron-never-runs",
-     "title": "backup cron job never runs"
+     "title": "backup cron job never runs",
+     "learn": false
     },
     {
      "n": "23",
      "slug": "shared-dir",
-     "title": "team share: files bob creates, alice cannot edit"
+     "title": "team share: files bob creates, alice cannot edit",
+     "learn": false
     }
    ]
   },
@@ -666,111 +796,133 @@
    "track": "nestjs",
    "blurb": "NestJS dependency injection and HTTP",
    "count": 21,
+   "learn": 11,
    "levels": [
     {
      "n": "01",
      "slug": "add-health",
-     "title": "ticket: add a health endpoint"
+     "title": "a controller class is a route prefix, its methods are routes",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "add-health-service",
-     "title": "ticket: /health should report uptime"
+     "title": "a provider is a class Nest builds for you and hands to whoever asks",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "add-user-by-id",
-     "title": "ticket: user detail endpoint"
+     "title": "route params arrive as strings; pipes convert them, exceptions become status codes",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "add-role-filter",
-     "title": "ticket: filter users by role"
+     "title": "query strings come in through @Query, and the service does the filtering",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "add-create-user",
-     "title": "ticket: create users"
+     "title": "a DTO class plus class-validator decorators is how a body gets validated",
+     "learn": true
     },
     {
      "n": "06",
      "slug": "extract-users-module",
-     "title": "ticket: give users its own module"
+     "title": "a module is a visibility boundary: it sees what it provides plus what its imports export",
+     "learn": true
     },
     {
      "n": "07",
      "slug": "provider-missing",
-     "title": "api won't start after the users refactor"
+     "title": "read the DI error: it names the module, the class and which argument is unsatisfied",
+     "learn": true
     },
     {
      "n": "08",
      "slug": "not-exported",
-     "title": "\"Nest can't resolve dependencies of the OrdersService\""
+     "title": "importing a module gives you its exports only, not its providers",
+     "learn": true
     },
     {
      "n": "09",
      "slug": "controller-not-registered",
-     "title": "load balancer marks the api as down"
+     "title": "the RouterExplorer boot log is the list of routes that exist",
+     "learn": true
     },
     {
      "n": "10",
      "slug": "route-typo",
-     "title": "user detail page is blank"
+     "title": "a route path is matched literally unless a segment starts with a colon",
+     "learn": true
     },
     {
      "n": "11",
      "slug": "boot-crash",
-     "title": "ENOENT at boot"
+     "title": "relative paths in Node resolve against a base, and a failing lifecycle hook aborts boot",
+     "learn": true
     },
     {
      "n": "12",
      "slug": "nan-id",
-     "title": "every user is \"not found\""
+     "title": "every user is \"not found\"",
+     "learn": false
     },
     {
      "n": "13",
      "slug": "field-vanishes",
-     "title": "created users have no email"
+     "title": "created users have no email",
+     "learn": false
     },
     {
      "n": "14",
      "slug": "always-unauthorized",
-     "title": "admin stats always 401"
+     "title": "admin stats always 401",
+     "learn": false
     },
     {
      "n": "15",
      "slug": "key-not-configured",
-     "title": "admin stats: 500 \"API_KEY is not configured\""
+     "title": "admin stats: 500 \"API_KEY is not configured\"",
+     "learn": false
     },
     {
      "n": "16",
      "slug": "everything-is-500",
-     "title": "every error is a 500"
+     "title": "every error is a 500",
+     "learn": false
     },
     {
      "n": "17",
      "slug": "no-envelope",
-     "title": "frontend shows \"undefined\" everywhere"
+     "title": "frontend shows \"undefined\" everywhere",
+     "learn": false
     },
     {
      "n": "18",
      "slug": "cors-preflight",
-     "title": "browser: \"Request header field x-api-key is not allowed by Access-Control-Allow-Headers\""
+     "title": "browser: \"Request header field x-api-key is not allowed by Access-Control-Allow-Headers\"",
+     "learn": false
     },
     {
      "n": "19",
      "slug": "users-vanish",
-     "title": "users disappear between requests"
+     "title": "users disappear between requests",
+     "learn": false
     },
     {
      "n": "20",
      "slug": "circular",
-     "title": "\"Nest cannot create the OrdersModule instance\""
+     "title": "\"Nest cannot create the OrdersModule instance\"",
+     "learn": false
     },
     {
      "n": "21",
      "slug": "test-cannot-resolve",
-     "title": "CI red: OrdersService spec can't compile the TestingModule"
+     "title": "CI red: OrdersService spec can't compile the TestingModule",
+     "learn": false
     }
    ]
   },
@@ -778,66 +930,79 @@
    "track": "networking",
    "blurb": "DNS, ports, routes, firewalls",
    "count": 12,
+   "learn": 6,
    "levels": [
     {
      "n": "01",
      "slug": "start-service",
-     "title": "the API isn't answering on port 8080 \u2014 nothing is listening"
+     "title": "a port only answers when a process is listening on it",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "hosts-entry",
-     "title": "api.internal doesn't resolve \u2014 scripts can't find the API host"
+     "title": "a hostname must resolve to an IP before anything can connect",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "listen-8080",
-     "title": "nginx is running but serves nothing on 8080 \u2014 the API vhost is missing"
+     "title": "nginx listens only where a server block tells it to",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "open-firewall",
-     "title": "the API is up but the firewall blocks port 8080"
+     "title": "a firewall drops packets before the server ever sees them",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "bind-address",
-     "title": "the API answers on localhost but not on the box's network address"
+     "title": "a listener binds to an address, not just a port",
+     "learn": true
     },
     {
      "n": "06",
      "slug": "icmp-blocked",
-     "title": "monitoring reports this host as down \u2014 it stopped answering pings"
+     "title": "ping is ICMP, a protocol of its own that the firewall filters separately",
+     "learn": true
     },
     {
      "n": "07",
      "slug": "wrong-port",
-     "title": "the API moved to the wrong port \u2014 clients expect 8080, it's on 8081"
+     "title": "the API moved to the wrong port \u2014 clients expect 8080, it's on 8081",
+     "learn": false
     },
     {
      "n": "08",
      "slug": "hosts-wrong-ip",
-     "title": "calls to http://api.internal:8080 time out, but the API is healthy locally"
+     "title": "calls to http://api.internal:8080 time out, but the API is healthy locally",
+     "learn": false
     },
     {
      "n": "09",
      "slug": "port-conflict",
-     "title": "nginx won't start \u2014 \"address already in use\" on 8080"
+     "title": "nginx won't start \u2014 \"address already in use\" on 8080",
+     "learn": false
     },
     {
      "n": "10",
      "slug": "mtu",
-     "title": "large transfers over eth0 stall \u2014 the interface MTU was lowered"
+     "title": "large transfers over eth0 stall \u2014 the interface MTU was lowered",
+     "learn": false
     },
     {
      "n": "11",
      "slug": "config-syntax",
-     "title": "after an edit, nginx won't come up \u2014 the config has a syntax error"
+     "title": "after an edit, nginx won't come up \u2014 the config has a syntax error",
+     "learn": false
     },
     {
      "n": "12",
      "slug": "double-fault",
-     "title": "the API is unreachable on 8080 across the network \u2014 two things are wrong"
+     "title": "the API is unreachable on 8080 across the network \u2014 two things are wrong",
+     "learn": false
     }
    ]
   },
@@ -845,111 +1010,133 @@
    "track": "nextjs",
    "blurb": "Next.js 15 App Router",
    "count": 21,
+   "learn": 11,
    "levels": [
     {
      "n": "01",
      "slug": "add-page",
-     "title": "add an /about page"
+     "title": "a URL is a folder under src/app, and page.tsx is what it renders",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "nested-layout",
-     "title": "dashboard needs its own sub-navigation"
+     "title": "layouts nest: a layout.tsx wraps every page below its folder",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "dynamic-route",
-     "title": "add /posts/[slug]"
+     "title": "[slug] folders match any value, and the page reads it from params",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "api-route",
-     "title": "add GET /api/ping"
+     "title": "route.ts turns a folder into an API endpoint: one exported function per HTTP method",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "client-component",
-     "title": "add a like button to the product page"
+     "title": "interactivity lives in a \"use client\" file that a server page renders",
+     "learn": true
     },
     {
      "n": "06",
      "slug": "server-action",
-     "title": "add a guestbook with a server action"
+     "title": "a Server Action is a server function a form can call directly",
+     "learn": true
     },
     {
      "n": "07",
      "slug": "api-405",
-     "title": "health endpoint answers 405"
+     "title": "a Route Handler is found by export name; 405 means the name matched nothing",
+     "learn": true
     },
     {
      "n": "08",
      "slug": "use-client",
-     "title": "dashboard is a 500"
+     "title": "a render crash on the server usually means browser code lost its \"use client\" boundary",
+     "learn": true
     },
     {
      "n": "09",
      "slug": "metadata",
-     "title": "browser tab shows no title"
+     "title": "<head> is generated from a metadata export with an exact, conventional name",
+     "learn": true
     },
     {
      "n": "10",
      "slug": "middleware-matcher",
-     "title": "old marketing links 404"
+     "title": "middleware runs before routing, but only on the paths its matcher selects",
+     "learn": true
     },
     {
      "n": "11",
      "slug": "route-group",
-     "title": "/products is gone"
+     "title": "a (group) folder organises files without adding a URL segment",
+     "learn": true
     },
     {
      "n": "12",
      "slug": "root-layout",
-     "title": "browser overlay: \"Missing <html> and <body> tags in the root layout\""
+     "title": "browser overlay: \"Missing <html> and <body> tags in the root layout\"",
+     "learn": false
     },
     {
      "n": "13",
      "slug": "image-host",
-     "title": "gallery page crashes with \"hostname is not configured\""
+     "title": "gallery page crashes with \"hostname is not configured\"",
+     "learn": false
     },
     {
      "n": "14",
      "slug": "type-error",
-     "title": "CI build is red, app works locally"
+     "title": "CI build is red, app works locally",
+     "learn": false
     },
     {
      "n": "15",
      "slug": "public-env",
-     "title": "shop name flashes then disappears in the browser"
+     "title": "shop name flashes then disappears in the browser",
+     "learn": false
     },
     {
      "n": "16",
      "slug": "server-only-import",
-     "title": "/products: \"Module not found: Can't resolve 'fs'\""
+     "title": "/products: \"Module not found: Can't resolve 'fs'\"",
+     "learn": false
     },
     {
      "n": "17",
      "slug": "hydration",
-     "title": "hydration error on the home page"
+     "title": "hydration error on the home page",
+     "learn": false
     },
     {
      "n": "18",
      "slug": "async-params",
-     "title": "build broken after the Next 15 upgrade: \"Type 'Props' does not satisfy the constraint 'PageProps'\""
+     "title": "build broken after the Next 15 upgrade: \"Type 'Props' does not satisfy the constraint 'PageProps'\"",
+     "learn": false
     },
     {
      "n": "19",
      "slug": "stale-fetch",
-     "title": "stock page shows yesterday's numbers"
+     "title": "stock page shows yesterday's numbers",
+     "learn": false
     },
     {
      "n": "20",
      "slug": "redirect-try-catch",
-     "title": "/go shows \"Something went wrong\" instead of redirecting"
+     "title": "/go shows \"Something went wrong\" instead of redirecting",
+     "learn": false
     },
     {
      "n": "21",
      "slug": "use-server",
-     "title": "cart page: \"Functions cannot be passed directly to Client Components\""
+     "title": "cart page: \"Functions cannot be passed directly to Client Components\"",
+     "learn": false
     }
    ]
   },
@@ -957,66 +1144,79 @@
    "track": "nginx",
    "blurb": "Reverse proxy and web server",
    "count": 12,
+   "learn": 6,
    "levels": [
     {
      "n": "01",
      "slug": "health-endpoint",
-     "title": "monitoring alerts: GET /health returns the homepage, not \"ok\""
+     "title": "a request picks one location, and `return` answers it without a file",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "redirect-old",
-     "title": "/old should 301 to /new, but it serves the homepage instead"
+     "title": "a redirect is a location that returns 301 and a new path",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "api-proxy",
-     "title": "the shop API is unreachable: /api/* no longer hits the backend"
+     "title": "proxy_pass hands a path to an upstream, and its trailing slash rewrites the prefix",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "frame-header",
-     "title": "security scan: shop.local is missing the X-Frame-Options header"
+     "title": "add_header sets response headers, and where you put it decides which responses get it",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "upstream-port",
-     "title": "checkout is down: every /api/ call returns 502 Bad Gateway"
+     "title": "502 means nginx answered but the upstream did not: read the status, then test the upstream yourself",
+     "learn": true
     },
     {
      "n": "06",
      "slug": "spa-fallback",
-     "title": "deep links 404: /dashboard works from the menu but not on a page reload"
+     "title": "try_files walks a list of candidates, and the last one is what happens when nothing exists",
+     "learn": true
     },
     {
      "n": "07",
      "slug": "upload-size",
-     "title": "medium uploads fail with 413 Request Entity Too Large"
+     "title": "medium uploads fail with 413 Request Entity Too Large",
+     "learn": false
     },
     {
      "n": "08",
      "slug": "config-down",
-     "title": "shop.local is completely down \u2014 the browser says connection refused"
+     "title": "shop.local is completely down \u2014 the browser says connection refused",
+     "learn": false
     },
     {
      "n": "09",
      "slug": "wrong-root",
-     "title": "the site is up but every static asset 404s (blank page, no CSS)"
+     "title": "the site is up but every static asset 404s (blank page, no CSS)",
+     "learn": false
     },
     {
      "n": "10",
      "slug": "gzip-off",
-     "title": "frontend bundle ships uncompressed; front-end team wants gzip back"
+     "title": "frontend bundle ships uncompressed; front-end team wants gzip back",
+     "learn": false
     },
     {
      "n": "11",
      "slug": "forwarded-host",
-     "title": "the backend logs the wrong Host for every proxied request"
+     "title": "the backend logs the wrong Host for every proxied request",
+     "learn": false
     },
     {
      "n": "12",
      "slug": "deploy-fallout",
-     "title": "after a deploy: checkout throws 502 AND deep links 404"
+     "title": "after a deploy: checkout throws 502 AND deep links 404",
+     "learn": false
     }
    ]
   },
@@ -1024,66 +1224,79 @@
    "track": "pentest",
    "blurb": "Find and fix web-app vulnerabilities (defensive)",
    "count": 12,
+   "learn": 6,
    "levels": [
     {
      "n": "01",
      "slug": "reflected-xss",
-     "title": "security review flagged the search box"
+     "title": "escape user input before it becomes HTML",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "path-traversal",
-     "title": "the docs endpoint can read files it shouldn't"
+     "title": "keep file paths inside the folder you meant",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "open-redirect",
-     "title": "our /go link can send users to any site"
+     "title": "only redirect to places you trust",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "leaky-profile",
-     "title": "public profiles are returning too much"
+     "title": "send only the fields the client should see",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "admin-no-auth",
-     "title": "the admin user list is wide open"
+     "title": "check who is calling before you answer",
+     "learn": true
     },
     {
      "n": "06",
      "slug": "idor-notes",
-     "title": "users can open each other's notes"
+     "title": "a login is not permission to touch every object",
+     "learn": true
     },
     {
      "n": "07",
      "slug": "sqli-login",
-     "title": "login can be bypassed with a crafted username"
+     "title": "login can be bypassed with a crafted username",
+     "learn": false
     },
     {
      "n": "08",
      "slug": "command-injection",
-     "title": "the diagnostics endpoint runs shell commands"
+     "title": "the diagnostics endpoint runs shell commands",
+     "learn": false
     },
     {
      "n": "09",
      "slug": "mass-assignment",
-     "title": "new signups can make themselves admin"
+     "title": "new signups can make themselves admin",
+     "learn": false
     },
     {
      "n": "10",
      "slug": "prototype-pollution",
-     "title": "posting settings can poison every object"
+     "title": "posting settings can poison every object",
+     "learn": false
     },
     {
      "n": "11",
      "slug": "note-render-flaws",
-     "title": "the note preview page has two problems"
+     "title": "the note preview page has two problems",
+     "learn": false
     },
     {
      "n": "12",
      "slug": "login-error-leak",
-     "title": "login is both bypassable and chatty on errors"
+     "title": "login is both bypassable and chatty on errors",
+     "learn": false
     }
    ]
   },
@@ -1091,76 +1304,91 @@
    "track": "postgres",
    "blurb": "SQL, schema, performance",
    "count": 14,
+   "learn": 7,
    "levels": [
     {
      "n": "01",
      "slug": "create-table",
-     "title": "no customers table yet"
+     "title": "a table is named, typed columns: CREATE TABLE declares them once",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "insert-rows",
-     "title": "the shop has no products"
+     "title": "INSERT names the columns you supply; serial columns fill themselves",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "constraints",
-     "title": "users table accepts garbage"
+     "title": "constraints are rules the database enforces on every write",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "foreign-key",
-     "title": "orders point at customers that don't exist"
+     "title": "a foreign key ties a column to rows that must exist in another table",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "create-index",
-     "title": "add an index for the activity feed"
+     "title": "an index makes WHERE on a column fast; EXPLAIN shows whether it is used",
+     "learn": true
     },
     {
      "n": "06",
      "slug": "join-query",
-     "title": "finance wants a list: who ordered what"
+     "title": "JOIN combines rows from two tables on a matching column",
+     "learn": true
     },
     {
      "n": "07",
      "slug": "create-view",
-     "title": "the dashboard needs a revenue-per-customer view"
+     "title": "GROUP BY collapses rows into one per group; a VIEW saves a query under a name",
+     "learn": true
     },
     {
      "n": "08",
      "slug": "slow-query",
-     "title": "the order history page takes seconds"
+     "title": "the order history page takes seconds",
+     "learn": false
     },
     {
      "n": "09",
      "slug": "duplicate-rows",
-     "title": "the newsletter goes out twice to some people"
+     "title": "the newsletter goes out twice to some people",
+     "learn": false
     },
     {
      "n": "10",
      "slug": "seed-fk-order",
-     "title": "the demo seed script dies with a constraint error"
+     "title": "the demo seed script dies with a constraint error",
+     "learn": false
     },
     {
      "n": "11",
      "slug": "wrong-column-type",
-     "title": "the app's user lookup crashes with an operator error"
+     "title": "the app's user lookup crashes with an operator error",
+     "learn": false
     },
     {
      "n": "12",
      "slug": "null-totals",
-     "title": "some invoices show an empty total"
+     "title": "some invoices show an empty total",
+     "learn": false
     },
     {
      "n": "13",
      "slug": "blocked-transaction",
-     "title": "every payment hangs forever"
+     "title": "every payment hangs forever",
+     "learn": false
     },
     {
      "n": "14",
      "slug": "reporter-cannot-select",
-     "title": "the BI tool gets 'permission denied for table sales'"
+     "title": "the BI tool gets 'permission denied for table sales'",
+     "learn": false
     }
    ]
   },
@@ -1168,66 +1396,79 @@
    "track": "redis",
    "blurb": "Keys, queues, eviction",
    "count": 12,
+   "learn": 6,
    "levels": [
     {
      "n": "01",
      "slug": "set-key",
-     "title": "the app can't read its name from cache \u2014 key app:name is empty"
+     "title": "redis is a key-value store: SET writes a string, GET reads it back",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "hash-profile",
-     "title": "the profile cache is empty \u2014 hash user:1 has no fields"
+     "title": "a hash is a small record under one key: fields you can read and update one at a time",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "list-queue",
-     "title": "the job queue is empty \u2014 list queue:jobs has no items"
+     "title": "a list keeps order: push onto an end, read by index",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "expire-session",
-     "title": "add a login session that auto-expires"
+     "title": "a key can carry a time-to-live: write value and expiry in one SET",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "wrongtype",
-     "title": "the events feed is broken: LPUSH returns WRONGTYPE"
+     "title": "every key has exactly one type, fixed at creation: WRONGTYPE means the key is not what the app expects",
+     "learn": true
     },
     {
      "n": "06",
      "slug": "ttl-persist",
-     "title": "sessions never expire \u2014 memory keeps growing"
+     "title": "TTL -1 is the leak: EXPIRE adds an expiry to a key that already exists",
+     "learn": true
     },
     {
      "n": "07",
      "slug": "counter-type",
-     "title": "the view counter is stuck \u2014 INCR page:views fails"
+     "title": "the view counter is stuck \u2014 INCR page:views fails",
+     "learn": false
     },
     {
      "n": "08",
      "slug": "eviction-policy",
-     "title": "the cache returns OOM errors under load instead of evicting"
+     "title": "the cache returns OOM errors under load instead of evicting",
+     "learn": false
     },
     {
      "n": "09",
      "slug": "rename-key",
-     "title": "the catalog cache misses \u2014 the data is under the wrong key name"
+     "title": "the catalog cache misses \u2014 the data is under the wrong key name",
+     "learn": false
     },
     {
      "n": "10",
      "slug": "set-dedup",
-     "title": "the tag list has duplicates \u2014 it should be a unique set"
+     "title": "the tag list has duplicates \u2014 it should be a unique set",
+     "learn": false
     },
     {
      "n": "11",
      "slug": "appendonly",
-     "title": "durability audit: this instance isn't persisting writes to the AOF"
+     "title": "durability audit: this instance isn't persisting writes to the AOF",
+     "learn": false
     },
     {
      "n": "12",
      "slug": "cache-broken",
-     "title": "the homepage cache is broken two ways: wrong type and no expiry"
+     "title": "the homepage cache is broken two ways: wrong type and no expiry",
+     "learn": false
     }
    ]
   },
@@ -1235,76 +1476,91 @@
    "track": "shell",
    "blurb": "The terminal from zero \u2014 for absolute beginners",
    "count": 14,
+   "learn": 14,
    "levels": [
     {
      "n": "01",
      "slug": "first-command",
-     "title": "your first command"
+     "title": "your first command",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "arguments",
-     "title": "commands take arguments"
+     "title": "commands take arguments",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "where-am-i",
-     "title": "where am I? \u2014 pwd, ls, cd"
+     "title": "where am I? \u2014 pwd, ls, cd",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "paths",
-     "title": "paths \u2014 the address of a file"
+     "title": "paths \u2014 the address of a file",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "reading-files",
-     "title": "reading files \u2014 cat and less"
+     "title": "reading files \u2014 cat and less",
+     "learn": true
     },
     {
      "n": "06",
      "slug": "making-things",
-     "title": "making things \u2014 mkdir and touch"
+     "title": "making things \u2014 mkdir and touch",
+     "learn": true
     },
     {
      "n": "07",
      "slug": "copy-move-delete",
-     "title": "copy, move, rename, delete \u2014 cp, mv, rm"
+     "title": "copy, move, rename, delete \u2014 cp, mv, rm",
+     "learn": true
     },
     {
      "n": "08",
      "slug": "wildcards",
-     "title": "wildcards \u2014 * means \"anything\""
+     "title": "wildcards \u2014 * means \"anything\"",
+     "learn": true
     },
     {
      "n": "09",
      "slug": "redirection",
-     "title": "redirection \u2014 > and >>"
+     "title": "redirection \u2014 > and >>",
+     "learn": true
     },
     {
      "n": "10",
      "slug": "pipes",
-     "title": "pipes \u2014 snap commands together with |"
+     "title": "pipes \u2014 snap commands together with |",
+     "learn": true
     },
     {
      "n": "11",
      "slug": "variables",
-     "title": "variables, export, PATH \u2014 and \"command not found\""
+     "title": "variables, export, PATH \u2014 and \"command not found\"",
+     "learn": true
     },
     {
      "n": "12",
      "slug": "help-yourself",
-     "title": "help yourself \u2014 --help, man, Tab, \u2191"
+     "title": "help yourself \u2014 --help, man, Tab, \u2191",
+     "learn": true
     },
     {
      "n": "13",
      "slug": "permissions",
-     "title": "permissions and chmod \u2014 running your first script"
+     "title": "permissions and chmod \u2014 running your first script",
+     "learn": true
     },
     {
      "n": "14",
      "slug": "permission-denied",
-     "title": "\"backup.sh doesn't work \u2014 it says Permission denied\""
+     "title": "\"backup.sh doesn't work \u2014 it says Permission denied\"",
+     "learn": true
     }
    ]
   },
@@ -1312,96 +1568,115 @@
    "track": "supabase",
    "blurb": "Postgres, RLS, auth, storage",
    "count": 18,
+   "learn": 9,
    "levels": [
     {
      "n": "01",
      "slug": "first-migration",
-     "title": "first migration"
+     "title": "a migration is a versioned SQL file the CLI applies and remembers",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "seed-data",
-     "title": "seed it"
+     "title": "seed.sql gives every rebuilt database its starting rows",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "rls-select-policy",
-     "title": "open it up (read-only)"
+     "title": "with RLS on, a policy says who may do which command on which rows",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "rpc-function",
-     "title": "a function behind /rpc"
+     "title": "a SQL function in an exposed schema is an endpoint under /rpc",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "storage-bucket",
-     "title": "a place for files"
+     "title": "a storage bucket is a row in storage.buckets, and public is a flag on it",
+     "learn": true
     },
     {
      "n": "06",
      "slug": "policy-wrong-role",
-     "title": "FAQ page blank for logged-out visitors"
+     "title": "a policy only applies to the roles in its TO clause",
+     "learn": true
     },
     {
      "n": "07",
      "slug": "insert-with-check",
-     "title": "visitors can't sign the guestbook"
+     "title": "USING filters rows you read, WITH CHECK judges rows you write",
+     "learn": true
     },
     {
      "n": "08",
      "slug": "missing-grant",
-     "title": "catalog: permission denied"
+     "title": "GRANT comes before RLS: 42501 means the role may not touch the table at all",
+     "learn": true
     },
     {
      "n": "09",
      "slug": "trigger-typo",
-     "title": "publishing a post fails with a weird 400"
+     "title": "a trigger runs a PL/pgSQL function on every row, and NEW is that row",
+     "learn": true
     },
     {
      "n": "10",
      "slug": "updated-at",
-     "title": "updated_at never changes"
+     "title": "updated_at never changes",
+     "learn": false
     },
     {
      "n": "11",
      "slug": "view-not-exposed",
-     "title": "the new view 404s"
+     "title": "the new view 404s",
+     "learn": false
     },
     {
      "n": "12",
      "slug": "storage-private-bucket",
-     "title": "avatars are broken images"
+     "title": "avatars are broken images",
+     "learn": false
     },
     {
      "n": "13",
      "slug": "rpc-security",
-     "title": "the public counter says 0"
+     "title": "the public counter says 0",
+     "learn": false
     },
     {
      "n": "14",
      "slug": "realtime-publication",
-     "title": "chat doesn't update live"
+     "title": "chat doesn't update live",
+     "learn": false
     },
     {
      "n": "15",
      "slug": "auth-email-confirmation",
-     "title": "new users can't log in"
+     "title": "new users can't log in",
+     "learn": false
     },
     {
      "n": "16",
      "slug": "migration-syntax-error",
-     "title": "`supabase db reset` is red"
+     "title": "`supabase db reset` is red",
+     "learn": false
     },
     {
      "n": "17",
      "slug": "missing-index",
-     "title": "the profile page takes seconds"
+     "title": "the profile page takes seconds",
+     "learn": false
     },
     {
      "n": "18",
      "slug": "duplicates-no-unique",
-     "title": "the newsletter sends twice to some people"
+     "title": "the newsletter sends twice to some people",
+     "learn": false
     }
    ]
   },
@@ -1409,46 +1684,55 @@
    "track": "systemd",
    "blurb": "Units, services, timers",
    "count": 8,
+   "learn": 4,
    "levels": [
     {
      "n": "01",
      "slug": "oneshot-marker",
-     "title": "ops wants a \"this box was provisioned\" marker written by systemd"
+     "title": "a unit file tells systemd what to run: write one, reload, start it",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "simple-service",
-     "title": "heartbeat script only runs while someone keeps a terminal open"
+     "title": "Type=simple: systemd owns a long-running process and watches it",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "enable-on-boot",
-     "title": "heartbeat is gone after every reboot"
+     "title": "start runs it now, enable runs it on boot: the [Install] section",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "restart-on-failure",
-     "title": "api died at 03:00 and stayed dead until someone noticed at 09:00"
+     "title": "Restart= is opt-in: a crashed service stays dead until the unit asks to come back",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "timer",
-     "title": "tmp cleanup exists but nobody runs it"
+     "title": "tmp cleanup exists but nobody runs it",
+     "learn": false
     },
     {
      "n": "06",
      "slug": "environment-file",
-     "title": "api refuses to start: \"API_PORT not set\""
+     "title": "api refuses to start: \"API_PORT not set\"",
+     "learn": false
     },
     {
      "n": "07",
      "slug": "wrong-execstart",
-     "title": "report service fails instantly, status shows 203/EXEC"
+     "title": "report service fails instantly, status shows 203/EXEC",
+     "learn": false
     },
     {
      "n": "08",
      "slug": "working-directory",
-     "title": "metrics agent dies with 200/CHDIR"
+     "title": "metrics agent dies with 200/CHDIR",
+     "learn": false
     }
    ]
   },
@@ -1456,66 +1740,79 @@
    "track": "terraform",
    "blurb": "Infrastructure as code",
    "count": 12,
+   "learn": 6,
    "levels": [
     {
      "n": "01",
      "slug": "first-file",
-     "title": "we need terraform to drop a marker file"
+     "title": "a resource block declares a thing; apply makes it exist",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "variable",
-     "title": "the greeting must be configurable, not hardcoded"
+     "title": "a variable is an input knob: default in the config, override at apply time",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "output",
-     "title": "CI needs to read a value back out of terraform"
+     "title": "an output exposes a value, and <type>.<name>.<attribute> reads one from a resource",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "random",
-     "title": "each environment needs a stable random name"
+     "title": "random values are resources: generated once, kept in state",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "count",
-     "title": "spin up three node files, not one"
+     "title": "count makes N instances from one block, and count.index tells them apart",
+     "learn": true
     },
     {
      "n": "06",
      "slug": "provider-version",
-     "title": "'terraform init' fails: no available releases match"
+     "title": "init resolves provider versions; an impossible constraint stops everything before plan",
+     "learn": true
     },
     {
      "n": "07",
      "slug": "wrong-attribute",
-     "title": "plan errors: Unsupported attribute .name"
+     "title": "plan errors: Unsupported attribute .name",
+     "learn": false
     },
     {
      "n": "08",
      "slug": "count-index",
-     "title": "apply errors: Missing resource instance key"
+     "title": "apply errors: Missing resource instance key",
+     "learn": false
     },
     {
      "n": "09",
      "slug": "for-each-type",
-     "title": "for_each rejects the env list"
+     "title": "for_each rejects the env list",
+     "learn": false
     },
     {
      "n": "10",
      "slug": "duplicate-resource",
-     "title": "init fails: Duplicate resource \"local_file\" configuration"
+     "title": "init fails: Duplicate resource \"local_file\" configuration",
+     "learn": false
     },
     {
      "n": "11",
      "slug": "required-var",
-     "title": "non-interactive apply fails: No value for required variable"
+     "title": "non-interactive apply fails: No value for required variable",
+     "learn": false
     },
     {
      "n": "12",
      "slug": "two-bugs",
-     "title": "rewritten module won't init AND won't plan"
+     "title": "rewritten module won't init AND won't plan",
+     "learn": false
     }
    ]
   },
@@ -1523,56 +1820,67 @@
    "track": "tls",
    "blurb": "Certificates and openssl",
    "count": 10,
+   "learn": 5,
    "levels": [
     {
      "n": "01",
      "slug": "enable-https",
-     "title": "the site serves plain HTTP only \u2014 HTTPS on 443 is dead"
+     "title": "HTTPS is HTTP behind a second listener that presents a certificate",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "http-redirect",
-     "title": "plain HTTP isn't redirected to HTTPS"
+     "title": "port 80 should not serve content: it answers with a 301 to the https URL",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "hsts-header",
-     "title": "security audit: HSTS header is missing on HTTPS responses"
+     "title": "HSTS is a response header that makes the browser refuse plain HTTP",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "cert-key-mismatch",
-     "title": "after a cert rotation nginx won't start \u2014 key does not match the certificate"
+     "title": "a certificate and its private key are a pair \u2014 nginx refuses to start with a mismatch",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "cert-path-wrong",
-     "title": "nginx is down \u2014 it can't open the certificate file"
+     "title": "nginx opens every file in its config at startup \u2014 a wrong path is fatal, and paths are container paths",
+     "learn": true
     },
     {
      "n": "06",
      "slug": "wrong-cert",
-     "title": "clients get a certificate-name error for shop.local"
+     "title": "clients get a certificate-name error for shop.local",
+     "learn": false
     },
     {
      "n": "07",
      "slug": "http2",
-     "title": "the CDN wants HTTP/2 but the origin only speaks HTTP/1.1 over TLS"
+     "title": "the CDN wants HTTP/2 but the origin only speaks HTTP/1.1 over TLS",
+     "learn": false
     },
     {
      "n": "08",
      "slug": "missing-chain",
-     "title": "clients can't build a trust chain \u2014 the intermediate is missing"
+     "title": "clients can't build a trust chain \u2014 the intermediate is missing",
+     "learn": false
     },
     {
      "n": "09",
      "slug": "weak-protocol",
-     "title": "TLS handshakes fail \u2014 the server only offers an obsolete protocol"
+     "title": "TLS handshakes fail \u2014 the server only offers an obsolete protocol",
+     "learn": false
     },
     {
      "n": "10",
      "slug": "cert-and-redirect",
-     "title": "post-incident: two TLS faults at once"
+     "title": "post-incident: two TLS faults at once",
+     "learn": false
     }
    ]
   },
@@ -1580,96 +1888,115 @@
    "track": "trigger",
    "blurb": "Trigger.dev background tasks",
    "count": 18,
+   "learn": 9,
    "levels": [
     {
      "n": "01",
      "slug": "define-charge-card",
-     "title": "ticket: implement the charge-card task"
+     "title": "a task is an exported object: an id, a run function, and a validated payload",
+     "learn": true
     },
     {
      "n": "02",
      "slug": "add-retry-policy",
-     "title": "ticket: retry policy for the CRM sync"
+     "title": "retries are declared on the task, and a task-level option beats the project default",
+     "learn": true
     },
     {
      "n": "03",
      "slug": "schedule-daily-digest",
-     "title": "ticket: daily digest at 09:00 Berlin"
+     "title": "a scheduled task declares its cron next to the id, and a timezone next to the cron",
+     "learn": true
     },
     {
      "n": "04",
      "slug": "fan-out-campaign",
-     "title": "ticket: campaign fan-out task"
+     "title": "tasks trigger tasks: batchTrigger creates many runs in one call",
+     "learn": true
     },
     {
      "n": "05",
      "slug": "alert-on-failure",
-     "title": "ticket: page on-call when a payout fails"
+     "title": "lifecycle hooks: onFailure runs once, after the last attempt has failed",
+     "learn": true
     },
     {
      "n": "06",
      "slug": "no-tasks-found",
-     "title": "dev server finds no tasks"
+     "title": "the CLI only indexes tasks where trigger.config.ts tells it to look",
+     "learn": true
     },
     {
      "n": "07",
      "slug": "duplicate-task-id",
-     "title": "refunds come back as processed orders"
+     "title": "the id string is the task's identity, and it must be unique across the project",
+     "learn": true
     },
     {
      "n": "08",
      "slug": "payload-rejected",
-     "title": "checkout 500s with TaskPayloadParsedError"
+     "title": "schema validation happens at trigger time, in the caller \u2014 so convert at the boundary",
+     "learn": true
     },
     {
      "n": "09",
      "slug": "no-retries",
-     "title": "CRM sync fails on the first timeout"
+     "title": "a task-level override replaces the project default \u2014 find which layer is in effect",
+     "learn": true
     },
     {
      "n": "10",
      "slug": "run-killed-after-30s",
-     "title": "report runs die after 30 seconds"
+     "title": "report runs die after 30 seconds",
+     "learn": false
     },
     {
      "n": "11",
      "slug": "out-of-memory",
-     "title": "image runs crash with exit code 137"
+     "title": "image runs crash with exit code 137",
+     "learn": false
     },
     {
      "n": "12",
      "slug": "shopify-429",
-     "title": "Shopify rate-limits us"
+     "title": "Shopify rate-limits us",
+     "learn": false
     },
     {
      "n": "13",
      "slug": "double-charge",
-     "title": "customers charged twice"
+     "title": "customers charged twice",
+     "learn": false
     },
     {
      "n": "14",
      "slug": "campaign-takes-forever",
-     "title": "campaign send takes 10 minutes and hits 429"
+     "title": "campaign send takes 10 minutes and hits 429",
+     "learn": false
     },
     {
      "n": "15",
      "slug": "report-endpoint-500",
-     "title": "POST /api/reports returns 500"
+     "title": "POST /api/reports returns 500",
+     "learn": false
     },
     {
      "n": "16",
      "slug": "followup-burns-compute",
-     "title": "follow-up mails never go out and the bill exploded"
+     "title": "follow-up mails never go out and the bill exploded",
+     "learn": false
     },
     {
      "n": "17",
      "slug": "progress-stuck-at-zero",
-     "title": "import progress bar stuck at 0 %"
+     "title": "import progress bar stuck at 0 %",
+     "learn": false
     },
     {
      "n": "18",
      "slug": "payout-alert-silent",
-     "title": "payout failures never reach on-call"
+     "title": "payout failures never reach on-call",
+     "learn": false
     }
    ]
   }

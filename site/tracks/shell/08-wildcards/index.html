@@ -18,7 +18,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">shell</a> / level 08</div>
 <h1 class="lvl">wildcards — * means &quot;anything&quot;</h1>
 <p class="meta">shell · level 08 of 14 · <code>wildcards</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a <code>*</code> in a name stands for &quot;any characters&quot;. Before the command runs, the shell swaps the pattern for every name that matches — so the command sees a plain list of files: ls *.jpg             becomes   ls beach.jpg cat.jpg mountain.jpg mv *.jpg photos/     moves all three at once rm *                 deletes everything in the folder. (Now you see why rm deserves respect.) <code>*.txt</code> = anything ending in .txt.   <code>report*</code> = anything starting with report.   <code>*</code> alone = everything here. Try it: cd ~/.k8s-wargame/shell/sandbox ls ls *.jpg ls *.txt Your task: move every <code>.jpg</code> file in the sandbox into the folder <code>photos</code> — with one command. The <code>.txt</code> files stay. Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: a <code>*</code> in a name stands for &quot;any characters&quot;. Before the command runs, the shell swaps the pattern for every</p>
+<p>name that matches — so the command sees a plain list of files:</p>
+<pre>ls *.jpg             becomes   ls beach.jpg cat.jpg mountain.jpg
+mv *.jpg photos/     moves all three at once
+rm *                 deletes everything in the folder. (Now you see why rm deserves respect.)</pre>
+<p><code>*.txt</code> = anything ending in .txt.   <code>report*</code> = anything starting with report.   <code>*</code> alone = everything here.</p>
+<p>Try it:</p>
+<pre>cd ~/.k8s-wargame/shell/sandbox
+ls
+ls *.jpg
+ls *.txt</pre>
+<p>Your task: move every <code>.jpg</code> file in the sandbox into the folder <code>photos</code> — with one command. The <code>.txt</code> files stay.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track shell

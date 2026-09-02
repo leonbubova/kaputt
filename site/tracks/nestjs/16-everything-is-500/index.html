@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nestjs</a> / level 16</div>
 <h1 class="lvl">every error is a 500</h1>
 <p class="meta">nestjs · level 16 of 21 · <code>everything-is-500</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Frontend can&#x27;t distinguish &#x27;user not found&#x27; from a crash anymore: <code>GET /users/999</code> → 500, a bad id → 500, missing api key → 500. Started with the &#x27;don&#x27;t leak internals&#x27; hardening.&quot; Goal: 404 for unknown user, 400 for bad id, 401 without api key, 200 for valid requests — unexpected errors may stay 500. App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Frontend can&#x27;t distinguish &#x27;user not found&#x27; from a crash anymore: <code>GET /users/999</code> → 500, a bad id → 500, missing api key → 500. Started with the &#x27;don&#x27;t leak internals&#x27; hardening.&quot; Goal: 404 for unknown user, 400 for bad id, 401 without api key, 200 for valid requests — unexpected errors may stay 500.</p>
+<p>App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nestjs

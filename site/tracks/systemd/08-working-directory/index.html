@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">systemd</a> / level 08</div>
 <h1 class="lvl">metrics agent dies with 200/CHDIR</h1>
 <p class="meta">systemd · level 08 of 8 · <code>working-directory</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>wg-metrics.service</code> never comes up. The agent reads <code>config.ini</code> from its own directory (<code>/opt/wg/metrics/app</code>), works fine when you <code>cd</code> there and run it by hand. Don&#x27;t change the agent.&quot; Goal: <code>wg-metrics.service</code> is active and <code>/opt/wg/metrics/app/status</code> shows the interval from <code>config.ini</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>wg-metrics.service</code> never comes up. The agent reads <code>config.ini</code> from its own directory (<code>/opt/wg/metrics/app</code>), works fine when you <code>cd</code> there and run it by hand. Don&#x27;t change the agent.&quot;</p>
+<p>Goal: <code>wg-metrics.service</code> is active and <code>/opt/wg/metrics/app/status</code> shows the interval from <code>config.ini</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track systemd

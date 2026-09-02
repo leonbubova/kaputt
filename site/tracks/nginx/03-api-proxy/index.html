@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>the shop API is unreachable: /api/* no longer hits the backend — nginx level 03 — kaputt</title>
-<meta name="description" content="nginx exercise: the shop API is unreachable: /api/* no longer hits the backend. Fix a real broken nginx system in your own terminal — level 03 of 12, with hints and a checker.">
+<title>proxy_pass hands a path to an upstream, and its trailing slash rewrites the prefix — nginx level 03 — kaputt</title>
+<meta name="description" content="nginx exercise: proxy_pass hands a path to an upstream, and its trailing slash rewrites the prefix. Fix a real broken nginx system in your own terminal — level 03 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nginx/03-api-proxy/">
-<meta property="og:title" content="the shop API is unreachable: /api/* no longer hits the backend — nginx level 03 — kaputt"><meta property="og:description" content="nginx exercise: the shop API is unreachable: /api/* no longer hits the backend. Fix a real broken nginx system in your own terminal — level 03 of 12, with hints and a checker.">
+<meta property="og:title" content="proxy_pass hands a path to an upstream, and its trailing slash rewrites the prefix — nginx level 03 — kaputt"><meta property="og:description" content="nginx exercise: proxy_pass hands a path to an upstream, and its trailing slash rewrites the prefix. Fix a real broken nginx system in your own terminal — level 03 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,18 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nginx</a> / level 03</div>
-<h1 class="lvl">the shop API is unreachable: /api/* no longer hits the backend</h1>
+<h1 class="lvl">proxy_pass hands a path to an upstream, and its trailing slash rewrites the prefix</h1>
 <p class="meta">nginx · level 03 of 12 · <code>api-proxy</code></p>
-<div class="brief"><h2>the ticket</h2><p>The frontend calls /api/orders and expects the upstream (wg-backend:9000) to answer. Right now nothing proxies /api/, so the requests fall through to the static site. Add a location that proxies /api/ to http://wg-backend:9000/ (note the trailing slash).</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: nginx&#x27;s third kind of answer, after &quot;serve a file&quot; and &quot;return&quot;, is &quot;ask someone else&quot;. <code>proxy_pass http://host:port/;</code> forwards the request to that upstream and streams the reply back. Only a location with <code>proxy_pass</code> proxies — every other path is still looked up on disk under <code>root</code>.</p>
+<p>The trailing slash matters. <code>proxy_pass http://wg-backend:9000/;</code> (with slash) strips the matched location prefix: /api/orders becomes /orders upstream. Without the slash the full path /api/orders is passed through unchanged. Which one is right depends on what the backend expects.</p>
+<p>By default nginx sends the upstream&#x27;s hostname as Host. <code>proxy_set_header Host $host;</code> keeps the original Host so the backend knows which site it is serving.</p>
+<pre>location /api/ { ... }                              prefix match for everything under /api/
+proxy_pass http://wg-backend:9000/;                 forward, strip /api/
+proxy_set_header Host $host;                        keep the original Host
+docker exec wg-nginx wget -qO- http://wg-backend:9000/    is the upstream reachable from inside?</pre>
+<p>Try it first: run the wget line above — the backend answers <code>backend ok</code> on its root, so the only question is whether nginx hands requests to it.</p>
+<p>Your task: the frontend calls /api/orders and expects the upstream (wg-backend:9000) to answer. Right now nothing proxies /api/, so the requests fall through to the static site. Add a location that proxies /api/ to http://wg-backend:9000/ (note the trailing slash).</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nginx
@@ -26,7 +35,7 @@ wg level 3
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nginx/03-api-proxy">level source on github</a>.</p>
-<div class="pn"><a href="../02-redirect-old/index.html">← /old should 301 to /new, but it serves the homepage instead</a><a href="../04-frame-header/index.html">security scan: shop.local is missing the X-Frame-Options header →</a></div>
+<div class="pn"><a href="../02-redirect-old/index.html">← a redirect is a location that returns 301 and a new path</a><a href="../04-frame-header/index.html">add_header sets response headers, and where you put it decides which responses get it →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

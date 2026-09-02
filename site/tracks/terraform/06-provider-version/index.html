@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>&#x27;terraform init&#x27; fails: no available releases match — terraform level 06 — kaputt</title>
-<meta name="description" content="terraform exercise: &#x27;terraform init&#x27; fails: no available releases match. Fix a real broken terraform system in your own terminal — level 06 of 12, with hints and a checker.">
+<title>init resolves provider versions; an impossible constraint stops everything before plan — terraform level 06 — kaputt</title>
+<meta name="description" content="terraform exercise: init resolves provider versions; an impossible constraint stops everything before plan. Fix a real broken terraform system in your own terminal — level 06 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/terraform/06-provider-version/">
-<meta property="og:title" content="&#x27;terraform init&#x27; fails: no available releases match — terraform level 06 — kaputt"><meta property="og:description" content="terraform exercise: &#x27;terraform init&#x27; fails: no available releases match. Fix a real broken terraform system in your own terminal — level 06 of 12, with hints and a checker.">
+<meta property="og:title" content="init resolves provider versions; an impossible constraint stops everything before plan — terraform level 06 — kaputt"><meta property="og:description" content="terraform exercise: init resolves provider versions; an impossible constraint stops everything before plan. Fix a real broken terraform system in your own terminal — level 06 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">terraform</a> / level 06</div>
-<h1 class="lvl">&#x27;terraform init&#x27; fails: no available releases match</h1>
+<h1 class="lvl">init resolves provider versions; an impossible constraint stops everything before plan</h1>
 <p class="meta">terraform · level 06 of 12 · <code>provider-version</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;A teammate pinned the random provider and now nobody can init: <code>Error: Failed to query available provider packages ... no available releases match the given constraints</code>. The config itself is fine. Make init succeed.&quot; Goal: <code>terraform init</code> and <code>apply</code> succeed; <code>out/name.txt</code> is written by <code>random_pet</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: terraform itself knows nothing about files or random names — providers do. <code>versions.tf</code> lists them in <code>required_providers</code>, each with a <code>source</code> and a version constraint. <code>terraform init</code> reads that list, finds a released version that satisfies every constraint, and installs it. Only then can plan or apply run.</p>
+<p>Errors come in order: init (providers, versions) → plan (syntax, references) → apply (real-world failures). An init error means your resources have not been looked at yet. Read the init message: it names the provider and the constraint it could not satisfy.</p>
+<p>Constraints: <code>~&gt; 3.6</code> means 3.6 or any newer 3.x, never 4.0. In this play area providers come from an offline mirror holding local 2.x, random 3.x, null 3.x; a constraint outside those ranges matches nothing.</p>
+<pre>terraform init                          resolve and install providers — the first thing that can fail
+terraform providers                     which providers the config requires, with constraints
+version = &quot;~&gt; 3.6&quot;                      pessimistic constraint: &gt;= 3.6, &lt; 4.0
+terraform init -upgrade                 re-resolve after changing a constraint</pre>
+<p>Try it first: <code>terraform providers</code> — compare the constraints it prints with what the init error says.</p>
+<p>Your task: a teammate pinned the random provider and now nobody can init: <code>Error: Failed to query available provider packages ... no available releases match the given constraints</code>. The config itself is fine. Make init succeed.</p>
+<p>Goal: <code>terraform init</code> and <code>apply</code> succeed; <code>out/name.txt</code> is written by <code>random_pet</code>.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track terraform
@@ -26,7 +36,7 @@ wg level 6
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/terraform/06-provider-version">level source on github</a>.</p>
-<div class="pn"><a href="../05-count/index.html">← spin up three node files, not one</a><a href="../07-wrong-attribute/index.html">plan errors: Unsupported attribute .name →</a></div>
+<div class="pn"><a href="../05-count/index.html">← count makes N instances from one block, and count.index tells them apart</a><a href="../07-wrong-attribute/index.html">plan errors: Unsupported attribute .name →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

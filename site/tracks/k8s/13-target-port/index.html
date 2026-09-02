@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>connection refused — k8s level 13 — kaputt</title>
-<meta name="description" content="k8s exercise: connection refused. Fix a real broken k8s system in your own terminal — level 13 of 25, with hints and a checker.">
+<title>port is what clients dial, targetPort is where traffic lands on the pod — k8s level 13 — kaputt</title>
+<meta name="description" content="k8s exercise: port is what clients dial, targetPort is where traffic lands on the pod. Fix a real broken k8s system in your own terminal — level 13 of 25, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/k8s/13-target-port/">
-<meta property="og:title" content="connection refused — k8s level 13 — kaputt"><meta property="og:description" content="k8s exercise: connection refused. Fix a real broken k8s system in your own terminal — level 13 of 25, with hints and a checker.">
+<meta property="og:title" content="port is what clients dial, targetPort is where traffic lands on the pod — k8s level 13 — kaputt"><meta property="og:description" content="k8s exercise: port is what clients dial, targetPort is where traffic lands on the pod. Fix a real broken k8s system in your own terminal — level 13 of 25, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,18 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">k8s</a> / level 13</div>
-<h1 class="lvl">connection refused</h1>
+<h1 class="lvl">port is what clients dial, targetPort is where traffic lands on the pod</h1>
 <p class="meta">k8s · level 13 of 25 · <code>target-port</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Endpoints look fine this time, but <code>curl web</code> says connection refused.&quot; Goal: <code>http://web.wg.svc/</code> answers 200.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: a Service has two port numbers, and they may differ. <code>port</code> is the number on the Service IP that clients connect to. <code>targetPort</code> is the number on the pod that traffic is forwarded to. <code>port: 80, targetPort: 8080</code> gives a container on 8080 a clean 80 outside.</p>
+<p>That freedom is also the failure mode. If <code>targetPort</code> names a port nothing in the container listens on, the packet reaches a real pod and the pod&#x27;s kernel answers: connection refused. That is the opposite tell from the previous level — endpoints exist, and the connection is rejected instead of hanging.</p>
+<p>Endpoints show IP and port; the container listens on some port; the two must match. What a container listens on is decided by the process inside, not by any Kubernetes field; <code>containerPort</code> in the pod spec is documentation, not configuration.</p>
+<pre>kubectl get endpoints NAME                   pod IP and the port the service forwards to
+kubectl get svc NAME -o yaml                 port and targetPort as stored
+kubectl exec NAME -- netstat -tln            what the container really listens on
+kubectl patch svc NAME -p &#x27;{&quot;spec&quot;:{&quot;ports&quot;:[{&quot;port&quot;:..,&quot;targetPort&quot;:..}]}}&#x27;   change the ports</pre>
+<p>Try it first: <code>kubectl get endpoints web</code> — read the number after the colon.</p>
+<p>Your task: &quot;Endpoints look fine this time, but <code>curl web</code> says connection refused.&quot; Goal: <code>http://web.wg.svc/</code> answers 200.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track k8s
@@ -26,7 +35,7 @@ wg level 13
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/k8s/13-target-port">level source on github</a>.</p>
-<div class="pn"><a href="../12-no-endpoints/index.html">← service returns nothing</a><a href="../14-missing-secret/index.html">CreateContainerConfigError →</a></div>
+<div class="pn"><a href="../12-no-endpoints/index.html">← a Service with no endpoints selects no pods — compare selector and labels</a><a href="../14-missing-secret/index.html">CreateContainerConfigError →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>git status is cluttered with log files — git level 05 — kaputt</title>
-<meta name="description" content="git exercise: git status is cluttered with log files. Fix a real broken git system in your own terminal — level 05 of 22, with hints and a checker.">
+<title>.gitignore hides untracked files from git — and is itself a committed file — git level 05 — kaputt</title>
+<meta name="description" content="git exercise: .gitignore hides untracked files from git — and is itself a committed file. Fix a real broken git system in your own terminal — level 05 of 22, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/git/05-add-gitignore/">
-<meta property="og:title" content="git status is cluttered with log files — git level 05 — kaputt"><meta property="og:description" content="git exercise: git status is cluttered with log files. Fix a real broken git system in your own terminal — level 05 of 22, with hints and a checker.">
+<meta property="og:title" content=".gitignore hides untracked files from git — and is itself a committed file — git level 05 — kaputt"><meta property="og:description" content="git exercise: .gitignore hides untracked files from git — and is itself a committed file. Fix a real broken git system in your own terminal — level 05 of 22, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">git</a> / level 05</div>
-<h1 class="lvl">git status is cluttered with log files</h1>
+<h1 class="lvl">.gitignore hides untracked files from git — and is itself a committed file</h1>
 <p class="meta">git · level 05 of 22 · <code>add-gitignore</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Every run writes <code>debug.log</code> and it shows up in <code>git status</code>. Make git ignore all <code>*.log</code> files — for everyone, so it must be committed.&quot; Repo: <code>~/.k8s-wargame/git/repo</code>. Goal: <code>*.log</code> files are ignored via a committed <code>.gitignore</code>; <code>debug.log</code> still exists on disk; <code>git status</code> is clean.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: <code>git status</code> lists every untracked file so you never forget one. Build output and logs make that list useless. A <code>.gitignore</code> file at the repo root lists patterns; untracked files matching a pattern disappear from status and are never picked up by <code>git add .</code>.</p>
+<p>Patterns are one per line: an exact name (<code>debug.log</code>), a wildcard (<code>*.log</code>), a directory (<code>build/</code>). Ignoring only affects untracked files — an already committed file stays tracked whatever <code>.gitignore</code> says.</p>
+<p><code>.gitignore</code> is a normal file in the project. For the rule to reach every clone it must be added and committed like any other file. Ignored files stay on disk; git just stops mentioning them.</p>
+<pre>git status                     untracked files that need a rule
+echo &#x27;*.log&#x27; &gt;&gt; .gitignore     add a pattern (one per line)
+git check-ignore -v &lt;file&gt;     which rule, if any, ignores this file
+git status --ignored           show the files that are being hidden</pre>
+<p>Try it first: <code>git check-ignore -v debug.log</code> in the repo — exits 1, no rule matches yet.</p>
+<p>Your task: &quot;Every run writes <code>debug.log</code> and it shows up in <code>git status</code>. Make git ignore all <code>*.log</code> files — for everyone, so it must be committed.&quot; Repo: <code>~/.k8s-wargame/git/repo</code>.</p>
+<p>Goal: <code>*.log</code> files are ignored via a committed <code>.gitignore</code>; <code>debug.log</code> still exists on disk; <code>git status</code> is clean.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track git
@@ -26,7 +36,7 @@ wg level 5
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/git/05-add-gitignore">level source on github</a>.</p>
-<div class="pn"><a href="../04-fast-forward/index.html">← bring the finished branch into main</a><a href="../06-add-remote-push/index.html">publish the repo to the team&#x27;s server →</a></div>
+<div class="pn"><a href="../04-fast-forward/index.html">← merging a branch that is directly ahead just moves the pointer: fast-forward</a><a href="../06-add-remote-push/index.html">a remote is a named address of another repo; push copies your commits there →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

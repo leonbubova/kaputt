@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>/old should 301 to /new, but it serves the homepage instead — nginx level 02 — kaputt</title>
-<meta name="description" content="nginx exercise: /old should 301 to /new, but it serves the homepage instead. Fix a real broken nginx system in your own terminal — level 02 of 12, with hints and a checker.">
+<title>a redirect is a location that returns 301 and a new path — nginx level 02 — kaputt</title>
+<meta name="description" content="nginx exercise: a redirect is a location that returns 301 and a new path. Fix a real broken nginx system in your own terminal — level 02 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nginx/02-redirect-old/">
-<meta property="og:title" content="/old should 301 to /new, but it serves the homepage instead — nginx level 02 — kaputt"><meta property="og:description" content="nginx exercise: /old should 301 to /new, but it serves the homepage instead. Fix a real broken nginx system in your own terminal — level 02 of 12, with hints and a checker.">
+<meta property="og:title" content="a redirect is a location that returns 301 and a new path — nginx level 02 — kaputt"><meta property="og:description" content="nginx exercise: a redirect is a location that returns 301 and a new path. Fix a real broken nginx system in your own terminal — level 02 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,18 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nginx</a> / level 02</div>
-<h1 class="lvl">/old should 301 to /new, but it serves the homepage instead</h1>
+<h1 class="lvl">a redirect is a location that returns 301 and a new path</h1>
 <p class="meta">nginx · level 02 of 12 · <code>redirect-old</code></p>
-<div class="brief"><h2>the ticket</h2><p>Marketing moved a page. Requests to http://shop.local/old must return a 301 redirect with Location: /new. Right now /old just renders the app. Add the redirect on the shop.local server.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: a redirect is not a file and not a rewrite — it is an answer. nginx sends status 301 (moved permanently) or 302 (moved temporarily) plus a <code>Location:</code> header, and the browser makes a second request to that new URL. Nothing is served from the old path at all.</p>
+<p>In nginx that is one line inside a location: <code>return 301 /new;</code>. The second argument is the target; with a redirect code nginx puts it into the <code>Location:</code> header instead of the body. Relative targets like <code>/new</code> keep the current scheme and host; a full URL moves the client elsewhere.</p>
+<p>Because a request still picks only one location, an old path with no block of its own falls into <code>location /</code> and renders whatever the catch-all serves. The redirect only exists if the block exists.</p>
+<pre>return 301 /new;                                    permanent redirect to /new
+return 302 /new;                                    temporary redirect
+curl -I -H &#x27;Host: shop.local&#x27; http://127.0.0.1:8082/old    headers only: status + Location
+curl -L ...                                         follow the redirect like a browser</pre>
+<p>Try it first: <code>curl -I -H &#x27;Host: shop.local&#x27; http://127.0.0.1:8082/old</code> — note the status and whether a <code>Location:</code> line is present.</p>
+<p>Your task: marketing moved a page. Requests to http://shop.local/old must return a 301 redirect with Location: /new. Right now /old just renders the app. Add the redirect on the shop.local server.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nginx
@@ -26,7 +35,7 @@ wg level 2
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nginx/02-redirect-old">level source on github</a>.</p>
-<div class="pn"><a href="../01-health-endpoint/index.html">← monitoring alerts: GET /health returns the homepage, not &quot;ok&quot;</a><a href="../03-api-proxy/index.html">the shop API is unreachable: /api/* no longer hits the backend →</a></div>
+<div class="pn"><a href="../01-health-endpoint/index.html">← a request picks one location, and `return` answers it without a file</a><a href="../03-api-proxy/index.html">proxy_pass hands a path to an upstream, and its trailing slash rewrites the prefix →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

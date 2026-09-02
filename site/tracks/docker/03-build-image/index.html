@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>package the landing page as an image — docker level 03 — kaputt</title>
-<meta name="description" content="docker exercise: package the landing page as an image. Fix a real broken docker system in your own terminal — level 03 of 22, with hints and a checker.">
+<title>a Dockerfile builds your own image: FROM a base, COPY your files in — docker level 03 — kaputt</title>
+<meta name="description" content="docker exercise: a Dockerfile builds your own image: FROM a base, COPY your files in. Fix a real broken docker system in your own terminal — level 03 of 22, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/docker/03-build-image/">
-<meta property="og:title" content="package the landing page as an image — docker level 03 — kaputt"><meta property="og:description" content="docker exercise: package the landing page as an image. Fix a real broken docker system in your own terminal — level 03 of 22, with hints and a checker.">
+<meta property="og:title" content="a Dockerfile builds your own image: FROM a base, COPY your files in — docker level 03 — kaputt"><meta property="og:description" content="docker exercise: a Dockerfile builds your own image: FROM a base, COPY your files in. Fix a real broken docker system in your own terminal — level 03 of 22, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,16 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">docker</a> / level 03</div>
-<h1 class="lvl">package the landing page as an image</h1>
+<h1 class="lvl">a Dockerfile builds your own image: FROM a base, COPY your files in</h1>
 <p class="meta">docker · level 03 of 22 · <code>build-image</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Designers finished <code>index.html</code> (in <code>~/.k8s-wargame/docker/03-build-image/</code>). Ship it as an image so every environment gets the same page.&quot; Goal: write a <code>Dockerfile</code> there and build image <code>wg-site:1</code> that serves <code>index.html</code> with nginx on port 80 — <code>docker run --rm -p 18003:80 wg-site:1</code> must show the page at <code>curl localhost:18003</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: so far you ran images other people built. A Dockerfile is the recipe for your own: a text file of instructions, each adding a layer on the previous. <code>FROM</code> picks the base image — you inherit its files, exposed ports and start command. <code>COPY src dst</code> copies files from your directory into the image.</p>
+<p><code>docker build -t name:tag DIR</code> runs the recipe. DIR is the build context: the folder sent to the builder, the only place <code>COPY</code> can read from. <code>-t</code> names the result so you can <code>docker run</code> it; the tag after the colon is a version label you choose.</p>
+<p>The base image already knows how to serve: nginx images start nginx and serve whatever is in <code>/usr/share/nginx/html/</code>. Your image only has to put the page there.</p>
+<pre>FROM nginx:1.27-alpine                  first line of a Dockerfile: the base
+COPY index.html /usr/share/nginx/html/  copy from the build context into the image
+docker build -t wg-site:1 .             build the Dockerfile in this dir, tag it</pre>
+<p>Your task: &quot;Designers finished <code>index.html</code> (in <code>~/.k8s-wargame/docker/03-build-image/</code>). Ship it as an image so every environment gets the same page.&quot; Goal: write a <code>Dockerfile</code> there and build image <code>wg-site:1</code> that serves <code>index.html</code> with nginx on port 80 — <code>docker run --rm -p 18003:80 wg-site:1</code> must show the page at <code>curl localhost:18003</code>.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track docker
@@ -26,7 +33,7 @@ wg level 3
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/docker/03-build-image">level source on github</a>.</p>
-<div class="pn"><a href="../02-env-var/index.html">← configure the app through the environment</a><a href="../04-bind-mount/index.html">live-edit the page without rebuilding →</a></div>
+<div class="pn"><a href="../02-env-var/index.html">← a container lives as long as its main process; -e puts config in its environment</a><a href="../04-bind-mount/index.html">a bind mount shares a host directory with the container, live →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">helm</a> / level 20</div>
 <h1 class="lvl">audit finding: database password in helm</h1>
 <p class="meta">helm · level 20 of 20 · <code>secret-in-values</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Security ran <code>helm get values shop -n wg-helm --all</code> and found the DB password in plaintext. Also <code>helm get manifest</code>. Finding must be closed today; the app must keep working with the SAME password (<code>s3cret-hunter2</code>).&quot; Chart copy: <code>~/.k8s-wargame/helm/20-secret-in-values/shop</code>. Goal: neither <code>helm get values --all</code> nor <code>helm get manifest</code> contain the password (plain or base64), pod still gets <code>DB_PASSWORD</code> from a Secret and is available.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Security ran <code>helm get values shop -n wg-helm --all</code> and found the DB password in plaintext. Also <code>helm get manifest</code>. Finding must be closed today; the app must keep working with the SAME password (<code>s3cret-hunter2</code>).&quot;</p>
+<p>Chart copy: <code>~/.k8s-wargame/helm/20-secret-in-values/shop</code>. Goal: neither <code>helm get values --all</code> nor <code>helm get manifest</code> contain the password (plain or base64), pod still gets <code>DB_PASSWORD</code> from a Secret and is available.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track helm

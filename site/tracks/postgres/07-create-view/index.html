@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>the dashboard needs a revenue-per-customer view — postgres level 07 — kaputt</title>
-<meta name="description" content="postgres exercise: the dashboard needs a revenue-per-customer view. Fix a real broken postgres system in your own terminal — level 07 of 14, with hints and a checker.">
+<title>GROUP BY collapses rows into one per group; a VIEW saves a query under a name — postgres level 07 — kaputt</title>
+<meta name="description" content="postgres exercise: GROUP BY collapses rows into one per group; a VIEW saves a query under a name. Fix a real broken postgres system in your own terminal — level 07 of 14, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/postgres/07-create-view/">
-<meta property="og:title" content="the dashboard needs a revenue-per-customer view — postgres level 07 — kaputt"><meta property="og:description" content="postgres exercise: the dashboard needs a revenue-per-customer view. Fix a real broken postgres system in your own terminal — level 07 of 14, with hints and a checker.">
+<meta property="og:title" content="GROUP BY collapses rows into one per group; a VIEW saves a query under a name — postgres level 07 — kaputt"><meta property="og:description" content="postgres exercise: GROUP BY collapses rows into one per group; a VIEW saves a query under a name. Fix a real broken postgres system in your own terminal — level 07 of 14, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,18 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">postgres</a> / level 07</div>
-<h1 class="lvl">the dashboard needs a revenue-per-customer view</h1>
+<h1 class="lvl">GROUP BY collapses rows into one per group; a VIEW saves a query under a name</h1>
 <p class="meta">postgres · level 07 of 14 · <code>create-view</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;BI tools can only read tables and views. Give them <code>customer_totals</code>: customer <code>name</code> and <code>revenue</code> (sum of their order totals).&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>). Work = run SQL. Goal: view <code>customer_totals(name, revenue)</code> over <code>customers</code> + <code>orders</code>, one row per customer that has orders.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: a JOIN gives one row per order. One row per customer with a sum is aggregation. <code>GROUP BY c.name</code> folds all rows with the same name into one group, and an aggregate function like <code>SUM(o.total)</code> computes one value per group. Rule: every SELECT column is either in the GROUP BY or inside an aggregate. <code>AS x</code> names the computed column.</p>
+<p>A VIEW is a query stored in the database under a table-like name: <code>CREATE VIEW v AS SELECT …</code>. <code>select * from v</code> runs the stored query fresh each time — no copy, always current. Anything that can read a table can read a view, which is how you hand a shaped result to dashboards.</p>
+<pre>select c.name, sum(o.total) as revenue from … group by c.name;   one row per name, with a sum
+create view v as select …;                                       store the query as v
+select * from v;                                                  use it like a table
+\dv                                                               list views</pre>
+<p>Try it first: <code>select customer_id, count(*) from orders group by customer_id;</code> — orders per customer, one row each.</p>
+<p>Your task: &quot;BI tools can only read tables and views. Give them <code>customer_totals</code>: customer <code>name</code> and <code>revenue</code> (sum of their order totals).&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>). Work = run SQL.</p>
+<p>Goal: view <code>customer_totals(name, revenue)</code> over <code>customers</code> + <code>orders</code>, one row per customer that has orders.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track postgres
@@ -26,7 +35,7 @@ wg level 7
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/postgres/07-create-view">level source on github</a>.</p>
-<div class="pn"><a href="../06-join-query/index.html">← finance wants a list: who ordered what</a><a href="../08-slow-query/index.html">the order history page takes seconds →</a></div>
+<div class="pn"><a href="../06-join-query/index.html">← JOIN combines rows from two tables on a matching column</a><a href="../08-slow-query/index.html">the order history page takes seconds →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

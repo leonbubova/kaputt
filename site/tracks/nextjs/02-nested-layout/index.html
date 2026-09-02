@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>dashboard needs its own sub-navigation — nextjs level 02 — kaputt</title>
-<meta name="description" content="nextjs exercise: dashboard needs its own sub-navigation. Fix a real broken nextjs system in your own terminal — level 02 of 21, with hints and a checker.">
+<title>layouts nest: a layout.tsx wraps every page below its folder — nextjs level 02 — kaputt</title>
+<meta name="description" content="nextjs exercise: layouts nest: a layout.tsx wraps every page below its folder. Fix a real broken nextjs system in your own terminal — level 02 of 21, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nextjs/02-nested-layout/">
-<meta property="og:title" content="dashboard needs its own sub-navigation — nextjs level 02 — kaputt"><meta property="og:description" content="nextjs exercise: dashboard needs its own sub-navigation. Fix a real broken nextjs system in your own terminal — level 02 of 21, with hints and a checker.">
+<meta property="og:title" content="layouts nest: a layout.tsx wraps every page below its folder — nextjs level 02 — kaputt"><meta property="og:description" content="nextjs exercise: layouts nest: a layout.tsx wraps every page below its folder. Fix a real broken nextjs system in your own terminal — level 02 of 21, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nextjs</a> / level 02</div>
-<h1 class="lvl">dashboard needs its own sub-navigation</h1>
+<h1 class="lvl">layouts nest: a layout.tsx wraps every page below its folder</h1>
 <p class="meta">nextjs · level 02 of 21 · <code>nested-layout</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>/dashboard</code> and a new <code>/dashboard/settings</code> page should share a sub-nav (<code>Overview</code> → <code>/dashboard</code>, <code>Settings</code> → <code>/dashboard/settings</code>) — rendered once, not copied into each page. Mark the nav <code>data-testid=&quot;dashboard-nav&quot;</code>.&quot; App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: both URLs return 200 and contain the sub-nav; the nav lives in a nested layout, not in the pages.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: a <code>layout.tsx</code> is a component that receives <code>{ children }</code> and renders around it. The root one in <code>src/app/</code> wraps the whole site. Put another <code>layout.tsx</code> inside a route folder and it wraps only that folder and everything beneath it — nested inside the root layout, not instead of it.</p>
+<p>That is how shared UI stays in one place. A sub-navigation every <code>/dashboard/*</code> page needs belongs in <code>src/app/dashboard/layout.tsx</code>, written once; each <code>page.tsx</code> below renders only its own content and gets the nav for free. Copying the nav into every page works today and drifts tomorrow.</p>
+<p>One rule: only the root layout renders <code>&lt;html&gt;</code> and <code>&lt;body&gt;</code> — a nested layout returns a plain wrapper element.</p>
+<pre>src/app/&lt;route&gt;/layout.tsx        wraps &lt;route&gt; and all its children; receives { children }
+src/app/&lt;route&gt;/&lt;sub&gt;/page.tsx    a child route, rendered inside every layout above it
+import Link from &quot;next/link&quot;      client-side navigation between pages
+curl -s localhost:3100/dashboard | grep -o &#x27;&lt;nav[^&gt;]*&gt;&#x27;   is the nav in the HTML?</pre>
+<p>Try it first: <code>cat src/app/layout.tsx</code> — see where <code>children</code> sits inside <code>&lt;body&gt;</code>. A nested layout does the same without the html/body shell.</p>
+<p>Your task: <code>/dashboard</code> and a new <code>/dashboard/settings</code> page should share a sub-nav (<code>Overview</code> → <code>/dashboard</code>, <code>Settings</code> → <code>/dashboard/settings</code>) — rendered once, not copied into each page. Mark the nav <code>data-testid=&quot;dashboard-nav&quot;</code>. App: <code>~/.k8s-wargame/nextjs/app</code>.</p>
+<p>Goal: both URLs return 200 and contain the sub-nav; the nav lives in a nested layout, not in the pages.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nextjs
@@ -26,7 +36,7 @@ wg level 2
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nextjs/02-nested-layout">level source on github</a>.</p>
-<div class="pn"><a href="../01-add-page/index.html">← add an /about page</a><a href="../03-dynamic-route/index.html">add /posts/[slug] →</a></div>
+<div class="pn"><a href="../01-add-page/index.html">← a URL is a folder under src/app, and page.tsx is what it renders</a><a href="../03-dynamic-route/index.html">[slug] folders match any value, and the page reads it from params →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

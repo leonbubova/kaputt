@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">linux</a> / level 18</div>
 <h1 class="lvl">alice is &quot;not in the sudoers file&quot;</h1>
 <p class="meta">linux · level 18 of 23 · <code>sudo-denied</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;alice joined the ops team and was added to the group yesterday, but <code>sudo</code> still says she is not in the sudoers file. bob (not ops) must NOT get sudo.&quot; Goal: <code>su - alice -c &#x27;sudo -n id -u&#x27;</code> prints <code>0</code>; <code>su - bob -c &#x27;sudo -n true&#x27;</code> still fails.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;alice joined the ops team and was added to the group yesterday, but <code>sudo</code> still says she is not in the sudoers file. bob (not ops) must NOT get sudo.&quot;</p>
+<p>Goal: <code>su - alice -c &#x27;sudo -n id -u&#x27;</code> prints <code>0</code>; <code>su - bob -c &#x27;sudo -n true&#x27;</code> still fails.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track linux

@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>publishing a post fails with a weird 400 — supabase level 09 — kaputt</title>
-<meta name="description" content="supabase exercise: publishing a post fails with a weird 400. Fix a real broken supabase system in your own terminal — level 09 of 18, with hints and a checker.">
+<title>a trigger runs a PL/pgSQL function on every row, and NEW is that row — supabase level 09 — kaputt</title>
+<meta name="description" content="supabase exercise: a trigger runs a PL/pgSQL function on every row, and NEW is that row. Fix a real broken supabase system in your own terminal — level 09 of 18, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/supabase/09-trigger-typo/">
-<meta property="og:title" content="publishing a post fails with a weird 400 — supabase level 09 — kaputt"><meta property="og:description" content="supabase exercise: publishing a post fails with a weird 400. Fix a real broken supabase system in your own terminal — level 09 of 18, with hints and a checker.">
+<meta property="og:title" content="a trigger runs a PL/pgSQL function on every row, and NEW is that row — supabase level 09 — kaputt"><meta property="og:description" content="supabase exercise: a trigger runs a PL/pgSQL function on every row, and NEW is that row. Fix a real broken supabase system in your own terminal — level 09 of 18, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,18 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">supabase</a> / level 09</div>
-<h1 class="lvl">publishing a post fails with a weird 400</h1>
+<h1 class="lvl">a trigger runs a PL/pgSQL function on every row, and NEW is that row</h1>
 <p class="meta">supabase · level 09 of 18 · <code>trigger-typo</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Every <code>POST /rest/v1/posts</code> (service key, <code>{&quot;title&quot;:…,&quot;body&quot;:…}</code>) fails: <code>record &quot;new&quot; has no field …</code>. It worked before the slug feature shipped.&quot; Goal: posts can be inserted and get a slug like <code>hello-world-again</code> for title <code>Hello World, Again</code>. Don&#x27;t drop the feature.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: a trigger is Postgres running your function automatically on INSERT, UPDATE or DELETE. <code>before insert … for each row</code> means: for every new row, call the function first; inside it, <code>new</code> is the row about to be written, <code>new.column</code> its fields, and <code>return new</code> hands the (possibly modified) row on.</p>
+<p>A function body is checked loosely at <code>create</code> time. References to <code>new.&lt;field&gt;</code> are resolved only when the trigger fires — so a wrong field name does not fail at deploy, it fails on the first insert, with <code>record &quot;new&quot; has no field &quot;…&quot;</code>. That message is PL/pgSQL&#x27;s, not PostgREST&#x27;s; the API relays it as a 400.</p>
+<p>Investigation order: which triggers are on the table, which function each calls, what the body references, and whether the table has that column.</p>
+<pre>select tgname, tgrelid::regclass, tgfoid::regproc from pg_trigger where not tgisinternal;     triggers and their functions
+\sf public.fn                                                                                   the function body
+\d public.posts                                                                                 the real column names
+create or replace function public.fn() returns trigger language plpgsql as $$ … $$;            replace the body; the trigger keeps pointing at it</pre>
+<p>Your task: &quot;Every <code>POST /rest/v1/posts</code> (service key, <code>{&quot;title&quot;:…,&quot;body&quot;:…}</code>) fails: <code>record &quot;new&quot; has no field …</code>. It worked before the slug feature shipped.&quot;</p>
+<p>Goal: posts can be inserted and get a slug like <code>hello-world-again</code> for title <code>Hello World, Again</code>. Don&#x27;t drop the feature.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track supabase
@@ -26,7 +35,7 @@ wg level 9
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/supabase/09-trigger-typo">level source on github</a>.</p>
-<div class="pn"><a href="../08-missing-grant/index.html">← catalog: permission denied</a><a href="../10-updated-at/index.html">updated_at never changes →</a></div>
+<div class="pn"><a href="../08-missing-grant/index.html">← GRANT comes before RLS: 42501 means the role may not touch the table at all</a><a href="../10-updated-at/index.html">updated_at never changes →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

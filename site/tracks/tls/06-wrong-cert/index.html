@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">tls</a> / level 06</div>
 <h1 class="lvl">clients get a certificate-name error for shop.local</h1>
 <p class="meta">tls · level 06 of 10 · <code>wrong-cert</code></p>
-<div class="brief"><h2>the ticket</h2><p>HTTPS is up, but verifying clients reject it: the served certificate is issued for a different hostname, so it doesn&#x27;t match shop.local. Serve the correct certificate (and its key) for shop.local.</p></div>
+<div class="brief"><h2>the ticket</h2><p>HTTPS is up, but verifying clients reject it: the served certificate is issued for a different</p>
+<p>hostname, so it doesn&#x27;t match shop.local. Serve the correct certificate (and its key) for shop.local.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track tls
@@ -26,7 +27,7 @@ wg level 6
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/tls/06-wrong-cert">level source on github</a>.</p>
-<div class="pn"><a href="../05-cert-path-wrong/index.html">← nginx is down — it can&#x27;t open the certificate file</a><a href="../07-http2/index.html">the CDN wants HTTP/2 but the origin only speaks HTTP/1.1 over TLS →</a></div>
+<div class="pn"><a href="../05-cert-path-wrong/index.html">← nginx opens every file in its config at startup — a wrong path is fatal, and paths are container paths</a><a href="../07-http2/index.html">the CDN wants HTTP/2 but the origin only speaks HTTP/1.1 over TLS →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

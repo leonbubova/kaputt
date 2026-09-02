@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>add a login session that auto-expires — redis level 04 — kaputt</title>
-<meta name="description" content="redis exercise: add a login session that auto-expires. Fix a real broken redis system in your own terminal — level 04 of 12, with hints and a checker.">
+<title>a key can carry a time-to-live: write value and expiry in one SET — redis level 04 — kaputt</title>
+<meta name="description" content="redis exercise: a key can carry a time-to-live: write value and expiry in one SET. Fix a real broken redis system in your own terminal — level 04 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/redis/04-expire-session/">
-<meta property="og:title" content="add a login session that auto-expires — redis level 04 — kaputt"><meta property="og:description" content="redis exercise: add a login session that auto-expires. Fix a real broken redis system in your own terminal — level 04 of 12, with hints and a checker.">
+<meta property="og:title" content="a key can carry a time-to-live: write value and expiry in one SET — redis level 04 — kaputt"><meta property="og:description" content="redis exercise: a key can carry a time-to-live: write value and expiry in one SET. Fix a real broken redis system in your own terminal — level 04 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,17 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">redis</a> / level 04</div>
-<h1 class="lvl">add a login session that auto-expires</h1>
+<h1 class="lvl">a key can carry a time-to-live: write value and expiry in one SET</h1>
 <p class="meta">redis · level 04 of 12 · <code>expire-session</code></p>
-<div class="brief"><h2>the ticket</h2><p>Store a session string at <code>session:abc</code> with the value <code>token123</code>, and give it a time-to-live so it expires on its own (any TTL between 1 and 3600 seconds).</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: by default a Redis key lives until something deletes it. For a session token, a one-time code, a rate-limit window, that is wrong — the data has a natural lifetime, and after that it is garbage taking up memory.</p>
+<p>Redis solves this with a TTL (time-to-live) on the key. When the countdown reaches zero, the key deletes itself. No cron job, no cleanup script: the expiry is part of the data.</p>
+<p>The cleanest way to set it is at write time. <code>SET key value EX seconds</code> stores the value and starts the countdown in one atomic step, so there is never a moment where the key exists without an expiry. <code>TTL key</code> shows the seconds left.</p>
+<pre>SET session:abc token123 EX 300    write the value and expire it after 300 s
+TTL session:abc                    seconds remaining; -2 = key gone
+GET session:abc                    the value is a normal string until it expires</pre>
+<p>Try it first: <code>SET demo x EX 5</code>, then <code>TTL demo</code> a few times — watch it count down, then <code>GET demo</code> returns <code>(nil)</code>.</p>
+<p>Your task: store a session string at <code>session:abc</code> with the value <code>token123</code>, and give it a time-to-live so it expires on its own (any TTL between 1 and 3600 seconds).</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track redis
@@ -26,7 +34,7 @@ wg level 4
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/redis/04-expire-session">level source on github</a>.</p>
-<div class="pn"><a href="../03-list-queue/index.html">← the job queue is empty — list queue:jobs has no items</a><a href="../05-wrongtype/index.html">the events feed is broken: LPUSH returns WRONGTYPE →</a></div>
+<div class="pn"><a href="../03-list-queue/index.html">← a list keeps order: push onto an end, read by index</a><a href="../05-wrongtype/index.html">every key has exactly one type, fixed at creation: WRONGTYPE means the key is not what the app expects →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

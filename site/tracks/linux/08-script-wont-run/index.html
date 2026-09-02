@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>deploy hook fails with &quot;Permission denied&quot; — linux level 08 — kaputt</title>
-<meta name="description" content="linux exercise: deploy hook fails with &quot;Permission denied&quot;. Fix a real broken linux system in your own terminal — level 08 of 23, with hints and a checker.">
+<title>running a file needs the execute bit, even for root — linux level 08 — kaputt</title>
+<meta name="description" content="linux exercise: running a file needs the execute bit, even for root. Fix a real broken linux system in your own terminal — level 08 of 23, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/linux/08-script-wont-run/">
-<meta property="og:title" content="deploy hook fails with &quot;Permission denied&quot; — linux level 08 — kaputt"><meta property="og:description" content="linux exercise: deploy hook fails with &quot;Permission denied&quot;. Fix a real broken linux system in your own terminal — level 08 of 23, with hints and a checker.">
+<meta property="og:title" content="running a file needs the execute bit, even for root — linux level 08 — kaputt"><meta property="og:description" content="linux exercise: running a file needs the execute bit, even for root. Fix a real broken linux system in your own terminal — level 08 of 23, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">linux</a> / level 08</div>
-<h1 class="lvl">deploy hook fails with &quot;Permission denied&quot;</h1>
+<h1 class="lvl">running a file needs the execute bit, even for root</h1>
 <p class="meta">linux · level 08 of 23 · <code>script-wont-run</code></p>
-<div class="brief"><h2>the ticket</h2><p>Team says: &quot;the post-deploy hook <code>/opt/tools/healthcheck.sh</code> worked on the old box, here it just says Permission denied. We&#x27;re root, how can that be?&quot; Goal: <code>/opt/tools/healthcheck.sh</code> runs and prints <code>healthcheck ok</code>. Don&#x27;t rewrite the script.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: to run a script by its path, the kernel checks the file&#x27;s mode for the execute bit (<code>x</code>). Without it the file is just readable text — bash can read it, but nothing can *run* it. That gives &quot;Permission denied&quot;, even for root, even though root can read every byte.</p>
+<p>This is why &quot;Permission denied&quot; is not always about ownership. Read the mode first: <code>-rw-r--r--</code> has no <code>x</code> anywhere; <code>-rwxr-xr-x</code> does. Files lose the bit when they are copied through tools that do not preserve modes — an upload, a paste, a git checkout on some systems.</p>
+<p><code>chmod +x</code> adds the bit for everyone; <code>chmod u+x</code> only for the owner. The content of the script does not change.</p>
+<pre>ls -l FILE                is there an x in the mode?
+chmod +x FILE             add the execute bit
+bash FILE                 run it without the bit (bash reads it as input)
+./FILE or /full/path      run it by path — needs the bit</pre>
+<p>Try it first: <code>ls -l /bin/ls /etc/hostname</code> — a program has x, a data file does not.</p>
+<p>Your task: &quot;The post-deploy hook <code>/opt/tools/healthcheck.sh</code> worked on the old box, here it just says Permission denied. We&#x27;re root, how can that be?&quot;</p>
+<p>Goal: <code>/opt/tools/healthcheck.sh</code> runs and prints <code>healthcheck ok</code>. Don&#x27;t rewrite the script.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track linux
@@ -26,7 +36,7 @@ wg level 8
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/linux/08-script-wont-run">level source on github</a>.</p>
-<div class="pn"><a href="../07-top-talker/index.html">← which client hammers us the most?</a><a href="../09-secret-too-open/index.html">app refuses to start: &quot;key file permissions too open&quot; →</a></div>
+<div class="pn"><a href="../07-top-talker/index.html">← pipelines: sort | uniq -c | sort -rn answers &quot;which appears most&quot;</a><a href="../09-secret-too-open/index.html">secrets are owner-only: programs check a key file&#x27;s mode and refuse it →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

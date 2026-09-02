@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>helm install blows up before anything reaches the cluster — helm level 06 — kaputt</title>
-<meta name="description" content="helm exercise: helm install blows up before anything reaches the cluster. Fix a real broken helm system in your own terminal — level 06 of 20, with hints and a checker.">
+<title>templates render locally first: a parse error stops before the cluster is touched — helm level 06 — kaputt</title>
+<meta name="description" content="helm exercise: templates render locally first: a parse error stops before the cluster is touched. Fix a real broken helm system in your own terminal — level 06 of 20, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/helm/06-template-syntax/">
-<meta property="og:title" content="helm install blows up before anything reaches the cluster — helm level 06 — kaputt"><meta property="og:description" content="helm exercise: helm install blows up before anything reaches the cluster. Fix a real broken helm system in your own terminal — level 06 of 20, with hints and a checker.">
+<meta property="og:title" content="templates render locally first: a parse error stops before the cluster is touched — helm level 06 — kaputt"><meta property="og:description" content="helm exercise: templates render locally first: a parse error stops before the cluster is touched. Fix a real broken helm system in your own terminal — level 06 of 20, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">helm</a> / level 06</div>
-<h1 class="lvl">helm install blows up before anything reaches the cluster</h1>
+<h1 class="lvl">templates render locally first: a parse error stops before the cluster is touched</h1>
 <p class="meta">helm · level 06 of 20 · <code>template-syntax</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;CI runs <code>helm install web ./web -n wg-helm</code> and dies with a parse error nobody understands. Nothing gets created.&quot; Your copy of the chart: <code>~/.k8s-wargame/helm/06-template-syntax/web</code>. Goal: release <code>web</code> is <code>deployed</code> in <code>wg-helm</code>, pod ready, page at <code>http://web.wg-helm.svc/</code>. Keep the memory limit.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: <code>helm install</code> has two phases. First it renders the templates into plain YAML on your machine; only then does it send that YAML to the API server. A broken template fails in phase one — no objects, no pods, the cluster never saw anything. That is why the error names a file and a line inside <code>templates/</code>, not a Kubernetes resource.</p>
+<p>Templates use Go template syntax: <code>{{ if ... }}</code>, <code>{{ range ... }}</code> and <code>{{ with ... }}</code> open a block, and each block must be closed with <code>{{ end }}</code>. An unclosed block is the classic cause of <code>unexpected EOF</code>.</p>
+<p>Because rendering is local, <code>helm template</code> reproduces the exact error without a cluster — iterate there, then install.</p>
+<pre>helm template web ./web                           render only; same error, no cluster
+{{- if .Values.x }} ... {{- end }}                every opener needs its end
+grep -n &#x27;{{&#x27; web/templates/*.yaml                 list all template directives with line numbers
+helm install web ./web -n wg-helm                 once it renders</pre>
+<p>Try it first: <code>helm template web ./web 2&gt;&amp;1 | tail -3</code> — read the file name and line in the error.</p>
+<p>Your task: &quot;CI runs <code>helm install web ./web -n wg-helm</code> and dies with a parse error nobody understands. Nothing gets created.&quot;</p>
+<p>Your copy of the chart: <code>~/.k8s-wargame/helm/06-template-syntax/web</code>. Goal: release <code>web</code> is <code>deployed</code> in <code>wg-helm</code>, pod ready, page at <code>http://web.wg-helm.svc/</code>. Keep the memory limit.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track helm
@@ -26,7 +36,7 @@ wg level 6
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/helm/06-template-syntax">level source on github</a>.</p>
-<div class="pn"><a href="../05-upgrade-uninstall/index.html">← ship 0.2.0, clean up the old one</a><a href="../07-values-typo/index.html">helm says deployed, pod says no →</a></div>
+<div class="pn"><a href="../05-upgrade-uninstall/index.html">← chart version vs release revision; uninstall removes everything a release owns</a><a href="../07-values-typo/index.html">deployed means accepted, not working: a missing value renders as nothing →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

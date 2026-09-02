@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>which client hammers us the most? — linux level 07 — kaputt</title>
-<meta name="description" content="linux exercise: which client hammers us the most?. Fix a real broken linux system in your own terminal — level 07 of 23, with hints and a checker.">
+<title>pipelines: sort | uniq -c | sort -rn answers &quot;which appears most&quot; — linux level 07 — kaputt</title>
+<meta name="description" content="linux exercise: pipelines: sort | uniq -c | sort -rn answers &quot;which appears most&quot;. Fix a real broken linux system in your own terminal — level 07 of 23, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/linux/07-top-talker/">
-<meta property="og:title" content="which client hammers us the most? — linux level 07 — kaputt"><meta property="og:description" content="linux exercise: which client hammers us the most?. Fix a real broken linux system in your own terminal — level 07 of 23, with hints and a checker.">
+<meta property="og:title" content="pipelines: sort | uniq -c | sort -rn answers &quot;which appears most&quot; — linux level 07 — kaputt"><meta property="og:description" content="linux exercise: pipelines: sort | uniq -c | sort -rn answers &quot;which appears most&quot;. Fix a real broken linux system in your own terminal — level 07 of 23, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">linux</a> / level 07</div>
-<h1 class="lvl">which client hammers us the most?</h1>
+<h1 class="lvl">pipelines: sort | uniq -c | sort -rn answers &quot;which appears most&quot;</h1>
 <p class="meta">linux · level 07 of 23 · <code>top-talker</code></p>
-<div class="brief"><h2>the ticket</h2><p>Ticket: &quot;From <code>/var/log/app/access.log</code>, find the client IP (first field) with the most requests and write only that IP to <code>/answer</code>.&quot; Goal: <code>/answer</code> contains the most frequent client IP.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: a pipe <code>|</code> sends one command&#x27;s output into the next command&#x27;s input. Instead of one tool that does everything, you chain small ones, each doing a single transformation. Build it left to right and look at the output after each step.</p>
+<p>&quot;Who appears most often&quot; is a classic chain. <code>awk &#x27;{print $1}&#x27;</code> keeps only the first column. <code>sort</code> puts equal values next to each other — necessary because <code>uniq -c</code> only counts *adjacent* duplicates. <code>sort -rn</code> orders the counts numerically, biggest first, and <code>head -1</code> keeps the winner.</p>
+<p>The result line looks like <code>  123 10.0.0.7</code> — count then value. One more <code>awk &#x27;{print $2}&#x27;</code> peels off the value alone.</p>
+<pre>awk &#x27;{print $1}&#x27; FILE        first column of every line
+sort | uniq -c               group equal lines and count them
+sort -rn | head -3           highest counts first, top three
+awk &#x27;{print $2}&#x27;             second column: the value without its count</pre>
+<p>Try it first: <code>awk &#x27;{print $1}&#x27; /var/log/app/access.log | sort | uniq -c</code> — every client with its count.</p>
+<p>Your task: &quot;From <code>/var/log/app/access.log</code>, find the client IP (first field) with the most requests and write only that IP to <code>/answer</code>.&quot;</p>
+<p>Goal: <code>/answer</code> contains the most frequent client IP.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track linux
@@ -26,7 +36,7 @@ wg level 7
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/linux/07-top-talker">level source on github</a>.</p>
-<div class="pn"><a href="../06-exact-mode/index.html">← db.conf: owner reads and writes, group reads, nobody else</a><a href="../08-script-wont-run/index.html">deploy hook fails with &quot;Permission denied&quot; →</a></div>
+<div class="pn"><a href="../06-exact-mode/index.html">← file modes: three digits say what owner, group and others may do</a><a href="../08-script-wont-run/index.html">running a file needs the execute bit, even for root →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

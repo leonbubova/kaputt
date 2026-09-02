@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>compose up fails for the cache service — docker level 10 — kaputt</title>
-<meta name="description" content="docker exercise: compose up fails for the cache service. Fix a real broken docker system in your own terminal — level 10 of 22, with hints and a checker.">
+<title>an image name is repo:tag, and a tag that is not in the registry cannot be pulled — docker level 10 — kaputt</title>
+<meta name="description" content="docker exercise: an image name is repo:tag, and a tag that is not in the registry cannot be pulled. Fix a real broken docker system in your own terminal — level 10 of 22, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/docker/10-image-tag/">
-<meta property="og:title" content="compose up fails for the cache service — docker level 10 — kaputt"><meta property="og:description" content="docker exercise: compose up fails for the cache service. Fix a real broken docker system in your own terminal — level 10 of 22, with hints and a checker.">
+<meta property="og:title" content="an image name is repo:tag, and a tag that is not in the registry cannot be pulled — docker level 10 — kaputt"><meta property="og:description" content="docker exercise: an image name is repo:tag, and a tag that is not in the registry cannot be pulled. Fix a real broken docker system in your own terminal — level 10 of 22, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,18 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">docker</a> / level 10</div>
-<h1 class="lvl">compose up fails for the cache service</h1>
+<h1 class="lvl">an image name is repo:tag, and a tag that is not in the registry cannot be pulled</h1>
 <p class="meta">docker · level 10 of 22 · <code>image-tag</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>docker compose up -d</code> in the new stack errors out and <code>wg-cache</code> never appears. <code>wg-web</code> is fine.&quot; Goal: both <code>wg-web</code> and <code>wg-cache</code> (a redis 7) running from the compose file in <code>~/.k8s-wargame/docker/10-image-tag/</code>, and <code>docker exec wg-cache redis-cli ping</code> answers PONG.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: <code>redis:7-alpine</code> is two parts. <code>redis</code> is the repository; <code>7-alpine</code> is the tag, a label the publisher attached to one build. Tags are plain strings: <code>7-alpine</code>, <code>7.2-alpine</code>, <code>alpine</code> may all exist, <code>7-alpin</code> does not, and Docker cannot guess what you meant.</p>
+<p>Before starting a service, compose must have its image locally or pull it. A pull for a tag that does not exist fails with &quot;manifest unknown&quot; or &quot;not found&quot; — and only that service fails. The others start normally: one container missing, the rest of the stack healthy.</p>
+<p>The error is printed by the command that tried the pull. Re-run <code>docker compose up -d</code> and read it; it names the image it could not get. Then check which tags you do have locally.</p>
+<pre>docker compose up -d                      start; the pull error names the missing image
+docker images REPO                        which tags of REPO are already local
+docker pull repo:tag                      try a tag on its own to see the exact error</pre>
+<p>Try it first: <code>docker pull alpine:3.20.nope</code> — the error text a bad tag produces.</p>
+<p>Your task: &quot;<code>docker compose up -d</code> in the new stack errors out and <code>wg-cache</code> never appears. <code>wg-web</code> is fine.&quot;</p>
+<p>Goal: both <code>wg-web</code> and <code>wg-cache</code> (a redis 7) running from the compose file in <code>~/.k8s-wargame/docker/10-image-tag/</code>, and <code>docker exec wg-cache redis-cli ping</code> answers PONG.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track docker
@@ -26,7 +35,7 @@ wg level 10
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/docker/10-image-tag">level source on github</a>.</p>
-<div class="pn"><a href="../09-wrong-port/index.html">← website on :18009 resets the connection</a><a href="../11-bind-mount/index.html">static site returns 403 →</a></div>
+<div class="pn"><a href="../09-wrong-port/index.html">← a port mapping is a blind forward: the container side must be where the process listens</a><a href="../11-bind-mount/index.html">a bind mount never fails: a missing host path is created empty, silently →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

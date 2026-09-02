@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>add an index for the activity feed — postgres level 05 — kaputt</title>
-<meta name="description" content="postgres exercise: add an index for the activity feed. Fix a real broken postgres system in your own terminal — level 05 of 14, with hints and a checker.">
+<title>an index makes WHERE on a column fast; EXPLAIN shows whether it is used — postgres level 05 — kaputt</title>
+<meta name="description" content="postgres exercise: an index makes WHERE on a column fast; EXPLAIN shows whether it is used. Fix a real broken postgres system in your own terminal — level 05 of 14, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/postgres/05-create-index/">
-<meta property="og:title" content="add an index for the activity feed — postgres level 05 — kaputt"><meta property="og:description" content="postgres exercise: add an index for the activity feed. Fix a real broken postgres system in your own terminal — level 05 of 14, with hints and a checker.">
+<meta property="og:title" content="an index makes WHERE on a column fast; EXPLAIN shows whether it is used — postgres level 05 — kaputt"><meta property="og:description" content="postgres exercise: an index makes WHERE on a column fast; EXPLAIN shows whether it is used. Fix a real broken postgres system in your own terminal — level 05 of 14, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">postgres</a> / level 05</div>
-<h1 class="lvl">add an index for the activity feed</h1>
+<h1 class="lvl">an index makes WHERE on a column fast; EXPLAIN shows whether it is used</h1>
 <p class="meta">postgres · level 05 of 14 · <code>create-index</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;The feed does <code>select * from events where user_id = ?</code> — 100k rows, only a primary key. Give it an index before launch.&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>). Work = run SQL. Goal: an index on <code>events (user_id)</code>; <code>explain</code> of that query shows an index is used. No data deleted.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: without an index, answering <code>WHERE user_id = 42</code> means reading every row — a Sequential Scan. An index is a separate sorted structure on a column that lets postgres jump straight to the matching rows: an Index Scan.</p>
+<p>Don&#x27;t guess whether a query is fast; ask. <code>EXPLAIN</code> prints the plan without running the query. <code>Seq Scan on events</code> means the whole table; <code>Index Scan</code> or <code>Bitmap Index Scan using …</code> means it found an index for the filter. <code>EXPLAIN ANALYZE</code> also runs it and adds real timings.</p>
+<p>Indexes cost write speed and disk: add them where queries filter or join. A primary key gets one automatically — only on the key column.</p>
+<pre>explain select * from t where col = 1;      the plan: Seq Scan or Index Scan?
+create index t_col_idx on t (col);          build an index on col
+\di                                         list indexes
+\d t                                        the table&#x27;s &quot;Indexes:&quot; block</pre>
+<p>Try it first: <code>explain select * from events where user_id = 42;</code> — read the first line of the plan.</p>
+<p>Your task: &quot;The feed does <code>select * from events where user_id = ?</code> — 100k rows, only a primary key. Give it an index before launch.&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>). Work = run SQL.</p>
+<p>Goal: an index on <code>events (user_id)</code>; <code>explain</code> of that query shows an index is used. No data deleted.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track postgres
@@ -26,7 +36,7 @@ wg level 5
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/postgres/05-create-index">level source on github</a>.</p>
-<div class="pn"><a href="../04-foreign-key/index.html">← orders point at customers that don&#x27;t exist</a><a href="../06-join-query/index.html">finance wants a list: who ordered what →</a></div>
+<div class="pn"><a href="../04-foreign-key/index.html">← a foreign key ties a column to rows that must exist in another table</a><a href="../06-join-query/index.html">JOIN combines rows from two tables on a matching column →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

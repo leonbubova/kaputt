@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FAQ page blank for logged-out visitors — supabase level 06 — kaputt</title>
-<meta name="description" content="supabase exercise: FAQ page blank for logged-out visitors. Fix a real broken supabase system in your own terminal — level 06 of 18, with hints and a checker.">
+<title>a policy only applies to the roles in its TO clause — supabase level 06 — kaputt</title>
+<meta name="description" content="supabase exercise: a policy only applies to the roles in its TO clause. Fix a real broken supabase system in your own terminal — level 06 of 18, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/supabase/06-policy-wrong-role/">
-<meta property="og:title" content="FAQ page blank for logged-out visitors — supabase level 06 — kaputt"><meta property="og:description" content="supabase exercise: FAQ page blank for logged-out visitors. Fix a real broken supabase system in your own terminal — level 06 of 18, with hints and a checker.">
+<meta property="og:title" content="a policy only applies to the roles in its TO clause — supabase level 06 — kaputt"><meta property="og:description" content="supabase exercise: a policy only applies to the roles in its TO clause. Fix a real broken supabase system in your own terminal — level 06 of 18, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,18 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">supabase</a> / level 06</div>
-<h1 class="lvl">FAQ page blank for logged-out visitors</h1>
+<h1 class="lvl">a policy only applies to the roles in its TO clause</h1>
 <p class="meta">supabase · level 06 of 18 · <code>policy-wrong-role</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;The FAQ shows fine once you log in, but the public landing page (anon key) gets <code>[]</code> from <code>/rest/v1/faq</code>. Someone already added a read policy, so it&#x27;s not RLS… right?&quot; Goal: anon GET returns all 3 FAQ rows. Keep RLS enabled.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: &quot;there is a read policy&quot; is not the same as &quot;everyone can read&quot;. Every policy carries a list of roles (<code>to …</code>), and it is silent for any role not on that list. Two roles hit the API: the anon key runs as <code>anon</code>, a logged-in user&#x27;s JWT runs as <code>authenticated</code>. A policy written for one does nothing for the other.</p>
+<p>The symptom is the same as having no policy at all: the excluded role gets <code>200 []</code>. So when one client sees rows and another does not, check who each one is and who the policy names — before touching <code>using</code>.</p>
+<p><code>pg_policies</code> shows <code>roles</code> as an array. A role list can be changed in place with <code>alter policy … to …</code>; the row condition stays as it was.</p>
+<pre>select policyname, roles, cmd, qual from pg_policies where tablename=&#x27;faq&#x27;;     roles = who it applies to
+alter policy &quot;name&quot; on public.t to anon, authenticated;                         change only the role list
+curl -s &quot;$API_URL/rest/v1/faq&quot; -H &quot;apikey: $ANON_KEY&quot;                          as role anon</pre>
+<p>Try it first: <code>select rolname from pg_roles where rolname in (&#x27;anon&#x27;,&#x27;authenticated&#x27;,&#x27;service_role&#x27;);</code> — the three API roles, as real Postgres roles.</p>
+<p>Your task: &quot;The FAQ shows fine once you log in, but the public landing page (anon key) gets <code>[]</code> from <code>/rest/v1/faq</code>. Someone already added a read policy, so it&#x27;s not RLS… right?&quot;</p>
+<p>Goal: anon GET returns all 3 FAQ rows. Keep RLS enabled.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track supabase
@@ -26,7 +35,7 @@ wg level 6
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/supabase/06-policy-wrong-role">level source on github</a>.</p>
-<div class="pn"><a href="../05-storage-bucket/index.html">← a place for files</a><a href="../07-insert-with-check/index.html">visitors can&#x27;t sign the guestbook →</a></div>
+<div class="pn"><a href="../05-storage-bucket/index.html">← a storage bucket is a row in storage.buckets, and public is a flag on it</a><a href="../07-insert-with-check/index.html">USING filters rows you read, WITH CHECK judges rows you write →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

@@ -18,7 +18,17 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">shell</a> / level 05</div>
 <h1 class="lvl">reading files — cat and less</h1>
 <p class="meta">shell · level 05 of 14 · <code>reading-files</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: two ways to look inside a file: cat FILE     print the whole file on the screen. Perfect for short files. less FILE    show one screen at a time. Space or ↓ moves on, ↑ goes back, q quits. For long files. Remember q. Everyone gets stuck inside less exactly once — now you won&#x27;t. Try it: cd ~/.k8s-wargame/shell/sandbox cat letter.txt less long.txt        (look around, then press q) Your task: <code>letter.txt</code> in the sandbox contains a secret word. Read it, then write that word — just the word — into a new file <code>answer.txt</code> in the sandbox. Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: two ways to look inside a file:</p>
+<pre>cat FILE     print the whole file on the screen. Perfect for short files.
+less FILE    show one screen at a time. Space or ↓ moves on, ↑ goes back, q quits. For long files.</pre>
+<p>Remember q. Everyone gets stuck inside less exactly once — now you won&#x27;t.</p>
+<p>Try it:</p>
+<pre>cd ~/.k8s-wargame/shell/sandbox
+cat letter.txt
+less long.txt        (look around, then press q)</pre>
+<p>Your task: <code>letter.txt</code> in the sandbox contains a secret word. Read it, then write that word — just the word —</p>
+<p>into a new file <code>answer.txt</code> in the sandbox.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track shell

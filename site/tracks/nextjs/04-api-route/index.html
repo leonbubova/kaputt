@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>add GET /api/ping — nextjs level 04 — kaputt</title>
-<meta name="description" content="nextjs exercise: add GET /api/ping. Fix a real broken nextjs system in your own terminal — level 04 of 21, with hints and a checker.">
+<title>route.ts turns a folder into an API endpoint: one exported function per HTTP method — nextjs level 04 — kaputt</title>
+<meta name="description" content="nextjs exercise: route.ts turns a folder into an API endpoint: one exported function per HTTP method. Fix a real broken nextjs system in your own terminal — level 04 of 21, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nextjs/04-api-route/">
-<meta property="og:title" content="add GET /api/ping — nextjs level 04 — kaputt"><meta property="og:description" content="nextjs exercise: add GET /api/ping. Fix a real broken nextjs system in your own terminal — level 04 of 21, with hints and a checker.">
+<meta property="og:title" content="route.ts turns a folder into an API endpoint: one exported function per HTTP method — nextjs level 04 — kaputt"><meta property="og:description" content="nextjs exercise: route.ts turns a folder into an API endpoint: one exported function per HTTP method. Fix a real broken nextjs system in your own terminal — level 04 of 21, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nextjs</a> / level 04</div>
-<h1 class="lvl">add GET /api/ping</h1>
+<h1 class="lvl">route.ts turns a folder into an API endpoint: one exported function per HTTP method</h1>
 <p class="meta">nextjs · level 04 of 21 · <code>api-route</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;The load balancer needs a cheap health probe: <code>GET /api/ping</code> → JSON <code>{&quot;ok&quot;:true}</code> with status 200. Other methods may 405.&quot; App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: <code>curl localhost:3100/api/ping</code> prints <code>{&quot;ok&quot;:true}</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: pages return HTML. When a URL should return JSON (or anything that is not a page), the folder gets a <code>route.ts</code> instead of a <code>page.tsx</code>. Same rule for the URL — folder path = path — but a Route Handler exports functions named after HTTP methods: <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>. Next.js calls the one matching the request.</p>
+<p>Each function returns a web-standard <code>Response</code>. <code>NextResponse.json({...})</code> builds one with a JSON body and the right <code>Content-Type</code> header. Methods you do not export do not exist: Next.js answers them with <code>405 Method Not Allowed</code> on its own, which is exactly what a health probe wants — cheap, explicit, no accidental writes.</p>
+<p>A folder holds either <code>page.tsx</code> or <code>route.ts</code>, never both at the same path.</p>
+<pre>src/app/api/&lt;x&gt;/route.ts          endpoint at /api/&lt;x&gt;
+export async function GET() { return NextResponse.json({ ok: true }); }   the whole handler
+import { NextResponse } from &quot;next/server&quot;
+curl -i localhost:3100/api/ping   status line + headers + body</pre>
+<p>Try it first: <code>cat src/app/api/health/route.ts</code> and <code>curl -s localhost:3100/api/health</code> — one exported function, one JSON answer. Now <code>curl -i -X POST localhost:3100/api/health</code> and read the status.</p>
+<p>Your task: the load balancer needs a cheap health probe: <code>GET /api/ping</code> → JSON <code>{&quot;ok&quot;:true}</code> with status 200. Other methods may 405. App: <code>~/.k8s-wargame/nextjs/app</code>.</p>
+<p>Goal: <code>curl localhost:3100/api/ping</code> prints <code>{&quot;ok&quot;:true}</code>.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nextjs
@@ -26,7 +36,7 @@ wg level 4
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nextjs/04-api-route">level source on github</a>.</p>
-<div class="pn"><a href="../03-dynamic-route/index.html">← add /posts/[slug]</a><a href="../05-client-component/index.html">add a like button to the product page →</a></div>
+<div class="pn"><a href="../03-dynamic-route/index.html">← [slug] folders match any value, and the page reads it from params</a><a href="../05-client-component/index.html">interactivity lives in a &quot;use client&quot; file that a server page renders →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

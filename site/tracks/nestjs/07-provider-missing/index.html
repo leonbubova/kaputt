@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>api won&#x27;t start after the users refactor — nestjs level 07 — kaputt</title>
-<meta name="description" content="nestjs exercise: api won&#x27;t start after the users refactor. Fix a real broken nestjs system in your own terminal — level 07 of 21, with hints and a checker.">
+<title>read the DI error: it names the module, the class and which argument is unsatisfied — nestjs level 07 — kaputt</title>
+<meta name="description" content="nestjs exercise: read the DI error: it names the module, the class and which argument is unsatisfied. Fix a real broken nestjs system in your own terminal — level 07 of 21, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nestjs/07-provider-missing/">
-<meta property="og:title" content="api won&#x27;t start after the users refactor — nestjs level 07 — kaputt"><meta property="og:description" content="nestjs exercise: api won&#x27;t start after the users refactor. Fix a real broken nestjs system in your own terminal — level 07 of 21, with hints and a checker.">
+<meta property="og:title" content="read the DI error: it names the module, the class and which argument is unsatisfied — nestjs level 07 — kaputt"><meta property="og:description" content="nestjs exercise: read the DI error: it names the module, the class and which argument is unsatisfied. Fix a real broken nestjs system in your own terminal — level 07 of 21, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nestjs</a> / level 07</div>
-<h1 class="lvl">api won&#x27;t start after the users refactor</h1>
+<h1 class="lvl">read the DI error: it names the module, the class and which argument is unsatisfied</h1>
 <p class="meta">nestjs · level 07 of 21 · <code>provider-missing</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Someone split <code>users</code> into its own module yesterday. Since then <code>npm run start:dev</code> dies at boot with a red Nest error.&quot; Goal: the app boots, <code>GET /users</code> lists the seed users and <code>GET /users/1</code> works. App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: Nest builds the entire dependency graph before it listens. Every constructor parameter of every controller and provider is looked up: provided in the same module, or exported by an import? One miss and the process exits — nothing half-boots.</p>
+<p>The error is precise if you read it slowly. &quot;Nest can&#x27;t resolve dependencies of the X (?)&quot; — X is the class whose constructor failed, the <code>?</code> sits at the argument it could not fill. It continues: &quot;the argument Y at index [0] is available in the Z context&quot; — the missing type and the module that was searched. The tail lists the possible fixes; only one applies.</p>
+<p>Subtle case: <code>exports</code> says &quot;others may have this&quot;, <code>providers</code> says &quot;I build this&quot;. A class can appear in one list without the other — you can only export what you provide.</p>
+<pre>npm run start:dev                the first ERROR block at boot is the whole diagnosis
+providers: [X]                   the module builds X
+exports: [X]                     the module shares X; requires providers too
+cat src/users/users.module.ts    compare its lists with the constructors</pre>
+<p>Try it first: boot; read the error to its last line before opening any file.</p>
+<p>Your task: someone split <code>users</code> into its own module yesterday. Since then <code>npm run start:dev</code> dies at boot with a red Nest error.</p>
+<p>Goal: the app boots, <code>GET /users</code> lists the seed users and <code>GET /users/1</code> works.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nestjs
@@ -26,7 +36,7 @@ wg level 7
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nestjs/07-provider-missing">level source on github</a>.</p>
-<div class="pn"><a href="../06-extract-users-module/index.html">← ticket: give users its own module</a><a href="../08-not-exported/index.html">&quot;Nest can&#x27;t resolve dependencies of the OrdersService&quot; →</a></div>
+<div class="pn"><a href="../06-extract-users-module/index.html">← a module is a visibility boundary: it sees what it provides plus what its imports export</a><a href="../08-not-exported/index.html">importing a module gives you its exports only, not its providers →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

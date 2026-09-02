@@ -18,7 +18,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">tls</a> / level 10</div>
 <h1 class="lvl">post-incident: two TLS faults at once</h1>
 <p class="meta">tls · level 10 of 10 · <code>cert-and-redirect</code></p>
-<div class="brief"><h2>the ticket</h2><p>After a rushed change, verifying clients can&#x27;t validate the chain AND plain HTTP is no longer redirected to HTTPS. Two independent faults in the config. Fix both: the served chain must verify for shop.local, and http:// must 301 to https://.</p></div>
+<div class="brief"><h2>the ticket</h2><p>After a rushed change, verifying clients can&#x27;t validate the chain AND plain HTTP is no longer</p>
+<p>redirected to HTTPS. Two independent faults in the config. Fix both: the served chain must verify</p>
+<p>for shop.local, and http:// must 301 to https://.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track tls

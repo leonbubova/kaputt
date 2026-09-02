@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CRM sync fails on the first timeout — trigger level 09 — kaputt</title>
-<meta name="description" content="trigger exercise: CRM sync fails on the first timeout. Fix a real broken trigger system in your own terminal — level 09 of 18, with hints and a checker.">
+<title>a task-level override replaces the project default — find which layer is in effect — trigger level 09 — kaputt</title>
+<meta name="description" content="trigger exercise: a task-level override replaces the project default — find which layer is in effect. Fix a real broken trigger system in your own terminal — level 09 of 18, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/trigger/09-no-retries/">
-<meta property="og:title" content="CRM sync fails on the first timeout — trigger level 09 — kaputt"><meta property="og:description" content="trigger exercise: CRM sync fails on the first timeout. Fix a real broken trigger system in your own terminal — level 09 of 18, with hints and a checker.">
+<meta property="og:title" content="a task-level override replaces the project default — find which layer is in effect — trigger level 09 — kaputt"><meta property="og:description" content="trigger exercise: a task-level override replaces the project default — find which layer is in effect. Fix a real broken trigger system in your own terminal — level 09 of 18, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,17 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">trigger</a> / level 09</div>
-<h1 class="lvl">CRM sync fails on the first timeout</h1>
+<h1 class="lvl">a task-level override replaces the project default — find which layer is in effect</h1>
 <p class="meta">trigger · level 09 of 18 · <code>no-retries</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>sync-crm</code> fails with <code>CRM API timeout (ETIMEDOUT)</code> on the very first attempt and never retries — it used to retry 5 times.&quot; Goal: <code>sync-crm</code> retries again (attempt 3 succeeds). Don&#x27;t touch the project-wide defaults.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: settings in Trigger.dev stack in two layers: <code>trigger.config.ts</code> holds the project default, a task can override it next to its <code>id</code>. You built such an override in level 02. The part that bites later: an override does not merge with the default. A task-level <code>retry</code> block replaces the whole default block; whatever it does not set is not inherited, and whatever it sets stands, even when it makes the task worse than the default.</p>
+<p>So when a task behaves unlike the rest of the project, the project default is the wrong place to look. Everyone else still gets it. The question is: which layer is in effect for THIS task — and the answer is in the task file, not in the config.</p>
+<p>Debugging habit: grep the setting across both layers at once. Two hits mean an override exists, and the task-level one is the one the run obeys.</p>
+<pre>grep -rn maxAttempts trigger.config.ts src/trigger     the setting in both layers
+cat trigger.config.ts                                  the default everyone inherits
+cat src/trigger/sync-crm.ts                            what this task declares</pre>
+<p>Try it first: run the grep — how many places set <code>maxAttempts</code>, and which one applies to <code>sync-crm</code>?</p>
+<p>Your task: &quot;<code>sync-crm</code> fails with <code>CRM API timeout (ETIMEDOUT)</code> on the very first attempt and never retries — it used to retry 5 times.&quot; Goal: <code>sync-crm</code> retries again (attempt 3 succeeds). Don&#x27;t touch the project-wide defaults.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track trigger
@@ -26,7 +34,7 @@ wg level 9
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/trigger/09-no-retries">level source on github</a>.</p>
-<div class="pn"><a href="../08-payload-rejected/index.html">← checkout 500s with TaskPayloadParsedError</a><a href="../10-run-killed-after-30s/index.html">report runs die after 30 seconds →</a></div>
+<div class="pn"><a href="../08-payload-rejected/index.html">← schema validation happens at trigger time, in the caller — so convert at the boundary</a><a href="../10-run-killed-after-30s/index.html">report runs die after 30 seconds →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

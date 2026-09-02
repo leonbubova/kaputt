@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">networking</a> / level 12</div>
 <h1 class="lvl">the API is unreachable on 8080 across the network — two things are wrong</h1>
 <p class="meta">networking · level 12 of 12 · <code>double-fault</code></p>
-<div class="brief"><h2>the ticket</h2><p>After a change window the API can&#x27;t be reached on 8080. There are two independent faults in the way: one in the nginx vhost, one in the firewall. Fix both so localhost:8080 returns &quot;api ok&quot;.</p></div>
+<div class="brief"><h2>the ticket</h2><p>After a change window the API can&#x27;t be reached on 8080. There are two independent faults</p>
+<p>in the way: one in the nginx vhost, one in the firewall. Fix both so localhost:8080 returns &quot;api ok&quot;.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track networking

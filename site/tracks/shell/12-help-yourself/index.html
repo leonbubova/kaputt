@@ -18,7 +18,21 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">shell</a> / level 12</div>
 <h1 class="lvl">help yourself — --help, man, Tab, ↑</h1>
 <p class="meta">shell · level 12 of 14 · <code>help-yourself</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: nobody memorises the shell. You look things up, right there in the terminal: COMMAND --help    a short usage summary. (On macOS a few commands only know -h, or none; then use man.) man COMMAND       the manual — long and exact. /word searches, n jumps to the next hit, q quits. Tab               finishes names for you: type <code>cd ki</code> + Tab → <code>cd kitchen/</code>. Tab twice lists all possibilities. ↑ / ↓             walk through the commands you typed before.  <code>history</code> lists them all. Options are arguments that start with <code>-</code> and change how a command behaves: <code>ls -l</code> gives a long listing with sizes, dates and permissions. The manual tells you which options a command has. Try it: cd ~/.k8s-wargame/shell/sandbox ls ls -l man ls            (find the option about &quot;hidden&quot; or &quot;dot&quot; files, then q) Your task: the sandbox contains a hidden file that plain <code>ls</code> does not show — names starting with <code>.</code> are hidden. Find the <code>ls</code> option that shows hidden files, then save such a listing of the sandbox into <code>listing.txt</code> in the sandbox. Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: nobody memorises the shell. You look things up, right there in the terminal:</p>
+<pre>COMMAND --help    a short usage summary. (On macOS a few commands only know -h, or none; then use man.)
+man COMMAND       the manual — long and exact. /word searches, n jumps to the next hit, q quits.
+Tab               finishes names for you: type `cd ki` + Tab → `cd kitchen/`. Tab twice lists all possibilities.
+↑ / ↓             walk through the commands you typed before.  `history` lists them all.</pre>
+<p>Options are arguments that start with <code>-</code> and change how a command behaves: <code>ls -l</code> gives a long listing with</p>
+<p>sizes, dates and permissions. The manual tells you which options a command has.</p>
+<p>Try it:</p>
+<pre>cd ~/.k8s-wargame/shell/sandbox
+ls
+ls -l
+man ls            (find the option about &quot;hidden&quot; or &quot;dot&quot; files, then q)</pre>
+<p>Your task: the sandbox contains a hidden file that plain <code>ls</code> does not show — names starting with <code>.</code> are hidden.</p>
+<p>Find the <code>ls</code> option that shows hidden files, then save such a listing of the sandbox into <code>listing.txt</code> in the sandbox.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track shell

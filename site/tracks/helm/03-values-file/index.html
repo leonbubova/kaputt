@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>prod config in a file — helm level 03 — kaputt</title>
-<meta name="description" content="helm exercise: prod config in a file. Fix a real broken helm system in your own terminal — level 03 of 20, with hints and a checker.">
+<title>a values file overrides only the keys it contains; render before you install — helm level 03 — kaputt</title>
+<meta name="description" content="helm exercise: a values file overrides only the keys it contains; render before you install. Fix a real broken helm system in your own terminal — level 03 of 20, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/helm/03-values-file/">
-<meta property="og:title" content="prod config in a file — helm level 03 — kaputt"><meta property="og:description" content="helm exercise: prod config in a file. Fix a real broken helm system in your own terminal — level 03 of 20, with hints and a checker.">
+<meta property="og:title" content="a values file overrides only the keys it contains; render before you install — helm level 03 — kaputt"><meta property="og:description" content="helm exercise: a values file overrides only the keys it contains; render before you install. Fix a real broken helm system in your own terminal — level 03 of 20, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">helm</a> / level 03</div>
-<h1 class="lvl">prod config in a file</h1>
+<h1 class="lvl">a values file overrides only the keys it contains; render before you install</h1>
 <p class="meta">helm · level 03 of 20 · <code>values-file</code></p>
-<div class="brief"><h2>the ticket</h2><p>Ticket: &quot;Install chart <code>shop</code> as release <code>shop</code> in <code>wg-helm</code> with prod settings: <code>environment: prod</code>, <code>domain: shop.example.com</code>, <code>replicas: 2</code>. Don&#x27;t edit the chart&#x27;s <code>values.yaml</code> and no long <code>--set</code> chains — put the settings in <code>values-prod.yaml</code> next to the chart so we can commit it.&quot; Work dir: <code>~/.k8s-wargame/helm/03-values-file/</code>. Goal: <code>values-prod.yaml</code> exists, release <code>shop</code> deployed from it, 2 pods, page shows <code>env=prod domain=shop.example.com</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: <code>--set</code> is fine for one value, but real configuration lives in a file you can commit and review. <code>helm install -f my.yaml</code> layers that file on top of the chart&#x27;s <code>values.yaml</code>: keys you name are replaced, everything else keeps its default. Same structure, same key names as <code>values.yaml</code> — that file is the reference for what the chart understands.</p>
+<p>One values file per environment (<code>values-prod.yaml</code>, <code>values-staging.yaml</code>) is the usual pattern; the chart itself stays untouched.</p>
+<p>Before installing, render: <code>helm template</code> prints the final YAML locally without a cluster, so you can see whether your values landed where you expect.</p>
+<pre>cat shop/values.yaml                              every knob and its default
+helm template &lt;release&gt; &lt;chart&gt; -f my.yaml        render locally with the file applied
+helm install &lt;release&gt; &lt;chart&gt; -n wg-helm -f my.yaml    install with the file
+helm get values &lt;release&gt; -n wg-helm              what helm recorded for the release</pre>
+<p>Try it first: <code>helm template shop ./shop | grep -A2 index.html</code> — the defaults, then compare after adding <code>-f</code>.</p>
+<p>Your task: &quot;Install chart <code>shop</code> as release <code>shop</code> in <code>wg-helm</code> with prod settings: <code>environment: prod</code>, <code>domain: shop.example.com</code>, <code>replicas: 2</code>. Don&#x27;t edit the chart&#x27;s <code>values.yaml</code> and no long <code>--set</code> chains — put the settings in <code>values-prod.yaml</code> next to the chart so we can commit it.&quot;</p>
+<p>Work dir: <code>~/.k8s-wargame/helm/03-values-file/</code>. Goal: <code>values-prod.yaml</code> exists, release <code>shop</code> deployed from it, 2 pods, page shows <code>env=prod domain=shop.example.com</code>.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track helm
@@ -26,7 +36,7 @@ wg level 3
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/helm/03-values-file">level source on github</a>.</p>
-<div class="pn"><a href="../02-set-values/index.html">← scale it — the helm way</a><a href="../04-configmap-template/index.html">the chart is missing a ConfigMap →</a></div>
+<div class="pn"><a href="../02-set-values/index.html">← helm owns the release: change it with upgrade, not kubectl</a><a href="../04-configmap-template/index.html">every file in templates/ becomes an object; .Release and .Values fill the holes →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

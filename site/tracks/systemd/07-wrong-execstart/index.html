@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">systemd</a> / level 07</div>
 <h1 class="lvl">report service fails instantly, status shows 203/EXEC</h1>
 <p class="meta">systemd · level 07 of 8 · <code>wrong-execstart</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>wg-report.service</code> was rolled out this morning and has never been up. <code>journalctl</code> just says <code>Failed at step EXEC</code>. The deploy put the script in place — leave it where it is, don&#x27;t copy or move it.&quot; Goal: <code>wg-report.service</code> is active and <code>/opt/wg/report/out/report.txt</code> is being updated.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>wg-report.service</code> was rolled out this morning and has never been up. <code>journalctl</code> just says <code>Failed at step EXEC</code>. The deploy put the script in place — leave it where it is, don&#x27;t copy or move it.&quot;</p>
+<p>Goal: <code>wg-report.service</code> is active and <code>/opt/wg/report/out/report.txt</code> is being updated.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track systemd

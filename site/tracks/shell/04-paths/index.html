@@ -18,7 +18,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">shell</a> / level 04</div>
 <h1 class="lvl">paths — the address of a file</h1>
 <p class="meta">shell · level 04 of 14 · <code>paths</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: every file and folder has an address, called a path. Folders in a path are separated by <code>/</code>. absolute path    starts with <code>/</code> — the full address from the top of the disk, e.g. /Users/you/Desktop. Works from anywhere. relative path    no leading <code>/</code> — starts from the folder you stand in. <code>kitchen/fridge.txt</code> = kitchen, inside here. shortcuts        ~  your home folder      .  this folder      ..  the folder above this one So <code>../garden</code> means &quot;go up one, then into garden&quot;. Pieces chain: <code>../../attic/box.txt</code>. The sandbox path you have been typing, <code>~/.k8s-wargame/shell/sandbox</code>, is &quot;home, then .k8s-wargame, then shell, then sandbox&quot;. Try it: cd ~/.k8s-wargame/shell/sandbox/house/kitchen ls ..               the folders next to you: garden and kitchen ls ../garden        empty so far Your task: stand in <code>~/.k8s-wargame/shell/sandbox/house/kitchen</code>. Without leaving it, create a file <code>plant.txt</code> inside the neighbouring folder <code>garden</code> — one command, using <code>..</code>. Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: every file and folder has an address, called a path. Folders in a path are separated by <code>/</code>.</p>
+<pre>absolute path    starts with `/` — the full address from the top of the disk, e.g. /Users/you/Desktop. Works from anywhere.
+relative path    no leading `/` — starts from the folder you stand in. `kitchen/fridge.txt` = kitchen, inside here.
+shortcuts        ~  your home folder      .  this folder      ..  the folder above this one</pre>
+<p>So <code>../garden</code> means &quot;go up one, then into garden&quot;. Pieces chain: <code>../../attic/box.txt</code>. The sandbox path you</p>
+<p>have been typing, <code>~/.k8s-wargame/shell/sandbox</code>, is &quot;home, then .k8s-wargame, then shell, then sandbox&quot;.</p>
+<p>Try it:</p>
+<pre>cd ~/.k8s-wargame/shell/sandbox/house/kitchen
+ls ..               the folders next to you: garden and kitchen
+ls ../garden        empty so far</pre>
+<p>Your task: stand in <code>~/.k8s-wargame/shell/sandbox/house/kitchen</code>. Without leaving it, create a file <code>plant.txt</code></p>
+<p>inside the neighbouring folder <code>garden</code> — one command, using <code>..</code>.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track shell

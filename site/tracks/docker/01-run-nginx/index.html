@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>we need a web server, now — docker level 01 — kaputt</title>
-<meta name="description" content="docker exercise: we need a web server, now. Fix a real broken docker system in your own terminal — level 01 of 22, with hints and a checker.">
+<title>an image is a template, a container is a running copy: docker run starts one — docker level 01 — kaputt</title>
+<meta name="description" content="docker exercise: an image is a template, a container is a running copy: docker run starts one. Fix a real broken docker system in your own terminal — level 01 of 22, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/docker/01-run-nginx/">
-<meta property="og:title" content="we need a web server, now — docker level 01 — kaputt"><meta property="og:description" content="docker exercise: we need a web server, now. Fix a real broken docker system in your own terminal — level 01 of 22, with hints and a checker.">
+<meta property="og:title" content="an image is a template, a container is a running copy: docker run starts one — docker level 01 — kaputt"><meta property="og:description" content="docker exercise: an image is a template, a container is a running copy: docker run starts one. Fix a real broken docker system in your own terminal — level 01 of 22, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,18 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">docker</a> / level 01</div>
-<h1 class="lvl">we need a web server, now</h1>
+<h1 class="lvl">an image is a template, a container is a running copy: docker run starts one</h1>
 <p class="meta">docker · level 01 of 22 · <code>run-nginx</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Marketing wants a placeholder page on this box today.&quot; Goal: a container named <code>wg-web</code> from image <code>nginx:1.27-alpine</code>, running in the background, with host port 18001 forwarded to the container&#x27;s port 80 — <code>curl localhost:18001</code> shows the nginx welcome page.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: an image is a frozen filesystem plus a start command, pulled once and reused. A container is a live copy of that image with its own process. <code>docker run IMAGE</code> creates a container and starts its command; the same image can run a hundred times.</p>
+<p>By default <code>docker run</code> stays attached to the container&#x27;s output. <code>-d</code> (detach) hands it back to you and prints the container ID. <code>--name</code> gives it a name you can use everywhere instead of the ID.</p>
+<p>A container has its own network — the nginx inside listens on port 80, but nothing on the host can see it. <code>-p HOST:CONTAINER</code> publishes it: traffic to the host port is forwarded to the container port.</p>
+<pre>docker run -d --name n -p 8080:80 img    start detached, named, host 8080 -&gt; container 80
+docker ps                                running containers, their ports and status
+docker logs n                            what the container printed
+docker rm -f n                           stop and delete it (to start over)</pre>
+<p>Try it first: <code>docker ps</code> — nothing named wg-web yet. <code>docker image ls nginx</code> shows which nginx images are already local.</p>
+<p>Your task: &quot;Marketing wants a placeholder page on this box today.&quot; Goal: a container named <code>wg-web</code> from image <code>nginx:1.27-alpine</code>, running in the background, with host port 18001 forwarded to the container&#x27;s port 80 — <code>curl localhost:18001</code> shows the nginx welcome page.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track docker
@@ -26,7 +35,7 @@ wg level 1
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/docker/01-run-nginx">level source on github</a>.</p>
-<div class="pn"><span></span><a href="../02-env-var/index.html">configure the app through the environment →</a></div>
+<div class="pn"><span></span><a href="../02-env-var/index.html">a container lives as long as its main process; -e puts config in its environment →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nextjs</a> / level 18</div>
 <h1 class="lvl">build broken after the Next 15 upgrade: &quot;Type &#x27;Props&#x27; does not satisfy the constraint &#x27;PageProps&#x27;&quot;</h1>
 <p class="meta">nextjs · level 18 of 21 · <code>async-params</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;We bumped Next.js 14 → 15. Dev works, but the terminal logs *<code>params</code> should be awaited before using its properties* on every product page, and <code>npm run build</code> fails on <code>/products/[slug]</code>.&quot; App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: <code>npm run build</code> passes and <code>/products/regenwurm</code> renders the price with no <code>sync-dynamic-apis</code> warning.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;We bumped Next.js 14 → 15. Dev works, but the terminal logs *<code>params</code> should be awaited before using its properties* on every product page, and <code>npm run build</code> fails on <code>/products/[slug]</code>.&quot;</p>
+<p>App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: <code>npm run build</code> passes and <code>/products/regenwurm</code> renders the price with no <code>sync-dynamic-apis</code> warning.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nextjs

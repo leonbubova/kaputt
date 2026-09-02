@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">postgres</a> / level 13</div>
 <h1 class="lvl">every payment hangs forever</h1>
 <p class="meta">postgres · level 13 of 14 · <code>blocked-transaction</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Since about an hour every <code>update accounts …</code> from the API just hangs; reads are fine. Nobody deployed anything. Someone mentioned a &#x27;batch reconcile&#x27; script.&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>). Goal: <code>update accounts set balance = balance where id = 1</code> completes within a few seconds; all 3 accounts and their balances intact.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Since about an hour every <code>update accounts …</code> from the API just hangs; reads are fine. Nobody deployed anything. Someone mentioned a &#x27;batch reconcile&#x27; script.&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>).</p>
+<p>Goal: <code>update accounts set balance = balance where id = 1</code> completes within a few seconds; all 3 accounts and their balances intact.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track postgres

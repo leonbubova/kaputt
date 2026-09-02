@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">docker</a> / level 13</div>
 <h1 class="lvl">app can&#x27;t reach web</h1>
 <p class="meta">docker · level 13 of 22 · <code>networks</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;In the compose stack (<code>~/.k8s-wargame/docker/13-networks/</code>), <code>wg-app</code> logs <code>bad address &#x27;web&#x27;</code> every few seconds. Both containers are Running.&quot; Goal: <code>docker exec wg-app wget -qO- http://web/</code> returns the nginx page. Keep the two networks (<code>wg-front</code>, <code>wg-back</code>) — the stack needs both.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;In the compose stack (<code>~/.k8s-wargame/docker/13-networks/</code>), <code>wg-app</code> logs <code>bad address &#x27;web&#x27;</code> every few seconds. Both containers are Running.&quot;</p>
+<p>Goal: <code>docker exec wg-app wget -qO- http://web/</code> returns the nginx page. Keep the two networks (<code>wg-front</code>, <code>wg-back</code>) — the stack needs both.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track docker

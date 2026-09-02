@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>plain HTTP isn&#x27;t redirected to HTTPS — tls level 02 — kaputt</title>
-<meta name="description" content="tls exercise: plain HTTP isn&#x27;t redirected to HTTPS. Fix a real broken tls system in your own terminal — level 02 of 10, with hints and a checker.">
+<title>port 80 should not serve content: it answers with a 301 to the https URL — tls level 02 — kaputt</title>
+<meta name="description" content="tls exercise: port 80 should not serve content: it answers with a 301 to the https URL. Fix a real broken tls system in your own terminal — level 02 of 10, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/tls/02-http-redirect/">
-<meta property="og:title" content="plain HTTP isn&#x27;t redirected to HTTPS — tls level 02 — kaputt"><meta property="og:description" content="tls exercise: plain HTTP isn&#x27;t redirected to HTTPS. Fix a real broken tls system in your own terminal — level 02 of 10, with hints and a checker.">
+<meta property="og:title" content="port 80 should not serve content: it answers with a 301 to the https URL — tls level 02 — kaputt"><meta property="og:description" content="tls exercise: port 80 should not serve content: it answers with a 301 to the https URL. Fix a real broken tls system in your own terminal — level 02 of 10, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,18 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">tls</a> / level 02</div>
-<h1 class="lvl">plain HTTP isn&#x27;t redirected to HTTPS</h1>
+<h1 class="lvl">port 80 should not serve content: it answers with a 301 to the https URL</h1>
 <p class="meta">tls · level 02 of 10 · <code>http-redirect</code></p>
-<div class="brief"><h2>the ticket</h2><p>Requests to http://shop.local/ are served over cleartext instead of being pushed to HTTPS. Make port 80 issue a 301 redirect to the https:// URL.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: having HTTPS does not stop anyone from using HTTP. Every link, bookmark and typed address that starts with http:// still lands on port 80, and if that server serves the page, the traffic stays in cleartext. The fix is a policy, not a feature: port 80 answers nothing but &quot;go to the https version of exactly this URL&quot;.</p>
+<p>In nginx that is a <code>return 301</code> in the port-80 server. <code>$host</code> and <code>$request_uri</code> are variables that echo back what the client asked for, so one line redirects every path on every hostname. 301 means permanent — browsers cache it and stop asking.</p>
+<p>A pure config change like this only needs a reload; nginx re-reads conf.d without dropping connections.</p>
+<pre>return 301 https://$host$request_uri;                             the redirect, in the listen-80 server
+curl -s -o /dev/null -w &#x27;%{http_code}&#x27; http://127.0.0.1:9080/     status only: 200 or 301?
+curl -sI http://127.0.0.1:9080/                                   headers: Location shows the target
+docker exec wg-tls nginx -t; docker exec wg-tls nginx -s reload   check, then apply</pre>
+<p>Try it first: <code>curl -sI http://127.0.0.1:9080/</code> — look at the status line and whether there is a Location header.</p>
+<p>Your task: requests to http://shop.local/ are served over cleartext instead of being pushed to HTTPS. Make port 80 issue a 301 redirect to the https:// URL.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track tls
@@ -26,7 +35,7 @@ wg level 2
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/tls/02-http-redirect">level source on github</a>.</p>
-<div class="pn"><a href="../01-enable-https/index.html">← the site serves plain HTTP only — HTTPS on 443 is dead</a><a href="../03-hsts-header/index.html">security audit: HSTS header is missing on HTTPS responses →</a></div>
+<div class="pn"><a href="../01-enable-https/index.html">← HTTPS is HTTP behind a second listener that presents a certificate</a><a href="../03-hsts-header/index.html">HSTS is a response header that makes the browser refuse plain HTTP →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

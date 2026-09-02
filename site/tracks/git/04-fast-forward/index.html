@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>bring the finished branch into main — git level 04 — kaputt</title>
-<meta name="description" content="git exercise: bring the finished branch into main. Fix a real broken git system in your own terminal — level 04 of 22, with hints and a checker.">
+<title>merging a branch that is directly ahead just moves the pointer: fast-forward — git level 04 — kaputt</title>
+<meta name="description" content="git exercise: merging a branch that is directly ahead just moves the pointer: fast-forward. Fix a real broken git system in your own terminal — level 04 of 22, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/git/04-fast-forward/">
-<meta property="og:title" content="bring the finished branch into main — git level 04 — kaputt"><meta property="og:description" content="git exercise: bring the finished branch into main. Fix a real broken git system in your own terminal — level 04 of 22, with hints and a checker.">
+<meta property="og:title" content="merging a branch that is directly ahead just moves the pointer: fast-forward — git level 04 — kaputt"><meta property="og:description" content="git exercise: merging a branch that is directly ahead just moves the pointer: fast-forward. Fix a real broken git system in your own terminal — level 04 of 22, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">git</a> / level 04</div>
-<h1 class="lvl">bring the finished branch into main</h1>
+<h1 class="lvl">merging a branch that is directly ahead just moves the pointer: fast-forward</h1>
 <p class="meta">git · level 04 of 22 · <code>fast-forward</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>feature/greeting</code> is reviewed and approved. Get it into <code>main</code>.&quot; Repo: <code>~/.k8s-wargame/git/repo</code>. <code>main</code> has not moved since the branch was created. Goal: <code>main</code> points at the same commit as <code>feature/greeting</code>; no extra merge commit; HEAD on <code>main</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: <code>git merge</code> combines two lines of history. But when the branch you are on has not moved since the other branch was created, there is nothing to combine — the other branch&#x27;s commits already sit directly on top of yours. Git simply slides your branch&#x27;s pointer forward to the other tip. That is a fast-forward: no new commit, the history stays a straight line.</p>
+<p>Direction matters. Merge always brings the named branch INTO the branch HEAD is on. &quot;Get feature into main&quot; therefore means: stand on main, merge feature. Standing on feature and merging main would move the wrong pointer.</p>
+<p>If the graph shows the other branch as a straight continuation of yours, expect &quot;Fast-forward&quot; in the output.</p>
+<pre>git log --oneline --all --graph    the shape: is the branch directly ahead?
+git switch main                    stand on the branch that should move
+git merge &lt;branch&gt;                 bring &lt;branch&gt; in; fast-forward if possible
+git branch --merged                which branches are already contained in HEAD</pre>
+<p>Try it first: <code>git log --oneline main..feature/greeting</code> — the commits feature has that main lacks. Then <code>git log --oneline feature/greeting..main</code> — should be empty.</p>
+<p>Your task: &quot;<code>feature/greeting</code> is reviewed and approved. Get it into <code>main</code>.&quot; Repo: <code>~/.k8s-wargame/git/repo</code>. <code>main</code> has not moved since the branch was created.</p>
+<p>Goal: <code>main</code> points at the same commit as <code>feature/greeting</code>; no extra merge commit; HEAD on <code>main</code>.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track git
@@ -26,7 +36,7 @@ wg level 4
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/git/04-fast-forward">level source on github</a>.</p>
-<div class="pn"><a href="../03-branch-and-switch/index.html">← work on a branch, leave main alone</a><a href="../05-add-gitignore/index.html">git status is cluttered with log files →</a></div>
+<div class="pn"><a href="../03-branch-and-switch/index.html">← a branch is a movable name for a commit, so you can work without touching main</a><a href="../05-add-gitignore/index.html">.gitignore hides untracked files from git — and is itself a committed file →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

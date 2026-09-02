@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>the API is up but the firewall blocks port 8080 — networking level 04 — kaputt</title>
-<meta name="description" content="networking exercise: the API is up but the firewall blocks port 8080. Fix a real broken networking system in your own terminal — level 04 of 12, with hints and a checker.">
+<title>a firewall drops packets before the server ever sees them — networking level 04 — kaputt</title>
+<meta name="description" content="networking exercise: a firewall drops packets before the server ever sees them. Fix a real broken networking system in your own terminal — level 04 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/networking/04-open-firewall/">
-<meta property="og:title" content="the API is up but the firewall blocks port 8080 — networking level 04 — kaputt"><meta property="og:description" content="networking exercise: the API is up but the firewall blocks port 8080. Fix a real broken networking system in your own terminal — level 04 of 12, with hints and a checker.">
+<meta property="og:title" content="a firewall drops packets before the server ever sees them — networking level 04 — kaputt"><meta property="og:description" content="networking exercise: a firewall drops packets before the server ever sees them. Fix a real broken networking system in your own terminal — level 04 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,18 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">networking</a> / level 04</div>
-<h1 class="lvl">the API is up but the firewall blocks port 8080</h1>
+<h1 class="lvl">a firewall drops packets before the server ever sees them</h1>
 <p class="meta">networking · level 04 of 12 · <code>open-firewall</code></p>
-<div class="brief"><h2>the ticket</h2><p>nginx serves &quot;api ok&quot; on 8080, yet connections hang. A firewall rule is dropping traffic to 8080. Add a rule that allows inbound TCP on 8080.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: between the network and your process sits the kernel&#x27;s packet filter. Every incoming packet walks the INPUT chain of iptables rules top to bottom; the first rule that matches decides — ACCEPT lets it through, DROP silently throws it away. Rules after the match are never consulted.</p>
+<p>That &quot;silently&quot; is the diagnostic clue. A port with no listener answers &quot;connection refused&quot; at once. A port behind a DROP rule answers nothing: the client just hangs until it times out. Hang means firewall, refused means nobody listening.</p>
+<p>Because first match wins, order matters. <code>-I</code> inserts a rule at the top of the chain, <code>-A</code> appends at the bottom. An ACCEPT inserted above a DROP wins; the same ACCEPT appended below it does nothing.</p>
+<pre>iptables -L INPUT -n                              the INPUT chain, in order
+iptables -I INPUT -p tcp --dport PORT -j ACCEPT   insert an allow at the top
+iptables -D INPUT -p tcp --dport PORT -j DROP     delete a rule (same spec as when added)
+curl -s -m 3 localhost:PORT                       give up after 3s instead of hanging</pre>
+<p>Try it first: <code>iptables -L INPUT -n</code> — read it top to bottom, find the line that matches port 8080.</p>
+<p>Your task: nginx serves &quot;api ok&quot; on 8080, yet connections hang. A firewall rule is dropping traffic to 8080. Add a rule that allows inbound TCP on 8080.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track networking
@@ -26,7 +35,7 @@ wg level 4
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/networking/04-open-firewall">level source on github</a>.</p>
-<div class="pn"><a href="../03-listen-8080/index.html">← nginx is running but serves nothing on 8080 — the API vhost is missing</a><a href="../05-bind-address/index.html">the API answers on localhost but not on the box&#x27;s network address →</a></div>
+<div class="pn"><a href="../03-listen-8080/index.html">← nginx listens only where a server block tells it to</a><a href="../05-bind-address/index.html">a listener binds to an address, not just a port →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

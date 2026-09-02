@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>load balancer marks the api as down — nestjs level 09 — kaputt</title>
-<meta name="description" content="nestjs exercise: load balancer marks the api as down. Fix a real broken nestjs system in your own terminal — level 09 of 21, with hints and a checker.">
+<title>the RouterExplorer boot log is the list of routes that exist — nestjs level 09 — kaputt</title>
+<meta name="description" content="nestjs exercise: the RouterExplorer boot log is the list of routes that exist. Fix a real broken nestjs system in your own terminal — level 09 of 21, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nestjs/09-controller-not-registered/">
-<meta property="og:title" content="load balancer marks the api as down — nestjs level 09 — kaputt"><meta property="og:description" content="nestjs exercise: load balancer marks the api as down. Fix a real broken nestjs system in your own terminal — level 09 of 21, with hints and a checker.">
+<meta property="og:title" content="the RouterExplorer boot log is the list of routes that exist — nestjs level 09 — kaputt"><meta property="og:description" content="nestjs exercise: the RouterExplorer boot log is the list of routes that exist. Fix a real broken nestjs system in your own terminal — level 09 of 21, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,18 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nestjs</a> / level 09</div>
-<h1 class="lvl">load balancer marks the api as down</h1>
+<h1 class="lvl">the RouterExplorer boot log is the list of routes that exist</h1>
 <p class="meta">nestjs · level 09 of 21 · <code>controller-not-registered</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Health checks hit <code>GET /health</code> every 5 s and get 404 since the last deploy. The app itself boots fine and the other routes work.&quot; Goal: <code>GET /health</code> returns 200 with <code>status: ok</code>. App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: a 404 from a Nest app can mean two different things. Either a handler ran and threw <code>NotFoundException</code>, or no handler exists for that path at all. The bodies look similar; the diagnosis is different. The second kind is a wiring problem, and there is one place that settles it: the boot log.</p>
+<p>At startup Nest prints one <code>[RoutesResolver] XController {/x}</code> line per registered controller and one <code>[RouterExplorer] Mapped {/x, GET} route</code> line per route. That list is the truth. A controller file that compiles, imports cleanly and even appears in an <code>import</code> statement at the top of a module still maps nothing until a module&#x27;s <code>controllers</code> array names it. Importing a symbol and registering a class are two separate acts.</p>
+<p>So the debugging move is: boot, find the Mapped line for the failing path. Absent? Then stop curling and find out why the router never saw the controller.</p>
+<pre>npm run start:dev 2&gt;&amp;1 | grep Mapped     every route Nest knows about
+curl -s localhost:3200/health            compare with what the log says
+grep -n &#x27;controllers&#x27; src/*.module.ts src/*/*.module.ts    where classes get registered</pre>
+<p>Try it first: boot and count the Mapped lines against the controllers in <code>src/</code>.</p>
+<p>Your task: health checks hit <code>GET /health</code> every 5 s and get 404 since the last deploy. The app itself boots fine and the other routes work.</p>
+<p>Goal: <code>GET /health</code> returns 200 with <code>status: ok</code>.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nestjs
@@ -26,7 +35,7 @@ wg level 9
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nestjs/09-controller-not-registered">level source on github</a>.</p>
-<div class="pn"><a href="../08-not-exported/index.html">← &quot;Nest can&#x27;t resolve dependencies of the OrdersService&quot;</a><a href="../10-route-typo/index.html">user detail page is blank →</a></div>
+<div class="pn"><a href="../08-not-exported/index.html">← importing a module gives you its exports only, not its providers</a><a href="../10-route-typo/index.html">a route path is matched literally unless a segment starts with a colon →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

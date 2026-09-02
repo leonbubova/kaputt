@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>the app can&#x27;t read its name from cache — key app:name is empty — redis level 01 — kaputt</title>
-<meta name="description" content="redis exercise: the app can&#x27;t read its name from cache — key app:name is empty. Fix a real broken redis system in your own terminal — level 01 of 12, with hints and a checker.">
+<title>redis is a key-value store: SET writes a string, GET reads it back — redis level 01 — kaputt</title>
+<meta name="description" content="redis exercise: redis is a key-value store: SET writes a string, GET reads it back. Fix a real broken redis system in your own terminal — level 01 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/redis/01-set-key/">
-<meta property="og:title" content="the app can&#x27;t read its name from cache — key app:name is empty — redis level 01 — kaputt"><meta property="og:description" content="redis exercise: the app can&#x27;t read its name from cache — key app:name is empty. Fix a real broken redis system in your own terminal — level 01 of 12, with hints and a checker.">
+<meta property="og:title" content="redis is a key-value store: SET writes a string, GET reads it back — redis level 01 — kaputt"><meta property="og:description" content="redis exercise: redis is a key-value store: SET writes a string, GET reads it back. Fix a real broken redis system in your own terminal — level 01 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,18 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">redis</a> / level 01</div>
-<h1 class="lvl">the app can&#x27;t read its name from cache — key app:name is empty</h1>
+<h1 class="lvl">redis is a key-value store: SET writes a string, GET reads it back</h1>
 <p class="meta">redis · level 01 of 12 · <code>set-key</code></p>
-<div class="brief"><h2>the ticket</h2><p>The service reads a string key <code>app:name</code> on boot and expects the value <code>shop</code>. Right now the key doesn&#x27;t exist. Set it.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: Redis keeps everything in memory as key → value. A key is just a name; the simplest value is a string. There are no tables, no schema, no files to edit — you talk to the server with commands, and the change is live the moment the command returns.</p>
+<p>Reading a key that doesn&#x27;t exist is not an error. <code>GET</code> on a missing key answers <code>(nil)</code>, which is why an app &quot;can&#x27;t read its config&quot; without anything crashing: it asked, and got nothing.</p>
+<p>Key names are plain strings. The <code>app:name</code> style with colons is only a convention that groups related keys — Redis doesn&#x27;t care about the colon.</p>
+<pre>KEYS *                    list every key on the server (fine on a small dev instance)
+GET app:name              read a string; (nil) means the key does not exist
+SET app:name shop         write a string, creating the key if needed
+EXISTS app:name           1 if the key exists, 0 if not</pre>
+<p>Try it first: <code>GET app:name</code> — it answers <code>(nil)</code>. Then <code>KEYS *</code> to see what else lives here.</p>
+<p>Your task: the service reads a string key <code>app:name</code> on boot and expects the value <code>shop</code>. Right now the key doesn&#x27;t exist. Set it.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track redis
@@ -26,7 +35,7 @@ wg level 1
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/redis/01-set-key">level source on github</a>.</p>
-<div class="pn"><span></span><a href="../02-hash-profile/index.html">the profile cache is empty — hash user:1 has no fields →</a></div>
+<div class="pn"><span></span><a href="../02-hash-profile/index.html">a hash is a small record under one key: fields you can read and update one at a time →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>website on :18009 resets the connection — docker level 09 — kaputt</title>
-<meta name="description" content="docker exercise: website on :18009 resets the connection. Fix a real broken docker system in your own terminal — level 09 of 22, with hints and a checker.">
+<title>a port mapping is a blind forward: the container side must be where the process listens — docker level 09 — kaputt</title>
+<meta name="description" content="docker exercise: a port mapping is a blind forward: the container side must be where the process listens. Fix a real broken docker system in your own terminal — level 09 of 22, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/docker/09-wrong-port/">
-<meta property="og:title" content="website on :18009 resets the connection — docker level 09 — kaputt"><meta property="og:description" content="docker exercise: website on :18009 resets the connection. Fix a real broken docker system in your own terminal — level 09 of 22, with hints and a checker.">
+<meta property="og:title" content="a port mapping is a blind forward: the container side must be where the process listens — docker level 09 — kaputt"><meta property="og:description" content="docker exercise: a port mapping is a blind forward: the container side must be where the process listens. Fix a real broken docker system in your own terminal — level 09 of 22, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,18 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">docker</a> / level 09</div>
-<h1 class="lvl">website on :18009 resets the connection</h1>
+<h1 class="lvl">a port mapping is a blind forward: the container side must be where the process listens</h1>
 <p class="meta">docker · level 09 of 22 · <code>wrong-port</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>wg-web</code> (nginx) is Running, but <code>curl localhost:18009</code> gives &#x27;connection reset by peer&#x27;.&quot; Goal: <code>http://localhost:18009/</code> returns the nginx welcome page from container <code>wg-web</code> (image <code>nginx:1.27-alpine</code>).</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: <code>-p HOST:CONTAINER</code> does not check anything. Docker forwards whatever arrives on the host port to that container port, whether a process listens there or not. So a mapping can be &quot;correct&quot; as far as Docker is concerned and still lead nowhere.</p>
+<p>The symptoms differ, and they are your diagnosis. &quot;Connection refused&quot; on the host port: nothing is published there at all. &quot;Connection reset by peer&quot; or an empty reply: the forward worked, the packet arrived inside the container, and nobody was listening on that port. The container is Running, the process is healthy — the two sides of the mapping just do not match.</p>
+<p>Ports are fixed when the container is created. To change a mapping you recreate the container; there is no flag to edit it in place.</p>
+<pre>docker port n                             the mappings of a running container
+docker exec n netstat -tln                what actually listens inside (works in nginx alpine)
+docker rm -f n &amp;&amp; docker run ... -p H:C img       recreate with a corrected mapping</pre>
+<p>Try it first: <code>curl localhost:1</code> on the host — &quot;connection refused&quot; is what an unpublished port looks like; compare with what :18009 says.</p>
+<p>Your task: &quot;<code>wg-web</code> (nginx) is Running, but <code>curl localhost:18009</code> gives &#x27;connection reset by peer&#x27;.&quot;</p>
+<p>Goal: <code>http://localhost:18009/</code> returns the nginx welcome page from container <code>wg-web</code> (image <code>nginx:1.27-alpine</code>).</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track docker
@@ -26,7 +35,7 @@ wg level 9
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/docker/09-wrong-port">level source on github</a>.</p>
-<div class="pn"><a href="../08-exits-immediately/index.html">← the worker container is gone right after start</a><a href="../10-image-tag/index.html">compose up fails for the cache service →</a></div>
+<div class="pn"><a href="../08-exits-immediately/index.html">← a container that vanished ran its command and finished: exit code and logs tell you why</a><a href="../10-image-tag/index.html">an image name is repo:tag, and a tag that is not in the registry cannot be pulled →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

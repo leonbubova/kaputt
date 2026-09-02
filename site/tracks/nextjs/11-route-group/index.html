@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>/products is gone — nextjs level 11 — kaputt</title>
-<meta name="description" content="nextjs exercise: /products is gone. Fix a real broken nextjs system in your own terminal — level 11 of 21, with hints and a checker.">
+<title>a (group) folder organises files without adding a URL segment — nextjs level 11 — kaputt</title>
+<meta name="description" content="nextjs exercise: a (group) folder organises files without adding a URL segment. Fix a real broken nextjs system in your own terminal — level 11 of 21, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nextjs/11-route-group/">
-<meta property="og:title" content="/products is gone — nextjs level 11 — kaputt"><meta property="og:description" content="nextjs exercise: /products is gone. Fix a real broken nextjs system in your own terminal — level 11 of 21, with hints and a checker.">
+<meta property="og:title" content="a (group) folder organises files without adding a URL segment — nextjs level 11 — kaputt"><meta property="og:description" content="nextjs exercise: a (group) folder organises files without adding a URL segment. Fix a real broken nextjs system in your own terminal — level 11 of 21, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nextjs</a> / level 11</div>
-<h1 class="lvl">/products is gone</h1>
+<h1 class="lvl">a (group) folder organises files without adding a URL segment</h1>
 <p class="meta">nextjs · level 11 of 21 · <code>route-group</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Someone reorganised <code>src/app</code> into &#x27;route groups&#x27; for clarity. Now <code>/products</code> and <code>/products/regenwurm</code> return 404. The files are all still there, the home page works.&quot; App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: <code>/products</code> lists the products and <code>/products/regenwurm</code> shows the price.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: folder equals URL segment — with a few naming exceptions, and route groups are the big one. A folder named in parentheses, <code>(marketing)</code>, is invisible to the router: <code>app/(marketing)/pricing/page.tsx</code> serves <code>/pricing</code>, not <code>/marketing/pricing</code>. Groups exist so you can split <code>src/app</code> into sections, or give each section its own <code>layout.tsx</code>, without changing any URL.</p>
+<p>The flip side: wrapping an existing folder in parentheses deletes its segment from every URL beneath it. The files stay where they are, the build passes, the dev server is silent, and the routes have moved. <code>(products)/page.tsx</code> now answers <code>/</code> — and collides with the real <code>app/page.tsx</code> — while <code>(products)/[slug]</code> catches <code>/anything</code>.</p>
+<p>Whenever a route vanishes, check the folder names on its path for special syntax before anything else.</p>
+<pre>find src/app -name &#x27;page.tsx&#x27;     every page and its folder path = its URL
+(name)                            route group: no URL segment
+[slug]  /  _folder                dynamic segment / excluded from routing
+curl -I localhost:3100/products   confirm the status</pre>
+<p>Try it first: <code>curl -s localhost:3100/ | grep -o &#x27;data-testid=&quot;[a-z-]*&quot;&#x27;</code> — the home page may be rendering content that belongs elsewhere.</p>
+<p>Your task: someone reorganised <code>src/app</code> into &#x27;route groups&#x27; for clarity. Now <code>/products</code> and <code>/products/regenwurm</code> return 404. The files are all still there, the home page works. App: <code>~/.k8s-wargame/nextjs/app</code>.</p>
+<p>Goal: <code>/products</code> lists the products and <code>/products/regenwurm</code> shows the price.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nextjs
@@ -26,7 +36,7 @@ wg level 11
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nextjs/11-route-group">level source on github</a>.</p>
-<div class="pn"><a href="../10-middleware-matcher/index.html">← old marketing links 404</a><a href="../12-root-layout/index.html">browser overlay: &quot;Missing &lt;html&gt; and &lt;body&gt; tags in the root layout&quot; →</a></div>
+<div class="pn"><a href="../10-middleware-matcher/index.html">← middleware runs before routing, but only on the paths its matcher selects</a><a href="../12-root-layout/index.html">browser overlay: &quot;Missing &lt;html&gt; and &lt;body&gt; tags in the root layout&quot; →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

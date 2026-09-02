@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ticket: daily digest at 09:00 Berlin — trigger level 03 — kaputt</title>
-<meta name="description" content="trigger exercise: ticket: daily digest at 09:00 Berlin. Fix a real broken trigger system in your own terminal — level 03 of 18, with hints and a checker.">
+<title>a scheduled task declares its cron next to the id, and a timezone next to the cron — trigger level 03 — kaputt</title>
+<meta name="description" content="trigger exercise: a scheduled task declares its cron next to the id, and a timezone next to the cron. Fix a real broken trigger system in your own terminal — level 03 of 18, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/trigger/03-schedule-daily-digest/">
-<meta property="og:title" content="ticket: daily digest at 09:00 Berlin — trigger level 03 — kaputt"><meta property="og:description" content="trigger exercise: ticket: daily digest at 09:00 Berlin. Fix a real broken trigger system in your own terminal — level 03 of 18, with hints and a checker.">
+<meta property="og:title" content="a scheduled task declares its cron next to the id, and a timezone next to the cron — trigger level 03 — kaputt"><meta property="og:description" content="trigger exercise: a scheduled task declares its cron next to the id, and a timezone next to the cron. Fix a real broken trigger system in your own terminal — level 03 of 18, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,18 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">trigger</a> / level 03</div>
-<h1 class="lvl">ticket: daily digest at 09:00 Berlin</h1>
+<h1 class="lvl">a scheduled task declares its cron next to the id, and a timezone next to the cron</h1>
 <p class="meta">trigger · level 03 of 18 · <code>schedule-daily-digest</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Add a scheduled task <code>daily-digest</code> that runs every day at 09:00 <strong>Europe/Berlin</strong> (also after the DST switch). It should return <code>{ ranAt, timezone }</code> from the schedule payload.&quot; Goal: the task is registered with that declarative schedule.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: a schedule is not a loop with a sleep — it is a declaration. <code>schedules.task({...})</code> replaces <code>task()</code>, takes a <code>cron</code> option next to <code>id</code>, and the platform creates a run whenever the cron fires. Nothing about timing lives inside <code>run</code>.</p>
+<p>The payload of a scheduled <code>run</code> is built by the platform, not by a caller: <code>timestamp</code> (when it was due), <code>timezone</code>, <code>lastTimestamp</code>, <code>upcoming</code>. You read from it; you never pass it.</p>
+<p>A bare cron string is evaluated in UTC. &quot;09:00 in Berlin&quot; is 07:00 UTC in summer and 08:00 UTC in winter, so a plain string is wrong for half the year. Pass an object instead: <code>cron: { pattern, timezone }</code> — then the platform handles the DST switch.</p>
+<pre>schedules.task({ id, cron, run })                    from @trigger.dev/sdk, instead of task()
+cron: &quot;0 9 * * *&quot;                                    5-field cron, runs in UTC
+cron: { pattern: &quot;0 9 * * *&quot;, timezone: &quot;Europe/Berlin&quot; }    pinned to a zone
+payload.timestamp.toISOString()                      the due time, as a Date</pre>
+<p>Try it first: <code>grep -rn schedules src/trigger</code> — no scheduled task exists yet, so <code>cat src/trigger/process-order.ts</code> for the plain shape you will adapt.</p>
+<p>Your task: &quot;Add a scheduled task <code>daily-digest</code> that runs every day at 09:00 <strong>Europe/Berlin</strong> (also after the DST switch). It should return <code>{ ranAt, timezone }</code> from the schedule payload.&quot; Goal: the task is registered with that declarative schedule.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track trigger
@@ -26,7 +35,7 @@ wg level 3
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/trigger/03-schedule-daily-digest">level source on github</a>.</p>
-<div class="pn"><a href="../02-add-retry-policy/index.html">← ticket: retry policy for the CRM sync</a><a href="../04-fan-out-campaign/index.html">ticket: campaign fan-out task →</a></div>
+<div class="pn"><a href="../02-add-retry-policy/index.html">← retries are declared on the task, and a task-level option beats the project default</a><a href="../04-fan-out-campaign/index.html">tasks trigger tasks: batchTrigger creates many runs in one call →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

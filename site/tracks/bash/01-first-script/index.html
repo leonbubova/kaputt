@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>we need a tiny greeter script for the onboarding docs — bash level 01 — kaputt</title>
-<meta name="description" content="bash exercise: we need a tiny greeter script for the onboarding docs. Fix a real broken bash system in your own terminal — level 01 of 12, with hints and a checker.">
+<title>a script is commands in a file, and $1 is its first argument — bash level 01 — kaputt</title>
+<meta name="description" content="bash exercise: a script is commands in a file, and $1 is its first argument. Fix a real broken bash system in your own terminal — level 01 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/bash/01-first-script/">
-<meta property="og:title" content="we need a tiny greeter script for the onboarding docs — bash level 01 — kaputt"><meta property="og:description" content="bash exercise: we need a tiny greeter script for the onboarding docs. Fix a real broken bash system in your own terminal — level 01 of 12, with hints and a checker.">
+<meta property="og:title" content="a script is commands in a file, and $1 is its first argument — bash level 01 — kaputt"><meta property="og:description" content="bash exercise: a script is commands in a file, and $1 is its first argument. Fix a real broken bash system in your own terminal — level 01 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,17 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">bash</a> / level 01</div>
-<h1 class="lvl">we need a tiny greeter script for the onboarding docs</h1>
+<h1 class="lvl">a script is commands in a file, and $1 is its first argument</h1>
 <p class="meta">bash · level 01 of 12 · <code>first-script</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;New hires copy-paste a <code>greet.sh</code> from the wiki, but the file is gone. Recreate it: it takes a name as its first argument and prints <code>hello, &lt;name&gt;</code>.&quot; Goal: <code>~/.k8s-wargame/bash/work/greet.sh</code> exists and <code>greet.sh Ada</code> prints exactly <code>hello, Ada</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: a bash script is nothing more than a text file with commands in it, run top to bottom. Anything you can type at the prompt can live in a script — the point is to run it again without retyping.</p>
+<p>Two things make a file a script: a first line <code>#!/usr/bin/env bash</code> that says which program runs it, and the executable bit (<code>chmod +x</code>) so you can call it by name.</p>
+<p>Whatever you type after the script&#x27;s name arrives inside it as positional arguments: <code>$1</code> is the first, <code>$2</code> the second. <code>&quot;$1&quot;</code> with quotes is the safe way to use one.</p>
+<pre>printf &#x27;hello, %s\n&#x27; &quot;$1&quot;      print with a placeholder — %s takes the argument
+chmod +x greet.sh              make the file runnable
+./greet.sh Ada                 run it with one argument</pre>
+<p>Try it first: <code>printf &#x27;hi %s\n&#x27; there</code> on the prompt — same thing, no script yet.</p>
+<p>Your task: the onboarding docs reference a greeter script that no longer exists. Create <code>~/.k8s-wargame/bash/work/greet.sh</code> so that <code>greet.sh Ada</code> prints exactly <code>hello, Ada</code>.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track bash
@@ -26,7 +34,7 @@ wg level 1
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/bash/01-first-script">level source on github</a>.</p>
-<div class="pn"><span></span><a href="../02-exit-code/index.html">CI needs a script whose exit code says even or odd →</a></div>
+<div class="pn"><span></span><a href="../02-exit-code/index.html">every command answers with an exit code, and if/else branches on it →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

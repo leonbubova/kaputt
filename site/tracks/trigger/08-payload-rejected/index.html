@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>checkout 500s with TaskPayloadParsedError — trigger level 08 — kaputt</title>
-<meta name="description" content="trigger exercise: checkout 500s with TaskPayloadParsedError. Fix a real broken trigger system in your own terminal — level 08 of 18, with hints and a checker.">
+<title>schema validation happens at trigger time, in the caller — so convert at the boundary — trigger level 08 — kaputt</title>
+<meta name="description" content="trigger exercise: schema validation happens at trigger time, in the caller — so convert at the boundary. Fix a real broken trigger system in your own terminal — level 08 of 18, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/trigger/08-payload-rejected/">
-<meta property="og:title" content="checkout 500s with TaskPayloadParsedError — trigger level 08 — kaputt"><meta property="og:description" content="trigger exercise: checkout 500s with TaskPayloadParsedError. Fix a real broken trigger system in your own terminal — level 08 of 18, with hints and a checker.">
+<meta property="og:title" content="schema validation happens at trigger time, in the caller — so convert at the boundary — trigger level 08 — kaputt"><meta property="og:description" content="trigger exercise: schema validation happens at trigger time, in the caller — so convert at the boundary. Fix a real broken trigger system in your own terminal — level 08 of 18, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,18 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">trigger</a> / level 08</div>
-<h1 class="lvl">checkout 500s with TaskPayloadParsedError</h1>
+<h1 class="lvl">schema validation happens at trigger time, in the caller — so convert at the boundary</h1>
 <p class="meta">trigger · level 08 of 18 · <code>payload-rejected</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Every real checkout fails at <code>POST /api/checkout</code> with <code>TaskPayloadParsedError: Expected number, received string</code> before a run is even created. Triggering <code>charge-card</code> from the dashboard test page works fine.&quot; Goal: <code>checkout()</code> with a real storefront body creates a <code>charge-card</code> run and the run charges exactly 4999 cents for ord_1001.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: a <code>schemaTask</code> checks its payload when <code>trigger()</code> is called, in the process that calls it. A bad payload never produces a run: the caller gets <code>TaskPayloadParsedError</code> and the dashboard shows nothing. By design — but the failure now lives on the caller&#x27;s side.</p>
+<p>It also means the same task can work from one caller and fail from another. The dashboard test page sends a hand-typed JSON object with real numbers. An HTTP form body arrives as strings: <code>&quot;4999&quot;</code> is not <code>4999</code>, and <code>z.number()</code> says so.</p>
+<p>TypeScript will not save you here. A body typed <code>any</code> lets a string flow into a number field without complaint; only the runtime schema notices. The fix belongs where untyped data enters the code: convert at the boundary so the payload matches the schema — or make the schema coerce.</p>
+<pre>cat src/trigger/charge-card.ts        what the schema demands
+cat src/api/checkout.ts               what the caller builds from the request body
+Number(x)                             string &quot;4999&quot; -&gt; number 4999
+z.coerce.number()                     zod: convert before validating</pre>
+<p>Try it first: <code>node -e &#x27;console.log(typeof &quot;4999&quot;, typeof Number(&quot;4999&quot;))&#x27;</code>.</p>
+<p>Your task: &quot;Every real checkout fails at <code>POST /api/checkout</code> with <code>TaskPayloadParsedError: Expected number, received string</code> before a run is even created. Triggering <code>charge-card</code> from the dashboard test page works fine.&quot; Goal: <code>checkout()</code> with a real storefront body creates a <code>charge-card</code> run and the run charges exactly 4999 cents for ord_1001.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track trigger
@@ -26,7 +35,7 @@ wg level 8
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/trigger/08-payload-rejected">level source on github</a>.</p>
-<div class="pn"><a href="../07-duplicate-task-id/index.html">← refunds come back as processed orders</a><a href="../09-no-retries/index.html">CRM sync fails on the first timeout →</a></div>
+<div class="pn"><a href="../07-duplicate-task-id/index.html">← the id string is the task&#x27;s identity, and it must be unique across the project</a><a href="../09-no-retries/index.html">a task-level override replaces the project default — find which layer is in effect →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

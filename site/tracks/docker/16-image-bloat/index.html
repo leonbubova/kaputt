@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">docker</a> / level 16</div>
 <h1 class="lvl">tiny shell app ships as a 70 MB image</h1>
 <p class="meta">docker · level 16 of 22 · <code>image-bloat</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>wg-app:1.0</code> is a 20-line shell script on alpine but the image is huge and pushes take forever. Build context is <code>~/.k8s-wargame/docker/16-image-bloat/</code>.&quot; Goal: rebuild <code>wg-app:1.0</code> under 20 MB; <code>docker run --rm wg-app:1.0</code> still prints <code>app ok</code>. Don&#x27;t delete the <code>.cache/</code> dir — the build server needs it.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>wg-app:1.0</code> is a 20-line shell script on alpine but the image is huge and pushes take forever. Build context is <code>~/.k8s-wargame/docker/16-image-bloat/</code>.&quot;</p>
+<p>Goal: rebuild <code>wg-app:1.0</code> under 20 MB; <code>docker run --rm wg-app:1.0</code> still prints <code>app ok</code>. Don&#x27;t delete the <code>.cache/</code> dir — the build server needs it.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track docker

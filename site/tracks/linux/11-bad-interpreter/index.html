@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>report tool: &quot;bad interpreter: No such file or directory&quot; — linux level 11 — kaputt</title>
-<meta name="description" content="linux exercise: report tool: &quot;bad interpreter: No such file or directory&quot;. Fix a real broken linux system in your own terminal — level 11 of 23, with hints and a checker.">
+<title>the shebang is a literal path: invisible bytes make it a different file — linux level 11 — kaputt</title>
+<meta name="description" content="linux exercise: the shebang is a literal path: invisible bytes make it a different file. Fix a real broken linux system in your own terminal — level 11 of 23, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/linux/11-bad-interpreter/">
-<meta property="og:title" content="report tool: &quot;bad interpreter: No such file or directory&quot; — linux level 11 — kaputt"><meta property="og:description" content="linux exercise: report tool: &quot;bad interpreter: No such file or directory&quot;. Fix a real broken linux system in your own terminal — level 11 of 23, with hints and a checker.">
+<meta property="og:title" content="the shebang is a literal path: invisible bytes make it a different file — linux level 11 — kaputt"><meta property="og:description" content="linux exercise: the shebang is a literal path: invisible bytes make it a different file. Fix a real broken linux system in your own terminal — level 11 of 23, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">linux</a> / level 11</div>
-<h1 class="lvl">report tool: &quot;bad interpreter: No such file or directory&quot;</h1>
+<h1 class="lvl">the shebang is a literal path: invisible bytes make it a different file</h1>
 <p class="meta">linux · level 11 of 23 · <code>bad-interpreter</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Someone edited <code>/usr/local/bin/report</code> on their laptop and copied it back. Now it says <code>/bin/bash: bad interpreter</code>. <code>/bin/bash</code> exists, we checked.&quot; Goal: <code>report</code> runs and prints the user count line. Keep the script&#x27;s logic.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: when you run a script, the kernel reads its first line. <code>#!/bin/bash</code> means &quot;start <code>/bin/bash</code> and hand it this file&quot;. The path is taken byte for byte, no cleanup — every character up to the end of the line is part of the filename it looks for.</p>
+<p>So a shebang can fail while the interpreter clearly exists: a trailing space, a wrong slash, or a Windows line ending. Windows ends lines with two bytes, CR and LF (<code>\r\n</code>); Linux with LF only. A file edited on Windows carries an extra <code>\r</code> on every line, and the kernel then looks for <code>/bin/bash\r</code> — &quot;bad interpreter: No such file or directory&quot;.</p>
+<p>Terminals hide these bytes. Make them visible before guessing.</p>
+<pre>head -1 FILE | cat -A      show every byte; ^M is a carriage return, $ is end of line
+file FILE                  says &quot;with CRLF line terminators&quot; when that is the case
+sed -i &#x27;s/\r$//&#x27; FILE      strip the CR at the end of every line
+dos2unix FILE              same thing, if installed</pre>
+<p>Try it first: <code>printf &#x27;a\r\n&#x27; | cat -A</code> — a line that looks empty but is not.</p>
+<p>Your task: &quot;Someone edited <code>/usr/local/bin/report</code> on their laptop and copied it back. Now it says <code>/bin/bash: bad interpreter</code>. <code>/bin/bash</code> exists, we checked.&quot;</p>
+<p>Goal: <code>report</code> runs and prints the user count line. Keep the script&#x27;s logic.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track linux
@@ -26,7 +36,7 @@ wg level 11
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/linux/11-bad-interpreter">level source on github</a>.</p>
-<div class="pn"><a href="../10-log-permission-denied/index.html">← app can&#x27;t write its log</a><a href="../12-config-not-found/index.html">app says config missing, but the file is right there →</a></div>
+<div class="pn"><a href="../10-log-permission-denied/index.html">← creating a file needs write permission on the directory, not the file</a><a href="../12-config-not-found/index.html">a symlink is a name pointing at a path; if the target is gone, the link dangles →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

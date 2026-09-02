@@ -71,6 +71,7 @@ pre.term .c{color:var(--faint)} pre.term .g{color:var(--ok)}
 .tk ol li{font-size:12.5px;color:var(--ink);padding:6px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:22px 1fr;gap:8px}
 .tk ol li .ln{color:var(--faint);font-variant-numeric:tabular-nums}
 .tk ol li .sl{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.tk ol li.phase{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent,#a78bfa);padding-top:10px}
 blockquote{margin:0;font-family:var(--serif);font-size:clamp(24px,3.6vw,32px);font-weight:400;line-height:1.32;color:var(--ink);max-width:640px}
 blockquote .it{font-style:italic;color:var(--accent)}
 blockquote footer{font-family:var(--sans);color:var(--muted);font-size:14px;margin-top:14px}

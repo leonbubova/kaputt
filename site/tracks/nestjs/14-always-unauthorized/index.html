@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nestjs</a> / level 14</div>
 <h1 class="lvl">admin stats always 401</h1>
 <p class="meta">nestjs · level 14 of 21 · <code>always-unauthorized</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>GET /admin/stats</code> with header <code>X-Api-Key: wg-secret-key</code> (the value in <code>.env</code>) returns 401 <code>invalid api key</code> — for everyone, from curl and from the frontend.&quot; Goal: correct key → 200 with stats, missing/wrong key → 401. App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>GET /admin/stats</code> with header <code>X-Api-Key: wg-secret-key</code> (the value in <code>.env</code>) returns 401 <code>invalid api key</code> — for everyone, from curl and from the frontend.&quot; Goal: correct key → 200 with stats, missing/wrong key → 401.</p>
+<p>App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nestjs

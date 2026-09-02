@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">docker</a> / level 19</div>
 <h1 class="lvl">security audit: api runs as root</h1>
 <p class="meta">docker · level 19 of 22 · <code>runs-as-root</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Audit finding: process in <code>wg-api</code> runs as uid 0. Fix it in the image (<code>~/.k8s-wargame/docker/19-runs-as-root/</code>), not with a runtime flag — the image goes to other teams too.&quot; Goal: <code>wg-api</code> running from a rebuilt <code>wg-api:1.0</code>, <code>docker exec wg-api id -u</code> is not 0, and the app still logs <code>api ready</code>. Don&#x27;t change <code>app.sh</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Audit finding: process in <code>wg-api</code> runs as uid 0. Fix it in the image (<code>~/.k8s-wargame/docker/19-runs-as-root/</code>), not with a runtime flag — the image goes to other teams too.&quot;</p>
+<p>Goal: <code>wg-api</code> running from a rebuilt <code>wg-api:1.0</code>, <code>docker exec wg-api id -u</code> is not 0, and the app still logs <code>api ready</code>. Don&#x27;t change <code>app.sh</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track docker

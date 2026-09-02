@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ship 0.2.0, clean up the old one — helm level 05 — kaputt</title>
-<meta name="description" content="helm exercise: ship 0.2.0, clean up the old one. Fix a real broken helm system in your own terminal — level 05 of 20, with hints and a checker.">
+<title>chart version vs release revision; uninstall removes everything a release owns — helm level 05 — kaputt</title>
+<meta name="description" content="helm exercise: chart version vs release revision; uninstall removes everything a release owns. Fix a real broken helm system in your own terminal — level 05 of 20, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/helm/05-upgrade-uninstall/">
-<meta property="og:title" content="ship 0.2.0, clean up the old one — helm level 05 — kaputt"><meta property="og:description" content="helm exercise: ship 0.2.0, clean up the old one. Fix a real broken helm system in your own terminal — level 05 of 20, with hints and a checker.">
+<meta property="og:title" content="chart version vs release revision; uninstall removes everything a release owns — helm level 05 — kaputt"><meta property="og:description" content="helm exercise: chart version vs release revision; uninstall removes everything a release owns. Fix a real broken helm system in your own terminal — level 05 of 20, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">helm</a> / level 05</div>
-<h1 class="lvl">ship 0.2.0, clean up the old one</h1>
+<h1 class="lvl">chart version vs release revision; uninstall removes everything a release owns</h1>
 <p class="meta">helm · level 05 of 20 · <code>upgrade-uninstall</code></p>
-<div class="brief"><h2>the ticket</h2><p>Ticket: &quot;Release <code>web</code> (chart 0.1.0) is running in <code>wg-helm</code>. Cut chart <code>0.2.0</code>: bump <code>version</code> in <code>Chart.yaml</code>, change the default <code>environment</code> to <code>staging</code>, preview the rendered YAML with <code>helm template</code>, then upgrade. <code>helm history web</code> must show revision 2 as <code>deployed</code> with <code>web-0.2.0</code>. While you&#x27;re there: release <code>wg-legacy</code> in the same namespace is abandoned — remove it and everything it owns.&quot; Chart copy: <code>~/.k8s-wargame/helm/05-upgrade-uninstall/web</code>. Goal: as described; keep the release history of <code>web</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: two numbers move independently. The chart <code>version</code> in <code>Chart.yaml</code> is yours — bump it when the chart changes, like a package version. The release revision is Helm&#x27;s — it counts up on every <code>helm upgrade</code>, whatever changed. <code>helm history</code> shows both side by side: revision, chart name-version, status.</p>
+<p>Upgrade, never delete-and-reinstall: an upgrade keeps the history so <code>helm rollback</code> still works. Preview with <code>helm template</code> first so the upgrade contains no surprises.</p>
+<p>Cleanup is the mirror image: <code>helm uninstall</code> removes the release and every object it created — Deployments, Services, ConfigMaps — in one go.</p>
+<pre>helm template &lt;release&gt; &lt;chart&gt; | grep &lt;something&gt;    check the rendered output locally
+helm upgrade &lt;release&gt; &lt;chart&gt; -n wg-helm             new revision from the changed chart
+helm history &lt;release&gt; -n wg-helm                     revision, chart version, status
+helm uninstall &lt;release&gt; -n wg-helm                   release and all its objects gone</pre>
+<p>Try it first: <code>helm history web -n wg-helm</code> — one revision, chart <code>web-0.1.0</code>.</p>
+<p>Your task: &quot;Release <code>web</code> (chart 0.1.0) is running in <code>wg-helm</code>. Cut chart <code>0.2.0</code>: bump <code>version</code> in <code>Chart.yaml</code>, change the default <code>environment</code> to <code>staging</code>, preview the rendered YAML with <code>helm template</code>, then upgrade. <code>helm history web</code> must show revision 2 as <code>deployed</code> with <code>web-0.2.0</code>. While you&#x27;re there: release <code>wg-legacy</code> in the same namespace is abandoned — remove it and everything it owns.&quot;</p>
+<p>Chart copy: <code>~/.k8s-wargame/helm/05-upgrade-uninstall/web</code>. Goal: as described; keep the release history of <code>web</code>.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track helm
@@ -26,7 +36,7 @@ wg level 5
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/helm/05-upgrade-uninstall">level source on github</a>.</p>
-<div class="pn"><a href="../04-configmap-template/index.html">← the chart is missing a ConfigMap</a><a href="../06-template-syntax/index.html">helm install blows up before anything reaches the cluster →</a></div>
+<div class="pn"><a href="../04-configmap-template/index.html">← every file in templates/ becomes an object; .Release and .Values fill the holes</a><a href="../06-template-syntax/index.html">templates render locally first: a parse error stops before the cluster is touched →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

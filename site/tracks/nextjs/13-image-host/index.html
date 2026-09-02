@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nextjs</a> / level 13</div>
 <h1 class="lvl">gallery page crashes with &quot;hostname is not configured&quot;</h1>
 <p class="meta">nextjs · level 13 of 21 · <code>image-host</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;The CDN team moved our images to <code>cdn.wurm-assets.example</code>. We updated the <code>&lt;Image&gt;</code> URLs; now <code>/gallery</code> is a 500 with something about <code>next/image</code> and a hostname.&quot; App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: <code>/gallery</code> renders 200 with the hero image (<code>hero.jpg</code>) still served through <code>next/image</code>. Don&#x27;t swap <code>&lt;Image&gt;</code> for <code>&lt;img&gt;</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;The CDN team moved our images to <code>cdn.wurm-assets.example</code>. We updated the <code>&lt;Image&gt;</code> URLs; now <code>/gallery</code> is a 500 with something about <code>next/image</code> and a hostname.&quot;</p>
+<p>App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: <code>/gallery</code> renders 200 with the hero image (<code>hero.jpg</code>) still served through <code>next/image</code>. Don&#x27;t swap <code>&lt;Image&gt;</code> for <code>&lt;img&gt;</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nextjs

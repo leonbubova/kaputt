@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nextjs</a> / level 19</div>
 <h1 class="lvl">stock page shows yesterday&#x27;s numbers</h1>
 <p class="meta">nextjs · level 19 of 21 · <code>stale-fetch</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Warehouse updates <code>data/stock.json</code>, <code>/api/stock</code> returns the new values immediately, but <code>/stock</code> keeps showing the old count until the server is restarted. It must always be live.&quot; App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: change a number in <code>data/stock.json</code> → the next <code>GET /stock</code> shows it. Keep loading the data through <code>/api/stock</code> with <code>fetch</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Warehouse updates <code>data/stock.json</code>, <code>/api/stock</code> returns the new values immediately, but <code>/stock</code> keeps showing the old count until the server is restarted. It must always be live.&quot;</p>
+<p>App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: change a number in <code>data/stock.json</code> → the next <code>GET /stock</code> shows it. Keep loading the data through <code>/api/stock</code> with <code>fetch</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nextjs

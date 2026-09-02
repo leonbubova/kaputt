@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>config into the container — k8s level 05 — kaputt</title>
-<meta name="description" content="k8s exercise: config into the container. Fix a real broken k8s system in your own terminal — level 05 of 25, with hints and a checker.">
+<title>envFrom turns a ConfigMap&#x27;s keys into a container&#x27;s environment variables — k8s level 05 — kaputt</title>
+<meta name="description" content="k8s exercise: envFrom turns a ConfigMap&#x27;s keys into a container&#x27;s environment variables. Fix a real broken k8s system in your own terminal — level 05 of 25, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/k8s/05-configmap-env/">
-<meta property="og:title" content="config into the container — k8s level 05 — kaputt"><meta property="og:description" content="k8s exercise: config into the container. Fix a real broken k8s system in your own terminal — level 05 of 25, with hints and a checker.">
+<meta property="og:title" content="envFrom turns a ConfigMap&#x27;s keys into a container&#x27;s environment variables — k8s level 05 — kaputt"><meta property="og:description" content="k8s exercise: envFrom turns a ConfigMap&#x27;s keys into a container&#x27;s environment variables. Fix a real broken k8s system in your own terminal — level 05 of 25, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">k8s</a> / level 05</div>
-<h1 class="lvl">config into the container</h1>
+<h1 class="lvl">envFrom turns a ConfigMap&#x27;s keys into a container&#x27;s environment variables</h1>
 <p class="meta">k8s · level 05 of 25 · <code>configmap-env</code></p>
-<div class="brief"><h2>the ticket</h2><p>Ticket: &quot;We want app config outside the image. Create a ConfigMap <code>app-config</code> in <code>wg</code> with <code>GREETING=hello</code>, then a pod <code>greeter</code> (image <code>busybox:1.36</code>) that gets <strong>all</strong> keys of that ConfigMap as environment variables and prints <code>$GREETING</code>.&quot; Goal: <code>kubectl logs greeter</code> contains <code>hello</code>, and the pod takes its env from <code>app-config</code> via <code>envFrom</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: the image should be the same in dev and prod; only the settings differ. Kubernetes separates the two: config lives in a ConfigMap, and the pod spec says how to pull it in at start. Change the map, restart the pod, same image behaves differently.</p>
+<p>The simplest wiring is <code>envFrom</code> on a container: every key in the ConfigMap becomes an environment variable of that name. (<code>env[].valueFrom.configMapKeyRef</code> would pick single keys.)</p>
+<p>A pod&#x27;s spec is mostly immutable once created. Fix the file, delete the pod, apply again — that loop is normal. <code>kubectl run --dry-run=client -o yaml</code> drafts a pod manifest; <code>--restart=Never</code> makes a bare Pod, and anything after <code>--</code> becomes the container&#x27;s command.</p>
+<pre>kubectl create configmap NAME --from-literal=KEY=VALUE   the config object
+kubectl run NAME --image=IMG --restart=Never --dry-run=client -o yaml -- CMD &gt; f.yaml   draft a pod
+kubectl explain pod.spec.containers.envFrom   the shape of the field
+kubectl apply -f f.yaml                      create the pod
+kubectl logs NAME                            what the container printed</pre>
+<p>Try it first: <code>kubectl explain pod.spec.containers.envFrom.configMapRef</code> — two fields, one of them optional.</p>
+<p>Your task: ticket: &quot;We want app config outside the image. Create a ConfigMap <code>app-config</code> in <code>wg</code> with <code>GREETING=hello</code>, then a pod <code>greeter</code> (image <code>busybox:1.36</code>) that gets <strong>all</strong> keys of that ConfigMap as environment variables and prints <code>$GREETING</code>.&quot; Goal: <code>kubectl logs greeter</code> contains <code>hello</code>, and the pod takes its env from <code>app-config</code> via <code>envFrom</code>.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track k8s
@@ -26,7 +36,7 @@ wg level 5
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/k8s/05-configmap-env">level source on github</a>.</p>
-<div class="pn"><a href="../04-scale-configmap/index.html">← scale up and write it down</a><a href="../06-secret-volume/index.html">secret as a file →</a></div>
+<div class="pn"><a href="../04-scale-configmap/index.html">← change desired state and the controller catches up; a ConfigMap is plain key/value data</a><a href="../06-secret-volume/index.html">a Secret mounted as a volume shows up as one file per key →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

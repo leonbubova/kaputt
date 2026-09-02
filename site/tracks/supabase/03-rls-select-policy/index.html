@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>open it up (read-only) — supabase level 03 — kaputt</title>
-<meta name="description" content="supabase exercise: open it up (read-only). Fix a real broken supabase system in your own terminal — level 03 of 18, with hints and a checker.">
+<title>with RLS on, a policy says who may do which command on which rows — supabase level 03 — kaputt</title>
+<meta name="description" content="supabase exercise: with RLS on, a policy says who may do which command on which rows. Fix a real broken supabase system in your own terminal — level 03 of 18, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/supabase/03-rls-select-policy/">
-<meta property="og:title" content="open it up (read-only) — supabase level 03 — kaputt"><meta property="og:description" content="supabase exercise: open it up (read-only). Fix a real broken supabase system in your own terminal — level 03 of 18, with hints and a checker.">
+<meta property="og:title" content="with RLS on, a policy says who may do which command on which rows — supabase level 03 — kaputt"><meta property="og:description" content="supabase exercise: with RLS on, a policy says who may do which command on which rows. Fix a real broken supabase system in your own terminal — level 03 of 18, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,18 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">supabase</a> / level 03</div>
-<h1 class="lvl">open it up (read-only)</h1>
+<h1 class="lvl">with RLS on, a policy says who may do which command on which rows</h1>
 <p class="meta">supabase · level 03 of 18 · <code>rls-select-policy</code></p>
-<div class="brief"><h2>the ticket</h2><p>Ticket: &quot;<code>notes</code> has RLS enabled (good) and 3 rows. The public frontend uses the anon key and gets <code>[]</code> from <code>GET /rest/v1/notes</code>. Make notes readable for anonymous visitors — read only, RLS stays on.&quot; Goal: anon GET returns the 3 rows; anon POST is still rejected.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: the REST API runs SQL as a database role — <code>anon</code> for the anon key, <code>authenticated</code> for a logged-in user. Row Level Security decides which rows those roles get to touch. The rule is simple: RLS enabled and no matching policy means zero rows. Not an error — for SELECT, denied looks like <code>200 []</code>.</p>
+<p>A policy has three parts, in this order: who (<code>to anon</code>), which command (<code>for select</code>), which rows (<code>using (…)</code>, a boolean per row). <code>using (true)</code> means every row. You add one policy per role and command you want to permit; everything else stays closed. Turning RLS off instead would open INSERT, UPDATE and DELETE too.</p>
+<pre>select policyname, roles, cmd, qual from pg_policies where tablename=&#x27;notes&#x27;;     the policies that exist
+create policy &quot;name&quot; on public.t for select to anon using (true);               who / command / rows
+source ~/.k8s-wargame/supabase/env                                              API_URL, ANON_KEY
+curl -s &quot;$API_URL/rest/v1/notes&quot; -H &quot;apikey: $ANON_KEY&quot;                         what the frontend sees</pre>
+<p>Try it first: run the <code>pg_policies</code> query in <code>wg shell</code> — no rows. That is the whole reason the frontend sees <code>[]</code>.</p>
+<p>Your task: &quot;<code>notes</code> has RLS enabled (good) and 3 rows. The public frontend uses the anon key and gets <code>[]</code> from <code>GET /rest/v1/notes</code>. Make notes readable for anonymous visitors — read only, RLS stays on.&quot;</p>
+<p>Goal: anon GET returns the 3 rows; anon POST is still rejected.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track supabase
@@ -26,7 +35,7 @@ wg level 3
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/supabase/03-rls-select-policy">level source on github</a>.</p>
-<div class="pn"><a href="../02-seed-data/index.html">← seed it</a><a href="../04-rpc-function/index.html">a function behind /rpc →</a></div>
+<div class="pn"><a href="../02-seed-data/index.html">← seed.sql gives every rebuilt database its starting rows</a><a href="../04-rpc-function/index.html">a SQL function in an exposed schema is an endpoint under /rpc →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

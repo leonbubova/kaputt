@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">redis</a> / level 08</div>
 <h1 class="lvl">the cache returns OOM errors under load instead of evicting</h1>
 <p class="meta">redis · level 08 of 12 · <code>eviction-policy</code></p>
-<div class="brief"><h2>the ticket</h2><p>This instance is a cache, but its maxmemory-policy is <code>noeviction</code>, so once memory fills it rejects writes. Set the policy to <code>allkeys-lru</code> so old keys are evicted instead.</p></div>
+<div class="brief"><h2>the ticket</h2><p>This instance is a cache, but its maxmemory-policy is <code>noeviction</code>, so once memory fills it</p>
+<p>rejects writes. Set the policy to <code>allkeys-lru</code> so old keys are evicted instead.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track redis

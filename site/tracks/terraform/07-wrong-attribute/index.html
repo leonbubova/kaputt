@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">terraform</a> / level 07</div>
 <h1 class="lvl">plan errors: Unsupported attribute .name</h1>
 <p class="meta">terraform · level 07 of 12 · <code>wrong-attribute</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>out/name.txt</code> should hold the generated pet name, but plan fails: <code>Unsupported attribute: This object has no argument, nested block, or exported attribute named &quot;name&quot;</code>. Fix the reference; don&#x27;t change what the file is supposed to contain.&quot; Goal: apply succeeds; <code>out/name.txt</code> equals output <code>pet</code> (the generated name).</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>out/name.txt</code> should hold the generated pet name, but plan fails: <code>Unsupported attribute: This object has no argument, nested block, or exported attribute named &quot;name&quot;</code>. Fix the reference; don&#x27;t change what the file is supposed to contain.&quot;</p>
+<p>Goal: apply succeeds; <code>out/name.txt</code> equals output <code>pet</code> (the generated name).</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track terraform
@@ -26,7 +27,7 @@ wg level 7
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/terraform/07-wrong-attribute">level source on github</a>.</p>
-<div class="pn"><a href="../06-provider-version/index.html">← &#x27;terraform init&#x27; fails: no available releases match</a><a href="../08-count-index/index.html">apply errors: Missing resource instance key →</a></div>
+<div class="pn"><a href="../06-provider-version/index.html">← init resolves provider versions; an impossible constraint stops everything before plan</a><a href="../08-count-index/index.html">apply errors: Missing resource instance key →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

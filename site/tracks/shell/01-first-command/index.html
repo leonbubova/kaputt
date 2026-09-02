@@ -18,7 +18,16 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">shell</a> / level 01</div>
 <h1 class="lvl">your first command</h1>
 <p class="meta">shell · level 01 of 14 · <code>first-command</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: the window you are looking at is a terminal. Inside it a program called the shell waits for you to type. The short text on the left with the blinking cursor is the prompt — it means &quot;your turn&quot;. You type a command, press Enter, the computer does it, and the prompt comes back: your turn again. That is the whole game. Try it — type this line and press Enter: echo hello The computer answers <code>hello</code>. <code>echo</code> means &quot;say this back to me&quot;. Try <code>echo good morning</code> as well. Your task: make the computer put its answer into a file instead of the screen. Type this exactly, then Enter: echo hello &gt; ~/.k8s-wargame/shell/sandbox/hello.txt Nothing appears — the word went into the file. (The <code>&gt;</code> and the <code>~</code> get their own lessons later; for now just type them.) Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: the window you are looking at is a terminal. Inside it a program called the shell waits for you to type.</p>
+<p>The short text on the left with the blinking cursor is the prompt — it means &quot;your turn&quot;. You type a command,</p>
+<p>press Enter, the computer does it, and the prompt comes back: your turn again. That is the whole game.</p>
+<p>Try it — type this line and press Enter:</p>
+<pre>echo hello</pre>
+<p>The computer answers <code>hello</code>. <code>echo</code> means &quot;say this back to me&quot;. Try <code>echo good morning</code> as well.</p>
+<p>Your task: make the computer put its answer into a file instead of the screen. Type this exactly, then Enter:</p>
+<pre>echo hello &gt; ~/.k8s-wargame/shell/sandbox/hello.txt</pre>
+<p>Nothing appears — the word went into the file. (The <code>&gt;</code> and the <code>~</code> get their own lessons later; for now just type them.)</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track shell

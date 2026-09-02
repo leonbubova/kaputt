@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>add a like button to the product page — nextjs level 05 — kaputt</title>
-<meta name="description" content="nextjs exercise: add a like button to the product page. Fix a real broken nextjs system in your own terminal — level 05 of 21, with hints and a checker.">
+<title>interactivity lives in a &quot;use client&quot; file that a server page renders — nextjs level 05 — kaputt</title>
+<meta name="description" content="nextjs exercise: interactivity lives in a &quot;use client&quot; file that a server page renders. Fix a real broken nextjs system in your own terminal — level 05 of 21, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nextjs/05-client-component/">
-<meta property="og:title" content="add a like button to the product page — nextjs level 05 — kaputt"><meta property="og:description" content="nextjs exercise: add a like button to the product page. Fix a real broken nextjs system in your own terminal — level 05 of 21, with hints and a checker.">
+<meta property="og:title" content="interactivity lives in a &quot;use client&quot; file that a server page renders — nextjs level 05 — kaputt"><meta property="og:description" content="nextjs exercise: interactivity lives in a &quot;use client&quot; file that a server page renders. Fix a real broken nextjs system in your own terminal — level 05 of 21, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nextjs</a> / level 05</div>
-<h1 class="lvl">add a like button to the product page</h1>
+<h1 class="lvl">interactivity lives in a &quot;use client&quot; file that a server page renders</h1>
 <p class="meta">nextjs · level 05 of 21 · <code>client-component</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Product detail pages (<code>/products/&lt;slug&gt;</code>) need a <code>&lt;button data-testid=&quot;like-button&quot;&gt;likes: N&lt;/button&gt;</code> that counts up on click. The page itself stays a Server Component (it reads from disk); put the button in <code>src/components/LikeButton.tsx</code>.&quot; App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: <code>/products/regenwurm</code> renders 200 with the button showing <code>likes: 0</code>; the button is a Client Component, the page is not.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: in the App Router every component is a Server Component by default. It runs on the server and ships no JavaScript to the browser. The price: it cannot hold state, run effects, or handle clicks — there is no browser there.</p>
+<p>Anything interactive goes into its own file whose first line is <code>&quot;use client&quot;;</code>. That directive marks a boundary: this file and what it imports are bundled for the browser. The server page then imports and renders <code>&lt;LikeButton /&gt;</code> like any other tag, passing plain props.</p>
+<p>So push the boundary as low as possible: the page stays on the server with its data access; only the small button that needs <code>useState</code> becomes client.</p>
+<pre>&quot;use client&quot;;                     first line of any file using useState / useEffect / onClick
+src/components/&lt;Name&gt;.tsx         where this app keeps shared components
+const [n, set] = useState(0);     from &quot;react&quot;; state that survives re-renders
+curl -s localhost:3100/products/regenwurm | grep -o &#x27;likes[^&lt;]*&#x27;   the server-rendered initial state</pre>
+<p>Try it first: <code>cat src/components/Counter.tsx src/app/dashboard/page.tsx</code> — a client widget and the server page that renders it.</p>
+<p>Your task: product detail pages (<code>/products/&lt;slug&gt;</code>) need a <code>&lt;button data-testid=&quot;like-button&quot;&gt;likes: N&lt;/button&gt;</code> that counts up on click. The page itself stays a Server Component (it reads from disk); put the button in <code>src/components/LikeButton.tsx</code>. App: <code>~/.k8s-wargame/nextjs/app</code>.</p>
+<p>Goal: <code>/products/regenwurm</code> renders 200 with the button showing <code>likes: 0</code>; the button is a Client Component, the page is not.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nextjs
@@ -26,7 +36,7 @@ wg level 5
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nextjs/05-client-component">level source on github</a>.</p>
-<div class="pn"><a href="../04-api-route/index.html">← add GET /api/ping</a><a href="../06-server-action/index.html">add a guestbook with a server action →</a></div>
+<div class="pn"><a href="../04-api-route/index.html">← route.ts turns a folder into an API endpoint: one exported function per HTTP method</a><a href="../06-server-action/index.html">a Server Action is a server function a form can call directly →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

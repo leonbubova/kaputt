@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">helm</a> / level 15</div>
 <h1 class="lvl">prod shop stuck in Init, waiting for the cache</h1>
 <p class="meta">helm · level 15 of 20 · <code>subchart</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Release <code>shop</code> was installed with <code>-f values-prod.yaml</code>, but the pod never leaves <code>Init:0/1</code>. Logs say the cache is unreachable. In prod the chart is supposed to bring its own cache.&quot; Work dir: <code>~/.k8s-wargame/helm/15-subchart/</code>. Goal: <code>shop</code> and <code>shop-cache</code> both available, page reachable. Don&#x27;t remove the init container — the app really needs the cache.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Release <code>shop</code> was installed with <code>-f values-prod.yaml</code>, but the pod never leaves <code>Init:0/1</code>. Logs say the cache is unreachable. In prod the chart is supposed to bring its own cache.&quot;</p>
+<p>Work dir: <code>~/.k8s-wargame/helm/15-subchart/</code>. Goal: <code>shop</code> and <code>shop-cache</code> both available, page reachable. Don&#x27;t remove the init container — the app really needs the cache.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track helm

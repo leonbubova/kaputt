@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">bash</a> / level 07</div>
 <h1 class="lvl">&#x27;max&#x27; picks 9 over 100</h1>
 <p class="meta">bash · level 07 of 12 · <code>numeric-compare</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>maxnum.sh A B</code> should print the larger of two numbers. QA reports <code>maxnum.sh 9 100</code> prints <code>9</code>. Fix the comparison.&quot; Goal: <code>maxnum.sh 9 100</code> prints <code>100</code>; <code>maxnum.sh 100 9</code> prints <code>100</code>; <code>maxnum.sh 5 5</code> prints <code>5</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>maxnum.sh A B</code> should print the larger of two numbers. QA reports <code>maxnum.sh 9 100</code> prints <code>9</code>. Fix the comparison.&quot;</p>
+<p>Goal: <code>maxnum.sh 9 100</code> prints <code>100</code>; <code>maxnum.sh 100 9</code> prints <code>100</code>; <code>maxnum.sh 5 5</code> prints <code>5</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track bash
@@ -26,7 +27,7 @@ wg level 7
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/bash/07-numeric-compare">level source on github</a>.</p>
-<div class="pn"><a href="../06-quote-the-argument/index.html">← &#x27;cat: my: No such file or directory&#x27; — but the file is right there</a><a href="../08-off-by-one/index.html">the countdown never reaches 1 →</a></div>
+<div class="pn"><a href="../06-quote-the-argument/index.html">← quote your variables: unquoted $1 splits on spaces</a><a href="../08-off-by-one/index.html">the countdown never reaches 1 →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

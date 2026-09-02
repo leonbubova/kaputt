@@ -18,7 +18,8 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">docker</a> / level 14</div>
 <h1 class="lvl">cache loses everything on redeploy</h1>
 <p class="meta">docker · level 14 of 22 · <code>volume-lost</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Every <code>docker compose down &amp;&amp; docker compose up -d</code> of the cache stack (<code>~/.k8s-wargame/docker/14-volume-lost/</code>) wipes all redis keys, although we declared a volume.&quot; Goal: a key written with <code>docker exec wg-cache redis-cli set k v</code> + <code>redis-cli save</code> survives <code>down</code>/<code>up -d</code>. Keep image <code>redis:7-alpine</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Every <code>docker compose down &amp;&amp; docker compose up -d</code> of the cache stack (<code>~/.k8s-wargame/docker/14-volume-lost/</code>) wipes all redis keys, although we declared a volume.&quot;</p>
+<p>Goal: a key written with <code>docker exec wg-cache redis-cli set k v</code> + <code>redis-cli save</code> survives <code>down</code>/<code>up -d</code>. Keep image <code>redis:7-alpine</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track docker

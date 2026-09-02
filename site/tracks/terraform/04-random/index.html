@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>each environment needs a stable random name — terraform level 04 — kaputt</title>
-<meta name="description" content="terraform exercise: each environment needs a stable random name. Fix a real broken terraform system in your own terminal — level 04 of 12, with hints and a checker.">
+<title>random values are resources: generated once, kept in state — terraform level 04 — kaputt</title>
+<meta name="description" content="terraform exercise: random values are resources: generated once, kept in state. Fix a real broken terraform system in your own terminal — level 04 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/terraform/04-random/">
-<meta property="og:title" content="each environment needs a stable random name — terraform level 04 — kaputt"><meta property="og:description" content="terraform exercise: each environment needs a stable random name. Fix a real broken terraform system in your own terminal — level 04 of 12, with hints and a checker.">
+<meta property="og:title" content="random values are resources: generated once, kept in state — terraform level 04 — kaputt"><meta property="og:description" content="terraform exercise: random values are resources: generated once, kept in state. Fix a real broken terraform system in your own terminal — level 04 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,19 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">terraform</a> / level 04</div>
-<h1 class="lvl">each environment needs a stable random name</h1>
+<h1 class="lvl">random values are resources: generated once, kept in state</h1>
 <p class="meta">terraform · level 04 of 12 · <code>random</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Use <code>random_pet</code> to generate a two-word name, write it to <code>out/name.txt</code>, and expose it as output <code>pet</code>. It must stay the same across plans (no churn).&quot; Goal: apply writes a non-empty <code>out/name.txt</code>; output <code>pet</code> equals it; a follow-up plan shows no changes.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: in terraform, randomness is not a function call that re-rolls on every run. The <code>random</code> provider models random values as resources: on create the value is generated and saved into the state file; every later plan reads the stored value back instead of rolling again. That is what makes a random name stable — the same config gives the same name until the resource is destroyed.</p>
+<p>This is the state file doing its job: it remembers what exists so a repeated plan can say &quot;no changes&quot;. A plan that keeps wanting to replace something is churn — a value computed outside state.</p>
+<p><code>random_pet</code> produces a readable name like <code>curious-otter</code>. Its generated value lives in the <code>.id</code> attribute — there is no <code>.name</code>. Reference it exactly like any other attribute.</p>
+<pre>resource &quot;random_pet&quot; &quot;n&quot; { length = 2 }    a two-word name, generated on create
+random_pet.n.id                              the generated value (not .name)
+terraform plan                               after apply: &quot;No changes&quot; means state holds the value
+terraform state show random_pet.n            see what state remembers about it</pre>
+<p>Try it first: apply once, then <code>terraform plan</code> twice — the name does not move.</p>
+<p>Your task: use <code>random_pet</code> to generate a two-word name, write it to <code>out/name.txt</code>, and expose it as output <code>pet</code>. It must stay the same across plans (no churn).</p>
+<p>Goal: apply writes a non-empty <code>out/name.txt</code>; output <code>pet</code> equals it; a follow-up plan shows no changes.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track terraform
@@ -26,7 +36,7 @@ wg level 4
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/terraform/04-random">level source on github</a>.</p>
-<div class="pn"><a href="../03-output/index.html">← CI needs to read a value back out of terraform</a><a href="../05-count/index.html">spin up three node files, not one →</a></div>
+<div class="pn"><a href="../03-output/index.html">← an output exposes a value, and &lt;type&gt;.&lt;name&gt;.&lt;attribute&gt; reads one from a resource</a><a href="../05-count/index.html">count makes N instances from one block, and count.index tells them apart →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

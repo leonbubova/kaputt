@@ -32,10 +32,15 @@ for td in sorted(glob.glob(root+'/*/')):
     name=os.path.basename(td.rstrip('/'))
     if not os.path.exists(os.path.join(td,'track.sh')): continue
     lvls=[]
+    learn=None
+    for l in open(os.path.join(td,'track.sh')):
+        if l.startswith('LEARN_LEVELS='): learn=int(l.split('=')[1].split()[0])
     for ld in sorted(glob.glob(td+'[0-9]*/')):
         slug=os.path.basename(ld.rstrip('/'))
         lvls.append({'n':slug[:2],'slug':slug[3:],'title':firstline(os.path.join(ld,'README.md'))})
-    if lvls: tracks.append({'track':name,'blurb':BLURB.get(name,''),'count':len(lvls),'levels':lvls})
+    if learn is None: learn=(len(lvls)+1)//2
+    for i,l in enumerate(lvls): l['learn']=i<learn
+    if lvls: tracks.append({'track':name,'blurb':BLURB.get(name,''),'count':len(lvls),'learn':learn,'levels':lvls})
 json.dump({'tracks':tracks,'total':sum(t['count'] for t in tracks),'ntracks':len(tracks)},sys.stdout,indent=1)
 PY
 echo "wrote levels.json: $(python3 -c "import json;d=json.load(open('$HERE/levels.json'));print(d['ntracks'],'tracks',d['total'],'levels')")"

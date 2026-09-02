@@ -17,21 +17,23 @@ def md_inline(s):
     return s
 
 def md_body(text):
-    """tiny markdown: drop the H1, paragraphs, bullet lists, inline code/bold."""
+    """tiny markdown: drop the H1; one line = one paragraph; 4-space-indented lines = command block; bullets; inline code/bold."""
     lines = [l.rstrip() for l in text.splitlines()]
     lines = [l for l in lines if not l.startswith("# ")]
-    out, para, ul = [], [], []
+    out, ul, pre = [], [], []
     def flush():
-        nonlocal para, ul
-        if para: out.append("<p>" + md_inline(" ".join(para)) + "</p>"); para = []
+        nonlocal ul, pre
         if ul: out.append("<ul>" + "".join(f"<li>{md_inline(x)}</li>" for x in ul) + "</ul>"); ul = []
+        if pre: out.append("<pre>" + html.escape("\n".join(pre)) + "</pre>"); pre = []
     for l in lines:
         if not l.strip(): flush(); continue
+        if l.startswith("    "):
+            if ul: flush()
+            pre.append(l[4:]); continue
         if l.lstrip().startswith(("- ", "* ")):
-            if para: flush()
+            if pre: flush()
             ul.append(l.lstrip()[2:]); continue
-        if ul: flush()
-        para.append(l.strip())
+        flush(); out.append("<p>" + md_inline(l.strip()) + "</p>")
     flush()
     return "\n".join(out)
 
@@ -79,7 +81,7 @@ for t in tracks:
 <p class="meta">{t["count"]} levels · the first block builds the basics, then real incidents, easy → hard</p>
 <pre class="term"><span class="c"># play this track</span>
 wg track {tr}
-wg primer        <span class="c"># the ~10 commands you'll need</span>
+wg help          <span class="c"># the ~10 commands you'll need</span>
 wg level 1</pre>
 <ul class="lvls" style="margin-top:28px">{items}</ul>'''
     write(f"tracks/{tr}/index.html", page(f"{tr} track — {t['count']} break/fix levels — {NAME}", f"Learn {tr} by fixing broken systems: {t['count']} hands-on levels, beginner to pro. {t['blurb']}.", body, 2, f"{BASE}/tracks/{tr}/"))

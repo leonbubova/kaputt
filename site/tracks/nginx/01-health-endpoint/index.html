@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>monitoring alerts: GET /health returns the homepage, not &quot;ok&quot; — nginx level 01 — kaputt</title>
-<meta name="description" content="nginx exercise: monitoring alerts: GET /health returns the homepage, not &quot;ok&quot;. Fix a real broken nginx system in your own terminal — level 01 of 12, with hints and a checker.">
+<title>a request picks one location, and `return` answers it without a file — nginx level 01 — kaputt</title>
+<meta name="description" content="nginx exercise: a request picks one location, and `return` answers it without a file. Fix a real broken nginx system in your own terminal — level 01 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nginx/01-health-endpoint/">
-<meta property="og:title" content="monitoring alerts: GET /health returns the homepage, not &quot;ok&quot; — nginx level 01 — kaputt"><meta property="og:description" content="nginx exercise: monitoring alerts: GET /health returns the homepage, not &quot;ok&quot;. Fix a real broken nginx system in your own terminal — level 01 of 12, with hints and a checker.">
+<meta property="og:title" content="a request picks one location, and `return` answers it without a file — nginx level 01 — kaputt"><meta property="og:description" content="nginx exercise: a request picks one location, and `return` answers it without a file. Fix a real broken nginx system in your own terminal — level 01 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,18 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nginx</a> / level 01</div>
-<h1 class="lvl">monitoring alerts: GET /health returns the homepage, not &quot;ok&quot;</h1>
+<h1 class="lvl">a request picks one location, and `return` answers it without a file</h1>
 <p class="meta">nginx · level 01 of 12 · <code>health-endpoint</code></p>
-<div class="brief"><h2>the ticket</h2><p>The load balancer probes http://shop.local/health and expects the body &quot;ok&quot;. Right now it gets the HTML index page, so the probe is failing. Add a /health endpoint on the shop.local server that returns 200 with the plain body &quot;ok&quot;.</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: nginx handles every request in two steps. First it picks a <code>server</code> block by the Host header, then inside that server it picks exactly ONE <code>location</code> block — the most specific match for the path. Whatever that location says is what happens.</p>
+<p><code>location /</code> is a prefix match: it catches everything that no better block claims. <code>location = /path</code> is an exact match and always wins for that one path. That is how you carve a single URL out of the catch-all.</p>
+<p>A location does not have to serve a file. <code>return CODE &quot;text&quot;;</code> sends a fixed answer straight from the config. Add <code>default_type text/plain;</code> so the client sees plain text.</p>
+<pre>location = /health { ... }                          exact match: only this path
+default_type text/plain;                            content-type for a fixed answer
+return 200 &quot;ok\n&quot;;                                  answer with a status and body
+docker exec wg-nginx nginx -s reload                apply the edit</pre>
+<p>Try it first: <code>curl -H &#x27;Host: shop.local&#x27; http://127.0.0.1:8082/new</code> — /new is an exact-match location that answers with <code>return</code>; read it in conf.d/default.conf and compare with <code>location /</code>.</p>
+<p>Your task: the load balancer probes http://shop.local/health and expects the body &quot;ok&quot;. Right now it gets the HTML index page, so the probe is failing. Add a /health endpoint on the shop.local server that returns 200 with the plain body &quot;ok&quot;.</p>
+<p>Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nginx
@@ -26,7 +35,7 @@ wg level 1
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nginx/01-health-endpoint">level source on github</a>.</p>
-<div class="pn"><span></span><a href="../02-redirect-old/index.html">/old should 301 to /new, but it serves the homepage instead →</a></div>
+<div class="pn"><span></span><a href="../02-redirect-old/index.html">a redirect is a location that returns 301 and a new path →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>
