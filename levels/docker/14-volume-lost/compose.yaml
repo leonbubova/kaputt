@@ -1,0 +1,9 @@
+name: wg
+services:
+  cache:
+    image: redis:7-alpine
+    container_name: wg-cache
+    volumes:
+      - cache-data:/var/lib/redis
+volumes:
+  cache-data: {name: wg-cache-data}

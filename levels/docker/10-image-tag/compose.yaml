@@ -1,0 +1,9 @@
+name: wg
+services:
+  web:
+    image: nginx:1.27-alpine
+    container_name: wg-web
+    ports: ["18003:80"]
+  cache:
+    image: redis:7-alpne
+    container_name: wg-cache

@@ -1,0 +1,2 @@
+# one command to start the whole stack
+"New devs need `web` + `cache` up with one command, not a page of docker runs." Goal: a `compose.yaml` in `~/.k8s-wargame/docker/07-compose/` with services `web` (`nginx:1.27-alpine`, container `wg-web`, host 18007 → 80) and `cache` (`redis:7-alpine`, container `wg-cache`), started with project name `wg` (`docker compose -p wg up -d`). `curl localhost:18007` answers, `docker exec wg-cache redis-cli ping` says PONG.

@@ -1,0 +1,18 @@
+name: wg
+services:
+  db:
+    image: redis:7-alpine
+    container_name: wg-db
+    healthcheck:
+      test: ["CMD", "redis-cli", "-p", "6380", "ping"]
+      interval: 2s
+      timeout: 2s
+      retries: 3
+      start_period: 2s
+  app:
+    image: busybox:1.36
+    container_name: wg-app
+    command: sh -c 'echo "app started, db is ready"; exec sleep infinity'
+    depends_on:
+      db:
+        condition: service_healthy
