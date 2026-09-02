@@ -58,7 +58,7 @@ create the table), then incidents from easy to hard, with the last levels chaini
 | `bash` | 12 | quoting, comparisons, subshells, pipefail, the classic traps |
 | `terraform` | 12 | resources, variables, outputs, count/for_each, drift |
 | `systemd` | 8 | units, services, timers, ordering, restart policy |
-| `tls` | — | certificates, chains, SANs, openssl |
+| `tls` | 10 | certificates, chains, SANs, openssl |
 
 Run `wg list` for the tracks on your machine and your status in each.
 
