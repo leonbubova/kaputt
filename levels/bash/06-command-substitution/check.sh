@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/bash/bashlib.sh"
+have whoran.sh || fail "no whoran.sh in the sandbox"
+grep -qF "$(whoami)" "$WORK/whoran.sh" && fail "whoran.sh hard-codes the name — look it up at run time"
+out=$(run whoran.sh); [ "$out" = "user: $(whoami)" ] || fail "whoran.sh → '$out', want 'user: $(whoami)'"
+ok "whoran.sh reports the login name"

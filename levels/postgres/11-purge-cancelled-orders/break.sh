@@ -1,0 +1,8 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/postgres/lib.sh"
+sqlf <<'SQL' >/dev/null
+drop table if exists public.orders cascade; drop table if exists public.customers cascade;
+create table public.customers (id serial primary key, name text not null, cancelled boolean not null default false);
+insert into public.customers (name, cancelled) values ('Anna', false), ('Ben', true), ('Cara', false), ('Dan', true);
+create table public.orders (id serial primary key, customer_id integer not null references public.customers(id), total numeric(10,2) not null);
+insert into public.orders (customer_id, total) values (1, 100.00), (2, 20.00), (1, 50.00), (4, 9.99), (3, 75.50), (2, 1.00);
+SQL

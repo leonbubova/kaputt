@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/systemd/lib.sh"
+want=$(exp key); [ -n "$want" ] || fail "no expected key recorded — reload the level"
+got=$(X cat /opt/wg/license/key 2>/dev/null | tr -d '[:space:]'); [ -n "$got" ] || fail "/opt/wg/license/key missing or empty"
+[ "$got" = "$want" ] || fail "/opt/wg/license/key contains '$got' — not what wg-license printed"
+ok "activation key recovered from the journal"

@@ -3,6 +3,8 @@ import { task, metadata } from "@trigger.dev/sdk";
 // the dashboard shows metadata.progress (0-100) and metadata.rows while this runs
 export const importCsv = task({
   id: "import-csv",
+  // big customers upload CSVs that take up to 10 minutes
+  maxDuration: 600,
   run: async (payload: { rows: number }) => {
     const batch = 100;
     let done = 0;

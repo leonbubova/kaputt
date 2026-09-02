@@ -1,0 +1,6 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/systemd/lib.sh"
+active wg-heartbeat.service || fail "wg-heartbeat.service is not active"
+p=$(prop wg-heartbeat.service MainPID); [ "${p:-0}" -gt 0 ] || fail "wg-heartbeat has no main PID"
+got=$(X cat /run/wg-heartbeat.pid 2>/dev/null | tr -d '[:space:]'); [ -n "$got" ] || fail "/run/wg-heartbeat.pid missing or empty"
+[ "$got" = "$p" ] || fail "file says $got, systemd's main PID for wg-heartbeat is $p"
+ok "/run/wg-heartbeat.pid = $p (systemd's main PID)"

@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/linux/lib.sh"
+X test -L /opt/app/current 2>/dev/null || fail "/opt/app/current is not a symlink"
+t=$(X readlink -f /opt/app/current 2>/dev/null); [ "$t" = /opt/app/releases/1.4.2 ] || fail "link points to '${t:-nothing}'"
+[ "$(X cat /opt/app/current/VERSION 2>/dev/null | tr -d '[:space:]')" = 1.4.2 ] || fail "current/VERSION is not 1.4.2"
+ok "current -> 1.4.2"

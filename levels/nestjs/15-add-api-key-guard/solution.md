@@ -1,0 +1,1 @@
+`src/admin/api-key.guard.ts`: `@Injectable() class ApiKeyGuard implements CanActivate`, reads `req.headers['x-api-key']`, throws `UnauthorizedException` on mismatch; `@UseGuards(ApiKeyGuard)` on `AdminController`, `providers: [ApiKeyGuard]` in `AdminModule`.

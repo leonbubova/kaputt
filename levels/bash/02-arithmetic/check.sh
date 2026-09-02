@@ -1,0 +1,6 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/bash/bashlib.sh"
+have double.sh || fail "no double.sh in the sandbox"
+out=$(run double.sh 21); [ "$(trim "$out")" = 42 ] || fail "double.sh 21 → '$out', want 42"
+out=$(run double.sh 0);  [ "$(trim "$out")" = 0 ]  || fail "double.sh 0 → '$out', want 0"
+out=$(run double.sh 7);  [ "$(trim "$out")" = 14 ] || fail "double.sh 7 → '$out', want 14"
+ok "double.sh calculates"
