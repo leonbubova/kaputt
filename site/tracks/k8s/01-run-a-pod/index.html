@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a Pod is the unit Kubernetes runs, and kubectl run starts one — k8s level 01 — kaputt</title>
-<meta name="description" content="k8s exercise: a Pod is the unit Kubernetes runs, and kubectl run starts one. Fix a real broken k8s system in your own terminal — level 01 of 25, with hints and a checker.">
+<title>run a pod — k8s level 01 — kaputt</title>
+<meta name="description" content="k8s exercise: run a pod. Fix a real broken k8s system in your own terminal — level 01 of 25, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/k8s/01-run-a-pod/">
-<meta property="og:title" content="a Pod is the unit Kubernetes runs, and kubectl run starts one — k8s level 01 — kaputt"><meta property="og:description" content="k8s exercise: a Pod is the unit Kubernetes runs, and kubectl run starts one. Fix a real broken k8s system in your own terminal — level 01 of 25, with hints and a checker.">
+<meta property="og:title" content="run a pod — k8s level 01 — kaputt"><meta property="og:description" content="k8s exercise: run a pod. Fix a real broken k8s system in your own terminal — level 01 of 25, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,20 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">k8s</a> / level 01</div>
-<h1 class="lvl">a Pod is the unit Kubernetes runs, and kubectl run starts one</h1>
+<h1 class="lvl">run a pod</h1>
 <p class="meta">k8s · level 01 of 25 · <code>run-a-pod</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: everything in Kubernetes ends up as a Pod — one or more containers that share an IP and a lifetime. It is the smallest thing the cluster schedules, starts, and reports on; every other object you will meet (Deployment, Service) exists to create or reach Pods.</p>
-<p>For a one-off you do not need YAML. <code>kubectl run NAME --image=IMAGE</code> creates a single Pod directly, like <code>docker run</code> — except the cluster picks the node.</p>
-<p>Every object lives in a namespace. Your kubectl context already defaults to <code>wg</code>, so plain commands land there without <code>-n wg</code>.</p>
-<p>A new Pod passes through phases: <code>Pending</code> (no node yet, or image downloading), <code>ContainerCreating</code>, then <code>Running</code>. If it sits in an early phase, <code>describe</code> shows the Events that explain why.</p>
-<pre>kubectl run NAME --image=IMAGE               create one pod from an image
-kubectl get pods                             list pods and their STATUS
-kubectl get pods -w                          watch status change live
-kubectl describe pod NAME                    details plus Events at the bottom
-kubectl get pod NAME -o jsonpath=&#x27;{.spec.containers[0].image}&#x27;   print the exact image</pre>
-<p>Try it first: <code>kubectl config view --minify | grep namespace</code> — proof you are in <code>wg</code>.</p>
-<p>Your task: ticket: &quot;Before we build anything, I want to see one nginx running in namespace <code>wg</code>.&quot; Create a pod named <code>hello</code> with image <code>nginx:1.27-alpine</code>. Goal: the pod is <code>Running</code> with exactly that image.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Ticket: &quot;Before we build anything, I want to see one nginx running in namespace <code>wg</code>.&quot; Create a pod named <code>hello</code> with image <code>nginx:1.27-alpine</code>. Goal: the pod is <code>Running</code> with exactly that image.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track k8s
@@ -37,7 +26,7 @@ wg level 1
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/k8s/01-run-a-pod">level source on github</a>.</p>
-<div class="pn"><span></span><a href="../02-deployment/index.html">a Deployment keeps N pods alive, and labels are what ties them together →</a></div>
+<div class="pn"><span></span><a href="../02-deployment/index.html">write a deployment manifest →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

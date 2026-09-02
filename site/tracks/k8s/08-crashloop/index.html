@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CrashLoopBackOff means the process exits — the logs say why — k8s level 08 — kaputt</title>
-<meta name="description" content="k8s exercise: CrashLoopBackOff means the process exits — the logs say why. Fix a real broken k8s system in your own terminal — level 08 of 25, with hints and a checker.">
+<title>the api pod keeps restarting — k8s level 08 — kaputt</title>
+<meta name="description" content="k8s exercise: the api pod keeps restarting. Fix a real broken k8s system in your own terminal — level 08 of 25, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/k8s/08-crashloop/">
-<meta property="og:title" content="CrashLoopBackOff means the process exits — the logs say why — k8s level 08 — kaputt"><meta property="og:description" content="k8s exercise: CrashLoopBackOff means the process exits — the logs say why. Fix a real broken k8s system in your own terminal — level 08 of 25, with hints and a checker.">
+<meta property="og:title" content="the api pod keeps restarting — k8s level 08 — kaputt"><meta property="og:description" content="k8s exercise: the api pod keeps restarting. Fix a real broken k8s system in your own terminal — level 08 of 25, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">k8s</a> / level 08</div>
-<h1 class="lvl">CrashLoopBackOff means the process exits — the logs say why</h1>
+<h1 class="lvl">the api pod keeps restarting</h1>
 <p class="meta">k8s · level 08 of 25 · <code>crashloop</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: Kubernetes does not know what your app does; it only sees whether the container&#x27;s main process is still running. If the process exits, the kubelet restarts it. If it keeps exiting, the kubelet waits longer between attempts — 10s, 20s, 40s, up to five minutes. That growing pause is the BackOff in <code>CrashLoopBackOff</code>.</p>
-<p>So the status is not the problem, it is the cluster&#x27;s reaction to it. The cause is inside the process: a missing setting, a bad config file, a dependency it cannot reach. The process usually says so on its way out, and Kubernetes keeps that output.</p>
-<p>The order is always: status, Events, logs of the previous container. Environment variables are set on the Deployment&#x27;s pod template, and changing them there rolls out new pods.</p>
-<pre>kubectl get pods                             STATUS and RESTARTS
-kubectl describe pod NAME                    Last State, Exit Code, Events
-kubectl logs NAME --previous                 output of the container that crashed
-kubectl get deploy NAME -o yaml              the template as stored, env included
-kubectl set env deploy/NAME KEY=val          set an env var; KEY- removes one</pre>
-<p>Try it first: <code>kubectl get pods</code> twice, a minute apart — watch RESTARTS climb.</p>
-<p>Your task: team says: &quot;we deployed <code>api</code> to namespace <code>wg</code> 10 minutes ago and it&#x27;s been flapping ever since.&quot; Goal: <code>api</code> deployment has 1 ready pod that stays up. Don&#x27;t change the image.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Team says: &quot;we deployed <code>api</code> to namespace <code>wg</code> 10 minutes ago and it&#x27;s been flapping ever since.&quot; Goal: <code>api</code> deployment has 1 ready pod that stays up. Don&#x27;t change the image.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track k8s
@@ -36,7 +26,7 @@ wg level 8
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/k8s/08-crashloop">level source on github</a>.</p>
-<div class="pn"><a href="../07-namespace-context/index.html">← namespaces split a cluster into rooms, and your context picks the default room</a><a href="../09-imagepull/index.html">a container cannot start until the node has pulled its image →</a></div>
+<div class="pn"><a href="../07-namespace-context/index.html">← a namespace for team A</a><a href="../09-imagepull/index.html">web won&#x27;t start at all →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

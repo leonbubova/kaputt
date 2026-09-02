@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>users and groups: who a process runs as, and who owns a file — linux level 05 — kaputt</title>
-<meta name="description" content="linux exercise: users and groups: who a process runs as, and who owns a file. Fix a real broken linux system in your own terminal — level 05 of 23, with hints and a checker.">
+<title>service account for the runner — linux level 05 — kaputt</title>
+<meta name="description" content="linux exercise: service account for the runner. Fix a real broken linux system in your own terminal — level 05 of 23, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/linux/05-service-account/">
-<meta property="og:title" content="users and groups: who a process runs as, and who owns a file — linux level 05 — kaputt"><meta property="og:description" content="linux exercise: users and groups: who a process runs as, and who owns a file. Fix a real broken linux system in your own terminal — level 05 of 23, with hints and a checker.">
+<meta property="og:title" content="service account for the runner — linux level 05 — kaputt"><meta property="og:description" content="linux exercise: service account for the runner. Fix a real broken linux system in your own terminal — level 05 of 23, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,20 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">linux</a> / level 05</div>
-<h1 class="lvl">users and groups: who a process runs as, and who owns a file</h1>
+<h1 class="lvl">service account for the runner</h1>
 <p class="meta">linux · level 05 of 23 · <code>service-account</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: every process runs as a user, and every user belongs to one primary group plus any number of extra groups. Files carry an owner and a group. Access is decided by matching those two against each other — which is why services get their own account instead of running as root.</p>
-<p><code>groupadd</code> creates a group, <code>useradd</code> creates a user. <code>useradd</code> does nothing extra unless asked: <code>-m</code> creates the home directory, <code>-s SHELL</code> sets the login shell, <code>-g GROUP</code> sets the primary group. Without <code>-m</code> the user exists but cannot log in properly.</p>
-<p><code>chown USER:GROUP PATH</code> hands a file or directory to that user and group. <code>id</code> shows what the system believes about a user.</p>
-<pre>groupadd svc                          create a group
-useradd -m -g svc -s /bin/bash NAME   user with home, primary group, shell
-id NAME                               uid, gid and groups of a user
-getent passwd NAME                    home and shell of a user
-chown NAME:svc /path                  set owner and group</pre>
-<p>Try it first: <code>id</code> and <code>id root</code> — your own account versus root.</p>
-<p>Your task: &quot;Create a group <code>svc</code> and a user <code>runner</code> whose primary group is <code>svc</code>, with a home directory and bash as shell. <code>/srv/data</code> must be owned by <code>runner</code>, group <code>svc</code>.&quot;</p>
-<p>Goal: <code>id runner</code> shows primary group <code>svc</code>; <code>/srv/data</code> is <code>runner:svc</code>; runner can log in with <code>su - runner</code>.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Ticket: &quot;Create a group <code>svc</code> and a user <code>runner</code> whose primary group is <code>svc</code>, with a home directory and bash as shell. <code>/srv/data</code> must be owned by <code>runner</code>, group <code>svc</code>.&quot; Goal: <code>id runner</code> shows primary group <code>svc</code>; <code>/srv/data</code> is <code>runner:svc</code>; runner can log in with <code>su - runner</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track linux
@@ -37,7 +26,7 @@ wg level 5
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/linux/05-service-account">level source on github</a>.</p>
-<div class="pn"><a href="../04-count-errors/index.html">← grep -c counts matching lines; the pattern decides what you count</a><a href="../06-exact-mode/index.html">file modes: three digits say what owner, group and others may do →</a></div>
+<div class="pn"><a href="../04-count-errors/index.html">← how many 500s did we serve yesterday?</a><a href="../06-exact-mode/index.html">db.conf: owner reads and writes, group reads, nobody else →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

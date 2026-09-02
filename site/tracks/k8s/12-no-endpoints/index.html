@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a Service with no endpoints selects no pods — compare selector and labels — k8s level 12 — kaputt</title>
-<meta name="description" content="k8s exercise: a Service with no endpoints selects no pods — compare selector and labels. Fix a real broken k8s system in your own terminal — level 12 of 25, with hints and a checker.">
+<title>service returns nothing — k8s level 12 — kaputt</title>
+<meta name="description" content="k8s exercise: service returns nothing. Fix a real broken k8s system in your own terminal — level 12 of 25, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/k8s/12-no-endpoints/">
-<meta property="og:title" content="a Service with no endpoints selects no pods — compare selector and labels — k8s level 12 — kaputt"><meta property="og:description" content="k8s exercise: a Service with no endpoints selects no pods — compare selector and labels. Fix a real broken k8s system in your own terminal — level 12 of 25, with hints and a checker.">
+<meta property="og:title" content="service returns nothing — k8s level 12 — kaputt"><meta property="og:description" content="k8s exercise: service returns nothing. Fix a real broken k8s system in your own terminal — level 12 of 25, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">k8s</a> / level 12</div>
-<h1 class="lvl">a Service with no endpoints selects no pods — compare selector and labels</h1>
+<h1 class="lvl">service returns nothing</h1>
 <p class="meta">k8s · level 12 of 25 · <code>no-endpoints</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: level 03 let <code>kubectl expose</code> copy the labels. When someone writes the Service by hand, the selector is just text, and text can be wrong. Kubernetes does not validate it: a Service selecting zero pods is valid, it just has an empty endpoint list.</p>
-<p>Traffic to such a Service has nowhere to go. No pod is there to refuse the connection, so clients see a hang or a timeout, not an error. The pods themselves are healthy — that is the tell: <code>Running</code> pods plus a silent service points at the wiring between them.</p>
-<p>The Endpoints object is the Service&#x27;s live answer to &quot;who do I point at&quot;. Check it first for any Service problem. Empty means the selector matched nothing; from there it is a diff between selector and labels.</p>
-<pre>kubectl get endpoints NAME                   the pod IPs the service selects, or none
-kubectl get svc NAME -o yaml                 the selector as stored
-kubectl get pods --show-labels               the labels the selector must match
-kubectl edit svc NAME                        change the live object
-kubectl patch svc NAME -p &#x27;{&quot;spec&quot;:{&quot;selector&quot;:{...}}}&#x27;   change one field from the shell</pre>
-<p>Try it first: <code>kubectl get endpoints</code> — every service in the namespace next to its current targets.</p>
-<p>Your task: &quot;<code>web</code> pods are Running, but <code>curl web</code> from any pod in the cluster hangs.&quot; Goal: <code>http://web.wg.svc/</code> answers 200 from inside the cluster.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>web</code> pods are Running, but <code>curl web</code> from any pod in the cluster hangs.&quot; Goal: <code>http://web.wg.svc/</code> answers 200 from inside the cluster.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track k8s
@@ -36,7 +26,7 @@ wg level 12
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/k8s/12-no-endpoints">level source on github</a>.</p>
-<div class="pn"><a href="../11-oomkilled/index.html">← a memory limit is a hard ceiling: cross it and the kernel kills the process</a><a href="../13-target-port/index.html">port is what clients dial, targetPort is where traffic lands on the pod →</a></div>
+<div class="pn"><a href="../11-oomkilled/index.html">← cache service dies every few seconds</a><a href="../13-target-port/index.html">connection refused →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

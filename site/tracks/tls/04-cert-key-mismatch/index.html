@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a certificate and its private key are a pair — nginx refuses to start with a mismatch — tls level 04 — kaputt</title>
-<meta name="description" content="tls exercise: a certificate and its private key are a pair — nginx refuses to start with a mismatch. Fix a real broken tls system in your own terminal — level 04 of 10, with hints and a checker.">
+<title>after a cert rotation nginx won&#x27;t start — key does not match the certificate — tls level 04 — kaputt</title>
+<meta name="description" content="tls exercise: after a cert rotation nginx won&#x27;t start — key does not match the certificate. Fix a real broken tls system in your own terminal — level 04 of 10, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/tls/04-cert-key-mismatch/">
-<meta property="og:title" content="a certificate and its private key are a pair — nginx refuses to start with a mismatch — tls level 04 — kaputt"><meta property="og:description" content="tls exercise: a certificate and its private key are a pair — nginx refuses to start with a mismatch. Fix a real broken tls system in your own terminal — level 04 of 10, with hints and a checker.">
+<meta property="og:title" content="after a cert rotation nginx won&#x27;t start — key does not match the certificate — tls level 04 — kaputt"><meta property="og:description" content="tls exercise: after a cert rotation nginx won&#x27;t start — key does not match the certificate. Fix a real broken tls system in your own terminal — level 04 of 10, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">tls</a> / level 04</div>
-<h1 class="lvl">a certificate and its private key are a pair — nginx refuses to start with a mismatch</h1>
+<h1 class="lvl">after a cert rotation nginx won&#x27;t start — key does not match the certificate</h1>
 <p class="meta">tls · level 04 of 10 · <code>cert-key-mismatch</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a certificate is public. It contains a public key plus a name and a CA signature. The private key is the secret other half of that exact public key, and it is how the server proves during the handshake that the certificate is really its own. Any other key is useless with this cert.</p>
-<p>nginx checks the pair when it loads the config. A mismatch is a fatal error, so nginx exits and every site in the config is down. The symptom is a dead container and &quot;key values mismatch&quot; in its log.</p>
-<p>You can check a pair yourself: for RSA both files contain the same modulus, so hash it on each side and compare.</p>
-<pre>docker logs wg-tls                                                    why nginx exited
-openssl x509 -noout -modulus -in certs/fullchain.crt | openssl md5    fingerprint of the cert&#x27;s key
-openssl rsa  -noout -modulus -in certs/server.key    | openssl md5    fingerprint of a private key
-docker restart wg-tls                                                 cert/key changes need a restart</pre>
-<p>Try it first: from ~/.k8s-wargame/tls/app run the two openssl lines against fullchain.crt and each .key in certs/ — exactly one key matches.</p>
-<p>Your task: after a cert rotation nginx won&#x27;t start. The TLS config points at a private key that doesn&#x27;t belong to the served certificate, so nginx fails to start and the whole site is down. Point it back at the matching key.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>The TLS config points at a private key that doesn&#x27;t belong to the served certificate, so nginx fails to start and the whole site is down. Point it back at the matching key.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track tls
@@ -35,7 +26,7 @@ wg level 4
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/tls/04-cert-key-mismatch">level source on github</a>.</p>
-<div class="pn"><a href="../03-hsts-header/index.html">← HSTS is a response header that makes the browser refuse plain HTTP</a><a href="../05-cert-path-wrong/index.html">nginx opens every file in its config at startup — a wrong path is fatal, and paths are container paths →</a></div>
+<div class="pn"><a href="../03-hsts-header/index.html">← security audit: HSTS header is missing on HTTPS responses</a><a href="../05-cert-path-wrong/index.html">nginx is down — it can&#x27;t open the certificate file →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

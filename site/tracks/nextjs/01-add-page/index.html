@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a URL is a folder under src/app, and page.tsx is what it renders — nextjs level 01 — kaputt</title>
-<meta name="description" content="nextjs exercise: a URL is a folder under src/app, and page.tsx is what it renders. Fix a real broken nextjs system in your own terminal — level 01 of 21, with hints and a checker.">
+<title>add an /about page — nextjs level 01 — kaputt</title>
+<meta name="description" content="nextjs exercise: add an /about page. Fix a real broken nextjs system in your own terminal — level 01 of 21, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nextjs/01-add-page/">
-<meta property="og:title" content="a URL is a folder under src/app, and page.tsx is what it renders — nextjs level 01 — kaputt"><meta property="og:description" content="nextjs exercise: a URL is a folder under src/app, and page.tsx is what it renders. Fix a real broken nextjs system in your own terminal — level 01 of 21, with hints and a checker.">
+<meta property="og:title" content="add an /about page — nextjs level 01 — kaputt"><meta property="og:description" content="nextjs exercise: add an /about page. Fix a real broken nextjs system in your own terminal — level 01 of 21, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nextjs</a> / level 01</div>
-<h1 class="lvl">a URL is a folder under src/app, and page.tsx is what it renders</h1>
+<h1 class="lvl">add an /about page</h1>
 <p class="meta">nextjs · level 01 of 21 · <code>add-page</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: the App Router has no route table. The file system is the router: every folder under <code>src/app/</code> is one URL segment, and the folder becomes a real page the moment it contains a file named exactly <code>page.tsx</code> that <code>export default</code>s a React component. <code>src/app/dashboard/page.tsx</code> is <code>/dashboard</code>; <code>src/app/page.tsx</code> is <code>/</code>.</p>
-<p>Nothing else in the folder is a route. A <code>Hero.tsx</code> or <code>about.tsx</code> next to it is just a module you can import. Get the filename wrong and Next.js silently serves 404 — there is no error, because as far as it knows you never asked for that URL.</p>
-<p>The component itself is plain JSX: a function returning markup. It renders on the server, and the root layout (<code>src/app/layout.tsx</code>) wraps it with the shop&#x27;s chrome automatically.</p>
-<pre>src/app/&lt;route&gt;/page.tsx          URL = folder; must have a default export
-npm run dev                       serves on http://localhost:3100
-curl -s localhost:3100/about | head   what the server actually rendered
-ls src/app                        the current route tree</pre>
-<p>Try it first: <code>cat src/app/dashboard/page.tsx</code> — that is the whole shape of a page. Then <code>curl -I localhost:3100/nope</code> and look at the status.</p>
-<p>Your task: the nav already links to <code>/about</code> but it 404s. Marketing wants a simple page there: a heading <code>About</code> and one sentence. App: <code>~/.k8s-wargame/nextjs/app</code> — <code>npm run dev</code> (port 3100), <code>npm run build</code>, <code>npm test</code>.</p>
-<p>Goal: <code>GET /about</code> returns 200 with an <code>&lt;h1&gt;About&lt;/h1&gt;</code>.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;The nav already links to <code>/about</code> but it 404s. Marketing wants a simple page there: a heading <code>About</code> and one sentence.&quot; App: <code>~/.k8s-wargame/nextjs/app</code> — <code>npm run dev</code> (port 3100), <code>npm run build</code>, <code>npm test</code>. Goal: <code>GET /about</code> returns 200 with an <code>&lt;h1&gt;About&lt;/h1&gt;</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nextjs
@@ -36,7 +26,7 @@ wg level 1
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nextjs/01-add-page">level source on github</a>.</p>
-<div class="pn"><span></span><a href="../02-nested-layout/index.html">layouts nest: a layout.tsx wraps every page below its folder →</a></div>
+<div class="pn"><span></span><a href="../02-nested-layout/index.html">dashboard needs its own sub-navigation →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">linux</a> / level 17</div>
 <h1 class="lvl">app says APP_ENV is not set, but /etc/profile.d sets it</h1>
 <p class="meta">linux · level 17 of 23 · <code>env-not-set</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>/opt/app/env-check</code> complains <code>APP_ENV not set</code>. Yet <code>grep APP_ENV /etc/profile.d/*</code> finds it, and <code>echo $APP_ENV</code> in a login shell prints <code>production</code>. <code>APP_REGION</code> from the same file works fine.&quot;</p>
-<p>Goal: <code>bash -lc /opt/app/env-check</code> prints <code>env=production</code>. Fix it in the profile, not in the script.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>/opt/app/env-check</code> complains <code>APP_ENV not set</code>. Yet <code>grep APP_ENV /etc/profile.d/*</code> finds it, and <code>echo $APP_ENV</code> in a login shell prints <code>production</code>. <code>APP_REGION</code> from the same file works fine.&quot; Goal: <code>bash -lc /opt/app/env-check</code> prints <code>env=production</code>. Fix it in the profile, not in the script.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track linux

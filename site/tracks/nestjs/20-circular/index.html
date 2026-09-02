@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nestjs</a> / level 20</div>
 <h1 class="lvl">&quot;Nest cannot create the OrdersModule instance&quot;</h1>
 <p class="meta">nestjs · level 20 of 21 · <code>circular</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;A cleanup PR removed &#x27;unnecessary forwardRef() wrappers&#x27; in users and orders. Now the app dies at boot. Reverting isn&#x27;t an option — the PR also shipped other things.&quot; Goal: the app boots, <code>GET /users/1</code> still reports <code>orderCount</code>, <code>POST /orders</code> still verifies the user exists.</p>
-<p>App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;A cleanup PR removed &#x27;unnecessary forwardRef() wrappers&#x27; in users and orders. Now the app dies at boot. Reverting isn&#x27;t an option — the PR also shipped other things.&quot; Goal: the app boots, <code>GET /users/1</code> still reports <code>orderCount</code>, <code>POST /orders</code> still verifies the user exists. App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nestjs

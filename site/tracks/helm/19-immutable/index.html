@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">helm</a> / level 19</div>
 <h1 class="lvl">&quot;field is immutable&quot;</h1>
 <p class="meta">helm · level 19 of 20 · <code>immutable</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Rolling out prod config: <code>helm upgrade shop ./shop -n wg-helm -f values-prod.yaml</code> fails with <code>Deployment.apps &quot;shop&quot; is invalid: spec.selector: Invalid value ... field is immutable</code>. Prod launch is blocked.&quot;</p>
-<p>Work dir: <code>~/.k8s-wargame/helm/19-immutable/</code>. Goal: release <code>shop</code> deployed with 2 available replicas, page shows <code>env=prod domain=shop.example.com</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Rolling out prod config: <code>helm upgrade shop ./shop -n wg-helm -f values-prod.yaml</code> fails with <code>Deployment.apps &quot;shop&quot; is invalid: spec.selector: Invalid value ... field is immutable</code>. Prod launch is blocked.&quot; Work dir: <code>~/.k8s-wargame/helm/19-immutable/</code>. Goal: release <code>shop</code> deployed with 2 available replicas, page shows <code>env=prod domain=shop.example.com</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track helm

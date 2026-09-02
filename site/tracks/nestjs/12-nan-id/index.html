@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nestjs</a> / level 12</div>
 <h1 class="lvl">every user is &quot;not found&quot;</h1>
 <p class="meta">nestjs · level 12 of 21 · <code>nan-id</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>GET /users/1</code> says <code>User 1 not found</code> although <code>GET /users</code> clearly lists id 1. Started after the controller cleanup.&quot; Goal: <code>GET /users/1</code> returns Ada, a non-numeric id gives 400, an unknown id gives 404.</p>
-<p>App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>GET /users/1</code> says <code>User 1 not found</code> although <code>GET /users</code> clearly lists id 1. Started after the controller cleanup.&quot; Goal: <code>GET /users/1</code> returns Ada, a non-numeric id gives 400, an unknown id gives 404. App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nestjs
@@ -27,7 +26,7 @@ wg level 12
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nestjs/12-nan-id">level source on github</a>.</p>
-<div class="pn"><a href="../11-boot-crash/index.html">← relative paths in Node resolve against a base, and a failing lifecycle hook aborts boot</a><a href="../13-field-vanishes/index.html">created users have no email →</a></div>
+<div class="pn"><a href="../11-boot-crash/index.html">← ENOENT at boot</a><a href="../13-field-vanishes/index.html">created users have no email →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

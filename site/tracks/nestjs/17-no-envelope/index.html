@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nestjs</a> / level 17</div>
 <h1 class="lvl">frontend shows &quot;undefined&quot; everywhere</h1>
 <p class="meta">nestjs · level 17 of 21 · <code>no-envelope</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;The frontend reads <code>response.data</code> — every endpoint used to answer <code>{ data: ... }</code>. Since the last refactor bodies come back bare (<code>[...]</code>, <code>{status:&#x27;ok&#x27;}</code>).&quot; Goal: all successful responses are wrapped in <code>{ &quot;data&quot;: ... }</code> again (<code>TransformInterceptor</code> exists in <code>src/common/</code>).</p>
-<p>App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;The frontend reads <code>response.data</code> — every endpoint used to answer <code>{ data: ... }</code>. Since the last refactor bodies come back bare (<code>[...]</code>, <code>{status:&#x27;ok&#x27;}</code>).&quot; Goal: all successful responses are wrapped in <code>{ &quot;data&quot;: ... }</code> again (<code>TransformInterceptor</code> exists in <code>src/common/</code>). App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nestjs

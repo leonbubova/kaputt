@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">terraform</a> / level 11</div>
 <h1 class="lvl">non-interactive apply fails: No value for required variable</h1>
 <p class="meta">terraform · level 11 of 12 · <code>required-var</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;CI runs with no TTY and apply dies: <code>No value for required input variable ... &quot;port&quot;</code>. The service should default to port 8080 when nothing overrides it. Make an unattended apply succeed.&quot;</p>
-<p>Goal: <code>apply</code> with no input writes <code>out/cfg.txt</code> containing <code>port=8080</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;CI runs with no TTY and apply dies: <code>No value for required input variable ... &quot;port&quot;</code>. The service should default to port 8080 when nothing overrides it. Make an unattended apply succeed.&quot; Goal: <code>apply</code> with no input writes <code>out/cfg.txt</code> containing <code>port=8080</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track terraform

@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">systemd</a> / level 06</div>
 <h1 class="lvl">api refuses to start: &quot;API_PORT not set&quot;</h1>
 <p class="meta">systemd · level 06 of 8 · <code>environment-file</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>wg-api.service</code> fails right after deploy. The config the app needs is already on the box in <code>/etc/wg/api.env</code> (<code>API_PORT</code>, <code>API_TOKEN</code>). Wire the file into the unit — don&#x27;t copy the values into the unit file, ops rotates the token there.&quot;</p>
-<p>Goal: <code>wg-api.service</code> is active and <code>/opt/wg/api/state</code> shows the port and token from <code>/etc/wg/api.env</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>wg-api.service</code> fails right after deploy. The config the app needs is already on the box in <code>/etc/wg/api.env</code> (<code>API_PORT</code>, <code>API_TOKEN</code>). Wire the file into the unit — don&#x27;t copy the values into the unit file, ops rotates the token there.&quot; Goal: <code>wg-api.service</code> is active and <code>/opt/wg/api/state</code> shows the port and token from <code>/etc/wg/api.env</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track systemd

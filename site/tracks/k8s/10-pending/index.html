@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pending means no node accepted the pod — requests must fit a node — k8s level 10 — kaputt</title>
-<meta name="description" content="k8s exercise: Pending means no node accepted the pod — requests must fit a node. Fix a real broken k8s system in your own terminal — level 10 of 25, with hints and a checker.">
+<title>worker is Pending forever — k8s level 10 — kaputt</title>
+<meta name="description" content="k8s exercise: worker is Pending forever. Fix a real broken k8s system in your own terminal — level 10 of 25, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/k8s/10-pending/">
-<meta property="og:title" content="Pending means no node accepted the pod — requests must fit a node — k8s level 10 — kaputt"><meta property="og:description" content="k8s exercise: Pending means no node accepted the pod — requests must fit a node. Fix a real broken k8s system in your own terminal — level 10 of 25, with hints and a checker.">
+<meta property="og:title" content="worker is Pending forever — k8s level 10 — kaputt"><meta property="og:description" content="k8s exercise: worker is Pending forever. Fix a real broken k8s system in your own terminal — level 10 of 25, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">k8s</a> / level 10</div>
-<h1 class="lvl">Pending means no node accepted the pod — requests must fit a node</h1>
+<h1 class="lvl">worker is Pending forever</h1>
 <p class="meta">k8s · level 10 of 25 · <code>pending</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: before a pod runs anywhere, the scheduler has to pick a node for it. It looks at what the pod asks for and at what each node can still give. If no node fits, the pod stays <code>Pending</code> — not failed, not running, just waiting for a node that may never come. No container has started, so there are no logs and no restarts.</p>
-<p><code>resources.requests</code> is the ask: the CPU and memory the scheduler must reserve on a node. <code>limits</code> is the ceiling the container may use. A request is the scheduler&#x27;s only input; a node with less allocatable than the request is simply not a candidate.</p>
-<p>The scheduler writes its reasoning into the pod&#x27;s Events, in plain words: how many nodes it considered and why each was rejected. Compare that with the node&#x27;s Allocatable and the mismatch is visible.</p>
-<pre>kubectl get pods                             STATUS Pending, no restarts
-kubectl describe pod NAME                    Events: the scheduler&#x27;s verdict
-kubectl get nodes                            the nodes available
-kubectl describe node NAME                   Capacity, Allocatable, Allocated resources
-kubectl set resources deploy/NAME --requests=cpu=..,memory=.. --limits=cpu=..,memory=..   change what the pod asks for</pre>
-<p>Try it first: <code>kubectl describe node $(kubectl get nodes -o name | head -1 | cut -d/ -f2) | grep -A6 Allocatable</code> — what one node can hand out.</p>
-<p>Your task: &quot;The <code>worker</code> pod never starts. No errors, no logs, just Pending.&quot; Goal: worker running.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;The <code>worker</code> pod never starts. No errors, no logs, just Pending.&quot; Goal: worker running.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track k8s
@@ -36,7 +26,7 @@ wg level 10
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/k8s/10-pending">level source on github</a>.</p>
-<div class="pn"><a href="../09-imagepull/index.html">← a container cannot start until the node has pulled its image</a><a href="../11-oomkilled/index.html">a memory limit is a hard ceiling: cross it and the kernel kills the process →</a></div>
+<div class="pn"><a href="../09-imagepull/index.html">← web won&#x27;t start at all</a><a href="../11-oomkilled/index.html">cache service dies every few seconds →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

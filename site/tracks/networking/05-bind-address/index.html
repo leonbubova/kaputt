@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a listener binds to an address, not just a port — networking level 05 — kaputt</title>
-<meta name="description" content="networking exercise: a listener binds to an address, not just a port. Fix a real broken networking system in your own terminal — level 05 of 12, with hints and a checker.">
+<title>the API answers on localhost but not on the box&#x27;s network address — networking level 05 — kaputt</title>
+<meta name="description" content="networking exercise: the API answers on localhost but not on the box&#x27;s network address. Fix a real broken networking system in your own terminal — level 05 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/networking/05-bind-address/">
-<meta property="og:title" content="a listener binds to an address, not just a port — networking level 05 — kaputt"><meta property="og:description" content="networking exercise: a listener binds to an address, not just a port. Fix a real broken networking system in your own terminal — level 05 of 12, with hints and a checker.">
+<meta property="og:title" content="the API answers on localhost but not on the box&#x27;s network address — networking level 05 — kaputt"><meta property="og:description" content="networking exercise: the API answers on localhost but not on the box&#x27;s network address. Fix a real broken networking system in your own terminal — level 05 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">networking</a> / level 05</div>
-<h1 class="lvl">a listener binds to an address, not just a port</h1>
+<h1 class="lvl">the API answers on localhost but not on the box&#x27;s network address</h1>
 <p class="meta">networking · level 05 of 12 · <code>bind-address</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a box has more than one IP address: 127.0.0.1 (loopback, reachable only from the box itself) and its real network address on eth0. When a server opens a port it also picks which address to accept connections on. Bound to 127.0.0.1 it hears only local clients; bound to 0.0.0.0 (&quot;all interfaces&quot;) it hears everyone.</p>
-<p>This is why &quot;works on localhost, unreachable from other hosts&quot; is a bind problem, not a firewall problem. <code>ss -ltn</code> shows the answer directly: the Local Address column reads <code>127.0.0.1:8080</code> or <code>0.0.0.0:8080</code>. In nginx, <code>listen 127.0.0.1:8080;</code> binds loopback only; <code>listen 8080;</code> binds all addresses.</p>
-<p>One trap: a changed listen address needs a full stop and start. <code>nginx -s reload</code> keeps the old sockets open, so the new address never gets bound.</p>
-<pre>ss -ltn                       Local Address column: 127.0.0.1 vs 0.0.0.0
-hostname -I                   the box&#x27;s network address(es)
-curl -s IP:8080               test via the real address, not localhost
-nginx -s stop; nginx          full restart, needed after a bind change</pre>
-<p>Try it first: <code>hostname -I</code>, then <code>curl -s localhost:8080</code> and <code>curl -s THAT_IP:8080</code> — compare.</p>
-<p>Your task: other hosts can&#x27;t reach the API. It works from <code>curl localhost:8080</code> on the box, but not via the machine&#x27;s own IP. nginx is bound to the loopback only. Make it listen on all interfaces.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Other hosts can&#x27;t reach the API. It works from <code>curl localhost:8080</code> on the box, but not via the machine&#x27;s own IP. nginx is bound to the loopback only. Make it listen on all interfaces.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track networking
@@ -35,7 +26,7 @@ wg level 5
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/networking/05-bind-address">level source on github</a>.</p>
-<div class="pn"><a href="../04-open-firewall/index.html">← a firewall drops packets before the server ever sees them</a><a href="../06-icmp-blocked/index.html">ping is ICMP, a protocol of its own that the firewall filters separately →</a></div>
+<div class="pn"><a href="../04-open-firewall/index.html">← the API is up but the firewall blocks port 8080</a><a href="../06-icmp-blocked/index.html">monitoring reports this host as down — it stopped answering pings →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">docker</a> / level 18</div>
 <h1 class="lvl">worker stays dead after a crash</h1>
 <p class="meta">docker · level 18 of 22 · <code>restart-policy</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>wg-worker</code> crashes now and then (known bug, fix is weeks out). Every time, someone has to notice and start it by hand at 3am.&quot;</p>
-<p>Goal: when the worker&#x27;s process dies (simulate: <code>docker exec wg-worker pkill -9 sleep</code>), <code>wg-worker</code> is running again within 15 s — automatically. Image stays <code>alpine:3.20</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>wg-worker</code> crashes now and then (known bug, fix is weeks out). Every time, someone has to notice and start it by hand at 3am.&quot; Goal: when the worker&#x27;s process dies (simulate: <code>docker exec wg-worker pkill -9 sleep</code>), <code>wg-worker</code> is running again within 15 s — automatically. Image stays <code>alpine:3.20</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track docker

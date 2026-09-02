@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>templates are text substitution: indent adds spaces, nindent adds a newline first — helm level 09 — kaputt</title>
-<meta name="description" content="helm exercise: templates are text substitution: indent adds spaces, nindent adds a newline first. Fix a real broken helm system in your own terminal — level 09 of 20, with hints and a checker.">
+<title>YAML parse error on install — helm level 09 — kaputt</title>
+<meta name="description" content="helm exercise: YAML parse error on install. Fix a real broken helm system in your own terminal — level 09 of 20, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/helm/09-indent/">
-<meta property="og:title" content="templates are text substitution: indent adds spaces, nindent adds a newline first — helm level 09 — kaputt"><meta property="og:description" content="helm exercise: templates are text substitution: indent adds spaces, nindent adds a newline first. Fix a real broken helm system in your own terminal — level 09 of 20, with hints and a checker.">
+<meta property="og:title" content="YAML parse error on install — helm level 09 — kaputt"><meta property="og:description" content="helm exercise: YAML parse error on install. Fix a real broken helm system in your own terminal — level 09 of 20, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">helm</a> / level 09</div>
-<h1 class="lvl">templates are text substitution: indent adds spaces, nindent adds a newline first</h1>
+<h1 class="lvl">YAML parse error on install</h1>
 <p class="meta">helm · level 09 of 20 · <code>indent</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: Helm does not understand YAML while rendering — it pastes text. The result must then parse as YAML, where the column a line starts in *is* the structure. A multi-line value pasted at the wrong column is a parse error (<code>error converting YAML to JSON</code>).</p>
-<p>Whitespace tools: <code>{{-</code> trims everything before the directive, newline included. <code>toYaml</code> turns a value into YAML text; <code>indent N</code> prefixes each line with N spaces but adds no leading newline; <code>nindent N</code> adds the newline first. <code>{{-</code> with <code>indent</code> pulls the first line up onto the previous one — the usual pattern is <code>{{- ... | nindent N }}</code>.</p>
-<p><code>helm template --debug</code> prints the rendered text even when it fails to parse, so you see where the lines landed.</p>
-<pre>helm template web ./web --debug                  the rendered text, parse error and all
-{{- toYaml .Values.x | indent 2 }}               no newline: first line joins the line above
-{{- toYaml .Values.x | nindent 2 }}              newline, then 2 spaces per line</pre>
-<p>Try it first: <code>helm template web ./web --debug 2&gt;&amp;1 | grep -n -A3 &#x27;data:&#x27;</code> — look at what follows <code>data:</code> on the same line.</p>
-<p>Your task: &quot;After moving the static files into <code>values.yaml</code>, <code>helm install web ./web -n wg-helm</code> fails with <code>error converting YAML to JSON</code>.&quot;</p>
-<p>Chart copy: <code>~/.k8s-wargame/helm/09-indent/web</code>. Goal: release <code>web</code> deployed, ConfigMap <code>web-html</code> holds both files, page serves the index from the ConfigMap.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;After moving the static files into <code>values.yaml</code>, <code>helm install web ./web -n wg-helm</code> fails with <code>error converting YAML to JSON</code>.&quot; Chart copy: <code>~/.k8s-wargame/helm/09-indent/web</code>. Goal: release <code>web</code> deployed, ConfigMap <code>web-html</code> holds both files, page serves the index from the ConfigMap.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track helm
@@ -35,7 +26,7 @@ wg level 9
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/helm/09-indent">level source on github</a>.</p>
-<div class="pn"><a href="../08-lint/index.html">← helm lint is a static check: Chart.yaml metadata and template rendering, no cluster</a><a href="../10-required/index.html">required makes a missing value a loud error instead of a silent empty string →</a></div>
+<div class="pn"><a href="../08-lint/index.html">← pipeline red at the lint stage</a><a href="../10-required/index.html">install fails with &quot;execution error&quot; →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

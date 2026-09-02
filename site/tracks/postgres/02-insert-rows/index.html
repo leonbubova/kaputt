@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>INSERT names the columns you supply; serial columns fill themselves — postgres level 02 — kaputt</title>
-<meta name="description" content="postgres exercise: INSERT names the columns you supply; serial columns fill themselves. Fix a real broken postgres system in your own terminal — level 02 of 14, with hints and a checker.">
+<title>the shop has no products — postgres level 02 — kaputt</title>
+<meta name="description" content="postgres exercise: the shop has no products. Fix a real broken postgres system in your own terminal — level 02 of 14, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/postgres/02-insert-rows/">
-<meta property="og:title" content="INSERT names the columns you supply; serial columns fill themselves — postgres level 02 — kaputt"><meta property="og:description" content="postgres exercise: INSERT names the columns you supply; serial columns fill themselves. Fix a real broken postgres system in your own terminal — level 02 of 14, with hints and a checker.">
+<meta property="og:title" content="the shop has no products — postgres level 02 — kaputt"><meta property="og:description" content="postgres exercise: the shop has no products. Fix a real broken postgres system in your own terminal — level 02 of 14, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">postgres</a> / level 02</div>
-<h1 class="lvl">INSERT names the columns you supply; serial columns fill themselves</h1>
+<h1 class="lvl">the shop has no products</h1>
 <p class="meta">postgres · level 02 of 14 · <code>insert-rows</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: rows go into a table with <code>INSERT INTO table (columns) VALUES (…)</code>. List the columns you provide, then one value per column in the same order. Text goes in single quotes, numbers bare. Several rows fit in one statement: one <code>(…)</code> group per row, separated by commas.</p>
-<p>You don&#x27;t have to supply every column. A column declared <code>serial</code> is backed by a sequence — a counter the database owns — and gets the next number automatically whenever you leave it out. That is how <code>id</code> columns usually work: the app never invents ids, the database hands them out.</p>
-<p>The habit: look at the table, name only the columns you have data for, let defaults do the rest.</p>
-<pre>\d products                                         which columns, which are serial / not null
-insert into t (a, b) values (&#x27;x&#x27;, 1);              one row, two named columns
-insert into t (a, b) values (&#x27;x&#x27;, 1), (&#x27;y&#x27;, 2);    two rows in one statement
-select * from t;                                   see what is there now</pre>
-<p>Try it first: <code>select * from products;</code> — zero rows, but the column headers show what a row needs.</p>
-<p>Your task: &quot;<code>products</code> exists but is empty. Put the launch catalogue in: Keyboard 49.90, Monitor 199.00, Mouse 19.90.&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>). Work = run SQL.</p>
-<p>Goal: exactly those 3 rows in <code>products</code> (<code>name</code>, <code>price</code>); <code>id</code> fills itself.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>products</code> exists but is empty. Put the launch catalogue in: Keyboard 49.90, Monitor 199.00, Mouse 19.90.&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>). Work = run SQL. Goal: exactly those 3 rows in <code>products</code> (<code>name</code>, <code>price</code>); <code>id</code> fills itself.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track postgres
@@ -36,7 +26,7 @@ wg level 2
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/postgres/02-insert-rows">level source on github</a>.</p>
-<div class="pn"><a href="../01-create-table/index.html">← a table is named, typed columns: CREATE TABLE declares them once</a><a href="../03-constraints/index.html">constraints are rules the database enforces on every write →</a></div>
+<div class="pn"><a href="../01-create-table/index.html">← no customers table yet</a><a href="../03-constraints/index.html">users table accepts garbage →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

@@ -17,23 +17,21 @@ def md_inline(s):
     return s
 
 def md_body(text):
-    """tiny markdown: drop the H1; one line = one paragraph; 4-space-indented lines = command block; bullets; inline code/bold."""
+    """tiny markdown: drop the H1, paragraphs, bullet lists, inline code/bold."""
     lines = [l.rstrip() for l in text.splitlines()]
     lines = [l for l in lines if not l.startswith("# ")]
-    out, ul, pre = [], [], []
+    out, para, ul = [], [], []
     def flush():
-        nonlocal ul, pre
+        nonlocal para, ul
+        if para: out.append("<p>" + md_inline(" ".join(para)) + "</p>"); para = []
         if ul: out.append("<ul>" + "".join(f"<li>{md_inline(x)}</li>" for x in ul) + "</ul>"); ul = []
-        if pre: out.append("<pre>" + html.escape("\n".join(pre)) + "</pre>"); pre = []
     for l in lines:
         if not l.strip(): flush(); continue
-        if l.startswith("    "):
-            if ul: flush()
-            pre.append(l[4:]); continue
         if l.lstrip().startswith(("- ", "* ")):
-            if pre: flush()
+            if para: flush()
             ul.append(l.lstrip()[2:]); continue
-        flush(); out.append("<p>" + md_inline(l.strip()) + "</p>")
+        if ul: flush()
+        para.append(l.strip())
     flush()
     return "\n".join(out)
 

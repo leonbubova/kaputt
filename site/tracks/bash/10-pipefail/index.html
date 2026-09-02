@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">bash</a> / level 10</div>
 <h1 class="lvl">script says success even when the file is missing</h1>
 <p class="meta">bash · level 10 of 12 · <code>pipefail</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>firstword.sh FILE</code> prints the first word of a file&#x27;s first line. Trouble: when FILE does not exist it prints nothing but still exits 0, so the caller thinks it worked. It must fail (non-zero) when the file is missing.&quot;</p>
-<p>Goal: <code>firstword.sh data.txt</code> prints <code>alpha</code> and exits 0; <code>firstword.sh nope.txt</code> exits non-zero.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>firstword.sh FILE</code> prints the first word of a file&#x27;s first line. Trouble: when FILE does not exist it prints nothing but still exits 0, so the caller thinks it worked. It must fail (non-zero) when the file is missing.&quot; Goal: <code>firstword.sh data.txt</code> prints <code>alpha</code> and exits 0; <code>firstword.sh nope.txt</code> exits non-zero.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track bash

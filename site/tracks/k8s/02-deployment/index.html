@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a Deployment keeps N pods alive, and labels are what ties them together — k8s level 02 — kaputt</title>
-<meta name="description" content="k8s exercise: a Deployment keeps N pods alive, and labels are what ties them together. Fix a real broken k8s system in your own terminal — level 02 of 25, with hints and a checker.">
+<title>write a deployment manifest — k8s level 02 — kaputt</title>
+<meta name="description" content="k8s exercise: write a deployment manifest. Fix a real broken k8s system in your own terminal — level 02 of 25, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/k8s/02-deployment/">
-<meta property="og:title" content="a Deployment keeps N pods alive, and labels are what ties them together — k8s level 02 — kaputt"><meta property="og:description" content="k8s exercise: a Deployment keeps N pods alive, and labels are what ties them together. Fix a real broken k8s system in your own terminal — level 02 of 25, with hints and a checker.">
+<meta property="og:title" content="write a deployment manifest — k8s level 02 — kaputt"><meta property="og:description" content="k8s exercise: write a deployment manifest. Fix a real broken k8s system in your own terminal — level 02 of 25, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">k8s</a> / level 02</div>
-<h1 class="lvl">a Deployment keeps N pods alive, and labels are what ties them together</h1>
+<h1 class="lvl">write a deployment manifest</h1>
 <p class="meta">k8s · level 02 of 25 · <code>deployment</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a single Pod dies and stays dead. A Deployment is a controller: you declare a pod template plus a replica count, and it keeps that many copies running, replacing any that disappear. You never manage its pods by hand — you change the Deployment and it catches up.</p>
-<p>Labels are the glue. <code>spec.selector.matchLabels</code> says which pods belong to the Deployment, and <code>spec.template.metadata.labels</code> stamps those labels onto every pod it creates. The two must agree or the apply is rejected.</p>
-<p>Nobody types manifests from memory. <code>--dry-run=client -o yaml</code> prints a correct manifest without creating anything; save it, read it, apply it. The file is now the source of truth.</p>
-<pre>kubectl create deployment NAME --image=IMG --replicas=2 --dry-run=client -o yaml &gt; f.yaml   draft the manifest
-kubectl apply -f f.yaml                      create or update from the file
-kubectl get deploy NAME                      READY column: available/desired
-kubectl get pods --show-labels               the labels on each pod
-kubectl explain deployment.spec.template     what a field means</pre>
-<p>Try it first: run the dry-run line for any name and count where <code>app:</code> appears in the output.</p>
-<p>Your task: ticket: &quot;One pod is not a service. Please give us a real Deployment named <code>web</code> in <code>wg</code>: image <code>nginx:1.27-alpine</code>, 2 replicas, labelled <code>app=web</code> (on the deployment *and* on its pods).&quot; Write the manifest to a file, then apply it. Goal: <code>web</code> has 2 available replicas and the labels are in place.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Ticket: &quot;One pod is not a service. Please give us a real Deployment named <code>web</code> in <code>wg</code>: image <code>nginx:1.27-alpine</code>, 2 replicas, labelled <code>app=web</code> (on the deployment *and* on its pods).&quot; Write the manifest to a file, then apply it. Goal: <code>web</code> has 2 available replicas and the labels are in place.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track k8s
@@ -36,7 +26,7 @@ wg level 2
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/k8s/02-deployment">level source on github</a>.</p>
-<div class="pn"><a href="../01-run-a-pod/index.html">← a Pod is the unit Kubernetes runs, and kubectl run starts one</a><a href="../03-expose/index.html">a Service gives pods a stable name by selecting their labels →</a></div>
+<div class="pn"><a href="../01-run-a-pod/index.html">← run a pod</a><a href="../03-expose/index.html">expose it →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

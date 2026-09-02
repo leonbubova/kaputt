@@ -18,19 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">shell</a> / level 10</div>
 <h1 class="lvl">pipes — snap commands together with |</h1>
 <p class="meta">shell · level 10 of 14 · <code>pipes</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: two new commands and one connector:</p>
-<pre>grep WORD FILE     print only the lines of FILE that contain WORD
-wc -l              count lines (word count; -l = lines only)
-A | B              the pipe: whatever A prints is fed into B, instead of onto the screen</pre>
-<p>Shell commands are small on purpose. The pipe chains them into something bigger:</p>
-<pre>grep vegetarian guests.txt | wc -l        first keep the matching lines, then count them</pre>
-<p>Try it:</p>
-<pre>cd ~/.k8s-wargame/shell/sandbox
-cat guests.txt
-grep vegetarian guests.txt</pre>
-<p>Your task: how many guests in <code>guests.txt</code> are vegetarian? Let the shell count, and put that number into <code>count.txt</code></p>
-<p>in the sandbox (the <code>&gt;</code> from before works on the whole chain).</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: two new commands and one connector: grep WORD FILE     print only the lines of FILE that contain WORD wc -l              count lines (word count; -l = lines only) A | B              the pipe: whatever A prints is fed into B, instead of onto the screen Shell commands are small on purpose. The pipe chains them into something bigger: grep vegetarian guests.txt | wc -l        first keep the matching lines, then count them Try it: cd ~/.k8s-wargame/shell/sandbox cat guests.txt grep vegetarian guests.txt Your task: how many guests in <code>guests.txt</code> are vegetarian? Let the shell count, and put that number into <code>count.txt</code> in the sandbox (the <code>&gt;</code> from before works on the whole chain). Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track shell

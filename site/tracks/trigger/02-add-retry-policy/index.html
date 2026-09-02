@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>retries are declared on the task, and a task-level option beats the project default — trigger level 02 — kaputt</title>
-<meta name="description" content="trigger exercise: retries are declared on the task, and a task-level option beats the project default. Fix a real broken trigger system in your own terminal — level 02 of 18, with hints and a checker.">
+<title>ticket: retry policy for the CRM sync — trigger level 02 — kaputt</title>
+<meta name="description" content="trigger exercise: ticket: retry policy for the CRM sync. Fix a real broken trigger system in your own terminal — level 02 of 18, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/trigger/02-add-retry-policy/">
-<meta property="og:title" content="retries are declared on the task, and a task-level option beats the project default — trigger level 02 — kaputt"><meta property="og:description" content="trigger exercise: retries are declared on the task, and a task-level option beats the project default. Fix a real broken trigger system in your own terminal — level 02 of 18, with hints and a checker.">
+<meta property="og:title" content="ticket: retry policy for the CRM sync — trigger level 02 — kaputt"><meta property="og:description" content="trigger exercise: ticket: retry policy for the CRM sync. Fix a real broken trigger system in your own terminal — level 02 of 18, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,17 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">trigger</a> / level 02</div>
-<h1 class="lvl">retries are declared on the task, and a task-level option beats the project default</h1>
+<h1 class="lvl">ticket: retry policy for the CRM sync</h1>
 <p class="meta">trigger · level 02 of 18 · <code>add-retry-policy</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a task never retries itself — no try/catch loops inside <code>run</code>. When <code>run</code> throws, the platform decides whether to start another attempt, and it decides from configuration that lives in two places.</p>
-<p><code>trigger.config.ts</code> holds the project default under <code>retries.default</code>: every task inherits it. A task that needs something else declares its own <code>retry: {...}</code> block next to <code>id</code>. The task-level block wins for that task and leaves everyone else on the default.</p>
-<p>The shape is the same in both places: <code>maxAttempts</code> (total attempts, including the first), <code>minTimeoutInMs</code> (wait before attempt 2), <code>maxTimeoutInMs</code> (cap), <code>factor</code> (multiplier per attempt, 2 = exponential), <code>randomize</code> (jitter). All times are milliseconds — 2 s is <code>2000</code>.</p>
-<pre>cat trigger.config.ts                          the project default under retries.default
-retry: { maxAttempts, minTimeoutInMs, ... }    same shape, placed next to id in the task
-npx tsc --noEmit                               the option names are type-checked</pre>
-<p>Try it first: <code>grep -rn retry trigger.config.ts src/trigger</code> — which tasks currently override the default? None yet.</p>
-<p>Your task: &quot;The CRM API times out on the first calls after a cold start. <code>sync-crm</code> should retry up to <strong>5 attempts</strong> with exponential backoff starting at <strong>2 s</strong> and capped at <strong>30 s</strong>. The project default (3 attempts, 1 s) stays as it is for everyone else.&quot; Goal: exactly that, on the task.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;The CRM API times out on the first calls after a cold start. <code>sync-crm</code> should retry up to <strong>5 attempts</strong> with exponential backoff starting at <strong>2 s</strong> and capped at <strong>30 s</strong>. The project default (3 attempts, 1 s) stays as it is for everyone else.&quot; Goal: exactly that, on the task.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track trigger
@@ -34,7 +26,7 @@ wg level 2
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/trigger/02-add-retry-policy">level source on github</a>.</p>
-<div class="pn"><a href="../01-define-charge-card/index.html">← a task is an exported object: an id, a run function, and a validated payload</a><a href="../03-schedule-daily-digest/index.html">a scheduled task declares its cron next to the id, and a timezone next to the cron →</a></div>
+<div class="pn"><a href="../01-define-charge-card/index.html">← ticket: implement the charge-card task</a><a href="../03-schedule-daily-digest/index.html">ticket: daily digest at 09:00 Berlin →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

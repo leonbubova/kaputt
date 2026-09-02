@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a chart is a folder of templates plus values; install turns it into a release — helm level 01 — kaputt</title>
-<meta name="description" content="helm exercise: a chart is a folder of templates plus values; install turns it into a release. Fix a real broken helm system in your own terminal — level 01 of 20, with hints and a checker.">
+<title>first chart — helm level 01 — kaputt</title>
+<meta name="description" content="helm exercise: first chart. Fix a real broken helm system in your own terminal — level 01 of 20, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/helm/01-create-install/">
-<meta property="og:title" content="a chart is a folder of templates plus values; install turns it into a release — helm level 01 — kaputt"><meta property="og:description" content="helm exercise: a chart is a folder of templates plus values; install turns it into a release. Fix a real broken helm system in your own terminal — level 01 of 20, with hints and a checker.">
+<meta property="og:title" content="first chart — helm level 01 — kaputt"><meta property="og:description" content="helm exercise: first chart. Fix a real broken helm system in your own terminal — level 01 of 20, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,20 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">helm</a> / level 01</div>
-<h1 class="lvl">a chart is a folder of templates plus values; install turns it into a release</h1>
+<h1 class="lvl">first chart</h1>
 <p class="meta">helm · level 01 of 20 · <code>create-install</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a Helm chart is nothing magical — a directory with <code>Chart.yaml</code> (name, version), <code>values.yaml</code> (the knobs) and <code>templates/</code> (Kubernetes YAML with holes that the values fill). <code>helm create</code> writes a complete working starter chart so you never begin from an empty file.</p>
-<p>Installing a chart creates a release: a named, tracked instance of that chart in one namespace. The same chart can be installed many times under different release names.</p>
-<p>Any value in <code>values.yaml</code> can be overridden on the command line with <code>--set key.sub=value</code> — the file keeps its defaults, the release gets your override.</p>
-<pre>helm create hello                                    scaffold a chart into ./hello
-cat hello/values.yaml                                the knobs — look for image.tag
-helm install &lt;release&gt; ./hello -n wg-helm            create a release from the chart
-helm install ... --set image.tag=X                   override one value for this release
-helm list -n wg-helm                                 releases in the namespace</pre>
-<p>Try it first: <code>helm create hello</code> in a scratch dir and <code>ls hello hello/templates</code> — that is the whole chart.</p>
-<p>Your task: &quot;We&#x27;re moving to Helm. Scaffold a chart called <code>hello</code> in <code>~/.k8s-wargame/helm/01-create-install/</code> and install it as release <code>wg-hello</code> into namespace <code>wg-helm</code>. The scaffold defaults to an nginx tag we don&#x27;t mirror — run it with image tag <code>1.27-alpine</code>.&quot;</p>
-<p>Goal: release <code>wg-hello</code> is <code>deployed</code>, its Deployment has 1 available pod running <code>nginx:1.27-alpine</code>.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Ticket: &quot;We&#x27;re moving to Helm. Scaffold a chart called <code>hello</code> in <code>~/.k8s-wargame/helm/01-create-install/</code> and install it as release <code>wg-hello</code> into namespace <code>wg-helm</code>. The scaffold defaults to an nginx tag we don&#x27;t mirror — run it with image tag <code>1.27-alpine</code>.&quot; Goal: release <code>wg-hello</code> is <code>deployed</code>, its Deployment has 1 available pod running <code>nginx:1.27-alpine</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track helm
@@ -37,7 +26,7 @@ wg level 1
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/helm/01-create-install">level source on github</a>.</p>
-<div class="pn"><span></span><a href="../02-set-values/index.html">helm owns the release: change it with upgrade, not kubectl →</a></div>
+<div class="pn"><span></span><a href="../02-set-values/index.html">scale it — the helm way →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

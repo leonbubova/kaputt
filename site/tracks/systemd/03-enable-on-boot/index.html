@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>start runs it now, enable runs it on boot: the [Install] section — systemd level 03 — kaputt</title>
-<meta name="description" content="systemd exercise: start runs it now, enable runs it on boot: the [Install] section. Fix a real broken systemd system in your own terminal — level 03 of 8, with hints and a checker.">
+<title>heartbeat is gone after every reboot — systemd level 03 — kaputt</title>
+<meta name="description" content="systemd exercise: heartbeat is gone after every reboot. Fix a real broken systemd system in your own terminal — level 03 of 8, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/systemd/03-enable-on-boot/">
-<meta property="og:title" content="start runs it now, enable runs it on boot: the [Install] section — systemd level 03 — kaputt"><meta property="og:description" content="systemd exercise: start runs it now, enable runs it on boot: the [Install] section. Fix a real broken systemd system in your own terminal — level 03 of 8, with hints and a checker.">
+<meta property="og:title" content="heartbeat is gone after every reboot — systemd level 03 — kaputt"><meta property="og:description" content="systemd exercise: heartbeat is gone after every reboot. Fix a real broken systemd system in your own terminal — level 03 of 8, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,20 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">systemd</a> / level 03</div>
-<h1 class="lvl">start runs it now, enable runs it on boot: the [Install] section</h1>
+<h1 class="lvl">heartbeat is gone after every reboot</h1>
 <p class="meta">systemd · level 03 of 8 · <code>enable-on-boot</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: <code>systemctl start</code> and <code>systemctl enable</code> are two different questions. <code>start</code> runs the unit now, and only now — after a reboot it is gone. <code>enable</code> hooks the unit into the boot sequence so systemd starts it on its own next time.</p>
-<p>Boot in systemd is a chain of targets; <code>multi-user.target</code> is the normal &quot;system is up, services may run&quot; point. A unit says where it wants to hook in with an <code>[Install]</code> section: <code>WantedBy=multi-user.target</code>. <code>enable</code> then creates a symlink in <code>multi-user.target.wants/</code> — that symlink is the whole mechanism. No <code>[Install]</code> section, nothing to hook: <code>enable</code> refuses.</p>
-<p>The two states are independent. A unit can be active but disabled (started by hand), or enabled but inactive (will come up next boot). Checks ask both questions separately.</p>
-<pre>[Install]  WantedBy=multi-user.target      where in the boot this unit hooks in
-systemctl enable wg-x                      create the .wants symlink (needs [Install])
-systemctl enable --now wg-x                enable and start in one go
-systemctl is-enabled wg-x                  enabled / disabled / static
-systemctl is-active wg-x                   running right now?</pre>
-<p>Try it first: <code>systemctl is-enabled wg-heartbeat</code> and <code>systemctl is-active wg-heartbeat</code> — the two answers differ.</p>
-<p>Your task: &quot;<code>wg-heartbeat.service</code> works — until the box reboots, then someone has to <code>systemctl start</code> it by hand. Make it come up on boot.&quot;</p>
-<p>Goal: <code>systemctl is-enabled wg-heartbeat</code> says <code>enabled</code>, and the service is active now.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>wg-heartbeat.service</code> works — until the box reboots, then someone has to <code>systemctl start</code> it by hand. Make it come up on boot.&quot; Goal: <code>systemctl is-enabled wg-heartbeat</code> says <code>enabled</code>, and the service is active now.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track systemd
@@ -37,7 +26,7 @@ wg level 3
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/systemd/03-enable-on-boot">level source on github</a>.</p>
-<div class="pn"><a href="../02-simple-service/index.html">← Type=simple: systemd owns a long-running process and watches it</a><a href="../04-restart-on-failure/index.html">Restart= is opt-in: a crashed service stays dead until the unit asks to come back →</a></div>
+<div class="pn"><a href="../02-simple-service/index.html">← heartbeat script only runs while someone keeps a terminal open</a><a href="../04-restart-on-failure/index.html">api died at 03:00 and stayed dead until someone noticed at 09:00 →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>every command answers with an exit code, and if/else branches on it — bash level 02 — kaputt</title>
-<meta name="description" content="bash exercise: every command answers with an exit code, and if/else branches on it. Fix a real broken bash system in your own terminal — level 02 of 12, with hints and a checker.">
+<title>CI needs a script whose exit code says even or odd — bash level 02 — kaputt</title>
+<meta name="description" content="bash exercise: CI needs a script whose exit code says even or odd. Fix a real broken bash system in your own terminal — level 02 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/bash/02-exit-code/">
-<meta property="og:title" content="every command answers with an exit code, and if/else branches on it — bash level 02 — kaputt"><meta property="og:description" content="bash exercise: every command answers with an exit code, and if/else branches on it. Fix a real broken bash system in your own terminal — level 02 of 12, with hints and a checker.">
+<meta property="og:title" content="CI needs a script whose exit code says even or odd — bash level 02 — kaputt"><meta property="og:description" content="bash exercise: CI needs a script whose exit code says even or odd. Fix a real broken bash system in your own terminal — level 02 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">bash</a> / level 02</div>
-<h1 class="lvl">every command answers with an exit code, and if/else branches on it</h1>
+<h1 class="lvl">CI needs a script whose exit code says even or odd</h1>
 <p class="meta">bash · level 02 of 12 · <code>exit-code</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: besides its output, every command returns a number when it finishes: 0 means &quot;went fine&quot;, anything else means &quot;failed&quot;. Nobody sees it unless they ask — <code>echo $?</code> shows the code of the last command. Scripts, CI pipelines and <code>&amp;&amp;</code> chains all read this number to decide what happens next.</p>
-<p>Your own script sets its code with <code>exit N</code>. Without an explicit exit, it returns the code of its last command.</p>
-<p><code>if</code> uses the same idea: it runs a test command and takes the <code>then</code> branch when that test returns 0. <code>[ ... ]</code> is the test command; <code>-eq</code> compares numbers; <code>$(( ))</code> does arithmetic.</p>
-<pre>echo $?                          exit code of the last command
-exit 1                           end the script with code 1 (failure)
-$(( n % 2 ))                     remainder of n divided by 2
-if [ &quot;$x&quot; -eq 0 ]; then …; else …; fi</pre>
-<p>Try it first: <code>true; echo $?</code> then <code>false; echo $?</code>.</p>
-<p>Your task: a pipeline step must fail on odd numbers. Write <code>even.sh N</code>: print <code>even</code> and exit 0 when N is even, print <code>odd</code> and exit 1 when it is odd.</p>
-<p>Goal: <code>even.sh 4</code> prints <code>even</code> and exits 0; <code>even.sh 7</code> prints <code>odd</code> and exits 1.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;A pipeline step must fail on odd numbers. Write <code>even.sh N</code>: print <code>even</code> and exit 0 when N is even, print <code>odd</code> and exit 1 when it is odd.&quot; Goal: <code>even.sh 4</code> prints <code>even</code> and exits 0; <code>even.sh 7</code> prints <code>odd</code> and exits 1.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track bash
@@ -36,7 +26,7 @@ wg level 2
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/bash/02-exit-code">level source on github</a>.</p>
-<div class="pn"><a href="../01-first-script/index.html">← a script is commands in a file, and $1 is its first argument</a><a href="../03-sum-args/index.html">&quot;$@&quot; is all the arguments, and for loops over them →</a></div>
+<div class="pn"><a href="../01-first-script/index.html">← we need a tiny greeter script for the onboarding docs</a><a href="../03-sum-args/index.html">add up a variable list of numbers →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

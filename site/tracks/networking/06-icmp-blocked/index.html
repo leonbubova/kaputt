@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ping is ICMP, a protocol of its own that the firewall filters separately — networking level 06 — kaputt</title>
-<meta name="description" content="networking exercise: ping is ICMP, a protocol of its own that the firewall filters separately. Fix a real broken networking system in your own terminal — level 06 of 12, with hints and a checker.">
+<title>monitoring reports this host as down — it stopped answering pings — networking level 06 — kaputt</title>
+<meta name="description" content="networking exercise: monitoring reports this host as down — it stopped answering pings. Fix a real broken networking system in your own terminal — level 06 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/networking/06-icmp-blocked/">
-<meta property="og:title" content="ping is ICMP, a protocol of its own that the firewall filters separately — networking level 06 — kaputt"><meta property="og:description" content="networking exercise: ping is ICMP, a protocol of its own that the firewall filters separately. Fix a real broken networking system in your own terminal — level 06 of 12, with hints and a checker.">
+<meta property="og:title" content="monitoring reports this host as down — it stopped answering pings — networking level 06 — kaputt"><meta property="og:description" content="networking exercise: monitoring reports this host as down — it stopped answering pings. Fix a real broken networking system in your own terminal — level 06 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">networking</a> / level 06</div>
-<h1 class="lvl">ping is ICMP, a protocol of its own that the firewall filters separately</h1>
+<h1 class="lvl">monitoring reports this host as down — it stopped answering pings</h1>
 <p class="meta">networking · level 06 of 12 · <code>icmp-blocked</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: ping does not use a port. It sends ICMP echo requests, a different protocol from TCP and UDP, and a firewall rule can match on protocol alone with <code>-p icmp</code>. So every ping can be dropped while every TCP service keeps working — dead to a monitor, healthy to its users.</p>
-<p>&quot;The host doesn&#x27;t answer pings&quot; is therefore not evidence that the host or its services are down. It only says ICMP is not getting through, and the INPUT chain is where to look: a DROP line for <code>icmp</code> sits there regardless of the tcp rules around it.</p>
-<p>Fixing a bad rule means deleting it rather than stacking a workaround on top. <code>iptables -D</code> removes a rule; give it the same match as when it was added, or its line number.</p>
-<pre>ping -c1 -W2 127.0.0.1                 one ping, 2s timeout — loopback goes through INPUT too
-iptables -L INPUT -n                   list the chain; look at the protocol column
-iptables -D INPUT &lt;spec&gt; -j DROP       delete the rule with that spec
-iptables -L INPUT -n --line-numbers    numbered view; iptables -D INPUT N deletes by number</pre>
-<p>Try it first: <code>curl -s localhost:8080</code> and <code>ping -c1 -W2 127.0.0.1</code> — TCP fine, ICMP not.</p>
-<p>Your task: the uptime monitor pings this box and gets nothing back, though services are fine. Something is dropping ICMP. Make the host answer pings again.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>The uptime monitor pings this box and gets nothing back, though services are fine. Something is dropping ICMP. Make the host answer pings again.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track networking
@@ -35,7 +26,7 @@ wg level 6
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/networking/06-icmp-blocked">level source on github</a>.</p>
-<div class="pn"><a href="../05-bind-address/index.html">← a listener binds to an address, not just a port</a><a href="../07-wrong-port/index.html">the API moved to the wrong port — clients expect 8080, it&#x27;s on 8081 →</a></div>
+<div class="pn"><a href="../05-bind-address/index.html">← the API answers on localhost but not on the box&#x27;s network address</a><a href="../07-wrong-port/index.html">the API moved to the wrong port — clients expect 8080, it&#x27;s on 8081 →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

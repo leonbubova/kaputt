@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nextjs</a> / level 21</div>
 <h1 class="lvl">cart page: &quot;Functions cannot be passed directly to Client Components&quot;</h1>
 <p class="meta">nextjs · level 21 of 21 · <code>use-server</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>/cart</code> is a 500 after the add-to-cart action was moved into its own file <code>actions.ts</code>. The page passes the action to a client form component — that worked before.&quot;</p>
-<p>App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: <code>/cart</code> renders 200 and the form is wired to a Server Action (a <code>$ACTION_ID</code> appears in the HTML). Keep <code>AddForm</code> a Client Component and <code>actions.ts</code> the home of the action.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>/cart</code> is a 500 after the add-to-cart action was moved into its own file <code>actions.ts</code>. The page passes the action to a client form component — that worked before.&quot; App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: <code>/cart</code> renders 200 and the form is wired to a Server Action (a <code>$ACTION_ID</code> appears in the HTML). Keep <code>AddForm</code> a Client Component and <code>actions.ts</code> the home of the action.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nextjs

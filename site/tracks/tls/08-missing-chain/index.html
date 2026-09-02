@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">tls</a> / level 08</div>
 <h1 class="lvl">clients can&#x27;t build a trust chain — the intermediate is missing</h1>
 <p class="meta">tls · level 08 of 10 · <code>missing-chain</code></p>
-<div class="brief"><h2>the ticket</h2><p>Only the leaf certificate is being served, without the intermediate CA, so clients that trust the</p>
-<p>root still can&#x27;t verify the chain. Serve the full chain (leaf + intermediate).</p></div>
+<div class="brief"><h2>the ticket</h2><p>Only the leaf certificate is being served, without the intermediate CA, so clients that trust the root still can&#x27;t verify the chain. Serve the full chain (leaf + intermediate).</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track tls

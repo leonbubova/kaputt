@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a variable is an input knob: default in the config, override at apply time — terraform level 02 — kaputt</title>
-<meta name="description" content="terraform exercise: a variable is an input knob: default in the config, override at apply time. Fix a real broken terraform system in your own terminal — level 02 of 12, with hints and a checker.">
+<title>the greeting must be configurable, not hardcoded — terraform level 02 — kaputt</title>
+<meta name="description" content="terraform exercise: the greeting must be configurable, not hardcoded. Fix a real broken terraform system in your own terminal — level 02 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/terraform/02-variable/">
-<meta property="og:title" content="a variable is an input knob: default in the config, override at apply time — terraform level 02 — kaputt"><meta property="og:description" content="terraform exercise: a variable is an input knob: default in the config, override at apply time. Fix a real broken terraform system in your own terminal — level 02 of 12, with hints and a checker.">
+<meta property="og:title" content="the greeting must be configurable, not hardcoded — terraform level 02 — kaputt"><meta property="og:description" content="terraform exercise: the greeting must be configurable, not hardcoded. Fix a real broken terraform system in your own terminal — level 02 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">terraform</a> / level 02</div>
-<h1 class="lvl">a variable is an input knob: default in the config, override at apply time</h1>
+<h1 class="lvl">the greeting must be configurable, not hardcoded</h1>
 <p class="meta">terraform · level 02 of 12 · <code>variable</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a value that differs between environments or teammates does not belong hardcoded in a resource. A <code>variable</code> block declares an input: a name, a type, and optionally a default. Whoever runs terraform can override it with <code>-var name=value</code> (or a tfvars file); the config reads whichever won.</p>
-<p>Inside the config you refer to it as <code>var.&lt;name&gt;</code>. Put it in a string with <code>${...}</code> interpolation, exactly like <code>${path.module}</code> in the last level.</p>
-<p>The default is what makes the variable optional: with one, a plain <code>terraform apply</code> works unattended; without one, terraform stops and asks.</p>
-<pre>variable &quot;x&quot; { type = string  default = &quot;hi&quot; }    declare an input with a fallback value
-var.x                                              read it anywhere in the config
-content = &quot;${var.x}, world\n&quot;                      interpolate it into a string
-terraform apply -auto-approve -var x=yo            override the default for this run</pre>
-<p>Try it first: after apply, run <code>terraform plan -var x=other</code> on a config with a variable — the plan shows the change without doing it.</p>
-<p>Your task: write <code>out/greet.txt</code> containing <code>&lt;greeting&gt;, world</code>, where <code>greeting</code> is an input variable that defaults to <code>hi</code>. Ops must be able to override it with <code>-var</code>.</p>
-<p>Goal: default apply writes <code>hi, world</code>; <code>apply -var greeting=yo</code> writes <code>yo, world</code>.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Write <code>out/greet.txt</code> containing <code>&lt;greeting&gt;, world</code>, where <code>greeting</code> is an input variable that defaults to <code>hi</code>. Ops must be able to override it with <code>-var</code>.&quot; Goal: default apply writes <code>hi, world</code>; <code>apply -var greeting=yo</code> writes <code>yo, world</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track terraform
@@ -36,7 +26,7 @@ wg level 2
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/terraform/02-variable">level source on github</a>.</p>
-<div class="pn"><a href="../01-first-file/index.html">← a resource block declares a thing; apply makes it exist</a><a href="../03-output/index.html">an output exposes a value, and &lt;type&gt;.&lt;name&gt;.&lt;attribute&gt; reads one from a resource →</a></div>
+<div class="pn"><a href="../01-first-file/index.html">← we need terraform to drop a marker file</a><a href="../03-output/index.html">CI needs to read a value back out of terraform →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

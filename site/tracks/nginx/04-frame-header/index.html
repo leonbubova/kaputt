@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>add_header sets response headers, and where you put it decides which responses get it — nginx level 04 — kaputt</title>
-<meta name="description" content="nginx exercise: add_header sets response headers, and where you put it decides which responses get it. Fix a real broken nginx system in your own terminal — level 04 of 12, with hints and a checker.">
+<title>security scan: shop.local is missing the X-Frame-Options header — nginx level 04 — kaputt</title>
+<meta name="description" content="nginx exercise: security scan: shop.local is missing the X-Frame-Options header. Fix a real broken nginx system in your own terminal — level 04 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nginx/04-frame-header/">
-<meta property="og:title" content="add_header sets response headers, and where you put it decides which responses get it — nginx level 04 — kaputt"><meta property="og:description" content="nginx exercise: add_header sets response headers, and where you put it decides which responses get it. Fix a real broken nginx system in your own terminal — level 04 of 12, with hints and a checker.">
+<meta property="og:title" content="security scan: shop.local is missing the X-Frame-Options header — nginx level 04 — kaputt"><meta property="og:description" content="nginx exercise: security scan: shop.local is missing the X-Frame-Options header. Fix a real broken nginx system in your own terminal — level 04 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nginx</a> / level 04</div>
-<h1 class="lvl">add_header sets response headers, and where you put it decides which responses get it</h1>
+<h1 class="lvl">security scan: shop.local is missing the X-Frame-Options header</h1>
 <p class="meta">nginx · level 04 of 12 · <code>frame-header</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: nginx adds nothing to a response by itself. Every extra header — security headers, cache hints, CORS — comes from an explicit <code>add_header NAME value;</code> in the config. Remove the line, the header is gone from every response.</p>
-<p>Directives live in a context: <code>http</code>, <code>server</code>, or <code>location</code>. Most are inherited downwards, so a line in <code>server</code> applies to every location inside it. <code>add_header</code> has a catch: if a location has its own <code>add_header</code>, it replaces ALL inherited ones instead of adding to them. So the server level is the place for a header that must appear everywhere.</p>
-<p>Headers are only visible on the wire. <code>curl -I</code> asks for headers only and shows exactly what a scanner or browser sees.</p>
-<pre>add_header X-Frame-Options DENY;                    one response header on every reply
-curl -sI -H &#x27;Host: shop.local&#x27; http://127.0.0.1:8082/       show the response headers
-curl -sI ... | grep -i frame                        pick one header out
-docker exec wg-nginx nginx -s reload                apply</pre>
-<p>Try it first: <code>curl -sI -H &#x27;Host: shop.local&#x27; http://127.0.0.1:8082/</code> — every line after the status is a header some directive produced; find which config line each one comes from.</p>
-<p>Your task: the scanner flags every page on http://shop.local for clickjacking protection. Responses must include the header <code>X-Frame-Options: DENY</code>. Add it on the shop.local server.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>The scanner flags every page on http://shop.local for clickjacking protection. Responses must include the header <code>X-Frame-Options: DENY</code>. Add it on the shop.local server.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nginx
@@ -35,7 +26,7 @@ wg level 4
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nginx/04-frame-header">level source on github</a>.</p>
-<div class="pn"><a href="../03-api-proxy/index.html">← proxy_pass hands a path to an upstream, and its trailing slash rewrites the prefix</a><a href="../05-upstream-port/index.html">502 means nginx answered but the upstream did not: read the status, then test the upstream yourself →</a></div>
+<div class="pn"><a href="../03-api-proxy/index.html">← the shop API is unreachable: /api/* no longer hits the backend</a><a href="../05-upstream-port/index.html">checkout is down: every /api/ call returns 502 Bad Gateway →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

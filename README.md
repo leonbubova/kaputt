@@ -34,7 +34,7 @@ wg track shell                  # never used a terminal? start here (no Docker n
 wg level 1                      # read the ticket, fix it, then:
 wg check
 ```
-New to a tool? `wg help` shows the ~10 commands a track uses. The first half of every track teaches the concept in the level itself and hints there are free; the second half is tickets only, hints counted. Stuck? `wg hint` (3 per level), then `wg spoil`.
+New to a tool? `wg help` shows the ~10 commands a track uses before you start. Stuck? `wg hint` (3 per level), then `wg spoil`.
 
 ## Tracks
 

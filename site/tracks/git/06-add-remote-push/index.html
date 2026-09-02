@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a remote is a named address of another repo; push copies your commits there — git level 06 — kaputt</title>
-<meta name="description" content="git exercise: a remote is a named address of another repo; push copies your commits there. Fix a real broken git system in your own terminal — level 06 of 22, with hints and a checker.">
+<title>publish the repo to the team&#x27;s server — git level 06 — kaputt</title>
+<meta name="description" content="git exercise: publish the repo to the team&#x27;s server. Fix a real broken git system in your own terminal — level 06 of 22, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/git/06-add-remote-push/">
-<meta property="og:title" content="a remote is a named address of another repo; push copies your commits there — git level 06 — kaputt"><meta property="og:description" content="git exercise: a remote is a named address of another repo; push copies your commits there. Fix a real broken git system in your own terminal — level 06 of 22, with hints and a checker.">
+<meta property="og:title" content="publish the repo to the team&#x27;s server — git level 06 — kaputt"><meta property="og:description" content="git exercise: publish the repo to the team&#x27;s server. Fix a real broken git system in your own terminal — level 06 of 22, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,20 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">git</a> / level 06</div>
-<h1 class="lvl">a remote is a named address of another repo; push copies your commits there</h1>
+<h1 class="lvl">publish the repo to the team&#x27;s server</h1>
 <p class="meta">git · level 06 of 22 · <code>add-remote-push</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a git repository is complete on its own — nothing about it knows a server. Sharing works by pointing at another repository, which can be a URL or simply a path on the same disk. That pointer is a remote: a short name (<code>origin</code> by convention) for a long address.</p>
-<p>Pushing copies commits and moves a branch pointer in the remote repo to match yours. After a push, git keeps a local read-only bookmark <code>origin/main</code> that remembers where the remote&#x27;s <code>main</code> was last seen. <code>git status</code> uses it to say &quot;ahead by 2&quot; or &quot;up to date&quot;.</p>
-<p><code>-u</code> on the first push links your local branch to the remote one, so later <code>git push</code> and <code>git pull</code> need no arguments.</p>
-<pre>git remote -v                  list remotes and their addresses
-git remote add &lt;name&gt; &lt;addr&gt;   register a remote
-git push -u &lt;remote&gt; &lt;branch&gt;  copy the branch there and remember the link
-git branch -r                  remote-tracking branches like origin/main
-git ls-remote &lt;remote&gt;         ask the remote what branches it has</pre>
-<p>Try it first: <code>git remote -v</code> in the repo prints nothing; <code>git ls-remote ~/.k8s-wargame/git/origin.git</code> prints nothing too — an empty bare repo, ready to receive.</p>
-<p>Your task: &quot;The central bare repo is ready at <code>~/.k8s-wargame/git/origin.git</code> (empty). Our repo <code>~/.k8s-wargame/git/repo</code> has no remote yet.&quot;</p>
-<p>Goal: remote <code>origin</code> points at that path and <code>main</code> is pushed, so the remote&#x27;s <code>main</code> equals ours.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;The central bare repo is ready at <code>~/.k8s-wargame/git/origin.git</code> (empty). Our repo <code>~/.k8s-wargame/git/repo</code> has no remote yet.&quot; Goal: remote <code>origin</code> points at that path and <code>main</code> is pushed, so the remote&#x27;s <code>main</code> equals ours.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track git
@@ -37,7 +26,7 @@ wg level 6
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/git/06-add-remote-push">level source on github</a>.</p>
-<div class="pn"><a href="../05-add-gitignore/index.html">← .gitignore hides untracked files from git — and is itself a committed file</a><a href="../07-wrong-message/index.html">commits are immutable; &quot;editing&quot; the last one means replacing it with --amend →</a></div>
+<div class="pn"><a href="../05-add-gitignore/index.html">← git status is cluttered with log files</a><a href="../07-wrong-message/index.html">last commit has a garbage message →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

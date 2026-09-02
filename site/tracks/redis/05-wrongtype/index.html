@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>every key has exactly one type, fixed at creation: WRONGTYPE means the key is not what the app expects — redis level 05 — kaputt</title>
-<meta name="description" content="redis exercise: every key has exactly one type, fixed at creation: WRONGTYPE means the key is not what the app expects. Fix a real broken redis system in your own terminal — level 05 of 12, with hints and a checker.">
+<title>the events feed is broken: LPUSH returns WRONGTYPE — redis level 05 — kaputt</title>
+<meta name="description" content="redis exercise: the events feed is broken: LPUSH returns WRONGTYPE. Fix a real broken redis system in your own terminal — level 05 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/redis/05-wrongtype/">
-<meta property="og:title" content="every key has exactly one type, fixed at creation: WRONGTYPE means the key is not what the app expects — redis level 05 — kaputt"><meta property="og:description" content="redis exercise: every key has exactly one type, fixed at creation: WRONGTYPE means the key is not what the app expects. Fix a real broken redis system in your own terminal — level 05 of 12, with hints and a checker.">
+<meta property="og:title" content="the events feed is broken: LPUSH returns WRONGTYPE — redis level 05 — kaputt"><meta property="og:description" content="redis exercise: the events feed is broken: LPUSH returns WRONGTYPE. Fix a real broken redis system in your own terminal — level 05 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">redis</a> / level 05</div>
-<h1 class="lvl">every key has exactly one type, fixed at creation: WRONGTYPE means the key is not what the app expects</h1>
+<h1 class="lvl">the events feed is broken: LPUSH returns WRONGTYPE</h1>
 <p class="meta">redis · level 05 of 12 · <code>wrongtype</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a Redis key is a string, or a hash, or a list, or a set — never more than one. The type is decided by the first command that creates the key, and every later command must match it. <code>LPUSH</code> on a key that holds a string is refused with <code>WRONGTYPE Operation against a key holding the wrong kind of value</code>.</p>
-<p>Behind many &quot;the feed stopped working&quot; tickets: some script did a plain <code>SET</code> on a key the app treats as a list, and from then on every list command fails.</p>
-<p>There is no conversion in place. The fix is always the same shape: confirm the type, delete the key, recreate it with the command that matches the type the app needs.</p>
-<pre>TYPE events                    string, hash, list, set — or none
-LPUSH events x                 fails with WRONGTYPE if events is not a list
-DEL events                     remove the key, whatever its type
-RPUSH events a b               recreate it as a list, in order</pre>
-<p>Try it first: <code>TYPE events</code>, then <code>LPUSH events test</code> — read the error text.</p>
-<p>Your task: the app appends to the list <code>events</code>, but the key was created as a plain string, so every push fails with WRONGTYPE. It should be a list holding: signup, login (index 0 = signup).</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>The app appends to the list <code>events</code>, but the key was created as a plain string, so every push fails with WRONGTYPE. It should be a list holding: signup, login (index 0 = signup).</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track redis
@@ -35,7 +26,7 @@ wg level 5
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/redis/05-wrongtype">level source on github</a>.</p>
-<div class="pn"><a href="../04-expire-session/index.html">← a key can carry a time-to-live: write value and expiry in one SET</a><a href="../06-ttl-persist/index.html">TTL -1 is the leak: EXPIRE adds an expiry to a key that already exists →</a></div>
+<div class="pn"><a href="../04-expire-session/index.html">← add a login session that auto-expires</a><a href="../06-ttl-persist/index.html">sessions never expire — memory keeps growing →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

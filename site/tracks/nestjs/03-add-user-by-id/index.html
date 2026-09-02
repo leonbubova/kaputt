@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>route params arrive as strings; pipes convert them, exceptions become status codes — nestjs level 03 — kaputt</title>
-<meta name="description" content="nestjs exercise: route params arrive as strings; pipes convert them, exceptions become status codes. Fix a real broken nestjs system in your own terminal — level 03 of 21, with hints and a checker.">
+<title>ticket: user detail endpoint — nestjs level 03 — kaputt</title>
+<meta name="description" content="nestjs exercise: ticket: user detail endpoint. Fix a real broken nestjs system in your own terminal — level 03 of 21, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nestjs/03-add-user-by-id/">
-<meta property="og:title" content="route params arrive as strings; pipes convert them, exceptions become status codes — nestjs level 03 — kaputt"><meta property="og:description" content="nestjs exercise: route params arrive as strings; pipes convert them, exceptions become status codes. Fix a real broken nestjs system in your own terminal — level 03 of 21, with hints and a checker.">
+<meta property="og:title" content="ticket: user detail endpoint — nestjs level 03 — kaputt"><meta property="og:description" content="nestjs exercise: ticket: user detail endpoint. Fix a real broken nestjs system in your own terminal — level 03 of 21, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nestjs</a> / level 03</div>
-<h1 class="lvl">route params arrive as strings; pipes convert them, exceptions become status codes</h1>
+<h1 class="lvl">ticket: user detail endpoint</h1>
 <p class="meta">nestjs · level 03 of 21 · <code>add-user-by-id</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: <code>@Get(&#x27;:id&#x27;)</code> declares a path segment as a parameter, and <code>@Param(&#x27;id&#x27;)</code> on a method argument receives it. Everything from a URL is text — <code>/users/1</code> gives you <code>&quot;1&quot;</code>, not <code>1</code>, and <code>&quot;1&quot; === 1</code> is false. TypeScript&#x27;s <code>id: number</code> annotation does nothing at runtime.</p>
-<p>A pipe fixes that at the door. <code>ParseIntPipe</code> turns the string into a number and, if it cannot (<code>abc</code>), rejects the request with 400 before your method runs. Validation lives in the decorator, not in your code.</p>
-<p>The second half of the concept: your handler never builds error responses. Throwing an <code>HttpException</code> subclass — <code>NotFoundException</code>, <code>BadRequestException</code> — is enough; Nest maps it to the status code and a JSON body. A service can throw it and the controller just passes the result through.</p>
-<pre>@Get(&#x27;:id&#x27;)                                   path parameter named id
-@Param(&#x27;id&#x27;, ParseIntPipe) id: number         extract it, convert, 400 on garbage
-throw new NotFoundException(&#x27;User 1 not found&#x27;)   becomes a 404 response
-curl -s -o /dev/null -w &#x27;%{http_code}&#x27; localhost:3200/users/abc   see only the status</pre>
-<p>Try it first: <code>cat src/orders/orders.controller.ts</code> — <code>findOne</code> uses exactly this shape; <code>cat src/users/users.service.ts</code> to see who already throws.</p>
-<p>Your task: add <code>GET /users/:id</code>. The id must be parsed as an integer (<code>ParseIntPipe</code> -&gt; 400 for <code>abc</code>), unknown ids answer 404 via <code>NotFoundException</code>.</p>
-<p>Goal: <code>/users/1</code> -&gt; Ada, <code>/users/abc</code> -&gt; 400, <code>/users/999</code> -&gt; 404.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Add <code>GET /users/:id</code>. The id must be parsed as an integer (<code>ParseIntPipe</code> → 400 for <code>abc</code>), unknown ids answer 404 via <code>NotFoundException</code>.&quot; Goal: <code>/users/1</code> → Ada, <code>/users/abc</code> → 400, <code>/users/999</code> → 404. App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nestjs
@@ -36,7 +26,7 @@ wg level 3
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nestjs/03-add-user-by-id">level source on github</a>.</p>
-<div class="pn"><a href="../02-add-health-service/index.html">← a provider is a class Nest builds for you and hands to whoever asks</a><a href="../04-add-role-filter/index.html">query strings come in through @Query, and the service does the filtering →</a></div>
+<div class="pn"><a href="../02-add-health-service/index.html">← ticket: /health should report uptime</a><a href="../04-add-role-filter/index.html">ticket: filter users by role →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

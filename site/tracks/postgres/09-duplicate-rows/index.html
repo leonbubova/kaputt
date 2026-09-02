@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">postgres</a> / level 09</div>
 <h1 class="lvl">the newsletter goes out twice to some people</h1>
 <p class="meta">postgres · level 09 of 14 · <code>duplicate-rows</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Some addresses are in <code>subscribers</code> two or three times — the signup form just inserts. Clean it up and make sure it can&#x27;t happen again.&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>).</p>
-<p>Goal: no duplicate emails, all 5 distinct subscribers kept, a second signup for an existing email is rejected by the database.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Some addresses are in <code>subscribers</code> two or three times — the signup form just inserts. Clean it up and make sure it can&#x27;t happen again.&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>). Goal: no duplicate emails, all 5 distinct subscribers kept, a second signup for an existing email is rejected by the database.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track postgres

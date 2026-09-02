@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${1:-fallback}: give a variable a default — bash level 05 — kaputt</title>
-<meta name="description" content="bash exercise: ${1:-fallback}: give a variable a default. Fix a real broken bash system in your own terminal — level 05 of 12, with hints and a checker.">
+<title>greeter should not print &#x27;hello, &#x27; when called with no name — bash level 05 — kaputt</title>
+<meta name="description" content="bash exercise: greeter should not print &#x27;hello, &#x27; when called with no name. Fix a real broken bash system in your own terminal — level 05 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/bash/05-default-arg/">
-<meta property="og:title" content="${1:-fallback}: give a variable a default — bash level 05 — kaputt"><meta property="og:description" content="bash exercise: ${1:-fallback}: give a variable a default. Fix a real broken bash system in your own terminal — level 05 of 12, with hints and a checker.">
+<meta property="og:title" content="greeter should not print &#x27;hello, &#x27; when called with no name — bash level 05 — kaputt"><meta property="og:description" content="bash exercise: greeter should not print &#x27;hello, &#x27; when called with no name. Fix a real broken bash system in your own terminal — level 05 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">bash</a> / level 05</div>
-<h1 class="lvl">${1:-fallback}: give a variable a default</h1>
+<h1 class="lvl">greeter should not print &#x27;hello, &#x27; when called with no name</h1>
 <p class="meta">bash · level 05 of 12 · <code>default-arg</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: an argument that was not passed is simply empty. Bash does not warn, <code>$1</code> expands to nothing, and your script prints <code>hello, </code> with a hole in it.</p>
-<p>Parameter expansion is the family of <code>${…}</code> forms that transform a variable while reading it. The most used one is the default: <code>${1:-world}</code> means &quot;the value of <code>$1</code>, or <code>world</code> if <code>$1</code> is unset or empty&quot;. The variable itself stays untouched.</p>
-<p>The same form works for any variable — <code>${NAME:-guest}</code>, <code>${PORT:-8080}</code> — and is how scripts take optional arguments and optional environment variables without an <code>if</code>.</p>
-<pre>${1:-world}                     $1, or world when missing
-name=${1:-world}                store the result once, use &quot;$name&quot; after
-${VAR:=x}                       like :- but also assigns the default to VAR</pre>
-<p>Try it first: <code>unset x; echo &quot;${x:-empty}&quot;; x=5; echo &quot;${x:-empty}&quot;</code>.</p>
-<p>Your task: reuse the greeter idea, but make it friendly: <code>greet2.sh [name]</code> greets the given name, and falls back to <code>world</code> when called with no argument.</p>
-<p>Goal: <code>greet2.sh</code> prints <code>hello, world</code>; <code>greet2.sh Bob</code> prints <code>hello, Bob</code>.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Reuse the greeter idea, but make it friendly: <code>greet2.sh [name]</code> greets the given name, and falls back to <code>world</code> when called with no argument.&quot; Goal: <code>greet2.sh</code> prints <code>hello, world</code>; <code>greet2.sh Bob</code> prints <code>hello, Bob</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track bash
@@ -35,7 +26,7 @@ wg level 5
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/bash/05-default-arg">level source on github</a>.</p>
-<div class="pn"><a href="../04-count-lines/index.html">← scripts glue tools together: $( ) captures a command&#x27;s output</a><a href="../06-quote-the-argument/index.html">quote your variables: unquoted $1 splits on spaces →</a></div>
+<div class="pn"><a href="../04-count-lines/index.html">← how many lines in this export?</a><a href="../06-quote-the-argument/index.html">&#x27;cat: my: No such file or directory&#x27; — but the file is right there →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

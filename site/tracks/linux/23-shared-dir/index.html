@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">linux</a> / level 23</div>
 <h1 class="lvl">team share: files bob creates, alice cannot edit</h1>
 <p class="meta">linux · level 23 of 23 · <code>shared-dir</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>/srv/share</code> belongs to group <code>dev</code>, both alice and bob are in <code>dev</code>, umask is 002 for everyone. Still, whenever bob drops a file there alice gets <code>Permission denied</code> writing to it.&quot;</p>
-<p>Goal: a file newly created by bob in <code>/srv/share</code> is writable by alice (group <code>dev</code>). Don&#x27;t chmod the files one by one.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>/srv/share</code> belongs to group <code>dev</code>, both alice and bob are in <code>dev</code>, umask is 002 for everyone. Still, whenever bob drops a file there alice gets <code>Permission denied</code> writing to it.&quot; Goal: a file newly created by bob in <code>/srv/share</code> is writable by alice (group <code>dev</code>). Don&#x27;t chmod the files one by one.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track linux

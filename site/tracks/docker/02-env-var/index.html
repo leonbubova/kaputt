@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a container lives as long as its main process; -e puts config in its environment — docker level 02 — kaputt</title>
-<meta name="description" content="docker exercise: a container lives as long as its main process; -e puts config in its environment. Fix a real broken docker system in your own terminal — level 02 of 22, with hints and a checker.">
+<title>configure the app through the environment — docker level 02 — kaputt</title>
+<meta name="description" content="docker exercise: configure the app through the environment. Fix a real broken docker system in your own terminal — level 02 of 22, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/docker/02-env-var/">
-<meta property="og:title" content="a container lives as long as its main process; -e puts config in its environment — docker level 02 — kaputt"><meta property="og:description" content="docker exercise: a container lives as long as its main process; -e puts config in its environment. Fix a real broken docker system in your own terminal — level 02 of 22, with hints and a checker.">
+<meta property="og:title" content="configure the app through the environment — docker level 02 — kaputt"><meta property="og:description" content="docker exercise: configure the app through the environment. Fix a real broken docker system in your own terminal — level 02 of 22, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,17 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">docker</a> / level 02</div>
-<h1 class="lvl">a container lives as long as its main process; -e puts config in its environment</h1>
+<h1 class="lvl">configure the app through the environment</h1>
 <p class="meta">docker · level 02 of 22 · <code>env-var</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a container is one process in a box, not a machine. When that process ends, the container ends. <code>nginx</code> runs forever, so its container stays up. <code>alpine</code> has no daemon — its default command exits at once, so give it something that keeps running. Whatever follows the image name replaces the image&#x27;s default command.</p>
-<p>Configuration goes in through environment variables, not by editing files in the image. <code>-e KEY=value</code> sets one for the main process and everything it starts. Apps read their region, database URL and so on exactly this way, in Docker as in Kubernetes.</p>
-<p><code>docker exec</code> runs an extra command inside a running container — how you look around or read a variable back.</p>
-<pre>docker run -d --name n -e KEY=value img cmd    start with an env var and an explicit command
-docker exec n printenv KEY                     read the variable back from inside
-docker ps -a                                   also shows containers that already exited</pre>
-<p>Try it first: <code>docker run --rm alpine:3.20 printenv</code> — the container runs printenv, prints, exits, and <code>--rm</code> deletes it.</p>
-<p>Your task: &quot;Our app reads its region from the environment; ops wants to see that this works in a container before we ship.&quot; Goal: a running container <code>wg-app</code> from <code>alpine:3.20</code> that idles (e.g. <code>sleep infinity</code>) and has the environment variable <code>REGION=eu-central</code> — <code>docker exec wg-app printenv REGION</code> prints <code>eu-central</code>.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Our app reads its region from the environment; ops wants to see that this works in a container before we ship.&quot; Goal: a running container <code>wg-app</code> from <code>alpine:3.20</code> that idles (e.g. <code>sleep infinity</code>) and has the environment variable <code>REGION=eu-central</code> — <code>docker exec wg-app printenv REGION</code> prints <code>eu-central</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track docker
@@ -34,7 +26,7 @@ wg level 2
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/docker/02-env-var">level source on github</a>.</p>
-<div class="pn"><a href="../01-run-nginx/index.html">← an image is a template, a container is a running copy: docker run starts one</a><a href="../03-build-image/index.html">a Dockerfile builds your own image: FROM a base, COPY your files in →</a></div>
+<div class="pn"><a href="../01-run-nginx/index.html">← we need a web server, now</a><a href="../03-build-image/index.html">package the landing page as an image →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

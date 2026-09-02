@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>lifecycle hooks: onFailure runs once, after the last attempt has failed — trigger level 05 — kaputt</title>
-<meta name="description" content="trigger exercise: lifecycle hooks: onFailure runs once, after the last attempt has failed. Fix a real broken trigger system in your own terminal — level 05 of 18, with hints and a checker.">
+<title>ticket: page on-call when a payout fails — trigger level 05 — kaputt</title>
+<meta name="description" content="trigger exercise: ticket: page on-call when a payout fails. Fix a real broken trigger system in your own terminal — level 05 of 18, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/trigger/05-alert-on-failure/">
-<meta property="og:title" content="lifecycle hooks: onFailure runs once, after the last attempt has failed — trigger level 05 — kaputt"><meta property="og:description" content="trigger exercise: lifecycle hooks: onFailure runs once, after the last attempt has failed. Fix a real broken trigger system in your own terminal — level 05 of 18, with hints and a checker.">
+<meta property="og:title" content="ticket: page on-call when a payout fails — trigger level 05 — kaputt"><meta property="og:description" content="trigger exercise: ticket: page on-call when a payout fails. Fix a real broken trigger system in your own terminal — level 05 of 18, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,17 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">trigger</a> / level 05</div>
-<h1 class="lvl">lifecycle hooks: onFailure runs once, after the last attempt has failed</h1>
+<h1 class="lvl">ticket: page on-call when a payout fails</h1>
 <p class="meta">trigger · level 05 of 18 · <code>alert-on-failure</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: <code>run</code> is not the only function a task can have. Next to it you can declare lifecycle hooks — <code>onStart</code>, <code>onSuccess</code>, <code>onFailure</code>, and more — that the platform calls at fixed points in a run&#x27;s life. They keep side concerns (alerting, cleanup, metrics) out of the business code.</p>
-<p><code>onFailure</code> is special because of retries: it does NOT fire on every failed attempt. It fires once, after the final attempt has failed and the run is marked failed for good. That is exactly the moment a human should be paged.</p>
-<p>In v4 every hook receives a single object and you destructure what you need: <code>{ payload, error, ctx }</code>. <code>error</code> is typed <code>unknown</code> because anything can be thrown — narrow it with <code>instanceof Error</code> before reading <code>.message</code>.</p>
-<pre>onFailure: async ({ payload, error, ctx }) =&gt; {...}    v4: one object argument, next to run
-error instanceof Error ? error.message : String(error)    safe way to get the message
-cat src/lib/alerts.ts                                  what sendAlert expects</pre>
-<p>Try it first: <code>cat src/trigger/payout.ts</code> — see what <code>run</code> throws, and that nothing catches it.</p>
-<p>Your task: &quot;When a <code>payout</code> run fails for good, on-call must get an alert containing the <strong>order id</strong> and the <strong>error message</strong>. Use <code>sendAlert</code> from <code>src/lib/alerts.ts</code>.&quot; Goal: <code>payout</code> has a failure hook that does exactly that.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;When a <code>payout</code> run fails for good, on-call must get an alert containing the <strong>order id</strong> and the <strong>error message</strong>. Use <code>sendAlert</code> from <code>src/lib/alerts.ts</code>.&quot; Goal: <code>payout</code> has a failure hook that does exactly that.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track trigger
@@ -34,7 +26,7 @@ wg level 5
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/trigger/05-alert-on-failure">level source on github</a>.</p>
-<div class="pn"><a href="../04-fan-out-campaign/index.html">← tasks trigger tasks: batchTrigger creates many runs in one call</a><a href="../06-no-tasks-found/index.html">the CLI only indexes tasks where trigger.config.ts tells it to look →</a></div>
+<div class="pn"><a href="../04-fan-out-campaign/index.html">← ticket: campaign fan-out task</a><a href="../06-no-tasks-found/index.html">dev server finds no tasks →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

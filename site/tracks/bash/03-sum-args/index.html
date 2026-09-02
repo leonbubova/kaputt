@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>&quot;$@&quot; is all the arguments, and for loops over them — bash level 03 — kaputt</title>
-<meta name="description" content="bash exercise: &quot;$@&quot; is all the arguments, and for loops over them. Fix a real broken bash system in your own terminal — level 03 of 12, with hints and a checker.">
+<title>add up a variable list of numbers — bash level 03 — kaputt</title>
+<meta name="description" content="bash exercise: add up a variable list of numbers. Fix a real broken bash system in your own terminal — level 03 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/bash/03-sum-args/">
-<meta property="og:title" content="&quot;$@&quot; is all the arguments, and for loops over them — bash level 03 — kaputt"><meta property="og:description" content="bash exercise: &quot;$@&quot; is all the arguments, and for loops over them. Fix a real broken bash system in your own terminal — level 03 of 12, with hints and a checker.">
+<meta property="og:title" content="add up a variable list of numbers — bash level 03 — kaputt"><meta property="og:description" content="bash exercise: add up a variable list of numbers. Fix a real broken bash system in your own terminal — level 03 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">bash</a> / level 03</div>
-<h1 class="lvl">&quot;$@&quot; is all the arguments, and for loops over them</h1>
+<h1 class="lvl">add up a variable list of numbers</h1>
 <p class="meta">bash · level 03 of 12 · <code>sum-args</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a script does not know in advance how many arguments it will get. <code>&quot;$@&quot;</code> expands to all of them, one word each, however many there are — with the quotes, an argument containing a space stays one word. (<code>$#</code> is how many there are.)</p>
-<p>A <code>for</code> loop visits a list one item at a time: <code>for n in &quot;$@&quot;; do …; done</code>. Inside the loop <code>$n</code> is the current item.</p>
-<p>To add things up you need a variable that carries a running total across the rounds: start it at 0, then <code>total=$((total + n))</code> each time. Variables are plain text until <code>$(( ))</code> treats them as numbers.</p>
-<pre>&quot;$@&quot;                            every argument, intact
-for n in &quot;$@&quot;; do …; done       one round per argument
-total=$((total + n))            arithmetic assignment
-echo &quot;$total&quot;                   print the result</pre>
-<p>Try it first: <code>for w in a b c; do echo &quot;item: $w&quot;; done</code>.</p>
-<p>Your task: a billing helper needs to total however many amounts it is given. Write <code>sum.sh</code>: it prints the sum of all its integer arguments, and prints <code>0</code> when given none.</p>
-<p>Goal: <code>sum.sh 2 3 4</code> prints <code>9</code>; <code>sum.sh</code> prints <code>0</code>.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;A billing helper needs to total however many amounts it is given. Write <code>sum.sh</code>: it prints the sum of all its integer arguments, and prints <code>0</code> when given none.&quot; Goal: <code>sum.sh 2 3 4</code> prints <code>9</code>; <code>sum.sh</code> prints <code>0</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track bash
@@ -36,7 +26,7 @@ wg level 3
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/bash/03-sum-args">level source on github</a>.</p>
-<div class="pn"><a href="../02-exit-code/index.html">← every command answers with an exit code, and if/else branches on it</a><a href="../04-count-lines/index.html">scripts glue tools together: $( ) captures a command&#x27;s output →</a></div>
+<div class="pn"><a href="../02-exit-code/index.html">← CI needs a script whose exit code says even or odd</a><a href="../04-count-lines/index.html">how many lines in this export? →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

@@ -11,7 +11,7 @@ usage() { cat <<U
 wg — break/fix wargame          tracks: $(tracks | tr '\n' ' ')
 
   wg track NAME       switch track (default k8s)
-  wg help             skills refresh: the ~10 commands this track uses (any time, not counted)
+  wg help             the ~10 commands this track uses — quick refresh, any time
   wg start            bring up the environment of the current track
   wg stop             tear it down
   wg shell            enter the broken machine (tracks that have one)
@@ -23,7 +23,7 @@ wg — break/fix wargame          tracks: $(tracks | tr '\n' ' ')
   wg pwd              the level's working directory (if the track has one)
   wg brief            briefing again
   wg check            am i done?
-  wg hint             next hint (3 per level; free in learn levels, counted in test levels; off during speedrun)
+  wg hint             next hint (3 per level, counted; off during speedrun)
   wg spoil            solution (marks level spoiled)
   wg reset / wg next
   wg progress         scoreboard, streak, achievements (all tracks)
@@ -43,9 +43,6 @@ solved() { grep -q "^$TRACK/$1 " "$STATE/progress" 2>/dev/null; }
 today() { date +%Y-%m-%d; }
 total() { levels | wc -l | tr -d ' '; }
 lvnum() { printf '%d' "$(( 10#${1%%-*} ))"; }
-# learn levels: the first LEARN_LEVELS of a track (track.sh; default: half, rounded up) teach the concept in the README — hints there are free.
-learn_n() { printf '%d' "${LEARN_LEVELS:-$(( ($(total) + 1) / 2 ))}"; }
-is_learn() { [ "$(lvnum "$1")" -le "$(learn_n)" ]; }
 
 cmd_track() { [ -d "$ROOT/levels/$1" ] || { echo "no track $1"; exit 1; }; echo "$1" > "$STATE/track"; echo "track: $1"; [ -f "$ROOT/levels/$1/PRIMER.md" ] && echo "new to $1? → wg help"; }
 cmd_primer() {
@@ -70,8 +67,7 @@ load_level() { # N [speedrun]
   fi
   printf '\033[2m%s · level %s of %s\033[0m\n' "$TRACK" "$(lvnum "$l")" "$(total)"; cat "$d/README.md"; echo
   if [ "${2:-}" = speedrun ]; then printf '\033[35m⏱ SPEEDRUN — hints disabled, clock running.\033[0m → wg check\n'
-  elif is_learn "$l"; then echo "→ do it, then: wg check   (learn level: wg hint is free · wg help = the track's commands)"
-  else echo "→ fix it, then: wg check   (stuck? wg hint · wg help = the track's commands)"; fi
+  else echo "→ fix it, then: wg check   (stuck? wg hint)"; fi
 }
 cmd_level() { load_level "$1"; }
 pick_unsolved() { local u=(); for l in $(levels); do solved "$l" || u+=("$l"); done; [ ${#u[@]} -gt 0 ] || return 1; echo "${u[$((RANDOM % ${#u[@]}))]}"; }
@@ -97,15 +93,11 @@ cmd_check() {
   if (cd "$TDIR/$l" && bash check.sh); then
     local s h sp start speed=""; start=$(cat "$STATE/$TRACK.$l.start"); s=$(( $(date +%s) - start ))
     h=$(wc -l < "$STATE/$TRACK.$l.hints" | tr -d ' '); sp=""; [ -f "$STATE/$TRACK.$l.spoiled" ] && sp=" spoiled"
-    is_learn "$l" && h=0   # learn levels: hints are part of the lesson, never counted
     [ -f "$STATE/$TRACK.$l.speed" ] && speed=" speedrun"
     grep -v "^$TRACK/$l " "$STATE/progress" 2>/dev/null > "$STATE/progress.tmp" || true
     echo "$TRACK/$l solved ${s}s hints=$h$sp$speed" >> "$STATE/progress.tmp"; mv "$STATE/progress.tmp" "$STATE/progress"
     bump_streak >/dev/null
-    printf '\n\033[1;32mLEVEL SOLVED\033[0m  %s · level %s of %s · %ss, %s hints%s%s\n' "$TRACK" "$(lvnum "$l")" "$(total)" "$s" "$h" "$sp" "$speed"
-    is_learn "$l" && printf 'practised: %s\n' "$(head -1 "$TDIR/$l/README.md" | sed 's/^# //')"
-    [ "$(lvnum "$l")" = "$(learn_n)" ] && printf '\033[2mthat was the last learn level — from here on tickets only, hints counted.\033[0m\n'
-    echo "→ wg next"
+    printf '\n\033[1;32mLEVEL SOLVED\033[0m  %s · level %s of %s · %ss, %s hints%s%s\n→ wg next\n' "$TRACK" "$(lvnum "$l")" "$(total)" "$s" "$h" "$sp" "$speed"
   else printf '\n\033[1;31mnot yet.\033[0m\n'; exit 1; fi
 }
 cmd_hint() {
@@ -114,15 +106,12 @@ cmd_hint() {
   local n; n=$(( $(wc -l < "$STATE/$TRACK.$l.hints" | tr -d ' ') + 1 ))
   local txt; txt=$(awk -v n="$n" '/^## /{c++} c==n && !/^## /' "$TDIR/$l/hints.md")
   [ -n "$txt" ] || { echo "no more hints. → wg spoil"; exit 0; }
-  echo "$n" >> "$STATE/$TRACK.$l.hints"; local free=""; is_learn "$l" && free=" (free)"; printf '\033[33mhint %s%s:\033[0m%s\n' "$n" "$free" "$txt"
+  echo "$n" >> "$STATE/$TRACK.$l.hints"; printf '\033[33mhint %s:\033[0m%s\n' "$n" "$txt"
 }
 cmd_spoil() { local l; l=$(cur); touch "$STATE/$TRACK.$l.spoiled"; cat "$TDIR/$l/solution.md"; }
 cmd_reset() { local l; l=$(cur); load_level "$(( 10#${l%%-*} ))"; }
 cmd_next()  { local l; l=$(cur); load_level "$(( 10#${l%%-*} + 1 ))"; }
-cmd_list()  { echo "track: $TRACK"; local n; n=$(learn_n); printf '\033[2m── learn (hints free) ──\033[0m\n'
-  for l in $(levels); do local st="  "; solved "$l" && st="✔ "; [ "$l" = "$(cat "$STATE/$TRACK.current" 2>/dev/null)" ] && st="▶ "
-    [ "$(lvnum "$l")" = "$((n+1))" ] && printf '\033[2m── test (tickets only, hints counted) ──\033[0m\n'
-    printf '%s%s  %s\n' "$st" "$l" "$(head -1 "$TDIR/$l/README.md" | sed 's/^# //')"; done; }
+cmd_list()  { echo "track: $TRACK"; for l in $(levels); do local st="  "; solved "$l" && st="✔ "; [ "$l" = "$(cat "$STATE/$TRACK.current" 2>/dev/null)" ] && st="▶ "; printf '%s%s  %s\n' "$st" "$l" "$(head -1 "$TDIR/$l/README.md" | sed 's/^# //')"; done; }
 
 achievements() {
   local p="$STATE/progress"; [ -f "$p" ] || return 0

@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">helm</a> / level 11</div>
 <h1 class="lvl">&quot;got string, expected integer&quot;</h1>
 <p class="meta">helm · level 11 of 20 · <code>quoted-port</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Someone made the port configurable and now <code>helm install web ./web -n wg-helm</code> is rejected by the API server with a ValidationError.&quot;</p>
-<p>Chart copy: <code>~/.k8s-wargame/helm/11-quoted-port/web</code>. Goal: release <code>web</code> deployed, container still declares port 80, page reachable.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Someone made the port configurable and now <code>helm install web ./web -n wg-helm</code> is rejected by the API server with a ValidationError.&quot; Chart copy: <code>~/.k8s-wargame/helm/11-quoted-port/web</code>. Goal: release <code>web</code> deployed, container still declares port 80, page reachable.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track helm
@@ -27,7 +26,7 @@ wg level 11
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/helm/11-quoted-port">level source on github</a>.</p>
-<div class="pn"><a href="../10-required/index.html">← required makes a missing value a loud error instead of a silent empty string</a><a href="../12-hook-fail/index.html">install fails in &quot;pre-install&quot; →</a></div>
+<div class="pn"><a href="../10-required/index.html">← install fails with &quot;execution error&quot;</a><a href="../12-hook-fail/index.html">install fails in &quot;pre-install&quot; →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

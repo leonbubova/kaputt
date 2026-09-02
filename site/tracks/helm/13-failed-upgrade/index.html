@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">helm</a> / level 13</div>
 <h1 class="lvl">launch upgrade failed, site degraded</h1>
 <p class="meta">helm · level 13 of 20 · <code>failed-upgrade</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;We ran <code>helm upgrade shop ./shop -f values-launch.yaml</code> for the launch. It timed out, new pods are ImagePullBackOff, and we&#x27;re live in 20 minutes.&quot;</p>
-<p>Work dir: <code>~/.k8s-wargame/helm/13-failed-upgrade/</code>. Goal: release <code>shop</code> is <code>deployed</code>, 3 available replicas on <code>nginx:1.27-alpine</code>, page shows <code>env=prod</code>. Keep the release history (no uninstall).</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;We ran <code>helm upgrade shop ./shop -f values-launch.yaml</code> for the launch. It timed out, new pods are ImagePullBackOff, and we&#x27;re live in 20 minutes.&quot; Work dir: <code>~/.k8s-wargame/helm/13-failed-upgrade/</code>. Goal: release <code>shop</code> is <code>deployed</code>, 3 available replicas on <code>nginx:1.27-alpine</code>, page shows <code>env=prod</code>. Keep the release history (no uninstall).</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track helm

@@ -18,9 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nginx</a> / level 10</div>
 <h1 class="lvl">frontend bundle ships uncompressed; front-end team wants gzip back</h1>
 <p class="meta">nginx · level 10 of 12 · <code>gzip-off</code></p>
-<div class="brief"><h2>the ticket</h2><p>app.js and the CSS are being sent uncompressed over the wire.</p>
-<p>Responses for text assets should carry <code>Content-Encoding: gzip</code> when the client accepts it.</p>
-<p>Turn compression back on for the shop.local server.</p></div>
+<div class="brief"><h2>the ticket</h2><p>app.js and the CSS are being sent uncompressed over the wire. Responses for text assets should carry <code>Content-Encoding: gzip</code> when the client accepts it. Turn compression back on for the shop.local server.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nginx

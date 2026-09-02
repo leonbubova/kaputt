@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>502 means nginx answered but the upstream did not: read the status, then test the upstream yourself — nginx level 05 — kaputt</title>
-<meta name="description" content="nginx exercise: 502 means nginx answered but the upstream did not: read the status, then test the upstream yourself. Fix a real broken nginx system in your own terminal — level 05 of 12, with hints and a checker.">
+<title>checkout is down: every /api/ call returns 502 Bad Gateway — nginx level 05 — kaputt</title>
+<meta name="description" content="nginx exercise: checkout is down: every /api/ call returns 502 Bad Gateway. Fix a real broken nginx system in your own terminal — level 05 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nginx/05-upstream-port/">
-<meta property="og:title" content="502 means nginx answered but the upstream did not: read the status, then test the upstream yourself — nginx level 05 — kaputt"><meta property="og:description" content="nginx exercise: 502 means nginx answered but the upstream did not: read the status, then test the upstream yourself. Fix a real broken nginx system in your own terminal — level 05 of 12, with hints and a checker.">
+<meta property="og:title" content="checkout is down: every /api/ call returns 502 Bad Gateway — nginx level 05 — kaputt"><meta property="og:description" content="nginx exercise: checkout is down: every /api/ call returns 502 Bad Gateway. Fix a real broken nginx system in your own terminal — level 05 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nginx</a> / level 05</div>
-<h1 class="lvl">502 means nginx answered but the upstream did not: read the status, then test the upstream yourself</h1>
+<h1 class="lvl">checkout is down: every /api/ call returns 502 Bad Gateway</h1>
 <p class="meta">nginx · level 05 of 12 · <code>upstream-port</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: status codes tell you WHO failed. 404 and 403 are nginx&#x27;s own decisions about a file. 502 Bad Gateway means the request reached a <code>proxy_pass</code> location, nginx tried to connect to the upstream, and got no valid answer — connection refused, wrong host, wrong port, backend dead.</p>
-<p>So a 502 is fixed by asking two questions. Is the backend actually up? And does the <code>proxy_pass</code> target — host AND port — match where it listens? A config that passes <code>nginx -t</code> can still point at a port nobody listens on.</p>
-<p>Split the two by bypassing nginx: talk to the upstream from inside the container network, then compare with what the config says.</p>
-<pre>curl -s -o /dev/null -w &#x27;%{http_code}\n&#x27; -H &#x27;Host: shop.local&#x27; http://127.0.0.1:8082/api/orders    just the status
-docker exec wg-nginx wget -qO- http://wg-backend:9000/       reach the upstream directly
-docker logs wg-nginx 2&gt;&amp;1 | tail                    error log names the failing connect
-grep -n proxy_pass ~/.k8s-wargame/nginx/app/conf.d/default.conf    what nginx thinks the target is</pre>
-<p>Try it first: the wget line — if the backend answers <code>backend ok</code>, the upstream is alive and the problem is between nginx and it.</p>
-<p>Your task: nothing changed in the backend, yet the shop API stopped answering through nginx — every /api/ call returns 502 Bad Gateway. The static site still loads fine. Get /api/ talking to the upstream again.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Nothing changed in the backend, yet the shop API stopped answering through nginx. The static site still loads fine. Get /api/ talking to the upstream again.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nginx
@@ -35,7 +26,7 @@ wg level 5
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nginx/05-upstream-port">level source on github</a>.</p>
-<div class="pn"><a href="../04-frame-header/index.html">← add_header sets response headers, and where you put it decides which responses get it</a><a href="../06-spa-fallback/index.html">try_files walks a list of candidates, and the last one is what happens when nothing exists →</a></div>
+<div class="pn"><a href="../04-frame-header/index.html">← security scan: shop.local is missing the X-Frame-Options header</a><a href="../06-spa-fallback/index.html">deep links 404: /dashboard works from the menu but not on a page reload →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

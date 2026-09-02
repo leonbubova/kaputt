@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">postgres</a> / level 12</div>
 <h1 class="lvl">some invoices show an empty total</h1>
 <p class="meta">postgres · level 12 of 14 · <code>null-totals</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>invoice_totals</code> is what the billing PDF reads. Invoices 2 and 5 print no total at all and the month sum is way too low. Amount and discount are in <code>invoices</code>.&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>).</p>
-<p>Goal: every row of <code>invoice_totals</code> has a <code>total</code> (amount minus discount; no discount = full amount); no invoice deleted.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>invoice_totals</code> is what the billing PDF reads. Invoices 2 and 5 print no total at all and the month sum is way too low. Amount and discount are in <code>invoices</code>.&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>). Goal: every row of <code>invoice_totals</code> has a <code>total</code> (amount minus discount; no discount = full amount); no invoice deleted.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track postgres

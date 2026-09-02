@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a task is an exported object: an id, a run function, and a validated payload — trigger level 01 — kaputt</title>
-<meta name="description" content="trigger exercise: a task is an exported object: an id, a run function, and a validated payload. Fix a real broken trigger system in your own terminal — level 01 of 18, with hints and a checker.">
+<title>ticket: implement the charge-card task — trigger level 01 — kaputt</title>
+<meta name="description" content="trigger exercise: ticket: implement the charge-card task. Fix a real broken trigger system in your own terminal — level 01 of 18, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/trigger/01-define-charge-card/">
-<meta property="og:title" content="a task is an exported object: an id, a run function, and a validated payload — trigger level 01 — kaputt"><meta property="og:description" content="trigger exercise: a task is an exported object: an id, a run function, and a validated payload. Fix a real broken trigger system in your own terminal — level 01 of 18, with hints and a checker.">
+<meta property="og:title" content="ticket: implement the charge-card task — trigger level 01 — kaputt"><meta property="og:description" content="trigger exercise: ticket: implement the charge-card task. Fix a real broken trigger system in your own terminal — level 01 of 18, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">trigger</a> / level 01</div>
-<h1 class="lvl">a task is an exported object: an id, a run function, and a validated payload</h1>
+<h1 class="lvl">ticket: implement the charge-card task</h1>
 <p class="meta">trigger · level 01 of 18 · <code>define-charge-card</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a task is a plain object you export from a file under <code>src/trigger</code>. The CLI scans those files and registers every <code>task({...})</code> under its <code>id</code>. The <code>id</code> is the address the platform uses; the export name is only for your imports.</p>
-<p><code>run</code> is the code that executes, and its argument is the payload the caller passed to <code>trigger()</code>. With plain <code>task()</code> the payload is whatever TypeScript type you write — nothing checks it at runtime.</p>
-<p><code>schemaTask</code> adds a zod <code>schema</code>. The payload type of <code>run</code> is inferred from it, and a bad payload is rejected when someone calls <code>trigger()</code> — before a run even exists. &quot;amount must be a positive integer&quot; belongs there: at the door, not inside the business logic.</p>
-<pre>cat src/trigger/process-order.ts                       a sibling task: the shape to copy
-schemaTask({ id, schema: z.object({...}), run })      validated payload, type inferred
-z.number().int().positive()                            zod: a positive integer
-npx tsc --noEmit                                       does the project compile?</pre>
-<p>Try it first: <code>npx tsc --noEmit</code> — read which files import the missing module.</p>
-<p>Your task: &quot;<code>src/api/checkout.ts</code> and <code>src/api/stripe-webhook.ts</code> already import <code>chargeCard</code> from <code>src/trigger/charge-card.ts</code> — the file doesn&#x27;t exist yet, <code>tsc</code> is red.&quot; Goal: create task id <code>charge-card</code> with a zod payload schema <code>{ orderId: string, amountCents: positive integer }</code> (bad payloads must be rejected at trigger time); <code>run</code> records the charge via <code>charges.push(...)</code> from <code>src/lib/db.ts</code> and returns <code>{ charged: amountCents, orderId }</code>.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>src/api/checkout.ts</code> and <code>src/api/stripe-webhook.ts</code> already import <code>chargeCard</code> from <code>src/trigger/charge-card.ts</code> — the file doesn&#x27;t exist yet, <code>tsc</code> is red.&quot; Goal: create task id <code>charge-card</code> with a zod payload schema <code>{ orderId: string, amountCents: positive integer }</code> (bad payloads must be rejected at trigger time); <code>run</code> records the charge via <code>charges.push(...)</code> from <code>src/lib/db.ts</code> and returns <code>{ charged: amountCents, orderId }</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track trigger
@@ -35,7 +26,7 @@ wg level 1
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/trigger/01-define-charge-card">level source on github</a>.</p>
-<div class="pn"><span></span><a href="../02-add-retry-policy/index.html">retries are declared on the task, and a task-level option beats the project default →</a></div>
+<div class="pn"><span></span><a href="../02-add-retry-policy/index.html">ticket: retry policy for the CRM sync →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

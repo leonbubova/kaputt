@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a hash is a small record under one key: fields you can read and update one at a time — redis level 02 — kaputt</title>
-<meta name="description" content="redis exercise: a hash is a small record under one key: fields you can read and update one at a time. Fix a real broken redis system in your own terminal — level 02 of 12, with hints and a checker.">
+<title>the profile cache is empty — hash user:1 has no fields — redis level 02 — kaputt</title>
+<meta name="description" content="redis exercise: the profile cache is empty — hash user:1 has no fields. Fix a real broken redis system in your own terminal — level 02 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/redis/02-hash-profile/">
-<meta property="og:title" content="a hash is a small record under one key: fields you can read and update one at a time — redis level 02 — kaputt"><meta property="og:description" content="redis exercise: a hash is a small record under one key: fields you can read and update one at a time. Fix a real broken redis system in your own terminal — level 02 of 12, with hints and a checker.">
+<meta property="og:title" content="the profile cache is empty — hash user:1 has no fields — redis level 02 — kaputt"><meta property="og:description" content="redis exercise: the profile cache is empty — hash user:1 has no fields. Fix a real broken redis system in your own terminal — level 02 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">redis</a> / level 02</div>
-<h1 class="lvl">a hash is a small record under one key: fields you can read and update one at a time</h1>
+<h1 class="lvl">the profile cache is empty — hash user:1 has no fields</h1>
 <p class="meta">redis · level 02 of 12 · <code>hash-profile</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a string holds one value. When an object has several attributes — a user with a name and an age — you could stuff a JSON blob into a string, but then every change means read the whole thing, edit, write it all back.</p>
-<p>A hash solves this: one key, many field/value pairs inside it. You can set one field, read one field, or fetch all of them, and Redis handles each field independently. That is the natural shape for profiles, settings, and any &quot;one object with properties&quot; cache.</p>
-<p>The value of the key is the whole hash. <code>TYPE key</code> tells you it is <code>hash</code>, and string commands like <code>GET</code> won&#x27;t work on it.</p>
-<pre>HSET user:1 name anna age 30    write one or more fields (creates the hash if needed)
-HGET user:1 name                read a single field
-HGETALL user:1                  dump every field and value
-TYPE user:1                     which kind of value this key holds</pre>
-<p>Try it first: <code>HGETALL user:1</code> — an empty result, the key doesn&#x27;t exist yet. <code>TYPE user:1</code> says <code>none</code>.</p>
-<p>Your task: the app stores user profiles as a hash. Create <code>user:1</code> with fields name=anna and age=30.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>The app stores user profiles as a hash. Create <code>user:1</code> with fields name=anna and age=30.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track redis
@@ -35,7 +26,7 @@ wg level 2
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/redis/02-hash-profile">level source on github</a>.</p>
-<div class="pn"><a href="../01-set-key/index.html">← redis is a key-value store: SET writes a string, GET reads it back</a><a href="../03-list-queue/index.html">a list keeps order: push onto an end, read by index →</a></div>
+<div class="pn"><a href="../01-set-key/index.html">← the app can&#x27;t read its name from cache — key app:name is empty</a><a href="../03-list-queue/index.html">the job queue is empty — list queue:jobs has no items →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

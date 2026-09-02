@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">postgres</a> / level 08</div>
 <h1 class="lvl">the order history page takes seconds</h1>
 <p class="meta">postgres · level 08 of 14 · <code>slow-query</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>/customers/777/orders</code> went from instant to 2–3 s over the last months. Query is in <code>~/.k8s-wargame/postgres/query.sql</code> — the app team says it&#x27;s trivial and won&#x27;t change it.&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>).</p>
-<p>Goal: that query is fast (planner uses an index), no rows deleted, <code>query.sql</code> untouched.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>/customers/777/orders</code> went from instant to 2–3 s over the last months. Query is in <code>~/.k8s-wargame/postgres/query.sql</code> — the app team says it&#x27;s trivial and won&#x27;t change it.&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>). Goal: that query is fast (planner uses an index), no rows deleted, <code>query.sql</code> untouched.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track postgres
@@ -27,7 +26,7 @@ wg level 8
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/postgres/08-slow-query">level source on github</a>.</p>
-<div class="pn"><a href="../07-create-view/index.html">← GROUP BY collapses rows into one per group; a VIEW saves a query under a name</a><a href="../09-duplicate-rows/index.html">the newsletter goes out twice to some people →</a></div>
+<div class="pn"><a href="../07-create-view/index.html">← the dashboard needs a revenue-per-customer view</a><a href="../09-duplicate-rows/index.html">the newsletter goes out twice to some people →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

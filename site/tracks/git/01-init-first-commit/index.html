@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a repo is a folder with a .git inside, and a commit is a snapshot of staged files — git level 01 — kaputt</title>
-<meta name="description" content="git exercise: a repo is a folder with a .git inside, and a commit is a snapshot of staged files. Fix a real broken git system in your own terminal — level 01 of 22, with hints and a checker.">
+<title>new project, not under version control yet — git level 01 — kaputt</title>
+<meta name="description" content="git exercise: new project, not under version control yet. Fix a real broken git system in your own terminal — level 01 of 22, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/git/01-init-first-commit/">
-<meta property="og:title" content="a repo is a folder with a .git inside, and a commit is a snapshot of staged files — git level 01 — kaputt"><meta property="og:description" content="git exercise: a repo is a folder with a .git inside, and a commit is a snapshot of staged files. Fix a real broken git system in your own terminal — level 01 of 22, with hints and a checker.">
+<meta property="og:title" content="new project, not under version control yet — git level 01 — kaputt"><meta property="og:description" content="git exercise: new project, not under version control yet. Fix a real broken git system in your own terminal — level 01 of 22, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,20 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">git</a> / level 01</div>
-<h1 class="lvl">a repo is a folder with a .git inside, and a commit is a snapshot of staged files</h1>
+<h1 class="lvl">new project, not under version control yet</h1>
 <p class="meta">git · level 01 of 22 · <code>init-first-commit</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: git does not live on a server — it lives in a hidden <code>.git</code> directory next to your files. <code>git init</code> creates it; your files stay untouched, now &quot;untracked&quot;.</p>
-<p>Recording history is a two-step move. First you stage: <code>git add</code> puts the files you name into the staging area, the waiting room for the next snapshot. Then <code>git commit</code> turns the waiting room into a commit — a permanent snapshot with a message and a parent.</p>
-<p>The mental model: working tree (your files) -&gt; staging area (what the next commit will contain) -&gt; history (commits). <code>git status</code> always tells you which of the three a file is in.</p>
-<pre>git init                       create .git here; files become untracked
-git status                     which files are untracked / staged / clean
-git add &lt;file&gt;...              stage: put files into the next snapshot
-git commit -m &quot;msg&quot;            record the staged files as a commit
-git log --oneline              the commits so far</pre>
-<p>Try it first: <code>ls -a ~/.k8s-wargame/git/repo</code> — no <code>.git</code> yet; <code>git status</code> there fails with &quot;not a git repository&quot;.</p>
-<p>Your task: &quot;<code>shop-api</code> lives in <code>~/.k8s-wargame/git/repo</code> — two files, no git. Put it under version control.&quot; If git asks who you are, set <code>git config user.name</code> and <code>user.email</code> first.</p>
-<p>Goal: the directory is a git repository whose first commit contains <code>README.md</code> and <code>app.py</code>; nothing left uncommitted.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>shop-api</code> lives in <code>~/.k8s-wargame/git/repo</code> — two files, no git. Put it under version control.&quot; Goal: the directory is a git repository whose first commit contains <code>README.md</code> and <code>app.py</code>; nothing left uncommitted.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track git
@@ -37,7 +26,7 @@ wg level 1
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/git/01-init-first-commit">level source on github</a>.</p>
-<div class="pn"><span></span><a href="../02-stage-one-file/index.html">the staging area lets you commit some changes and leave others behind →</a></div>
+<div class="pn"><span></span><a href="../02-stage-one-file/index.html">commit the bugfix, not the half-written notes →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

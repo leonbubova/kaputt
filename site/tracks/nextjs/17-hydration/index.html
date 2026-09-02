@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nextjs</a> / level 17</div>
 <h1 class="lvl">hydration error on the home page</h1>
 <p class="meta">nextjs · level 17 of 21 · <code>hydration</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Every load of <code>/</code> logs *Hydration failed because the server rendered text didn&#x27;t match the client* and the page flickers. Started when the &#x27;Rendered at …&#x27; line was added. Product wants to keep showing the render time.&quot;</p>
-<p>App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: <code>/</code> renders without a hydration mismatch — the server HTML must be deterministic (two requests give identical markup for the clock) and the clock element stays.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Every load of <code>/</code> logs *Hydration failed because the server rendered text didn&#x27;t match the client* and the page flickers. Started when the &#x27;Rendered at …&#x27; line was added. Product wants to keep showing the render time.&quot; App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: <code>/</code> renders without a hydration mismatch — the server HTML must be deterministic (two requests give identical markup for the clock) and the clock element stays.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nextjs

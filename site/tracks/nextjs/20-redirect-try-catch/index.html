@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nextjs</a> / level 20</div>
 <h1 class="lvl">/go shows &quot;Something went wrong&quot; instead of redirecting</h1>
 <p class="meta">nextjs · level 20 of 21 · <code>redirect-try-catch</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>/go</code> is our short link to the first product. It used to redirect; after error handling was added it renders &#x27;Something went wrong&#x27; and the server log shows <code>Error: NEXT_REDIRECT</code> — every single time, even though nothing is wrong.&quot;</p>
-<p>App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: <code>GET /go</code> answers with a redirect to <code>/products/regenwurm</code>. Keep error handling for the data lookup.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>/go</code> is our short link to the first product. It used to redirect; after error handling was added it renders &#x27;Something went wrong&#x27; and the server log shows <code>Error: NEXT_REDIRECT</code> — every single time, even though nothing is wrong.&quot; App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: <code>GET /go</code> answers with a redirect to <code>/products/regenwurm</code>. Keep error handling for the data lookup.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nextjs

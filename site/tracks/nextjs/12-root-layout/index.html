@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nextjs</a> / level 12</div>
 <h1 class="lvl">browser overlay: &quot;Missing &lt;html&gt; and &lt;body&gt; tags in the root layout&quot;</h1>
 <p class="meta">nextjs · level 12 of 21 · <code>root-layout</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;After a layout cleanup every page shows a red error overlay in the browser. curl still gets 200, but the HTML validator says the document has no <code>&lt;html&gt;</code>/<code>&lt;body&gt;</code> and the <code>lang</code> attribute is gone.&quot;</p>
-<p>App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: pages are served as a full document — <code>&lt;html lang=&quot;de&quot;&gt;</code> and <code>&lt;body&gt;</code> present, header and nav still rendered.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;After a layout cleanup every page shows a red error overlay in the browser. curl still gets 200, but the HTML validator says the document has no <code>&lt;html&gt;</code>/<code>&lt;body&gt;</code> and the <code>lang</code> attribute is gone.&quot; App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: pages are served as a full document — <code>&lt;html lang=&quot;de&quot;&gt;</code> and <code>&lt;body&gt;</code> present, header and nav still rendered.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nextjs
@@ -27,7 +26,7 @@ wg level 12
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nextjs/12-root-layout">level source on github</a>.</p>
-<div class="pn"><a href="../11-route-group/index.html">← a (group) folder organises files without adding a URL segment</a><a href="../13-image-host/index.html">gallery page crashes with &quot;hostname is not configured&quot; →</a></div>
+<div class="pn"><a href="../11-route-group/index.html">← /products is gone</a><a href="../13-image-host/index.html">gallery page crashes with &quot;hostname is not configured&quot; →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

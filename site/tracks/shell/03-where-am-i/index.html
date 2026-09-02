@@ -18,19 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">shell</a> / level 03</div>
 <h1 class="lvl">where am I? — pwd, ls, cd</h1>
 <p class="meta">shell · level 03 of 14 · <code>where-am-i</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: the shell always &quot;stands&quot; inside one folder — the current folder. A plain file name like <code>hello.txt</code></p>
-<p>means &quot;the one in this folder&quot;. Three commands to look around and move:</p>
-<pre>pwd        print working directory — where am I?
-ls         list what is in the current folder
-cd NAME    go into folder NAME.   cd ..  goes one folder up.   cd  alone goes to your home folder.</pre>
-<p>Start here — from now on every lesson begins in the sandbox:</p>
-<pre>cd ~/.k8s-wargame/shell/sandbox
-pwd
-ls</pre>
-<p>You see three folders: attic, garden, kitchen. Try <code>cd kitchen</code>, then <code>ls</code>, then <code>cd ..</code> to come back out.</p>
-<p>Your task: go into the <code>kitchen</code> folder and, while standing there, create a file <code>i-was-here.txt</code> with any</p>
-<p>text in it (lesson 1 showed how). Standing in the right folder, a plain file name is enough — no long path.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: the shell always &quot;stands&quot; inside one folder — the current folder. A plain file name like <code>hello.txt</code> means &quot;the one in this folder&quot;. Three commands to look around and move: pwd        print working directory — where am I? ls         list what is in the current folder cd NAME    go into folder NAME.   cd ..  goes one folder up.   cd  alone goes to your home folder. Start here — from now on every lesson begins in the sandbox: cd ~/.k8s-wargame/shell/sandbox pwd ls You see three folders: attic, garden, kitchen. Try <code>cd kitchen</code>, then <code>ls</code>, then <code>cd ..</code> to come back out. Your task: go into the <code>kitchen</code> folder and, while standing there, create a file <code>i-was-here.txt</code> with any text in it (lesson 1 showed how). Standing in the right folder, a plain file name is enough — no long path. Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track shell

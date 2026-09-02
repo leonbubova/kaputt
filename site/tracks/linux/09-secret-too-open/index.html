@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>secrets are owner-only: programs check a key file&#x27;s mode and refuse it — linux level 09 — kaputt</title>
-<meta name="description" content="linux exercise: secrets are owner-only: programs check a key file&#x27;s mode and refuse it. Fix a real broken linux system in your own terminal — level 09 of 23, with hints and a checker.">
+<title>app refuses to start: &quot;key file permissions too open&quot; — linux level 09 — kaputt</title>
+<meta name="description" content="linux exercise: app refuses to start: &quot;key file permissions too open&quot;. Fix a real broken linux system in your own terminal — level 09 of 23, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/linux/09-secret-too-open/">
-<meta property="og:title" content="secrets are owner-only: programs check a key file&#x27;s mode and refuse it — linux level 09 — kaputt"><meta property="og:description" content="linux exercise: secrets are owner-only: programs check a key file&#x27;s mode and refuse it. Fix a real broken linux system in your own terminal — level 09 of 23, with hints and a checker.">
+<meta property="og:title" content="app refuses to start: &quot;key file permissions too open&quot; — linux level 09 — kaputt"><meta property="og:description" content="linux exercise: app refuses to start: &quot;key file permissions too open&quot;. Fix a real broken linux system in your own terminal — level 09 of 23, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">linux</a> / level 09</div>
-<h1 class="lvl">secrets are owner-only: programs check a key file&#x27;s mode and refuse it</h1>
+<h1 class="lvl">app refuses to start: &quot;key file permissions too open&quot;</h1>
 <p class="meta">linux · level 09 of 23 · <code>secret-too-open</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a private key or password file is only private if nobody else can read it. Careful programs — ssh, and many app launchers — do not trust the content alone: they look at the file&#x27;s mode and refuse to start if group or others have any access. The fix is never in the program; it is on the file.</p>
-<p>Owner-only is mode <code>600</code> (<code>-rw-------</code>): owner reads and writes, everyone else nothing. <code>644</code> looks harmless but means every user on the box can read the secret.</p>
-<p>Reproduce as the user the service runs as, not as root. <code>su - USER -c COMMAND</code> runs one command as that user; the error message it prints usually names the offending file. Then <code>ls -l</code> that file and read the mode.</p>
-<pre>su - app -c /opt/app/start     run the command as user app
-ls -l FILE                     mode: -rw------- is owner-only
-chmod 600 FILE                 owner read/write, nothing for anyone else</pre>
-<p>Try it first: <code>ls -l /etc/shadow</code> — the system&#x27;s own password file is not world-readable.</p>
-<p>Your task: &quot;After someone copied the signing key onto the box, <code>/opt/app/start</code> dies immediately with a message about the key file. Runs as user <code>app</code>.&quot;</p>
-<p>Goal: <code>su - app -c /opt/app/start</code> prints <code>app started</code>. Don&#x27;t touch the start script or the key content.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;After someone copied the signing key onto the box, <code>/opt/app/start</code> dies immediately with a message about the key file. Runs as user <code>app</code>.&quot; Goal: <code>su - app -c /opt/app/start</code> prints <code>app started</code>. Don&#x27;t touch the start script or the key content.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track linux
@@ -35,7 +26,7 @@ wg level 9
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/linux/09-secret-too-open">level source on github</a>.</p>
-<div class="pn"><a href="../08-script-wont-run/index.html">← running a file needs the execute bit, even for root</a><a href="../10-log-permission-denied/index.html">creating a file needs write permission on the directory, not the file →</a></div>
+<div class="pn"><a href="../08-script-wont-run/index.html">← deploy hook fails with &quot;Permission denied&quot;</a><a href="../10-log-permission-denied/index.html">app can&#x27;t write its log →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

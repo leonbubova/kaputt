@@ -18,17 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">shell</a> / level 07</div>
 <h1 class="lvl">copy, move, rename, delete — cp, mv, rm</h1>
 <p class="meta">shell · level 07 of 14 · <code>copy-move-delete</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: three commands that rearrange files. The first argument is always the thing you have, the second where it goes.</p>
-<pre>cp FROM TO     copy. `cp a.txt b.txt` — now there are two. If TO is a folder, the copy goes inside it.
-mv FROM TO     move. If TO is a folder, the file goes inside. If TO is a new name, the file is renamed — same command.
-rm FILE        delete. There is no trash can and no undo. Read the name twice, then press Enter.</pre>
-<p>Try it:</p>
-<pre>cd ~/.k8s-wargame/shell/sandbox
-ls
-cat draft.txt</pre>
-<p>Your task, in the sandbox: (1) rename <code>draft.txt</code> to <code>final.txt</code>, (2) put a copy of <code>final.txt</code> into the folder</p>
-<p><code>archive</code>, (3) delete <code>old-junk.txt</code>. <code>ls</code> and <code>ls archive</code> show whether it worked.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: three commands that rearrange files. The first argument is always the thing you have, the second where it goes. cp FROM TO     copy. <code>cp a.txt b.txt</code> — now there are two. If TO is a folder, the copy goes inside it. mv FROM TO     move. If TO is a folder, the file goes inside. If TO is a new name, the file is renamed — same command. rm FILE        delete. There is no trash can and no undo. Read the name twice, then press Enter. Try it: cd ~/.k8s-wargame/shell/sandbox ls cat draft.txt Your task, in the sandbox: (1) rename <code>draft.txt</code> to <code>final.txt</code>, (2) put a copy of <code>final.txt</code> into the folder <code>archive</code>, (3) delete <code>old-junk.txt</code>. <code>ls</code> and <code>ls archive</code> show whether it worked. Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track shell

@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>query strings come in through @Query, and the service does the filtering — nestjs level 04 — kaputt</title>
-<meta name="description" content="nestjs exercise: query strings come in through @Query, and the service does the filtering. Fix a real broken nestjs system in your own terminal — level 04 of 21, with hints and a checker.">
+<title>ticket: filter users by role — nestjs level 04 — kaputt</title>
+<meta name="description" content="nestjs exercise: ticket: filter users by role. Fix a real broken nestjs system in your own terminal — level 04 of 21, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nestjs/04-add-role-filter/">
-<meta property="og:title" content="query strings come in through @Query, and the service does the filtering — nestjs level 04 — kaputt"><meta property="og:description" content="nestjs exercise: query strings come in through @Query, and the service does the filtering. Fix a real broken nestjs system in your own terminal — level 04 of 21, with hints and a checker.">
+<meta property="og:title" content="ticket: filter users by role — nestjs level 04 — kaputt"><meta property="og:description" content="nestjs exercise: ticket: filter users by role. Fix a real broken nestjs system in your own terminal — level 04 of 21, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nestjs</a> / level 04</div>
-<h1 class="lvl">query strings come in through @Query, and the service does the filtering</h1>
+<h1 class="lvl">ticket: filter users by role</h1>
 <p class="meta">nestjs · level 04 of 21 · <code>add-role-filter</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: <code>?role=admin</code> is the query string. Nest hands single values to a handler argument via <code>@Query(&#x27;role&#x27;)</code>. Unlike a path parameter it is optional by nature: leave it off and the argument is simply <code>undefined</code>. Type it as optional (<code>role?: string</code>) so both cases are honest.</p>
-<p>The habit this level builds: keep the controller thin. The controller&#x27;s job is to pull the value out of HTTP and pass it on; deciding what &quot;filter by role&quot; means belongs in the service, where it can be tested without a server. So the same value travels two hops — decorator argument in the controller, plain parameter in the service.</p>
-<p><code>Array.filter</code> with a ternary is all the logic there is: a value given, filter; nothing given, return everything.</p>
-<pre>@Query(&#x27;role&#x27;) role?: string     one query parameter, undefined when absent
-@Query() q: Record&lt;string,string&gt;    the whole query object, if you ever need it
-findAll(role?: Role)             service signature: optional argument
-role ? list.filter((u) =&gt; u.role === role) : list    filter only when asked</pre>
-<p>Try it first: <code>curl -s &#x27;localhost:3200/users&#x27;</code> — note the <code>role</code> field on each user; the quotes around the URL matter once you add <code>?</code>.</p>
-<p>Your task: support <code>GET /users?role=admin</code> (and <code>?role=user</code>). Without the query param the full list stays as is.</p>
-<p>Goal: <code>/users?role=admin</code> returns only admins (Ada), <code>/users</code> returns all 3.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Support <code>GET /users?role=admin</code> (and <code>?role=user</code>). Without the query param the full list stays as is.&quot; Goal: <code>/users?role=admin</code> returns only admins (Ada), <code>/users</code> returns all 3. App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nestjs
@@ -36,7 +26,7 @@ wg level 4
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nestjs/04-add-role-filter">level source on github</a>.</p>
-<div class="pn"><a href="../03-add-user-by-id/index.html">← route params arrive as strings; pipes convert them, exceptions become status codes</a><a href="../05-add-create-user/index.html">a DTO class plus class-validator decorators is how a body gets validated →</a></div>
+<div class="pn"><a href="../03-add-user-by-id/index.html">← ticket: user detail endpoint</a><a href="../05-add-create-user/index.html">ticket: create users →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

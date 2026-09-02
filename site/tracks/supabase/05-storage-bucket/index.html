@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a storage bucket is a row in storage.buckets, and public is a flag on it — supabase level 05 — kaputt</title>
-<meta name="description" content="supabase exercise: a storage bucket is a row in storage.buckets, and public is a flag on it. Fix a real broken supabase system in your own terminal — level 05 of 18, with hints and a checker.">
+<title>a place for files — supabase level 05 — kaputt</title>
+<meta name="description" content="supabase exercise: a place for files. Fix a real broken supabase system in your own terminal — level 05 of 18, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/supabase/05-storage-bucket/">
-<meta property="og:title" content="a storage bucket is a row in storage.buckets, and public is a flag on it — supabase level 05 — kaputt"><meta property="og:description" content="supabase exercise: a storage bucket is a row in storage.buckets, and public is a flag on it. Fix a real broken supabase system in your own terminal — level 05 of 18, with hints and a checker.">
+<meta property="og:title" content="a place for files — supabase level 05 — kaputt"><meta property="og:description" content="supabase exercise: a place for files. Fix a real broken supabase system in your own terminal — level 05 of 18, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">supabase</a> / level 05</div>
-<h1 class="lvl">a storage bucket is a row in storage.buckets, and public is a flag on it</h1>
+<h1 class="lvl">a place for files</h1>
 <p class="meta">supabase · level 05 of 18 · <code>storage-bucket</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: Supabase Storage keeps file bytes on disk (or S3) but all of its bookkeeping in Postgres: schema <code>storage</code>, tables <code>buckets</code> and <code>objects</code>. A bucket is a row. Whether files in it can be fetched without any auth header is the <code>public</code> boolean on that row. Nothing else has to be configured.</p>
-<p>That means three doors lead to the same place: Studio&#x27;s &quot;New bucket&quot; dialog, the Storage API (<code>POST /storage/v1/bucket</code> with the service key), or a plain <code>insert</code> in psql. Studio and the API write the row for you; SQL writes it directly.</p>
-<p>Two URL shapes matter. Uploads go to <code>/storage/v1/object/&lt;bucket&gt;/&lt;path&gt;</code> and need a key. Public reads go to <code>/storage/v1/object/public/&lt;bucket&gt;/&lt;path&gt;</code> — and only work when the bucket row says <code>public = true</code>.</p>
-<pre>select id, public from storage.buckets;                                              buckets that exist (wg shell)
-insert into storage.buckets (id, name, public) values (&#x27;b&#x27;, &#x27;b&#x27;, true);              create a public bucket
-curl -s -X POST &quot;$API_URL/storage/v1/object/b/a.txt&quot; -H &quot;Authorization: Bearer $SERVICE_ROLE_KEY&quot; -H &#x27;Content-Type: text/plain&#x27; --data hi
-curl -s &quot;$API_URL/storage/v1/object/public/b/a.txt&quot;                                  read it, no auth</pre>
-<p>Try it first: <code>wg shell</code>, then <code>\d storage.buckets</code> — the <code>public</code> column is right there.</p>
-<p>Your task: &quot;Users will upload attachments. Create a storage bucket <code>uploads</code> that serves files publicly: <code>GET /storage/v1/object/public/uploads/&lt;path&gt;</code> must work without any auth header.&quot;</p>
-<p>Goal: bucket <code>uploads</code> exists and is public; uploads with the service key are then readable at the public URL.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Ticket: &quot;Users will upload attachments. Create a storage bucket <code>uploads</code> that serves files publicly: <code>GET /storage/v1/object/public/uploads/&lt;path&gt;</code> must work without any auth header.&quot; Goal: bucket <code>uploads</code> exists and is public; uploads with the service key are then readable at the public URL.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track supabase
@@ -36,7 +26,7 @@ wg level 5
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/supabase/05-storage-bucket">level source on github</a>.</p>
-<div class="pn"><a href="../04-rpc-function/index.html">← a SQL function in an exposed schema is an endpoint under /rpc</a><a href="../06-policy-wrong-role/index.html">a policy only applies to the roles in its TO clause →</a></div>
+<div class="pn"><a href="../04-rpc-function/index.html">← a function behind /rpc</a><a href="../06-policy-wrong-role/index.html">FAQ page blank for logged-out visitors →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

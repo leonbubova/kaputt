@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>the id string is the task&#x27;s identity, and it must be unique across the project — trigger level 07 — kaputt</title>
-<meta name="description" content="trigger exercise: the id string is the task&#x27;s identity, and it must be unique across the project. Fix a real broken trigger system in your own terminal — level 07 of 18, with hints and a checker.">
+<title>refunds come back as processed orders — trigger level 07 — kaputt</title>
+<meta name="description" content="trigger exercise: refunds come back as processed orders. Fix a real broken trigger system in your own terminal — level 07 of 18, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/trigger/07-duplicate-task-id/">
-<meta property="og:title" content="the id string is the task&#x27;s identity, and it must be unique across the project — trigger level 07 — kaputt"><meta property="og:description" content="trigger exercise: the id string is the task&#x27;s identity, and it must be unique across the project. Fix a real broken trigger system in your own terminal — level 07 of 18, with hints and a checker.">
+<meta property="og:title" content="refunds come back as processed orders — trigger level 07 — kaputt"><meta property="og:description" content="trigger exercise: refunds come back as processed orders. Fix a real broken trigger system in your own terminal — level 07 of 18, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,17 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">trigger</a> / level 07</div>
-<h1 class="lvl">the id string is the task&#x27;s identity, and it must be unique across the project</h1>
+<h1 class="lvl">refunds come back as processed orders</h1>
 <p class="meta">trigger · level 07 of 18 · <code>duplicate-task-id</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: the platform never sees your export names, file names or variable names. It sees one thing per task: the <code>id</code> string. The dashboard lists ids, <code>trigger()</code> resolves to an id, and deploy registers ids.</p>
-<p>That has a consequence for copy-paste: if two files declare the same <code>id</code>, they are one task to the platform. The indexer keeps whichever it saw last and silently drops the other — at most a deploy warning. Calls meant for the dropped one land in the survivor, which does its own thing with the payload and reports success.</p>
-<p>So the symptom of a duplicate id is never an error. It is the wrong code running, with a green status. The check is mechanical: list every <code>id:</code> in <code>src/trigger</code> and look for a repeat.</p>
-<pre>grep -rn &#x27;id:&#x27; src/trigger                every task id in the project, with its file
-grep -rn &#x27;id:&#x27; src/trigger | sort -k2     sorted, so duplicates sit next to each other
-npx tsc --noEmit                          green — ids are strings, tsc cannot know</pre>
-<p>Try it first: run the grep and count: 14 task files, how many distinct ids?</p>
-<p>Your task: &quot;Support triggered <code>process-refund</code> for ord_1002 from the dashboard. The run output says <code>processed: true</code> and no refund was booked. Also deploy warns about something.&quot; Goal: <code>process-refund</code> refunds, <code>process-order</code> processes, deploy has no task-id warnings.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Support triggered <code>process-refund</code> for ord_1002 from the dashboard. The run output says <code>processed: true</code> and no refund was booked. Also deploy warns about something.&quot; Goal: <code>process-refund</code> refunds, <code>process-order</code> processes, deploy has no task-id warnings.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track trigger
@@ -34,7 +26,7 @@ wg level 7
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/trigger/07-duplicate-task-id">level source on github</a>.</p>
-<div class="pn"><a href="../06-no-tasks-found/index.html">← the CLI only indexes tasks where trigger.config.ts tells it to look</a><a href="../08-payload-rejected/index.html">schema validation happens at trigger time, in the caller — so convert at the boundary →</a></div>
+<div class="pn"><a href="../06-no-tasks-found/index.html">← dev server finds no tasks</a><a href="../08-payload-rejected/index.html">checkout 500s with TaskPayloadParsedError →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

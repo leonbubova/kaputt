@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>deployed means accepted, not working: a missing value renders as nothing — helm level 07 — kaputt</title>
-<meta name="description" content="helm exercise: deployed means accepted, not working: a missing value renders as nothing. Fix a real broken helm system in your own terminal — level 07 of 20, with hints and a checker.">
+<title>helm says deployed, pod says no — helm level 07 — kaputt</title>
+<meta name="description" content="helm exercise: helm says deployed, pod says no. Fix a real broken helm system in your own terminal — level 07 of 20, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/helm/07-values-typo/">
-<meta property="og:title" content="deployed means accepted, not working: a missing value renders as nothing — helm level 07 — kaputt"><meta property="og:description" content="helm exercise: deployed means accepted, not working: a missing value renders as nothing. Fix a real broken helm system in your own terminal — level 07 of 20, with hints and a checker.">
+<meta property="og:title" content="helm says deployed, pod says no — helm level 07 — kaputt"><meta property="og:description" content="helm exercise: helm says deployed, pod says no. Fix a real broken helm system in your own terminal — level 07 of 20, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">helm</a> / level 07</div>
-<h1 class="lvl">deployed means accepted, not working: a missing value renders as nothing</h1>
+<h1 class="lvl">helm says deployed, pod says no</h1>
 <p class="meta">helm · level 07 of 20 · <code>values-typo</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: <code>deployed</code> only says the rendered YAML was accepted by the API server. Helm does not check that it makes sense, and Kubernetes accepts many objects it can never run. A green <code>helm status</code> next to a broken pod is no contradiction.</p>
-<p>A common way there: the template reads <code>.Values.some.key</code> but no such key exists. Helm does not error — a missing value renders as an empty string, silently. Valid YAML, pod fails at runtime.</p>
-<p>So look at what Helm actually produced: <code>helm get manifest</code> prints the YAML applied for the release, <code>helm template</code> renders your current chart copy. Then compare the template&#x27;s <code>.Values</code> paths with the keys in <code>values.yaml</code>, letter by letter.</p>
-<pre>helm get manifest web -n wg-helm | grep image:    what helm applied
-helm template web ./web | grep image:             what the chart renders now
-kubectl describe pod -n wg-helm -l app=web        why kubernetes refuses it
-helm upgrade web ./web -n wg-helm                 apply the corrected chart</pre>
-<p>Try it first: <code>kubectl get pods -n wg-helm</code> next to <code>helm status web -n wg-helm</code> — one is red, one is green.</p>
-<p>Your task: &quot;<code>helm install</code> went through fine, <code>helm status web</code> is green, but the pod never starts. Kubernetes is complaining about the image.&quot;</p>
-<p>Chart copy: <code>~/.k8s-wargame/helm/07-values-typo/web</code>. Goal: pod of release <code>web</code> running <code>nginx:1.27-alpine</code>, page reachable. Fix it through Helm (<code>helm get manifest web -n wg-helm</code> must show the right image).</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>helm install</code> went through fine, <code>helm status web</code> is green, but the pod never starts. Kubernetes is complaining about the image.&quot; Chart copy: <code>~/.k8s-wargame/helm/07-values-typo/web</code>. Goal: pod of release <code>web</code> running <code>nginx:1.27-alpine</code>, page reachable. Fix it through Helm (<code>helm get manifest web -n wg-helm</code> must show the right image).</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track helm
@@ -36,7 +26,7 @@ wg level 7
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/helm/07-values-typo">level source on github</a>.</p>
-<div class="pn"><a href="../06-template-syntax/index.html">← templates render locally first: a parse error stops before the cluster is touched</a><a href="../08-lint/index.html">helm lint is a static check: Chart.yaml metadata and template rendering, no cluster →</a></div>
+<div class="pn"><a href="../06-template-syntax/index.html">← helm install blows up before anything reaches the cluster</a><a href="../08-lint/index.html">pipeline red at the lint stage →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

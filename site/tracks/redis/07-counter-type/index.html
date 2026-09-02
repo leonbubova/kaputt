@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">redis</a> / level 07</div>
 <h1 class="lvl">the view counter is stuck — INCR page:views fails</h1>
 <p class="meta">redis · level 07 of 12 · <code>counter-type</code></p>
-<div class="brief"><h2>the ticket</h2><p><code>page:views</code> should be an integer the app bumps with INCR, but it currently holds</p>
-<p>non-numeric text, so INCR errors out. Reset it to a whole number so INCR works again.</p></div>
+<div class="brief"><h2>the ticket</h2><p><code>page:views</code> should be an integer the app bumps with INCR, but it currently holds non-numeric text, so INCR errors out. Reset it to a whole number so INCR works again.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track redis
@@ -27,7 +26,7 @@ wg level 7
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/redis/07-counter-type">level source on github</a>.</p>
-<div class="pn"><a href="../06-ttl-persist/index.html">← TTL -1 is the leak: EXPIRE adds an expiry to a key that already exists</a><a href="../08-eviction-policy/index.html">the cache returns OOM errors under load instead of evicting →</a></div>
+<div class="pn"><a href="../06-ttl-persist/index.html">← sessions never expire — memory keeps growing</a><a href="../08-eviction-policy/index.html">the cache returns OOM errors under load instead of evicting →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

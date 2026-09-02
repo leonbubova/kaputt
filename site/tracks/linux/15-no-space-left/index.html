@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">linux</a> / level 15</div>
 <h1 class="lvl">&quot;No space left on device&quot; on the data volume</h1>
 <p class="meta">linux · level 15 of 23 · <code>no-space-left</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>/opt/app/write-state</code> fails with ENOSPC on <code>/var/lib/appdata</code>. That volume is 64M and our db dir is tiny. Where did the space go?&quot;</p>
-<p>Goal: <code>/opt/app/write-state</code> prints <code>state written</code>; <code>/var/lib/appdata</code> stays the data volume. Don&#x27;t delete the <code>db/</code> or <code>logs/</code> dirs.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>/opt/app/write-state</code> fails with ENOSPC on <code>/var/lib/appdata</code>. That volume is 64M and our db dir is tiny. Where did the space go?&quot; Goal: <code>/opt/app/write-state</code> prints <code>state written</code>; <code>/var/lib/appdata</code> stays the data volume. Don&#x27;t delete the <code>db/</code> or <code>logs/</code> dirs.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track linux

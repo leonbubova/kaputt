@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">docker</a> / level 21</div>
 <h1 class="lvl">build host is out of disk</h1>
 <p class="meta">docker · level 21 of 22 · <code>cleanup</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;The CI box running our <code>wg-*</code> stack is full: leftover images from old builds, stopped one-off containers, volumes nobody uses. Free it up — but <code>wg-web</code> and its volume <code>wg-web-data</code> are production, don&#x27;t touch them.&quot;</p>
-<p>Goal: no dangling images from our builds, no stopped <code>wg-old-*</code> containers, no <code>wg-old-*</code> volumes; <code>wg-web</code> still running with <code>wg-web-data</code> mounted and its data intact.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;The CI box running our <code>wg-*</code> stack is full: leftover images from old builds, stopped one-off containers, volumes nobody uses. Free it up — but <code>wg-web</code> and its volume <code>wg-web-data</code> are production, don&#x27;t touch them.&quot; Goal: no dangling images from our builds, no stopped <code>wg-old-*</code> containers, no <code>wg-old-*</code> volumes; <code>wg-web</code> still running with <code>wg-web-data</code> mounted and its data intact.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track docker

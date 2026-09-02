@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>git reset moves a branch pointer; a commit survives as long as some name points at it — git level 09 — kaputt</title>
-<meta name="description" content="git exercise: git reset moves a branch pointer; a commit survives as long as some name points at it. Fix a real broken git system in your own terminal — level 09 of 22, with hints and a checker.">
+<title>committed to main by accident — git level 09 — kaputt</title>
+<meta name="description" content="git exercise: committed to main by accident. Fix a real broken git system in your own terminal — level 09 of 22, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/git/09-wrong-branch/">
-<meta property="og:title" content="git reset moves a branch pointer; a commit survives as long as some name points at it — git level 09 — kaputt"><meta property="og:description" content="git exercise: git reset moves a branch pointer; a commit survives as long as some name points at it. Fix a real broken git system in your own terminal — level 09 of 22, with hints and a checker.">
+<meta property="og:title" content="committed to main by accident — git level 09 — kaputt"><meta property="og:description" content="git exercise: committed to main by accident. Fix a real broken git system in your own terminal — level 09 of 22, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">git</a> / level 09</div>
-<h1 class="lvl">git reset moves a branch pointer; a commit survives as long as some name points at it</h1>
+<h1 class="lvl">committed to main by accident</h1>
 <p class="meta">git · level 09 of 22 · <code>wrong-branch</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: since a branch is just a pointer, &quot;undo the last commit on main&quot; only means: point <code>main</code> somewhere else. <code>git reset &lt;ref&gt;</code> moves the current branch to any commit. <code>--hard</code> also rewrites the working tree to match.</p>
-<p>The commit you left is not deleted, only unreachable — and unreachable commits eventually get garbage-collected. So the safe pattern: give the commit a second name first (a branch), then move the original branch back. Name it before you leave it.</p>
-<p><code>origin/main</code> is a ref like any other, so it is a valid reset target. Got it wrong? <code>git reflog</code> lists every commit HEAD has pointed at.</p>
-<pre>git log --oneline main origin/main    how far main is ahead of the remote
-git branch &lt;name&gt;              new pointer at the current commit, HEAD stays
-git reset --hard &lt;ref&gt;         move the current branch to &lt;ref&gt;, files follow
-git reflog                     every place HEAD has been — your undo history</pre>
-<p>Try it first: <code>git log --oneline origin/main..main</code> — the commits only main has.</p>
-<p>Your task: &quot;The search endpoint was committed straight onto <code>main</code> instead of a feature branch. <code>main</code> must match <code>origin/main</code> again before anyone pulls.&quot; Repo: <code>~/.k8s-wargame/git/repo</code>.</p>
-<p>Goal: branch <code>feature/search</code> holds the search commit on top of <code>main</code>; <code>main</code> points where <code>origin/main</code> points. Don&#x27;t lose the work.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;The search endpoint was committed straight onto <code>main</code> instead of a feature branch. <code>main</code> must match <code>origin/main</code> again before anyone pulls.&quot; Repo: <code>~/.k8s-wargame/git/repo</code>. Goal: branch <code>feature/search</code> holds the search commit on top of <code>main</code>; <code>main</code> points where <code>origin/main</code> points. Don&#x27;t lose the work.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track git
@@ -36,7 +26,7 @@ wg level 9
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/git/09-wrong-branch">level source on github</a>.</p>
-<div class="pn"><a href="../08-committed-secret/index.html">← tracked is separate from on-disk: git rm --cached untracks a file without deleting it</a><a href="../10-detached-head/index.html">HEAD normally points at a branch; when it points straight at a commit, it is detached →</a></div>
+<div class="pn"><a href="../08-committed-secret/index.html">← a secret ended up in the last commit</a><a href="../10-detached-head/index.html">&quot;You are in &#x27;detached HEAD&#x27; state&quot; — and there&#x27;s a commit on it →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

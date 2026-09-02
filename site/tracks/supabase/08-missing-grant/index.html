@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GRANT comes before RLS: 42501 means the role may not touch the table at all — supabase level 08 — kaputt</title>
-<meta name="description" content="supabase exercise: GRANT comes before RLS: 42501 means the role may not touch the table at all. Fix a real broken supabase system in your own terminal — level 08 of 18, with hints and a checker.">
+<title>catalog: permission denied — supabase level 08 — kaputt</title>
+<meta name="description" content="supabase exercise: catalog: permission denied. Fix a real broken supabase system in your own terminal — level 08 of 18, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/supabase/08-missing-grant/">
-<meta property="og:title" content="GRANT comes before RLS: 42501 means the role may not touch the table at all — supabase level 08 — kaputt"><meta property="og:description" content="supabase exercise: GRANT comes before RLS: 42501 means the role may not touch the table at all. Fix a real broken supabase system in your own terminal — level 08 of 18, with hints and a checker.">
+<meta property="og:title" content="catalog: permission denied — supabase level 08 — kaputt"><meta property="og:description" content="supabase exercise: catalog: permission denied. Fix a real broken supabase system in your own terminal — level 08 of 18, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">supabase</a> / level 08</div>
-<h1 class="lvl">GRANT comes before RLS: 42501 means the role may not touch the table at all</h1>
+<h1 class="lvl">catalog: permission denied</h1>
 <p class="meta">supabase · level 08 of 18 · <code>missing-grant</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: every API request passes three layers in order: is the schema exposed, does the role have a privilege on the table (GRANT), and finally which rows do the policies allow. RLS is the last layer — it only filters rows for a role that is already allowed in.</p>
-<p>The two failures look different. A missing policy is silent: <code>200 []</code>. A missing GRANT is loud: <code>42501 permission denied for table …</code>. The error code tells you which layer to look at; no policy work fixes a 42501.</p>
-<p>Privileges are per role and per command: <code>select</code>, <code>insert</code>, <code>update</code>, <code>delete</code>. Grant only what the story needs; a read-only catalog gets <code>select</code>. Supabase grants these to <code>anon</code> and <code>authenticated</code> automatically for new tables in <code>public</code>; a <code>revoke</code> undoes that, and the policies still there do nothing.</p>
-<pre>\dp public.products                                                     Access privileges per role (wg shell)
-grant select on table public.t to anon, authenticated;                  give read access
-select * from pg_policies where tablename=&#x27;products&#x27;;                   the policies are still there</pre>
-<p>Try it first: <code>\dp public.products</code> versus <code>\dp public.notes</code> — compare the Access privileges column of a normal table with the broken one.</p>
-<p>Your task: &quot;After last night&#x27;s security hardening the shop page is dead: <code>GET /rest/v1/products</code> → <code>42501 permission denied for table products</code>. RLS policies look fine.&quot;</p>
-<p>Goal: anon can read the catalog again — read only, anon must not be able to insert.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;After last night&#x27;s security hardening the shop page is dead: <code>GET /rest/v1/products</code> → <code>42501 permission denied for table products</code>. RLS policies look fine.&quot; Goal: anon can read the catalog again — read only, anon must not be able to insert.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track supabase
@@ -35,7 +26,7 @@ wg level 8
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/supabase/08-missing-grant">level source on github</a>.</p>
-<div class="pn"><a href="../07-insert-with-check/index.html">← USING filters rows you read, WITH CHECK judges rows you write</a><a href="../09-trigger-typo/index.html">a trigger runs a PL/pgSQL function on every row, and NEW is that row →</a></div>
+<div class="pn"><a href="../07-insert-with-check/index.html">← visitors can&#x27;t sign the guestbook</a><a href="../09-trigger-typo/index.html">publishing a post fails with a weird 400 →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

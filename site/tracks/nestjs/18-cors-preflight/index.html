@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nestjs</a> / level 18</div>
 <h1 class="lvl">browser: &quot;Request header field x-api-key is not allowed by Access-Control-Allow-Headers&quot;</h1>
 <p class="meta">nestjs · level 18 of 21 · <code>cors-preflight</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;The frontend on <code>http://localhost:5173</code> gets CORS errors on <code>/admin/stats</code>. curl works fine. Other endpoints work in the browser too.&quot; Goal: the preflight for <code>/admin/stats</code> allows the <code>X-Api-Key</code> header (origin stays restricted to <code>http://localhost:5173</code>).</p>
-<p>App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;The frontend on <code>http://localhost:5173</code> gets CORS errors on <code>/admin/stats</code>. curl works fine. Other endpoints work in the browser too.&quot; Goal: the preflight for <code>/admin/stats</code> allows the <code>X-Api-Key</code> header (origin stays restricted to <code>http://localhost:5173</code>). App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nestjs

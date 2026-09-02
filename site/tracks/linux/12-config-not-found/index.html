@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a symlink is a name pointing at a path; if the target is gone, the link dangles — linux level 12 — kaputt</title>
-<meta name="description" content="linux exercise: a symlink is a name pointing at a path; if the target is gone, the link dangles. Fix a real broken linux system in your own terminal — level 12 of 23, with hints and a checker.">
+<title>app says config missing, but the file is right there — linux level 12 — kaputt</title>
+<meta name="description" content="linux exercise: app says config missing, but the file is right there. Fix a real broken linux system in your own terminal — level 12 of 23, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/linux/12-config-not-found/">
-<meta property="og:title" content="a symlink is a name pointing at a path; if the target is gone, the link dangles — linux level 12 — kaputt"><meta property="og:description" content="linux exercise: a symlink is a name pointing at a path; if the target is gone, the link dangles. Fix a real broken linux system in your own terminal — level 12 of 23, with hints and a checker.">
+<meta property="og:title" content="app says config missing, but the file is right there — linux level 12 — kaputt"><meta property="og:description" content="linux exercise: app says config missing, but the file is right there. Fix a real broken linux system in your own terminal — level 12 of 23, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">linux</a> / level 12</div>
-<h1 class="lvl">a symlink is a name pointing at a path; if the target is gone, the link dangles</h1>
+<h1 class="lvl">app says config missing, but the file is right there</h1>
 <p class="meta">linux · level 12 of 23 · <code>config-not-found</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a symbolic link is a tiny file that contains another path. <code>ls</code> lists the link like any file, but opening it makes the kernel follow the stored path and open *that* instead. The link itself never holds content.</p>
-<p>That is what makes it useful — a rollout is one link swap — and confusing when it breaks. If the target is renamed or deleted, the link stays and still shows up in <code>ls</code>, but opening it fails with &quot;No such file or directory&quot;. The name exists; the thing behind it does not.</p>
-<p><code>ls -l</code> marks links with <code>l</code> and shows <code>name -&gt; target</code>. <code>readlink -f</code> resolves the full chain. <code>ln -sfn TARGET LINK</code> creates or replaces a link in one go (<code>-f</code> overwrite, <code>-n</code> do not descend into an existing link).</p>
-<pre>ls -l DIR                        links show as name -&gt; target
-readlink -f LINK                 where it really points
-ln -sfn TARGET LINK              create or repoint a link</pre>
-<p>Try it first: <code>ls -l /bin</code> or <code>ls -l /etc/alternatives | head</code> — the system is full of links.</p>
-<p>Your task: &quot;<code>/opt/app/show-config</code> fails: <code>/etc/app/config.yaml: No such file or directory</code>. <code>ls /etc/app</code> clearly lists config.yaml. We rolled out config v2 an hour ago.&quot;</p>
-<p>Goal: <code>/etc/app/config.yaml</code> resolves to the v2 config (<code>release: v2</code>, <code>listen_port: 9000</code>).</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>/opt/app/show-config</code> fails: <code>/etc/app/config.yaml: No such file or directory</code>. <code>ls /etc/app</code> clearly lists config.yaml. We rolled out config v2 an hour ago.&quot; Goal: <code>/etc/app/config.yaml</code> resolves to the v2 config (<code>release: v2</code>, <code>listen_port: 9000</code>).</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track linux
@@ -35,7 +26,7 @@ wg level 12
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/linux/12-config-not-found">level source on github</a>.</p>
-<div class="pn"><a href="../11-bad-interpreter/index.html">← the shebang is a literal path: invisible bytes make it a different file</a><a href="../13-api-unreachable/index.html">api.internal times out from this box only →</a></div>
+<div class="pn"><a href="../11-bad-interpreter/index.html">← report tool: &quot;bad interpreter: No such file or directory&quot;</a><a href="../13-api-unreachable/index.html">api.internal times out from this box only →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

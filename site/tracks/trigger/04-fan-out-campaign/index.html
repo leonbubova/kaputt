@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>tasks trigger tasks: batchTrigger creates many runs in one call — trigger level 04 — kaputt</title>
-<meta name="description" content="trigger exercise: tasks trigger tasks: batchTrigger creates many runs in one call. Fix a real broken trigger system in your own terminal — level 04 of 18, with hints and a checker.">
+<title>ticket: campaign fan-out task — trigger level 04 — kaputt</title>
+<meta name="description" content="trigger exercise: ticket: campaign fan-out task. Fix a real broken trigger system in your own terminal — level 04 of 18, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/trigger/04-fan-out-campaign/">
-<meta property="og:title" content="tasks trigger tasks: batchTrigger creates many runs in one call — trigger level 04 — kaputt"><meta property="og:description" content="trigger exercise: tasks trigger tasks: batchTrigger creates many runs in one call. Fix a real broken trigger system in your own terminal — level 04 of 18, with hints and a checker.">
+<meta property="og:title" content="ticket: campaign fan-out task — trigger level 04 — kaputt"><meta property="og:description" content="trigger exercise: ticket: campaign fan-out task. Fix a real broken trigger system in your own terminal — level 04 of 18, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">trigger</a> / level 04</div>
-<h1 class="lvl">tasks trigger tasks: batchTrigger creates many runs in one call</h1>
+<h1 class="lvl">ticket: campaign fan-out task</h1>
 <p class="meta">trigger · level 04 of 18 · <code>fan-out-campaign</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a task can start other tasks, exactly like API code does — import the child task object and call a method on it inside <code>run</code>. The parent does not wait for the children; it gets handles back and returns.</p>
-<p>There are two ways to start N children. <code>child.trigger(payload)</code> in a loop is N API calls, N round trips, N chances to fail halfway. <code>child.batchTrigger([{ payload }, ...])</code> is ONE call that creates all N runs at once and returns a single <code>batchId</code> plus <code>runCount</code>. For thousands of users that is minutes versus seconds.</p>
-<p>The shape of the batch items is important: each item is an object with a <code>payload</code> key, not the bare payload. <code>map</code> over your ids, wrap each in <code>{ payload: {...} }</code>.</p>
-<pre>cat src/api/campaign.ts                              API code doing the same fan-out
-import { notifyUser } from &quot;./notify-user.js&quot;        the child task object (note the .js)
-notifyUser.batchTrigger([{ payload }, ...])          one call, many runs -&gt; { batchId, runCount }
-notifyUser.trigger(payload)                          one call, one run</pre>
-<p>Try it first: <code>cat src/trigger/notify-user.ts</code> — what payload does the child expect?</p>
-<p>Your task: &quot;Add task <code>send-campaign</code> with payload <code>{ campaign: string, userIds: string[] }</code>. It must create one <code>notify-user</code> run per user (payload <code>{ userId, campaign }</code>) in a <strong>single batch</strong> — not one trigger call per user — and return <code>{ batchId, count }</code>.&quot; Goal: exactly that.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Add task <code>send-campaign</code> with payload <code>{ campaign: string, userIds: string[] }</code>. It must create one <code>notify-user</code> run per user (payload <code>{ userId, campaign }</code>) in a <strong>single batch</strong> — not one trigger call per user — and return <code>{ batchId, count }</code>.&quot; Goal: exactly that.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track trigger
@@ -35,7 +26,7 @@ wg level 4
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/trigger/04-fan-out-campaign">level source on github</a>.</p>
-<div class="pn"><a href="../03-schedule-daily-digest/index.html">← a scheduled task declares its cron next to the id, and a timezone next to the cron</a><a href="../05-alert-on-failure/index.html">lifecycle hooks: onFailure runs once, after the last attempt has failed →</a></div>
+<div class="pn"><a href="../03-schedule-daily-digest/index.html">← ticket: daily digest at 09:00 Berlin</a><a href="../05-alert-on-failure/index.html">ticket: page on-call when a payout fails →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

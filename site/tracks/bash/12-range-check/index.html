@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">bash</a> / level 12</div>
 <h1 class="lvl">range check rejects the boundaries and mis-sorts big numbers</h1>
 <p class="meta">bash · level 12 of 12 · <code>range-check</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>between.sh N LO HI</code> prints <code>yes</code> when LO ≤ N ≤ HI (inclusive), else <code>no</code>. Two complaints: <code>between.sh 10 1 10</code> says <code>no</code> (should be yes), and <code>between.sh 9 1 100</code> says <code>no</code> (should be yes). Fix both.&quot;</p>
-<p>Goal: inclusive bounds AND numeric comparison — see the checks.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>between.sh N LO HI</code> prints <code>yes</code> when LO ≤ N ≤ HI (inclusive), else <code>no</code>. Two complaints: <code>between.sh 10 1 10</code> says <code>no</code> (should be yes), and <code>between.sh 9 1 100</code> says <code>no</code> (should be yes). Fix both.&quot; Goal: inclusive bounds AND numeric comparison — see the checks.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track bash

@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">terraform</a> / level 10</div>
 <h1 class="lvl">init fails: Duplicate resource &quot;local_file&quot; configuration</h1>
 <p class="meta">terraform · level 10 of 12 · <code>duplicate-resource</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Two file resources, and terraform won&#x27;t even init: <code>Duplicate resource ... A local_file resource named &quot;app&quot; was already declared</code>. Both files are wanted (<code>out/a.txt</code> and <code>out/b.txt</code>). Fix the clash.&quot;</p>
-<p>Goal: apply succeeds; both <code>out/a.txt</code> and <code>out/b.txt</code> exist.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Two file resources, and terraform won&#x27;t even init: <code>Duplicate resource ... A local_file resource named &quot;app&quot; was already declared</code>. Both files are wanted (<code>out/a.txt</code> and <code>out/b.txt</code>). Fix the clash.&quot; Goal: apply succeeds; both <code>out/a.txt</code> and <code>out/b.txt</code> exist.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track terraform

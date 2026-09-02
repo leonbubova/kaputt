@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">linux</a> / level 13</div>
 <h1 class="lvl">api.internal times out from this box only</h1>
 <p class="meta">linux · level 13 of 23 · <code>api-unreachable</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;The mock API on this host answers on <code>http://127.0.0.1:9100/</code>, but the app uses the name <code>api.internal</code> and every call hangs. DNS team says the name is fine everywhere else.&quot;</p>
-<p>Goal: <code>curl http://api.internal:9100/</code> from inside the box prints <code>api ok</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;The mock API on this host answers on <code>http://127.0.0.1:9100/</code>, but the app uses the name <code>api.internal</code> and every call hangs. DNS team says the name is fine everywhere else.&quot; Goal: <code>curl http://api.internal:9100/</code> from inside the box prints <code>api ok</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track linux
@@ -27,7 +26,7 @@ wg level 13
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/linux/13-api-unreachable">level source on github</a>.</p>
-<div class="pn"><a href="../12-config-not-found/index.html">← a symlink is a name pointing at a path; if the target is gone, the link dangles</a><a href="../14-port-in-use/index.html">web service won&#x27;t start: &quot;Address already in use&quot; →</a></div>
+<div class="pn"><a href="../12-config-not-found/index.html">← app says config missing, but the file is right there</a><a href="../14-port-in-use/index.html">web service won&#x27;t start: &quot;Address already in use&quot; →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

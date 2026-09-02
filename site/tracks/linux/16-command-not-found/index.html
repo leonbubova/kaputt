@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">linux</a> / level 16</div>
 <h1 class="lvl">deploy user: every command is &quot;not found&quot;</h1>
 <p class="meta">linux · level 16 of 23 · <code>command-not-found</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Since the new deploy tooling was rolled out, logging in as <code>deploy</code> gives <code>ls: command not found</code>, <code>vim: command not found</code>… only <code>deploytool</code> works.&quot;</p>
-<p>Goal: <code>su - deploy -c &#x27;ls / &amp;&amp; deploytool&#x27;</code> succeeds — normal commands AND <code>deploytool</code> on the login PATH.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Since the new deploy tooling was rolled out, logging in as <code>deploy</code> gives <code>ls: command not found</code>, <code>vim: command not found</code>… only <code>deploytool</code> works.&quot; Goal: <code>su - deploy -c &#x27;ls / &amp;&amp; deploytool&#x27;</code> succeeds — normal commands AND <code>deploytool</code> on the login PATH.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track linux

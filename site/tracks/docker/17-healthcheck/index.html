@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">docker</a> / level 17</div>
 <h1 class="lvl">app never starts, waits for the database forever</h1>
 <p class="meta">docker · level 17 of 22 · <code>healthcheck</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>docker compose up -d</code> in <code>~/.k8s-wargame/docker/17-healthcheck/</code> hangs on <code>wg-db</code> and finally says &#x27;dependency failed to start&#x27;. Redis itself answers just fine.&quot;</p>
-<p>Goal: <code>wg-db</code> is <code>healthy</code> and <code>wg-app</code> is running. Keep <code>depends_on</code> with the health condition — the app must not start before the db is ready.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>docker compose up -d</code> in <code>~/.k8s-wargame/docker/17-healthcheck/</code> hangs on <code>wg-db</code> and finally says &#x27;dependency failed to start&#x27;. Redis itself answers just fine.&quot; Goal: <code>wg-db</code> is <code>healthy</code> and <code>wg-app</code> is running. Keep <code>depends_on</code> with the health condition — the app must not start before the db is ready.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track docker

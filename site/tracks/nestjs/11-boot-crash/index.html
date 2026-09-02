@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>relative paths in Node resolve against a base, and a failing lifecycle hook aborts boot — nestjs level 11 — kaputt</title>
-<meta name="description" content="nestjs exercise: relative paths in Node resolve against a base, and a failing lifecycle hook aborts boot. Fix a real broken nestjs system in your own terminal — level 11 of 21, with hints and a checker.">
+<title>ENOENT at boot — nestjs level 11 — kaputt</title>
+<meta name="description" content="nestjs exercise: ENOENT at boot. Fix a real broken nestjs system in your own terminal — level 11 of 21, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nestjs/11-boot-crash/">
-<meta property="og:title" content="relative paths in Node resolve against a base, and a failing lifecycle hook aborts boot — nestjs level 11 — kaputt"><meta property="og:description" content="nestjs exercise: relative paths in Node resolve against a base, and a failing lifecycle hook aborts boot. Fix a real broken nestjs system in your own terminal — level 11 of 21, with hints and a checker.">
+<meta property="og:title" content="ENOENT at boot — nestjs level 11 — kaputt"><meta property="og:description" content="nestjs exercise: ENOENT at boot. Fix a real broken nestjs system in your own terminal — level 11 of 21, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nestjs</a> / level 11</div>
-<h1 class="lvl">relative paths in Node resolve against a base, and a failing lifecycle hook aborts boot</h1>
+<h1 class="lvl">ENOENT at boot</h1>
 <p class="meta">nestjs · level 11 of 21 · <code>boot-crash</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: Node never opens &quot;seed/users.json&quot;. It opens an absolute path computed from a base plus your relative piece. Two bases are common and they differ: <code>process.cwd()</code> is where the process was started (the project root under <code>npm run start:dev</code>); <code>__dirname</code> is the folder of the source file containing the line. Move a file into a subfolder and <code>__dirname</code> moves with it; <code>process.cwd()</code> does not.</p>
-<p>ENOENT carries the absolute path that was tried. Compare it with where the file really is and the wrong base is obvious.</p>
-<p>Second idea: <code>onModuleInit</code> is a Nest lifecycle hook, run during startup before the app listens. If it throws or rejects, boot aborts — a data-loading bug shows up as &quot;won&#x27;t start&quot;, not as a broken endpoint.</p>
-<pre>join(process.cwd(), &#x27;seed&#x27;, &#x27;users.json&#x27;)     path from the project root
-join(__dirname, &#x27;seed&#x27;, &#x27;users.json&#x27;)         path from the source file&#x27;s folder
-node -e &quot;console.log(process.cwd())&quot;          what cwd is in the app dir
-ls seed/                                      where the file actually lives</pre>
-<p>Try it first: boot and copy the full path out of the ENOENT line; run <code>ls</code> on its parent directory.</p>
-<p>Your task: since the seed loader was &#x27;made path-safe&#x27; the app crashes on start: <code>ENOENT: no such file or directory ... users.json</code>. The file is right there in <code>seed/</code>.</p>
-<p>Goal: the app boots and <code>GET /users</code> returns the 3 users from <code>seed/users.json</code> (keep loading them from that file).</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Since the seed loader was &#x27;made path-safe&#x27; the app crashes on start: <code>ENOENT: no such file or directory ... users.json</code>. The file is right there in <code>seed/</code>.&quot; Goal: the app boots and <code>GET /users</code> returns the 3 users from <code>seed/users.json</code> (keep loading them from that file). App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nestjs
@@ -36,7 +26,7 @@ wg level 11
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nestjs/11-boot-crash">level source on github</a>.</p>
-<div class="pn"><a href="../10-route-typo/index.html">← a route path is matched literally unless a segment starts with a colon</a><a href="../12-nan-id/index.html">every user is &quot;not found&quot; →</a></div>
+<div class="pn"><a href="../10-route-typo/index.html">← user detail page is blank</a><a href="../12-nan-id/index.html">every user is &quot;not found&quot; →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

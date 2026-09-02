@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a memory limit is a hard ceiling: cross it and the kernel kills the process — k8s level 11 — kaputt</title>
-<meta name="description" content="k8s exercise: a memory limit is a hard ceiling: cross it and the kernel kills the process. Fix a real broken k8s system in your own terminal — level 11 of 25, with hints and a checker.">
+<title>cache service dies every few seconds — k8s level 11 — kaputt</title>
+<meta name="description" content="k8s exercise: cache service dies every few seconds. Fix a real broken k8s system in your own terminal — level 11 of 25, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/k8s/11-oomkilled/">
-<meta property="og:title" content="a memory limit is a hard ceiling: cross it and the kernel kills the process — k8s level 11 — kaputt"><meta property="og:description" content="k8s exercise: a memory limit is a hard ceiling: cross it and the kernel kills the process. Fix a real broken k8s system in your own terminal — level 11 of 25, with hints and a checker.">
+<meta property="og:title" content="cache service dies every few seconds — k8s level 11 — kaputt"><meta property="og:description" content="k8s exercise: cache service dies every few seconds. Fix a real broken k8s system in your own terminal — level 11 of 25, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">k8s</a> / level 11</div>
-<h1 class="lvl">a memory limit is a hard ceiling: cross it and the kernel kills the process</h1>
+<h1 class="lvl">cache service dies every few seconds</h1>
 <p class="meta">k8s · level 11 of 25 · <code>oomkilled</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: the previous level was about requests, the scheduler&#x27;s input. Limits are the other half: a cap enforced at runtime by the kernel&#x27;s cgroups. CPU over the limit gets throttled. Memory over the limit gets no such mercy — the kernel&#x27;s OOM killer terminates the process instantly, however healthy the app is.</p>
-<p>Kubernetes records that verdict on the container: Last State <code>Terminated</code>, Reason <code>OOMKilled</code>, Exit Code 137 (128 + signal 9, SIGKILL). The app&#x27;s logs stop mid-sentence, because it was never asked to shut down. Then the restart loop from level 08 begins.</p>
-<p>The fix is never in the app&#x27;s code from your seat: either the limit is below what the app legitimately needs, or the app leaks. Know which by comparing the limit with the app&#x27;s real footprint.</p>
-<pre>kubectl get pods                             RESTARTS climbing
-kubectl describe pod NAME                    Last State: Reason and Exit Code
-kubectl get deploy NAME -o jsonpath=&#x27;{.spec.template.spec.containers[0].resources}&#x27;   the limits as stored
-kubectl set resources deploy/NAME --limits=memory=SIZE   change the cap
-kubectl logs deploy/NAME                     what the app printed before it was killed</pre>
-<p>Try it first: <code>kubectl top pod</code> (if metrics are available) — actual usage next to what you configured.</p>
-<p>Your task: &quot;<code>cache</code> starts, prints &#x27;warming cache&#x27;, dies. Repeat.&quot; The app legitimately needs ~60MB for its cache. Goal: cache runs stably.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>cache</code> starts, prints &#x27;warming cache&#x27;, dies. Repeat.&quot; The app legitimately needs ~60MB for its cache. Goal: cache runs stably.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track k8s
@@ -36,7 +26,7 @@ wg level 11
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/k8s/11-oomkilled">level source on github</a>.</p>
-<div class="pn"><a href="../10-pending/index.html">← Pending means no node accepted the pod — requests must fit a node</a><a href="../12-no-endpoints/index.html">a Service with no endpoints selects no pods — compare selector and labels →</a></div>
+<div class="pn"><a href="../10-pending/index.html">← worker is Pending forever</a><a href="../12-no-endpoints/index.html">service returns nothing →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

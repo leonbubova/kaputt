@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a conflict is git refusing to guess: you write the final lines, add, then commit — git level 11 — kaputt</title>
-<meta name="description" content="git exercise: a conflict is git refusing to guess: you write the final lines, add, then commit. Fix a real broken git system in your own terminal — level 11 of 22, with hints and a checker.">
+<title>merge stopped with CONFLICT in config.yaml — git level 11 — kaputt</title>
+<meta name="description" content="git exercise: merge stopped with CONFLICT in config.yaml. Fix a real broken git system in your own terminal — level 11 of 22, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/git/11-merge-conflict/">
-<meta property="og:title" content="a conflict is git refusing to guess: you write the final lines, add, then commit — git level 11 — kaputt"><meta property="og:description" content="git exercise: a conflict is git refusing to guess: you write the final lines, add, then commit. Fix a real broken git system in your own terminal — level 11 of 22, with hints and a checker.">
+<meta property="og:title" content="merge stopped with CONFLICT in config.yaml — git level 11 — kaputt"><meta property="og:description" content="git exercise: merge stopped with CONFLICT in config.yaml. Fix a real broken git system in your own terminal — level 11 of 22, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,22 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">git</a> / level 11</div>
-<h1 class="lvl">a conflict is git refusing to guess: you write the final lines, add, then commit</h1>
+<h1 class="lvl">merge stopped with CONFLICT in config.yaml</h1>
 <p class="meta">git · level 11 of 22 · <code>merge-conflict</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a real merge (not a fast-forward) combines both sides&#x27; changes since the common ancestor. Different lines merge silently. The same lines on both sides: git cannot know which is right, so it stops, writes both versions into the file between markers, and waits.</p>
-<pre>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD        your side (the branch you are on)
-=======             separator
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature     their side (the branch being merged)</pre>
-<p>The merge is paused, not failed. Three steps: edit the file to the final content (one side, the other, or both), delete the markers, <code>git add</code> it — staging means &quot;resolved&quot;. Then <code>git commit</code> finishes the merge with the prepared message.</p>
-<pre>git status                     &quot;both modified&quot; lists the conflicted files
-git diff                       the two sides, marked ++ / +
-git add &lt;file&gt;                 mark the file as resolved
-git commit --no-edit           complete the merge with the prepared message
-git merge --abort              give up, return to the pre-merge state</pre>
-<p>Try it first: <code>git status</code> in the repo — it says a merge is in progress and names the unmerged path.</p>
-<p>Your task: &quot;Merging <code>feature/timeouts</code> into <code>main</code> conflicted. Both sides are right: main raised retries, the branch raised the timeout.&quot; Repo: <code>~/.k8s-wargame/git/repo</code>.</p>
-<p>Goal: the merge is completed on <code>main</code> (a real merge commit), <code>config.yaml</code> has <code>retries: 5</code> <strong>and</strong> <code>timeout: 30</code>, no conflict markers, clean tree.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Merging <code>feature/timeouts</code> into <code>main</code> conflicted. Both sides are right: main raised retries, the branch raised the timeout.&quot; Repo: <code>~/.k8s-wargame/git/repo</code>. Goal: the merge is completed on <code>main</code> (a real merge commit), <code>config.yaml</code> has <code>retries: 5</code> <strong>and</strong> <code>timeout: 30</code>, no conflict markers, clean tree.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track git
@@ -39,7 +26,7 @@ wg level 11
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/git/11-merge-conflict">level source on github</a>.</p>
-<div class="pn"><a href="../10-detached-head/index.html">← HEAD normally points at a branch; when it points straight at a commit, it is detached</a><a href="../12-reset-hard/index.html">two commits vanished after a reset --hard →</a></div>
+<div class="pn"><a href="../10-detached-head/index.html">← &quot;You are in &#x27;detached HEAD&#x27; state&quot; — and there&#x27;s a commit on it</a><a href="../12-reset-hard/index.html">two commits vanished after a reset --hard →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

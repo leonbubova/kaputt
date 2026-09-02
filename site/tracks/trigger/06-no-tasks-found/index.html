@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>the CLI only indexes tasks where trigger.config.ts tells it to look — trigger level 06 — kaputt</title>
-<meta name="description" content="trigger exercise: the CLI only indexes tasks where trigger.config.ts tells it to look. Fix a real broken trigger system in your own terminal — level 06 of 18, with hints and a checker.">
+<title>dev server finds no tasks — trigger level 06 — kaputt</title>
+<meta name="description" content="trigger exercise: dev server finds no tasks. Fix a real broken trigger system in your own terminal — level 06 of 18, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/trigger/06-no-tasks-found/">
-<meta property="og:title" content="the CLI only indexes tasks where trigger.config.ts tells it to look — trigger level 06 — kaputt"><meta property="og:description" content="trigger exercise: the CLI only indexes tasks where trigger.config.ts tells it to look. Fix a real broken trigger system in your own terminal — level 06 of 18, with hints and a checker.">
+<meta property="og:title" content="dev server finds no tasks — trigger level 06 — kaputt"><meta property="og:description" content="trigger exercise: dev server finds no tasks. Fix a real broken trigger system in your own terminal — level 06 of 18, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">trigger</a> / level 06</div>
-<h1 class="lvl">the CLI only indexes tasks where trigger.config.ts tells it to look</h1>
+<h1 class="lvl">dev server finds no tasks</h1>
 <p class="meta">trigger · level 06 of 18 · <code>no-tasks-found</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: exporting a task from a file is not enough — the file also has to be found. The CLI does not scan the whole repo; it reads <code>dirs</code> from <code>trigger.config.ts</code> and walks only those directories. A task in a directory that is not listed does not exist as far as the platform is concerned: no dashboard entry, no runs, no error either.</p>
-<p>&quot;No tasks found&quot; therefore says nothing about your task code. It says: the set of directories the CLI walked contained no task files. Either <code>dirs</code> points somewhere wrong, or the files moved and the config did not follow.</p>
-<p>The mental model: two sources of truth that must agree — what the config declares and what the filesystem holds. When they drift, the platform trusts the config.</p>
-<pre>cat trigger.config.ts          where does dirs point?
-ls src                         where do the task files actually live?
-ls src/trigger | wc -l         how many task files there are
-npx tsc --noEmit               compiles fine — tsc does not read dirs, the CLI does</pre>
-<p>Try it first: compare the <code>dirs</code> line with <code>ls src</code> side by side.</p>
-<p>Your task: &quot;Since the repo restructure <code>npx trigger.dev dev</code> prints <code>No tasks found</code> and the dashboard lists zero tasks. The task files are all there in git.&quot; Goal: the CLI indexes all 14 tasks of the project (<code>send-welcome-email</code>, <code>charge-card</code>, …). Don&#x27;t rename task ids.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Since the repo restructure <code>npx trigger.dev dev</code> prints <code>No tasks found</code> and the dashboard lists zero tasks. The task files are all there in git.&quot; Goal: the CLI indexes all 14 tasks of the project (<code>send-welcome-email</code>, <code>charge-card</code>, …). Don&#x27;t rename task ids.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track trigger
@@ -35,7 +26,7 @@ wg level 6
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/trigger/06-no-tasks-found">level source on github</a>.</p>
-<div class="pn"><a href="../05-alert-on-failure/index.html">← lifecycle hooks: onFailure runs once, after the last attempt has failed</a><a href="../07-duplicate-task-id/index.html">the id string is the task&#x27;s identity, and it must be unique across the project →</a></div>
+<div class="pn"><a href="../05-alert-on-failure/index.html">← ticket: page on-call when a payout fails</a><a href="../07-duplicate-task-id/index.html">refunds come back as processed orders →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

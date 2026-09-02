@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a resource block declares a thing; apply makes it exist — terraform level 01 — kaputt</title>
-<meta name="description" content="terraform exercise: a resource block declares a thing; apply makes it exist. Fix a real broken terraform system in your own terminal — level 01 of 12, with hints and a checker.">
+<title>we need terraform to drop a marker file — terraform level 01 — kaputt</title>
+<meta name="description" content="terraform exercise: we need terraform to drop a marker file. Fix a real broken terraform system in your own terminal — level 01 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/terraform/01-first-file/">
-<meta property="og:title" content="a resource block declares a thing; apply makes it exist — terraform level 01 — kaputt"><meta property="og:description" content="terraform exercise: a resource block declares a thing; apply makes it exist. Fix a real broken terraform system in your own terminal — level 01 of 12, with hints and a checker.">
+<meta property="og:title" content="we need terraform to drop a marker file — terraform level 01 — kaputt"><meta property="og:description" content="terraform exercise: we need terraform to drop a marker file. Fix a real broken terraform system in your own terminal — level 01 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">terraform</a> / level 01</div>
-<h1 class="lvl">a resource block declares a thing; apply makes it exist</h1>
+<h1 class="lvl">we need terraform to drop a marker file</h1>
 <p class="meta">terraform · level 01 of 12 · <code>first-file</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: terraform does not run commands. You write down what should exist, and <code>terraform apply</code> compares that description with what it already knows (the state file) and creates, changes, or deletes until reality matches. You describe the end state, never the steps.</p>
-<p>The unit of description is a <code>resource</code> block: a type (what kind of thing, provided by a provider), a name you choose (how the config refers to it), and arguments inside the braces. A file on disk is a resource like any other — the <code>local</code> provider offers <code>local_file</code>.</p>
-<p>Any <code>.tf</code> file in the directory is read; a new <code>main.tf</code> next to <code>versions.tf</code> is the usual place. <code>${path.module}</code> is the directory the config lives in, so paths stay correct wherever it is run from.</p>
-<pre>resource &quot;local_file&quot; &quot;x&quot; { filename = &quot;${path.module}/out/x.txt&quot;  content = &quot;text\n&quot; }    type + your name + arguments
-terraform init                          fetch providers once — required before the first plan/apply
-terraform apply -auto-approve           make reality match the .tf files
-terraform state list                    what terraform now believes exists</pre>
-<p>Try it first: <code>terraform init</code> in the play area, then <code>terraform state list</code> — empty, because nothing is declared yet.</p>
-<p>Your task: bootstrap the play area. Write a <code>local_file</code> resource that creates <code>out/hello.txt</code> containing exactly <code>hello, terraform</code>. <code>terraform apply</code> should produce the file.</p>
-<p>Goal: after apply, <code>out/hello.txt</code> exists and its single line is <code>hello, terraform</code>.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Bootstrap the play area: write a <code>local_file</code> resource that creates <code>out/hello.txt</code> containing exactly <code>hello, terraform</code>. <code>terraform apply</code> should produce the file.&quot; Goal: after apply, <code>out/hello.txt</code> exists and its single line is <code>hello, terraform</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track terraform
@@ -36,7 +26,7 @@ wg level 1
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/terraform/01-first-file">level source on github</a>.</p>
-<div class="pn"><span></span><a href="../02-variable/index.html">a variable is an input knob: default in the config, override at apply time →</a></div>
+<div class="pn"><span></span><a href="../02-variable/index.html">the greeting must be configurable, not hardcoded →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

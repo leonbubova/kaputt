@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a bind mount shares a host directory with the container, live — docker level 04 — kaputt</title>
-<meta name="description" content="docker exercise: a bind mount shares a host directory with the container, live. Fix a real broken docker system in your own terminal — level 04 of 22, with hints and a checker.">
+<title>live-edit the page without rebuilding — docker level 04 — kaputt</title>
+<meta name="description" content="docker exercise: live-edit the page without rebuilding. Fix a real broken docker system in your own terminal — level 04 of 22, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/docker/04-bind-mount/">
-<meta property="og:title" content="a bind mount shares a host directory with the container, live — docker level 04 — kaputt"><meta property="og:description" content="docker exercise: a bind mount shares a host directory with the container, live. Fix a real broken docker system in your own terminal — level 04 of 22, with hints and a checker.">
+<meta property="og:title" content="live-edit the page without rebuilding — docker level 04 — kaputt"><meta property="og:description" content="docker exercise: live-edit the page without rebuilding. Fix a real broken docker system in your own terminal — level 04 of 22, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">docker</a> / level 04</div>
-<h1 class="lvl">a bind mount shares a host directory with the container, live</h1>
+<h1 class="lvl">live-edit the page without rebuilding</h1>
 <p class="meta">docker · level 04 of 22 · <code>bind-mount</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: files copied into an image are frozen at build time. For files that change constantly — source code, a page being edited — you do not rebuild, you mount: <code>-v /host/dir:/container/dir</code> makes a host directory appear inside the container at that path. It is the same directory, not a copy: a change on one side is visible on the other instantly.</p>
-<p>This is a bind mount, and the mount hides whatever the image had at that path. Mount your folder over <code>/usr/share/nginx/html</code> and nginx serves your files instead of its welcome page.</p>
-<p>Add <code>:ro</code> to mount read-only when the container only needs to read — nginx never writes its own pages, so the container cannot mess up the host folder.</p>
-<pre>docker run -d -v /host/dir:/ctr/dir img       bind-mount a host directory into the container
--v /host/dir:/ctr/dir:ro                      same, read-only from inside
-docker inspect -f &#x27;{{json .Mounts}}&#x27; n        what is mounted where
-docker exec n ls /ctr/dir                     check the files from inside</pre>
-<p>Try it first: <code>docker run --rm -v /etc:/host-etc:ro alpine:3.20 ls /host-etc</code> — your host&#x27;s /etc, seen from inside a container.</p>
-<p>Your task: &quot;Designers iterate on <code>~/.k8s-wargame/docker/04-bind-mount/site/</code> all day; rebuilding an image per change is too slow.&quot; Goal: container <code>wg-web</code> (<code>nginx:1.27-alpine</code>, host port 18004 → 80) serving that folder directly, so a change to <code>site/index.html</code> on the host shows up on <code>curl localhost:18004</code> immediately.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Designers iterate on <code>~/.k8s-wargame/docker/04-bind-mount/site/</code> all day; rebuilding an image per change is too slow.&quot; Goal: container <code>wg-web</code> (<code>nginx:1.27-alpine</code>, host port 18004 → 80) serving that folder directly, so a change to <code>site/index.html</code> on the host shows up on <code>curl localhost:18004</code> immediately.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track docker
@@ -35,7 +26,7 @@ wg level 4
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/docker/04-bind-mount">level source on github</a>.</p>
-<div class="pn"><a href="../03-build-image/index.html">← a Dockerfile builds your own image: FROM a base, COPY your files in</a><a href="../05-named-volume/index.html">a named volume keeps data alive after the container is gone →</a></div>
+<div class="pn"><a href="../03-build-image/index.html">← package the landing page as an image</a><a href="../05-named-volume/index.html">keep the notes when the container is replaced →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

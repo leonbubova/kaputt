@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">postgres</a> / level 14</div>
 <h1 class="lvl">the BI tool gets &#x27;permission denied for table sales&#x27;</h1>
 <p class="meta">postgres · level 14 of 14 · <code>reporter-cannot-select</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Reporting connects as <code>wg_reporter</code> (password <code>wg</code>) and only reads. Since the sales table was rebuilt last night, every dashboard is red.&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>).  As the reporter: <code>psql postgres://wg_reporter:wg@localhost:5433/wg</code>.</p>
-<p>Goal: <code>wg_reporter</code> can <code>select</code> from <code>sales</code> (5 rows) — and nothing more: no insert/update/delete.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Reporting connects as <code>wg_reporter</code> (password <code>wg</code>) and only reads. Since the sales table was rebuilt last night, every dashboard is red.&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>).  As the reporter: <code>psql postgres://wg_reporter:wg@localhost:5433/wg</code>. Goal: <code>wg_reporter</code> can <code>select</code> from <code>sales</code> (5 rows) — and nothing more: no insert/update/delete.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track postgres

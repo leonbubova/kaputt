@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>file modes: three digits say what owner, group and others may do — linux level 06 — kaputt</title>
-<meta name="description" content="linux exercise: file modes: three digits say what owner, group and others may do. Fix a real broken linux system in your own terminal — level 06 of 23, with hints and a checker.">
+<title>db.conf: owner reads and writes, group reads, nobody else — linux level 06 — kaputt</title>
+<meta name="description" content="linux exercise: db.conf: owner reads and writes, group reads, nobody else. Fix a real broken linux system in your own terminal — level 06 of 23, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/linux/06-exact-mode/">
-<meta property="og:title" content="file modes: three digits say what owner, group and others may do — linux level 06 — kaputt"><meta property="og:description" content="linux exercise: file modes: three digits say what owner, group and others may do. Fix a real broken linux system in your own terminal — level 06 of 23, with hints and a checker.">
+<meta property="og:title" content="db.conf: owner reads and writes, group reads, nobody else — linux level 06 — kaputt"><meta property="og:description" content="linux exercise: db.conf: owner reads and writes, group reads, nobody else. Fix a real broken linux system in your own terminal — level 06 of 23, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">linux</a> / level 06</div>
-<h1 class="lvl">file modes: three digits say what owner, group and others may do</h1>
+<h1 class="lvl">db.conf: owner reads and writes, group reads, nobody else</h1>
 <p class="meta">linux · level 06 of 23 · <code>exact-mode</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: besides owner and group, every file has a mode. It answers three questions: what may the owner do, what may the group do, what may everyone else do. Each answer is a combination of read, write and execute.</p>
-<p>Written as digits: r=4, w=2, x=1, added up per slot. <code>640</code> means owner 4+2 (read and write), group 4 (read only), others 0 (nothing). <code>ls -l</code> shows the same thing as letters: <code>-rw-r-----</code>. <code>666</code> — anyone can write — is what an audit flags on a config with a password in it.</p>
-<p>Owner and group are set with <code>chown</code>, the mode with <code>chmod</code>. They are separate tools for separate fields; a lock-down usually needs both. Neither touches the file content.</p>
-<pre>ls -l FILE                    owner, group and mode as letters
-stat -c &#x27;%U:%G %a&#x27; FILE       the same as name:group and digits
-chown app:app FILE            set owner and group
-chmod 640 FILE                set the mode</pre>
-<p>Try it first: <code>stat -c &#x27;%a %A&#x27; /etc/passwd /etc/shadow</code> — one world-readable, one not.</p>
-<p>Your task: &quot;Audit finding: <code>/etc/app/db.conf</code> is world-writable. It must be owned by <code>app</code>, group <code>app</code>, mode exactly <code>640</code> (<code>-rw-r-----</code>).&quot; Don&#x27;t change the content.</p>
-<p>Goal: <code>stat -c &#x27;%U:%G %a&#x27; /etc/app/db.conf</code> → <code>app:app 640</code>.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Ticket: &quot;Audit finding: <code>/etc/app/db.conf</code> is world-writable. It must be owned by <code>app</code>, group <code>app</code>, mode exactly <code>640</code> (<code>-rw-r-----</code>).&quot; Don&#x27;t change the content. Goal: <code>stat -c &#x27;%U:%G %a&#x27; /etc/app/db.conf</code> → <code>app:app 640</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track linux
@@ -36,7 +26,7 @@ wg level 6
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/linux/06-exact-mode">level source on github</a>.</p>
-<div class="pn"><a href="../05-service-account/index.html">← users and groups: who a process runs as, and who owns a file</a><a href="../07-top-talker/index.html">pipelines: sort | uniq -c | sort -rn answers &quot;which appears most&quot; →</a></div>
+<div class="pn"><a href="../05-service-account/index.html">← service account for the runner</a><a href="../07-top-talker/index.html">which client hammers us the most? →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

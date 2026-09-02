@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">docker</a> / level 15</div>
 <h1 class="lvl">CI can&#x27;t build the tool image</h1>
 <p class="meta">docker · level 15 of 22 · <code>build-fails</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>docker build -t wg-tool:1.0 .</code> in <code>~/.k8s-wargame/docker/15-build-fails/</code> fails since the last commit. Nobody touched the code.&quot;</p>
-<p>Goal: <code>docker run --rm wg-tool:1.0</code> prints <code>tool v1.0 ok</code>. Keep <code>entrypoint.sh</code> and the base image as they are.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>docker build -t wg-tool:1.0 .</code> in <code>~/.k8s-wargame/docker/15-build-fails/</code> fails since the last commit. Nobody touched the code.&quot; Goal: <code>docker run --rm wg-tool:1.0</code> prints <code>tool v1.0 ok</code>. Keep <code>entrypoint.sh</code> and the base image as they are.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track docker

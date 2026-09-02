@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">helm</a> / level 17</div>
 <h1 class="lvl">release exists, helm can&#x27;t find it</h1>
 <p class="meta">helm · level 17 of 20 · <code>wrong-namespace</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;The deploy pipeline (<code>helm upgrade shop ./shop -n wg-helm</code>) fails with <code>release: not found</code>, yet monitoring shows <code>shop</code> pods running and eating resources. Somebody installed it by hand.&quot;</p>
-<p>Chart copy: <code>~/.k8s-wargame/helm/17-wrong-namespace/shop</code>. Goal: release <code>shop</code> deployed in <code>wg-helm</code> and reachable at <code>http://shop.wg-helm.svc/</code>; no stray copy left anywhere else.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;The deploy pipeline (<code>helm upgrade shop ./shop -n wg-helm</code>) fails with <code>release: not found</code>, yet monitoring shows <code>shop</code> pods running and eating resources. Somebody installed it by hand.&quot; Chart copy: <code>~/.k8s-wargame/helm/17-wrong-namespace/shop</code>. Goal: release <code>shop</code> deployed in <code>wg-helm</code> and reachable at <code>http://shop.wg-helm.svc/</code>; no stray copy left anywhere else.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track helm

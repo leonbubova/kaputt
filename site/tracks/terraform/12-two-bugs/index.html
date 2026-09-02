@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">terraform</a> / level 12</div>
 <h1 class="lvl">rewritten module won&#x27;t init AND won&#x27;t plan</h1>
 <p class="meta">terraform · level 12 of 12 · <code>two-bugs</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;A rushed rewrite: <code>terraform init</code> fails on a provider constraint, and once that&#x27;s past, plan fails on an attribute that doesn&#x27;t exist. Two separate mistakes. <code>out/name.txt</code> must end up holding the generated pet name, exposed as output <code>pet</code>.&quot;</p>
-<p>Goal: init and apply succeed; output <code>pet</code> is non-empty and equals <code>out/name.txt</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;A rushed rewrite: <code>terraform init</code> fails on a provider constraint, and once that&#x27;s past, plan fails on an attribute that doesn&#x27;t exist. Two separate mistakes. <code>out/name.txt</code> must end up holding the generated pet name, exposed as output <code>pet</code>.&quot; Goal: init and apply succeed; output <code>pet</code> is non-empty and equals <code>out/name.txt</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track terraform

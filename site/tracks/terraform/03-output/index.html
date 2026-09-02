@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>an output exposes a value, and &lt;type&gt;.&lt;name&gt;.&lt;attribute&gt; reads one from a resource — terraform level 03 — kaputt</title>
-<meta name="description" content="terraform exercise: an output exposes a value, and &lt;type&gt;.&lt;name&gt;.&lt;attribute&gt; reads one from a resource. Fix a real broken terraform system in your own terminal — level 03 of 12, with hints and a checker.">
+<title>CI needs to read a value back out of terraform — terraform level 03 — kaputt</title>
+<meta name="description" content="terraform exercise: CI needs to read a value back out of terraform. Fix a real broken terraform system in your own terminal — level 03 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/terraform/03-output/">
-<meta property="og:title" content="an output exposes a value, and &lt;type&gt;.&lt;name&gt;.&lt;attribute&gt; reads one from a resource — terraform level 03 — kaputt"><meta property="og:description" content="terraform exercise: an output exposes a value, and &lt;type&gt;.&lt;name&gt;.&lt;attribute&gt; reads one from a resource. Fix a real broken terraform system in your own terminal — level 03 of 12, with hints and a checker.">
+<meta property="og:title" content="CI needs to read a value back out of terraform — terraform level 03 — kaputt"><meta property="og:description" content="terraform exercise: CI needs to read a value back out of terraform. Fix a real broken terraform system in your own terminal — level 03 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">terraform</a> / level 03</div>
-<h1 class="lvl">an output exposes a value, and &lt;type&gt;.&lt;name&gt;.&lt;attribute&gt; reads one from a resource</h1>
+<h1 class="lvl">CI needs to read a value back out of terraform</h1>
 <p class="meta">terraform · level 03 of 12 · <code>output</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: after apply, a resource has attributes — the arguments you wrote plus values the provider computed. Any block can read them with the reference <code>&lt;type&gt;.&lt;name&gt;.&lt;attribute&gt;</code>: <code>local_file.hello.content</code> is the content of the resource named <code>hello</code>. References are also how terraform learns the order of things: a block that references another is created after it.</p>
-<p>An <code>output</code> block is the config&#x27;s return value. It has no effect on infrastructure; it prints after apply and can be read back by scripts and CI with <code>terraform output</code>. Outputs are how a value leaves terraform without anyone parsing state files.</p>
-<p>Terraform has built-in functions for shaping values; <code>trimspace(...)</code> strips leading and trailing whitespace, including a trailing newline.</p>
-<pre>output &quot;x&quot; { value = local_file.hello.content }    expose a value under the name x
-local_file.hello.content                            reference = type.name.attribute
-trimspace(s)                                        function: drop surrounding whitespace/newlines
-terraform output -raw x                             read one output as plain text (what CI does)</pre>
-<p>Try it first: <code>terraform output</code> with no arguments — lists every output the config declares.</p>
-<p>Your task: create <code>out/hello.txt</code> with content <code>hello, world</code>, and expose an output named <code>file_content</code> whose value is that file&#x27;s content (trimmed). CI runs <code>terraform output -raw file_content</code>.</p>
-<p>Goal: <code>terraform output -raw file_content</code> prints <code>hello, world</code>.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Create <code>out/hello.txt</code> with content <code>hello, world</code>, and expose an output named <code>file_content</code> whose value is that file&#x27;s content (trimmed). CI runs <code>terraform output -raw file_content</code>.&quot; Goal: <code>terraform output -raw file_content</code> prints <code>hello, world</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track terraform
@@ -36,7 +26,7 @@ wg level 3
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/terraform/03-output">level source on github</a>.</p>
-<div class="pn"><a href="../02-variable/index.html">← a variable is an input knob: default in the config, override at apply time</a><a href="../04-random/index.html">random values are resources: generated once, kept in state →</a></div>
+<div class="pn"><a href="../02-variable/index.html">← the greeting must be configurable, not hardcoded</a><a href="../04-random/index.html">each environment needs a stable random name →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

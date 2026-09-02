@@ -18,23 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">shell</a> / level 11</div>
 <h1 class="lvl">variables, export, PATH — and &quot;command not found&quot;</h1>
 <p class="meta">shell · level 11 of 14 · <code>variables</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: the shell remembers named values, called variables. <code>$NAME</code> means &quot;the value of NAME&quot;:</p>
-<pre>echo $HOME              your home folder
-echo $PATH              a list of folders, separated by :
-COLOR=blue              set your own (no spaces around the =)
-echo $COLOR             → blue
-export COLOR            also hand it to every program you start from now on — it becomes an environment variable
-env                     print all environment variables, one NAME=value per line</pre>
-<p>PATH is how the shell finds commands: for <code>ls</code> it looks in each folder of PATH, in order, for a file called ls.</p>
-<p>&quot;command not found&quot; means: no such file in any of those folders — a typo, or a program that is not installed</p>
-<p>(or installed somewhere PATH does not list).</p>
-<p>Try it:</p>
-<pre>echo $HOME
-echo $PATH
-lss             ← the error you will see most often in your life</pre>
-<p>Your task: set a variable <code>FAVORITE_COLOR</code> to <code>blue</code>, export it, then save the whole environment into a file:</p>
-<pre>env &gt; ~/.k8s-wargame/shell/sandbox/env.txt</pre>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Lesson: the shell remembers named values, called variables. <code>$NAME</code> means &quot;the value of NAME&quot;: echo $HOME              your home folder echo $PATH              a list of folders, separated by : COLOR=blue              set your own (no spaces around the =) echo $COLOR             → blue export COLOR            also hand it to every program you start from now on — it becomes an environment variable env                     print all environment variables, one NAME=value per line PATH is how the shell finds commands: for <code>ls</code> it looks in each folder of PATH, in order, for a file called ls. &quot;command not found&quot; means: no such file in any of those folders — a typo, or a program that is not installed (or installed somewhere PATH does not list). Try it: echo $HOME echo $PATH lss             ← the error you will see most often in your life Your task: set a variable <code>FAVORITE_COLOR</code> to <code>blue</code>, export it, then save the whole environment into a file: env &gt; ~/.k8s-wargame/shell/sandbox/env.txt Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track shell

@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">linux</a> / level 14</div>
 <h1 class="lvl">web service won&#x27;t start: &quot;Address already in use&quot;</h1>
 <p class="meta">linux · level 14 of 23 · <code>port-in-use</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>/opt/web/start.sh</code> dies with <code>OSError: [Errno 98] Address already in use</code>. Nothing of ours should be on 8080. And whatever answers there serves garbage.&quot;</p>
-<p>Goal: <code>curl http://127.0.0.1:8080/</code> prints <code>hello from web</code>, served by <code>/opt/web/start.sh</code> (leave the script and port as they are).</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>/opt/web/start.sh</code> dies with <code>OSError: [Errno 98] Address already in use</code>. Nothing of ours should be on 8080. And whatever answers there serves garbage.&quot; Goal: <code>curl http://127.0.0.1:8080/</code> prints <code>hello from web</code>, served by <code>/opt/web/start.sh</code> (leave the script and port as they are).</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track linux

@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">systemd</a> / level 05</div>
 <h1 class="lvl">tmp cleanup exists but nobody runs it</h1>
 <p class="meta">systemd · level 05 of 8 · <code>timer</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>wg-cleanup.service</code> (oneshot) purges <code>/opt/wg/cleanup/tmp</code> and writes <code>/opt/wg/cleanup/last-run</code>. It works when started by hand. It should run every minute, automatically, and survive reboots. No cron — we&#x27;re on systemd.&quot;</p>
-<p>Goal: a <code>wg-cleanup.timer</code> is active and enabled, fires every minute, and has triggered <code>wg-cleanup.service</code> at least once.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>wg-cleanup.service</code> (oneshot) purges <code>/opt/wg/cleanup/tmp</code> and writes <code>/opt/wg/cleanup/last-run</code>. It works when started by hand. It should run every minute, automatically, and survive reboots. No cron — we&#x27;re on systemd.&quot; Goal: a <code>wg-cleanup.timer</code> is active and enabled, fires every minute, and has triggered <code>wg-cleanup.service</code> at least once.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track systemd
@@ -27,7 +26,7 @@ wg level 5
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/systemd/05-timer">level source on github</a>.</p>
-<div class="pn"><a href="../04-restart-on-failure/index.html">← Restart= is opt-in: a crashed service stays dead until the unit asks to come back</a><a href="../06-environment-file/index.html">api refuses to start: &quot;API_PORT not set&quot; →</a></div>
+<div class="pn"><a href="../04-restart-on-failure/index.html">← api died at 03:00 and stayed dead until someone noticed at 09:00</a><a href="../06-environment-file/index.html">api refuses to start: &quot;API_PORT not set&quot; →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

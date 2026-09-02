@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">helm</a> / level 16</div>
 <h1 class="lvl">site says localhost after scaling up</h1>
 <p class="meta">helm · level 16 of 20 · <code>reuse-values</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;Ops scaled <code>shop</code> to 3 replicas with <code>helm upgrade shop ./shop --set replicas=3</code>. Scaling worked — but since then the page shows <code>env=dev domain=localhost</code> instead of prod. Nobody touched <code>values-prod.yaml</code>.&quot;</p>
-<p>Work dir: <code>~/.k8s-wargame/helm/16-reuse-values/</code>. Goal: 3 available replicas AND the page shows <code>env=prod domain=shop.example.com</code>.</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Ops scaled <code>shop</code> to 3 replicas with <code>helm upgrade shop ./shop --set replicas=3</code>. Scaling worked — but since then the page shows <code>env=dev domain=localhost</code> instead of prod. Nobody touched <code>values-prod.yaml</code>.&quot; Work dir: <code>~/.k8s-wargame/helm/16-reuse-values/</code>. Goal: 3 available replicas AND the page shows <code>env=prod domain=shop.example.com</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track helm

@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a port only answers when a process is listening on it — networking level 01 — kaputt</title>
-<meta name="description" content="networking exercise: a port only answers when a process is listening on it. Fix a real broken networking system in your own terminal — level 01 of 12, with hints and a checker.">
+<title>the API isn&#x27;t answering on port 8080 — nothing is listening — networking level 01 — kaputt</title>
+<meta name="description" content="networking exercise: the API isn&#x27;t answering on port 8080 — nothing is listening. Fix a real broken networking system in your own terminal — level 01 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/networking/01-start-service/">
-<meta property="og:title" content="a port only answers when a process is listening on it — networking level 01 — kaputt"><meta property="og:description" content="networking exercise: a port only answers when a process is listening on it. Fix a real broken networking system in your own terminal — level 01 of 12, with hints and a checker.">
+<meta property="og:title" content="the API isn&#x27;t answering on port 8080 — nothing is listening — networking level 01 — kaputt"><meta property="og:description" content="networking exercise: the API isn&#x27;t answering on port 8080 — nothing is listening. Fix a real broken networking system in your own terminal — level 01 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">networking</a> / level 01</div>
-<h1 class="lvl">a port only answers when a process is listening on it</h1>
+<h1 class="lvl">the API isn&#x27;t answering on port 8080 — nothing is listening</h1>
 <p class="meta">networking · level 01 of 12 · <code>start-service</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a config file on disk does nothing by itself. A port comes alive only when a running process opens it — the kernel then hands every incoming connection on that port to that process. No process, no listener, and a client gets &quot;connection refused&quot; straight away.</p>
-<p>So the first question for &quot;the service doesn&#x27;t answer&quot; is never &quot;is the config right?&quot; but &quot;is anything listening at all?&quot;. <code>ss -ltn</code> lists every listening TCP socket on the box; if the port is not in that list, no amount of config editing will help until the server is started.</p>
-<p>For nginx: the site config lives in /etc/nginx/sites-enabled/, but nginx only reads it when it starts. Starting it is a single command; it forks into the background on its own.</p>
-<pre>ss -ltnp                      listening TCP ports, with the owning process
-pgrep nginx                   is an nginx process running? (no output = no)
-nginx                         start the web server
-curl -s localhost:8080        ask the API; refused = nobody listening</pre>
-<p>Try it first: <code>ss -ltn</code> right now — note which ports are open, then <code>curl -s localhost:8080</code>.</p>
-<p>Your task: the site config for the internal API is in place, but the web server was never started. Bring nginx up so http://localhost:8080/ returns &quot;api ok&quot;.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>The site config for the internal API is in place, but the web server was never started. Bring nginx up so http://localhost:8080/ returns &quot;api ok&quot;.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track networking
@@ -35,7 +26,7 @@ wg level 1
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/networking/01-start-service">level source on github</a>.</p>
-<div class="pn"><span></span><a href="../02-hosts-entry/index.html">a hostname must resolve to an IP before anything can connect →</a></div>
+<div class="pn"><span></span><a href="../02-hosts-entry/index.html">api.internal doesn&#x27;t resolve — scripts can&#x27;t find the API host →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Type=simple: systemd owns a long-running process and watches it — systemd level 02 — kaputt</title>
-<meta name="description" content="systemd exercise: Type=simple: systemd owns a long-running process and watches it. Fix a real broken systemd system in your own terminal — level 02 of 8, with hints and a checker.">
+<title>heartbeat script only runs while someone keeps a terminal open — systemd level 02 — kaputt</title>
+<meta name="description" content="systemd exercise: heartbeat script only runs while someone keeps a terminal open. Fix a real broken systemd system in your own terminal — level 02 of 8, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/systemd/02-simple-service/">
-<meta property="og:title" content="Type=simple: systemd owns a long-running process and watches it — systemd level 02 — kaputt"><meta property="og:description" content="systemd exercise: Type=simple: systemd owns a long-running process and watches it. Fix a real broken systemd system in your own terminal — level 02 of 8, with hints and a checker.">
+<meta property="og:title" content="heartbeat script only runs while someone keeps a terminal open — systemd level 02 — kaputt"><meta property="og:description" content="systemd exercise: heartbeat script only runs while someone keeps a terminal open. Fix a real broken systemd system in your own terminal — level 02 of 8, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">systemd</a> / level 02</div>
-<h1 class="lvl">Type=simple: systemd owns a long-running process and watches it</h1>
+<h1 class="lvl">heartbeat script only runs while someone keeps a terminal open</h1>
 <p class="meta">systemd · level 02 of 8 · <code>simple-service</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a oneshot runs and exits. A service is the opposite: a process that should keep running. <code>Type=simple</code> (the default) means systemd starts <code>ExecStart=</code>, keeps the process as the unit&#x27;s main PID, and calls the unit <code>active</code> for exactly as long as that process lives. When it exits, the unit is no longer active.</p>
-<p>This is what a terminal or tmux cannot give you: the process belongs to systemd, not to a login session. Close the terminal, log out — it keeps running. Its stdout and stderr land in the journal instead of a screen nobody is watching.</p>
-<p>Nothing else changes: <code>ExecStart=</code> is still an absolute path, the file still needs to be executable, and you still <code>daemon-reload</code> after writing the unit.</p>
-<pre>Type=simple                            long-running process; active while it lives
-systemctl status wg-x                  Main PID, active (running), last log lines
-journalctl -u wg-x -n 20               what the process printed
-systemctl show wg-x -p MainPID         the PID systemd is watching, no guessing</pre>
-<p>Try it first: <code>systemctl status wg-marker</code> from the last level — a finished oneshot shows <code>inactive (dead)</code>. A simple service will say <code>active (running)</code> instead.</p>
-<p>Your task: &quot;<code>/opt/wg/heartbeat/heartbeat.sh</code> appends a timestamp to <code>/opt/wg/heartbeat/log</code> every 2 s. Right now Tom runs it in a tmux. Make systemd run it as <code>wg-heartbeat.service</code>.&quot;</p>
-<p>Goal: <code>wg-heartbeat.service</code> is active, its main process is the script, and the log keeps getting fresh entries.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>/opt/wg/heartbeat/heartbeat.sh</code> appends a timestamp to <code>/opt/wg/heartbeat/log</code> every 2 s. Right now Tom runs it in a tmux. Make systemd run it as <code>wg-heartbeat.service</code>.&quot; Goal: <code>wg-heartbeat.service</code> is active, its main process is the script, and the log keeps getting fresh entries.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track systemd
@@ -36,7 +26,7 @@ wg level 2
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/systemd/02-simple-service">level source on github</a>.</p>
-<div class="pn"><a href="../01-oneshot-marker/index.html">← a unit file tells systemd what to run: write one, reload, start it</a><a href="../03-enable-on-boot/index.html">start runs it now, enable runs it on boot: the [Install] section →</a></div>
+<div class="pn"><a href="../01-oneshot-marker/index.html">← ops wants a &quot;this box was provisioned&quot; marker written by systemd</a><a href="../03-enable-on-boot/index.html">heartbeat is gone after every reboot →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

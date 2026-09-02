@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>try_files walks a list of candidates, and the last one is what happens when nothing exists — nginx level 06 — kaputt</title>
-<meta name="description" content="nginx exercise: try_files walks a list of candidates, and the last one is what happens when nothing exists. Fix a real broken nginx system in your own terminal — level 06 of 12, with hints and a checker.">
+<title>deep links 404: /dashboard works from the menu but not on a page reload — nginx level 06 — kaputt</title>
+<meta name="description" content="nginx exercise: deep links 404: /dashboard works from the menu but not on a page reload. Fix a real broken nginx system in your own terminal — level 06 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nginx/06-spa-fallback/">
-<meta property="og:title" content="try_files walks a list of candidates, and the last one is what happens when nothing exists — nginx level 06 — kaputt"><meta property="og:description" content="nginx exercise: try_files walks a list of candidates, and the last one is what happens when nothing exists. Fix a real broken nginx system in your own terminal — level 06 of 12, with hints and a checker.">
+<meta property="og:title" content="deep links 404: /dashboard works from the menu but not on a page reload — nginx level 06 — kaputt"><meta property="og:description" content="nginx exercise: deep links 404: /dashboard works from the menu but not on a page reload. Fix a real broken nginx system in your own terminal — level 06 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nginx</a> / level 06</div>
-<h1 class="lvl">try_files walks a list of candidates, and the last one is what happens when nothing exists</h1>
+<h1 class="lvl">deep links 404: /dashboard works from the menu but not on a page reload</h1>
 <p class="meta">nginx · level 06 of 12 · <code>spa-fallback</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: for a static location nginx maps the URL onto <code>root</code> and looks for a file. <code>try_files A B C;</code> makes that lookup explicit: check A on disk, then B, and if neither exists do C. The last argument is not checked — it is the fallback: an internal jump to a URI, or <code>=CODE</code> for a fixed status.</p>
-<p><code>$uri</code> is the requested path; <code>$uri/</code> is the same as a directory (served via <code>index</code>). So <code>try_files $uri $uri/ /index.html;</code> means: real file, real directory, otherwise hand out the app shell. That is the single-page-app pattern: any deep link gets index.html and the client-side router reads the URL.</p>
-<p>End the list with <code>=404</code> instead and every path that is not on disk is a hard 404 — fine for a classic site, fatal for deep links.</p>
-<pre>try_files $uri $uri/ /index.html;                   file, dir, then SPA fallback
-try_files $uri $uri/ =404;                          file, dir, else 404
-docker exec wg-nginx ls /usr/share/nginx/html       what actually exists under root
-curl -s -o /dev/null -w &#x27;%{http_code}\n&#x27; -H &#x27;Host: shop.local&#x27; http://127.0.0.1:8082/dashboard</pre>
-<p>Try it first: run the ls line — /dashboard is not there, so whatever the curl returns comes from the fallback alone.</p>
-<p>Your task: the SPA serves index.html for unknown paths so the client router can take over. After a config edit, reloading a deep link like /dashboard now returns 404. Restore the fallback to index.html.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>The SPA serves index.html for unknown paths so the client router can take over. After a config edit, reloading a deep link like /dashboard now returns 404. Restore the fallback to index.html.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nginx
@@ -35,7 +26,7 @@ wg level 6
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nginx/06-spa-fallback">level source on github</a>.</p>
-<div class="pn"><a href="../05-upstream-port/index.html">← 502 means nginx answered but the upstream did not: read the status, then test the upstream yourself</a><a href="../07-upload-size/index.html">medium uploads fail with 413 Request Entity Too Large →</a></div>
+<div class="pn"><a href="../05-upstream-port/index.html">← checkout is down: every /api/ call returns 502 Bad Gateway</a><a href="../07-upload-size/index.html">medium uploads fail with 413 Request Entity Too Large →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a provider is a class Nest builds for you and hands to whoever asks — nestjs level 02 — kaputt</title>
-<meta name="description" content="nestjs exercise: a provider is a class Nest builds for you and hands to whoever asks. Fix a real broken nestjs system in your own terminal — level 02 of 21, with hints and a checker.">
+<title>ticket: /health should report uptime — nestjs level 02 — kaputt</title>
+<meta name="description" content="nestjs exercise: ticket: /health should report uptime. Fix a real broken nestjs system in your own terminal — level 02 of 21, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nestjs/02-add-health-service/">
-<meta property="og:title" content="a provider is a class Nest builds for you and hands to whoever asks — nestjs level 02 — kaputt"><meta property="og:description" content="nestjs exercise: a provider is a class Nest builds for you and hands to whoever asks. Fix a real broken nestjs system in your own terminal — level 02 of 21, with hints and a checker.">
+<meta property="og:title" content="ticket: /health should report uptime — nestjs level 02 — kaputt"><meta property="og:description" content="nestjs exercise: ticket: /health should report uptime. Fix a real broken nestjs system in your own terminal — level 02 of 21, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nestjs</a> / level 02</div>
-<h1 class="lvl">a provider is a class Nest builds for you and hands to whoever asks</h1>
+<h1 class="lvl">ticket: /health should report uptime</h1>
 <p class="meta">nestjs · level 02 of 21 · <code>add-health-service</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: controllers translate HTTP in and out; the logic goes into a service. In Nest a service is a &quot;provider&quot;: a plain class marked <code>@Injectable()</code>. You never <code>new</code> it. A constructor parameter says you want one, and Nest creates a single instance and passes it in. That is dependency injection, the whole idea of the framework.</p>
-<p>Two lists make it work: the consumer asks by type in its constructor, and the module lists the class under <code>providers: [...]</code> so Nest may build it. Ask for something no module provides and boot stops with &quot;Nest can&#x27;t resolve dependencies of the X (?)&quot;.</p>
-<p>One instance means it can hold state: a field set when the class is constructed survives across requests.</p>
-<pre>@Injectable() export class HealthService { ... }     mark the class as a provider
-constructor(private readonly health: HealthService) {}   ask for it; Nest injects the instance
-providers: [HealthService]       in the module that owns the controller
-Date.now()                       milliseconds now; store it once, subtract later</pre>
-<p>Try it first: <code>cat src/orders/orders.controller.ts</code> — the constructor asks for <code>OrdersService</code>; find where it is provided.</p>
-<p>Your task: move the logic out of the controller: add a <code>HealthService</code> (<code>@Injectable</code>) that remembers when the process started and returns <code>uptime</code> in seconds. Inject it into <code>HealthController</code> via the constructor. <code>GET /health</code> -&gt; <code>{ status: &quot;ok&quot;, uptime: &lt;number&gt; }</code>.</p>
-<p>Goal: the endpoint returns a numeric <code>uptime</code>, provided by a service.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Move the logic out of the controller: add a <code>HealthService</code> (<code>@Injectable</code>) that remembers when the process started and returns <code>uptime</code> in seconds. Inject it into <code>HealthController</code> via the constructor. <code>GET /health</code> → <code>{ status: &quot;ok&quot;, uptime: &lt;number&gt; }</code>.&quot; Goal: the endpoint returns a numeric <code>uptime</code>, provided by a service. App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nestjs
@@ -36,7 +26,7 @@ wg level 2
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nestjs/02-add-health-service">level source on github</a>.</p>
-<div class="pn"><a href="../01-add-health/index.html">← a controller class is a route prefix, its methods are routes</a><a href="../03-add-user-by-id/index.html">route params arrive as strings; pipes convert them, exceptions become status codes →</a></div>
+<div class="pn"><a href="../01-add-health/index.html">← ticket: add a health endpoint</a><a href="../03-add-user-by-id/index.html">ticket: user detail endpoint →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

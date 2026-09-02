@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a Server Action is a server function a form can call directly — nextjs level 06 — kaputt</title>
-<meta name="description" content="nextjs exercise: a Server Action is a server function a form can call directly. Fix a real broken nextjs system in your own terminal — level 06 of 21, with hints and a checker.">
+<title>add a guestbook with a server action — nextjs level 06 — kaputt</title>
+<meta name="description" content="nextjs exercise: add a guestbook with a server action. Fix a real broken nextjs system in your own terminal — level 06 of 21, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nextjs/06-server-action/">
-<meta property="og:title" content="a Server Action is a server function a form can call directly — nextjs level 06 — kaputt"><meta property="og:description" content="nextjs exercise: a Server Action is a server function a form can call directly. Fix a real broken nextjs system in your own terminal — level 06 of 21, with hints and a checker.">
+<meta property="og:title" content="add a guestbook with a server action — nextjs level 06 — kaputt"><meta property="og:description" content="nextjs exercise: add a guestbook with a server action. Fix a real broken nextjs system in your own terminal — level 06 of 21, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nextjs</a> / level 06</div>
-<h1 class="lvl">a Server Action is a server function a form can call directly</h1>
+<h1 class="lvl">add a guestbook with a server action</h1>
 <p class="meta">nextjs · level 06 of 21 · <code>server-action</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a form that submits data used to need an API route plus fetch code in the browser. A Server Action collapses that: an <code>async</code> function in a file starting with <code>&quot;use server&quot;;</code>, handed to <code>&lt;form action={fn}&gt;</code>. Next.js renders the form with a hidden action id, and a plain HTML POST — no client JavaScript — invokes that function on the server with the <code>FormData</code>.</p>
-<p>The action has two jobs. Read the fields: <code>formData.get(&quot;name&quot;)</code>. And tell Next.js the page changed: <code>revalidatePath(&quot;/guestbook&quot;)</code> from <code>next/cache</code>.</p>
-<p>Keep the data in a module-level array in <code>src/lib/</code>: the server process lives across requests, so it is a tiny in-memory store.</p>
-<pre>&quot;use server&quot;;                     first line of the actions file
-export async function sign(formData: FormData) { ... }   the action
-revalidatePath(&quot;/guestbook&quot;)      from &quot;next/cache&quot;
-&lt;form action={sign}&gt;              binds the POST to the action</pre>
-<p>Try it first: <code>cat src/app/cart/actions.ts src/components/AddForm.tsx</code> — this app&#x27;s existing action and the form calling it.</p>
-<p>Your task: build <code>/guestbook</code>: a form with an <code>&lt;input name=&quot;name&quot;&gt;</code> whose submit runs a Server Action that appends the name to an in-memory list and revalidates the page; below the form a <code>&lt;ul data-testid=&quot;guestbook&quot;&gt;</code> lists all names. No database, no client JS needed — a plain form POST must work. App: <code>~/.k8s-wargame/nextjs/app</code>.</p>
-<p>Goal: <code>GET /guestbook</code> → 200 with the form bound to a Server Action; a form POST with <code>name=…</code> results in that name appearing in the list on the next GET.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Build <code>/guestbook</code>: a form with an <code>&lt;input name=&quot;name&quot;&gt;</code> whose submit runs a <strong>Server Action</strong> that appends the name to an in-memory list and revalidates the page; below the form a <code>&lt;ul data-testid=&quot;guestbook&quot;&gt;</code> lists all names. No database, no client JS needed — a plain form POST must work.&quot; App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: <code>GET /guestbook</code> → 200 with the form bound to a Server Action; a form POST with <code>name=…</code> results in that name appearing in the list on the next GET.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nextjs
@@ -36,7 +26,7 @@ wg level 6
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nextjs/06-server-action">level source on github</a>.</p>
-<div class="pn"><a href="../05-client-component/index.html">← interactivity lives in a &quot;use client&quot; file that a server page renders</a><a href="../07-api-405/index.html">a Route Handler is found by export name; 405 means the name matched nothing →</a></div>
+<div class="pn"><a href="../05-client-component/index.html">← add a like button to the product page</a><a href="../07-api-405/index.html">health endpoint answers 405 →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

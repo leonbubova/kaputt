@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>USING filters rows you read, WITH CHECK judges rows you write — supabase level 07 — kaputt</title>
-<meta name="description" content="supabase exercise: USING filters rows you read, WITH CHECK judges rows you write. Fix a real broken supabase system in your own terminal — level 07 of 18, with hints and a checker.">
+<title>visitors can&#x27;t sign the guestbook — supabase level 07 — kaputt</title>
+<meta name="description" content="supabase exercise: visitors can&#x27;t sign the guestbook. Fix a real broken supabase system in your own terminal — level 07 of 18, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/supabase/07-insert-with-check/">
-<meta property="og:title" content="USING filters rows you read, WITH CHECK judges rows you write — supabase level 07 — kaputt"><meta property="og:description" content="supabase exercise: USING filters rows you read, WITH CHECK judges rows you write. Fix a real broken supabase system in your own terminal — level 07 of 18, with hints and a checker.">
+<meta property="og:title" content="visitors can&#x27;t sign the guestbook — supabase level 07 — kaputt"><meta property="og:description" content="supabase exercise: visitors can&#x27;t sign the guestbook. Fix a real broken supabase system in your own terminal — level 07 of 18, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">supabase</a> / level 07</div>
-<h1 class="lvl">USING filters rows you read, WITH CHECK judges rows you write</h1>
+<h1 class="lvl">visitors can&#x27;t sign the guestbook</h1>
 <p class="meta">supabase · level 07 of 18 · <code>insert-with-check</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: RLS has two gates. <code>using (…)</code> is evaluated against existing rows and decides what SELECT, UPDATE and DELETE get to see. <code>with check (…)</code> is evaluated against the new row and decides whether INSERT (or the updated version of a row) is allowed to exist. An insert policy only has the second gate.</p>
-<p>When WITH CHECK is false for a row, Postgres refuses it — that is the <code>403 new row violates row-level security policy</code>. The policy exists; the condition is just not true for the row being written.</p>
-<p>The common trap: <code>auth.uid()</code> returns the user id from the JWT — and NULL for an anonymous request. In SQL, <code>NULL = anything</code> is not false, it is NULL, and a NULL check fails. A &quot;users own their rows&quot; condition therefore rejects every anonymous write.</p>
-<pre>select policyname, cmd, roles, with_check from pg_policies where tablename=&#x27;guestbook&#x27;;     the write gate
-alter policy &quot;name&quot; on public.t with check (expr);                                          change only the write gate
-select auth.uid();                                                                          NULL in wg shell too</pre>
-<p>Try it first: <code>select null = null, (null = null) is null;</code> — false? no: NULL, and NULL does not pass a check.</p>
-<p>Your task: &quot;Reading works. But <code>POST /rest/v1/guestbook</code> with <code>{&quot;name&quot;:&quot;…&quot;,&quot;message&quot;:&quot;…&quot;}</code> and the anon key answers <code>403 new row violates row-level security policy</code>. There is an insert policy!&quot;</p>
-<p>Goal: anonymous visitors can insert; they still must not be able to delete anything. RLS stays on.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Reading works. But <code>POST /rest/v1/guestbook</code> with <code>{&quot;name&quot;:&quot;…&quot;,&quot;message&quot;:&quot;…&quot;}</code> and the anon key answers <code>403 new row violates row-level security policy</code>. There is an insert policy!&quot; Goal: anonymous visitors can insert; they still must not be able to delete anything. RLS stays on.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track supabase
@@ -35,7 +26,7 @@ wg level 7
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/supabase/07-insert-with-check">level source on github</a>.</p>
-<div class="pn"><a href="../06-policy-wrong-role/index.html">← a policy only applies to the roles in its TO clause</a><a href="../08-missing-grant/index.html">GRANT comes before RLS: 42501 means the role may not touch the table at all →</a></div>
+<div class="pn"><a href="../06-policy-wrong-role/index.html">← FAQ page blank for logged-out visitors</a><a href="../08-missing-grant/index.html">catalog: permission denied →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

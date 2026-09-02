@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a named volume keeps data alive after the container is gone — docker level 05 — kaputt</title>
-<meta name="description" content="docker exercise: a named volume keeps data alive after the container is gone. Fix a real broken docker system in your own terminal — level 05 of 22, with hints and a checker.">
+<title>keep the notes when the container is replaced — docker level 05 — kaputt</title>
+<meta name="description" content="docker exercise: keep the notes when the container is replaced. Fix a real broken docker system in your own terminal — level 05 of 22, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/docker/05-named-volume/">
-<meta property="og:title" content="a named volume keeps data alive after the container is gone — docker level 05 — kaputt"><meta property="og:description" content="docker exercise: a named volume keeps data alive after the container is gone. Fix a real broken docker system in your own terminal — level 05 of 22, with hints and a checker.">
+<meta property="og:title" content="keep the notes when the container is replaced — docker level 05 — kaputt"><meta property="og:description" content="docker exercise: keep the notes when the container is replaced. Fix a real broken docker system in your own terminal — level 05 of 22, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,17 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">docker</a> / level 05</div>
-<h1 class="lvl">a named volume keeps data alive after the container is gone</h1>
+<h1 class="lvl">keep the notes when the container is replaced</h1>
 <p class="meta">docker · level 05 of 22 · <code>named-volume</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a container&#x27;s own filesystem dies with it — <code>docker rm</code> wipes everything written inside. A bind mount avoids that with a host path you manage yourself. A named volume is the other option: Docker-managed storage with a name, living outside any container, attachable to one container after another.</p>
-<p>Same <code>-v</code> flag, different left side: a name instead of a path (no leading <code>/</code>) means a volume. Docker creates it on first use, or you create it with <code>docker volume create</code>. Replacing the container — upgrade, crash, rebuild — does not touch the volume; the next container that mounts it sees the same files.</p>
-<p>Databases survive this way: the container is disposable, the volume is not.</p>
-<pre>docker volume create name              create a volume (optional, -v creates it too)
-docker run -v name:/path img           mount the volume at /path in the container
-docker run --rm -v name:/x img ls /x   peek into a volume</pre>
-<p>Try it first: <code>docker run --rm -v wg-scratch:/d alpine:3.20 touch /d/t; docker volume ls</code> — the volume outlived its container.</p>
-<p>Your task: &quot;Whatever we save in the <code>notes</code> container is gone after every upgrade.&quot; Goal: a named volume <code>wg-notes</code> mounted at <code>/notes</code> in a running container <code>wg-notes</code> (<code>alpine:3.20</code>), containing a file <code>/notes/hello.txt</code> with the text <code>keep me</code> — and that file must still be there after <code>docker rm -f wg-notes</code> and a fresh container with the same volume.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Whatever we save in the <code>notes</code> container is gone after every upgrade.&quot; Goal: a named volume <code>wg-notes</code> mounted at <code>/notes</code> in a running container <code>wg-notes</code> (<code>alpine:3.20</code>), containing a file <code>/notes/hello.txt</code> with the text <code>keep me</code> — and that file must still be there after <code>docker rm -f wg-notes</code> and a fresh container with the same volume.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track docker
@@ -34,7 +26,7 @@ wg level 5
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/docker/05-named-volume">level source on github</a>.</p>
-<div class="pn"><a href="../04-bind-mount/index.html">← a bind mount shares a host directory with the container, live</a><a href="../06-user-network/index.html">on a user-defined network, containers reach each other by name →</a></div>
+<div class="pn"><a href="../04-bind-mount/index.html">← live-edit the page without rebuilding</a><a href="../06-user-network/index.html">two containers must talk by name →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

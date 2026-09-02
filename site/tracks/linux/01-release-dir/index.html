@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>the filesystem is a tree: mkdir -p builds a path, &gt; writes a file — linux level 01 — kaputt</title>
-<meta name="description" content="linux exercise: the filesystem is a tree: mkdir -p builds a path, &gt; writes a file. Fix a real broken linux system in your own terminal — level 01 of 23, with hints and a checker.">
+<title>prepare the release directory — linux level 01 — kaputt</title>
+<meta name="description" content="linux exercise: prepare the release directory. Fix a real broken linux system in your own terminal — level 01 of 23, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/linux/01-release-dir/">
-<meta property="og:title" content="the filesystem is a tree: mkdir -p builds a path, &gt; writes a file — linux level 01 — kaputt"><meta property="og:description" content="linux exercise: the filesystem is a tree: mkdir -p builds a path, &gt; writes a file. Fix a real broken linux system in your own terminal — level 01 of 23, with hints and a checker.">
+<meta property="og:title" content="prepare the release directory — linux level 01 — kaputt"><meta property="og:description" content="linux exercise: prepare the release directory. Fix a real broken linux system in your own terminal — level 01 of 23, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">linux</a> / level 01</div>
-<h1 class="lvl">the filesystem is a tree: mkdir -p builds a path, &gt; writes a file</h1>
+<h1 class="lvl">prepare the release directory</h1>
 <p class="meta">linux · level 01 of 23 · <code>release-dir</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: on Linux everything lives in one tree that starts at <code>/</code>. A path like <code>/srv/app/releases/1.4.2</code> is just the walk from the root down through directories. Every directory on that walk has to exist before you can put something inside it.</p>
-<p><code>mkdir</code> makes one directory and refuses if the parent is missing. <code>mkdir -p</code> makes the whole path in one go, parents included, and is quiet if parts already exist — that makes it safe to run twice.</p>
-<p>A file is created the moment something writes to it. <code>echo text &gt; FILE</code> prints <code>text</code> and the <code>&gt;</code> sends it into FILE instead of the screen, creating or overwriting it. That is the fastest way to make a small file with known content.</p>
-<pre>mkdir -p /a/b/c              create the whole path, parents included
-echo 1.2.3 &gt; /a/b/VERSION    write one line into a (new) file
-ls -R /a                     list a tree recursively
-cat /a/b/VERSION             show what is in the file</pre>
-<p>Try it first: <code>mkdir -p /tmp/x/y/z &amp;&amp; ls -R /tmp/x</code> — three directories from one command.</p>
-<p>Your task: &quot;Release 1.4.2 ships tonight. Create <code>/srv/app/releases/1.4.2/</code> with a file <code>VERSION</code> containing exactly <code>1.4.2</code>, and an empty subdirectory <code>conf/</code> next to it.&quot; (<code>wg shell</code> puts you on the box as root.)</p>
-<p>Goal: <code>/srv/app/releases/1.4.2/VERSION</code> holds <code>1.4.2</code>; <code>/srv/app/releases/1.4.2/conf/</code> exists and is a directory.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Ticket: &quot;Release 1.4.2 ships tonight. Create <code>/srv/app/releases/1.4.2/</code> with a file <code>VERSION</code> containing exactly <code>1.4.2</code>, and an empty subdirectory <code>conf/</code> next to it.&quot; (<code>wg shell</code> puts you on the box as root.) Goal: <code>/srv/app/releases/1.4.2/VERSION</code> holds <code>1.4.2</code>; <code>/srv/app/releases/1.4.2/conf/</code> exists and is a directory.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track linux
@@ -36,7 +26,7 @@ wg level 1
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/linux/01-release-dir">level source on github</a>.</p>
-<div class="pn"><span></span><a href="../02-swap-config/index.html">mv renames, cp copies: order matters when a file gets replaced →</a></div>
+<div class="pn"><span></span><a href="../02-swap-config/index.html">roll out the new app.conf, keep the old one →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a table is named, typed columns: CREATE TABLE declares them once — postgres level 01 — kaputt</title>
-<meta name="description" content="postgres exercise: a table is named, typed columns: CREATE TABLE declares them once. Fix a real broken postgres system in your own terminal — level 01 of 14, with hints and a checker.">
+<title>no customers table yet — postgres level 01 — kaputt</title>
+<meta name="description" content="postgres exercise: no customers table yet. Fix a real broken postgres system in your own terminal — level 01 of 14, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/postgres/01-create-table/">
-<meta property="og:title" content="a table is named, typed columns: CREATE TABLE declares them once — postgres level 01 — kaputt"><meta property="og:description" content="postgres exercise: a table is named, typed columns: CREATE TABLE declares them once. Fix a real broken postgres system in your own terminal — level 01 of 14, with hints and a checker.">
+<meta property="og:title" content="no customers table yet — postgres level 01 — kaputt"><meta property="og:description" content="postgres exercise: no customers table yet. Fix a real broken postgres system in your own terminal — level 01 of 14, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">postgres</a> / level 01</div>
-<h1 class="lvl">a table is named, typed columns: CREATE TABLE declares them once</h1>
+<h1 class="lvl">no customers table yet</h1>
 <p class="meta">postgres · level 01 of 14 · <code>create-table</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a relational database stores everything in tables. A table is a fixed set of columns, each with a name and a type; rows come later and every row has exactly those columns. You declare the shape once with <code>CREATE TABLE</code>.</p>
-<p>The type is a contract: an <code>integer</code> column will never hold <code>&#x27;abc&#x27;</code>. Whole numbers → <code>integer</code>, free text → <code>text</code>, a point in time → <code>timestamptz</code> (short for <code>timestamp with time zone</code>).</p>
-<p>You talk to postgres through <code>psql</code>. SQL statements end with <code>;</code>. Lines starting with <code>\</code> are psql meta-commands — they inspect, they don&#x27;t change anything.</p>
-<pre>create table t (a integer, b text);   declare a table with two typed columns
-\dt                                   list the tables in this database
-\d t                                  describe one table: columns and types
-drop table t;                         remove it again (only if you made a typo)</pre>
-<p>Try it first: <code>\dt</code> — the database is empty, so it says &quot;Did not find any relations&quot;.</p>
-<p>Your task: &quot;The CRM is a blank database. First thing the app needs is a <code>customers</code> table.&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>). Work = run SQL.</p>
-<p>Goal: table <code>customers</code> with columns <code>id</code> (integer), <code>name</code> (text), <code>email</code> (text), <code>created_at</code> (timestamp with time zone).</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;The CRM is a blank database. First thing the app needs is a <code>customers</code> table.&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>). Work = run SQL. Goal: table <code>customers</code> with columns <code>id</code> (integer), <code>name</code> (text), <code>email</code> (text), <code>created_at</code> (timestamp with time zone).</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track postgres
@@ -36,7 +26,7 @@ wg level 1
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/postgres/01-create-table">level source on github</a>.</p>
-<div class="pn"><span></span><a href="../02-insert-rows/index.html">INSERT names the columns you supply; serial columns fill themselves →</a></div>
+<div class="pn"><span></span><a href="../02-insert-rows/index.html">the shop has no products →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

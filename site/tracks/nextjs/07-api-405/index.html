@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a Route Handler is found by export name; 405 means the name matched nothing — nextjs level 07 — kaputt</title>
-<meta name="description" content="nextjs exercise: a Route Handler is found by export name; 405 means the name matched nothing. Fix a real broken nextjs system in your own terminal — level 07 of 21, with hints and a checker.">
+<title>health endpoint answers 405 — nextjs level 07 — kaputt</title>
+<meta name="description" content="nextjs exercise: health endpoint answers 405. Fix a real broken nextjs system in your own terminal — level 07 of 21, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nextjs/07-api-405/">
-<meta property="og:title" content="a Route Handler is found by export name; 405 means the name matched nothing — nextjs level 07 — kaputt"><meta property="og:description" content="nextjs exercise: a Route Handler is found by export name; 405 means the name matched nothing. Fix a real broken nextjs system in your own terminal — level 07 of 21, with hints and a checker.">
+<meta property="og:title" content="health endpoint answers 405 — nextjs level 07 — kaputt"><meta property="og:description" content="nextjs exercise: health endpoint answers 405. Fix a real broken nextjs system in your own terminal — level 07 of 21, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nextjs</a> / level 07</div>
-<h1 class="lvl">a Route Handler is found by export name; 405 means the name matched nothing</h1>
+<h1 class="lvl">health endpoint answers 405</h1>
 <p class="meta">nextjs · level 07 of 21 · <code>api-405</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: there is no registration step for API methods. When a request reaches <code>src/app/api/x/route.ts</code>, Next.js looks at the module&#x27;s exports and picks the one whose name equals the HTTP method — literally the string <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code>. Uppercase, exact. Anything else exported is just a function nobody calls.</p>
-<p>That gives 405 a precise meaning: the URL resolved to a route file (otherwise it would be 404), but no export named after this method exists. TypeScript will not complain — a lowercase or misspelled export is valid code, just invisible to the router.</p>
-<p>The dev-server terminal prints the complaint with the file name; read that before reading code.</p>
-<pre>curl -i localhost:3100/api/health     status line tells 404 (no route) from 405 (route, no method)
-grep -n &#x27;export&#x27; src/app/api/health/route.ts    which names does this file actually export?
-npm run dev                           its terminal names the file and the complaint</pre>
-<p>Try it first: <code>curl -i -X DELETE localhost:3100/api/health</code> — 405 is the normal answer for a method the file never exported. Now compare with what GET returns.</p>
-<p>Your task: monitoring hits <code>GET /api/health</code> on the shop and gets <code>405 Method Not Allowed</code> since the last deploy. The route file is there, nobody touched the monitoring. App: <code>~/.k8s-wargame/nextjs/app</code> — <code>npm run dev</code> (port 3100), <code>npm run build</code>, <code>npm test</code>.</p>
-<p>Goal: <code>GET /api/health</code> returns 200 with <code>{&quot;ok&quot;:true,…}</code>.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;Monitoring hits <code>GET /api/health</code> on the shop and gets <code>405 Method Not Allowed</code> since the last deploy. The route file is there, nobody touched the monitoring.&quot; App: <code>~/.k8s-wargame/nextjs/app</code> — <code>npm run dev</code> (port 3100), <code>npm run build</code>, <code>npm test</code>. Goal: <code>GET /api/health</code> returns 200 with <code>{&quot;ok&quot;:true,…}</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nextjs
@@ -35,7 +26,7 @@ wg level 7
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nextjs/07-api-405">level source on github</a>.</p>
-<div class="pn"><a href="../06-server-action/index.html">← a Server Action is a server function a form can call directly</a><a href="../08-use-client/index.html">a render crash on the server usually means browser code lost its &quot;use client&quot; boundary →</a></div>
+<div class="pn"><a href="../06-server-action/index.html">← add a guestbook with a server action</a><a href="../08-use-client/index.html">dashboard is a 500 →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

@@ -18,8 +18,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nestjs</a> / level 19</div>
 <h1 class="lvl">users disappear between requests</h1>
 <p class="meta">nestjs · level 19 of 21 · <code>users-vanish</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>POST /users</code> returns 201 with id 1, the next <code>GET /users/1</code> is 404. <code>GET /users</code> is <code>[]</code> — the seed users are gone too. No errors in the log. Started after someone &#x27;optimized&#x27; the users service.&quot; Goal: seed users are listed and created users survive until restart.</p>
-<p>App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
+<div class="brief"><h2>the ticket</h2><p>&quot;<code>POST /users</code> returns 201 with id 1, the next <code>GET /users/1</code> is 404. <code>GET /users</code> is <code>[]</code> — the seed users are gone too. No errors in the log. Started after someone &#x27;optimized&#x27; the users service.&quot; Goal: seed users are listed and created users survive until restart. App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nestjs

@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TTL -1 is the leak: EXPIRE adds an expiry to a key that already exists — redis level 06 — kaputt</title>
-<meta name="description" content="redis exercise: TTL -1 is the leak: EXPIRE adds an expiry to a key that already exists. Fix a real broken redis system in your own terminal — level 06 of 12, with hints and a checker.">
+<title>sessions never expire — memory keeps growing — redis level 06 — kaputt</title>
+<meta name="description" content="redis exercise: sessions never expire — memory keeps growing. Fix a real broken redis system in your own terminal — level 06 of 12, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/redis/06-ttl-persist/">
-<meta property="og:title" content="TTL -1 is the leak: EXPIRE adds an expiry to a key that already exists — redis level 06 — kaputt"><meta property="og:description" content="redis exercise: TTL -1 is the leak: EXPIRE adds an expiry to a key that already exists. Fix a real broken redis system in your own terminal — level 06 of 12, with hints and a checker.">
+<meta property="og:title" content="sessions never expire — memory keeps growing — redis level 06 — kaputt"><meta property="og:description" content="redis exercise: sessions never expire — memory keeps growing. Fix a real broken redis system in your own terminal — level 06 of 12, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,18 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">redis</a> / level 06</div>
-<h1 class="lvl">TTL -1 is the leak: EXPIRE adds an expiry to a key that already exists</h1>
+<h1 class="lvl">sessions never expire — memory keeps growing</h1>
 <p class="meta">redis · level 06 of 12 · <code>ttl-persist</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: a key written with a plain <code>SET</code> has no expiry — <code>TTL key</code> answers <code>-1</code>, &quot;lives forever&quot;. For a session store that is a slow memory leak: every login adds a key, nothing ever removes one, and the server grows until it hits its limit.</p>
-<p>Redis distinguishes two &quot;no TTL&quot; answers. <code>-1</code> means the key exists but never expires; <code>-2</code> means the key is gone. When you audit a server, <code>-1</code> on keys that should be temporary is the finding.</p>
-<p>You don&#x27;t have to rewrite the value to fix it. <code>EXPIRE key seconds</code> attaches a countdown to an existing key and leaves the data untouched; <code>PERSIST</code> does the opposite and removes the expiry. Rewriting with <code>SET</code> would also reset the value and, without <code>EX</code>, would drop any TTL it had.</p>
-<pre>TTL session:live               -1 = never expires, -2 = missing, else seconds left
-EXPIRE session:live 3600       start a countdown on an existing key, value unchanged
-PERSIST session:live           remove the expiry again
-GET session:live               confirm the value is still what it was</pre>
-<p>Try it first: <code>TTL session:live</code> versus <code>TTL session:abc</code> from the previous level — one of them is <code>-1</code>.</p>
-<p>Your task: the key <code>session:live</code> was written without an expiry, so it persists forever and the session store leaks memory. Give it a TTL (1..3600 seconds) without changing its value.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>The key <code>session:live</code> was written without an expiry, so it persists forever and the session store leaks memory. Give it a TTL (1..3600 seconds) without changing its value.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track redis
@@ -35,7 +26,7 @@ wg level 6
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/redis/06-ttl-persist">level source on github</a>.</p>
-<div class="pn"><a href="../05-wrongtype/index.html">← every key has exactly one type, fixed at creation: WRONGTYPE means the key is not what the app expects</a><a href="../07-counter-type/index.html">the view counter is stuck — INCR page:views fails →</a></div>
+<div class="pn"><a href="../05-wrongtype/index.html">← the events feed is broken: LPUSH returns WRONGTYPE</a><a href="../07-counter-type/index.html">the view counter is stuck — INCR page:views fails →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

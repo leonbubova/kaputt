@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>every file in templates/ becomes an object; .Release and .Values fill the holes — helm level 04 — kaputt</title>
-<meta name="description" content="helm exercise: every file in templates/ becomes an object; .Release and .Values fill the holes. Fix a real broken helm system in your own terminal — level 04 of 20, with hints and a checker.">
+<title>the chart is missing a ConfigMap — helm level 04 — kaputt</title>
+<meta name="description" content="helm exercise: the chart is missing a ConfigMap. Fix a real broken helm system in your own terminal — level 04 of 20, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/helm/04-configmap-template/">
-<meta property="og:title" content="every file in templates/ becomes an object; .Release and .Values fill the holes — helm level 04 — kaputt"><meta property="og:description" content="helm exercise: every file in templates/ becomes an object; .Release and .Values fill the holes. Fix a real broken helm system in your own terminal — level 04 of 20, with hints and a checker.">
+<meta property="og:title" content="the chart is missing a ConfigMap — helm level 04 — kaputt"><meta property="og:description" content="helm exercise: the chart is missing a ConfigMap. Fix a real broken helm system in your own terminal — level 04 of 20, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">helm</a> / level 04</div>
-<h1 class="lvl">every file in templates/ becomes an object; .Release and .Values fill the holes</h1>
+<h1 class="lvl">the chart is missing a ConfigMap</h1>
 <p class="meta">helm · level 04 of 20 · <code>configmap-template</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: Helm renders each file under <code>templates/</code> and applies the result — add a file, the release gains an object. A template is ordinary Kubernetes YAML with <code>{{ ... }}</code> placeholders.</p>
-<p><code>{{ .Release.Name }}</code> is the release name (so one chart can be installed twice without clashes); <code>{{ .Values.foo }}</code> reads key <code>foo</code> from <code>values.yaml</code>. Give every new <code>.Values</code> key a default there so the chart renders without extra flags.</p>
-<p>Quote values you paste into YAML: <code>| quote</code> wraps the text in double quotes so spaces or numbers cannot change the YAML&#x27;s meaning.</p>
-<pre>cat web/templates/configmap.yaml                  an existing template to copy the shape from
-{{ .Release.Name }}-config                        name derived from the release
-{{ .Values.greeting | quote }}                    a value, safely quoted
-helm template web ./web                           render locally and read the new object
-helm upgrade web ./web -n wg-helm                 roll the changed chart out</pre>
-<p>Your task: &quot;Release <code>web</code> in <code>wg-helm</code> won&#x27;t start: the Deployment loads its env from ConfigMap <code>web-config</code>, but the chart doesn&#x27;t ship one. Add a template for it: ConfigMap <code>&lt;release name&gt;-config</code> with key <code>GREETING</code>, value taken from a new chart value <code>greeting</code> (default <code>hello from helm</code>). Then roll it out.&quot;</p>
-<p>Chart copy: <code>~/.k8s-wargame/helm/04-configmap-template/web</code>. Goal: pod available, <code>kubectl exec deploy/web -- printenv GREETING</code> prints the value from <code>values.yaml</code>; the ConfigMap is part of the release.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Ticket: &quot;Release <code>web</code> in <code>wg-helm</code> won&#x27;t start: the Deployment loads its env from ConfigMap <code>web-config</code>, but the chart doesn&#x27;t ship one. Add a template for it: ConfigMap <code>&lt;release name&gt;-config</code> with key <code>GREETING</code>, value taken from a new chart value <code>greeting</code> (default <code>hello from helm</code>). Then roll it out.&quot; Chart copy: <code>~/.k8s-wargame/helm/04-configmap-template/web</code>. Goal: pod available, <code>kubectl exec deploy/web -- printenv GREETING</code> prints the value from <code>values.yaml</code>; the ConfigMap is part of the release.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track helm
@@ -36,7 +26,7 @@ wg level 4
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/helm/04-configmap-template">level source on github</a>.</p>
-<div class="pn"><a href="../03-values-file/index.html">← a values file overrides only the keys it contains; render before you install</a><a href="../05-upgrade-uninstall/index.html">chart version vs release revision; uninstall removes everything a release owns →</a></div>
+<div class="pn"><a href="../03-values-file/index.html">← prod config in a file</a><a href="../05-upgrade-uninstall/index.html">ship 0.2.0, clean up the old one →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

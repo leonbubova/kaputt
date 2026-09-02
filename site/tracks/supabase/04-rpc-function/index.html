@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>a SQL function in an exposed schema is an endpoint under /rpc — supabase level 04 — kaputt</title>
-<meta name="description" content="supabase exercise: a SQL function in an exposed schema is an endpoint under /rpc. Fix a real broken supabase system in your own terminal — level 04 of 18, with hints and a checker.">
+<title>a function behind /rpc — supabase level 04 — kaputt</title>
+<meta name="description" content="supabase exercise: a function behind /rpc. Fix a real broken supabase system in your own terminal — level 04 of 18, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/supabase/04-rpc-function/">
-<meta property="og:title" content="a SQL function in an exposed schema is an endpoint under /rpc — supabase level 04 — kaputt"><meta property="og:description" content="supabase exercise: a SQL function in an exposed schema is an endpoint under /rpc. Fix a real broken supabase system in your own terminal — level 04 of 18, with hints and a checker.">
+<meta property="og:title" content="a function behind /rpc — supabase level 04 — kaputt"><meta property="og:description" content="supabase exercise: a function behind /rpc. Fix a real broken supabase system in your own terminal — level 04 of 18, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,20 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">supabase</a> / level 04</div>
-<h1 class="lvl">a SQL function in an exposed schema is an endpoint under /rpc</h1>
+<h1 class="lvl">a function behind /rpc</h1>
 <p class="meta">supabase · level 04 of 18 · <code>rpc-function</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: PostgREST does not only map tables to URLs. Every function in an exposed schema (<code>public</code>) becomes <code>POST /rest/v1/rpc/&lt;function name&gt;</code>. The JSON body&#x27;s keys are matched to the function&#x27;s parameter names, and the return value comes back as JSON. <code>create function</code> is the deploy.</p>
-<p>The function is ordinary Postgres: <code>language sql</code> for a single expression, <code>language plpgsql</code> for logic. Parameter names matter — they are the API.</p>
-<p>Calling it needs EXECUTE privilege for the calling role; in a Supabase project new functions in <code>public</code> get that for <code>anon</code> through default privileges, so a plain <code>create function</code> is already callable.</p>
-<p>PostgREST keeps a cache of the schema. It reloads on DDL by itself; if a function that exists still 404s, ask for a reload.</p>
-<pre>create function public.f(x text) returns text language sql as $$ select x $$;     define it
-\sf public.f                                                                       show a function&#x27;s body (wg shell)
-curl -s -X POST &quot;$API_URL/rest/v1/rpc/f&quot; -H &quot;apikey: $ANON_KEY&quot; -H &#x27;Content-Type: application/json&#x27; -d &#x27;{&quot;x&quot;:&quot;hi&quot;}&#x27;
-notify pgrst, &#x27;reload schema&#x27;;                                                     refresh PostgREST&#x27;s cache</pre>
-<p>Try it first: <code>curl -s &quot;$API_URL/rest/v1/&quot; -H &quot;apikey: $ANON_KEY&quot; | head -c 300</code> — the OpenAPI description PostgREST builds from the schema.</p>
-<p>Your task: &quot;We want a smoke-test endpoint. Create a SQL function <code>greet(name text)</code> that returns <code>&#x27;hello, &#x27; || name</code>, callable by the frontend (anon key) as <code>POST /rest/v1/rpc/greet</code> with body <code>{&quot;name&quot;:&quot;wg&quot;}</code> → <code>&quot;hello, wg&quot;</code>.&quot;</p>
-<p>Goal: that call returns 200 with <code>&quot;hello, wg&quot;</code>.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Ticket: &quot;We want a smoke-test endpoint. Create a SQL function <code>greet(name text)</code> that returns <code>&#x27;hello, &#x27; || name</code>, callable by the frontend (anon key) as <code>POST /rest/v1/rpc/greet</code> with body <code>{&quot;name&quot;:&quot;wg&quot;}</code> → <code>&quot;hello, wg&quot;</code>.&quot; Goal: that call returns 200 with <code>&quot;hello, wg&quot;</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track supabase
@@ -37,7 +26,7 @@ wg level 4
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/supabase/04-rpc-function">level source on github</a>.</p>
-<div class="pn"><a href="../03-rls-select-policy/index.html">← with RLS on, a policy says who may do which command on which rows</a><a href="../05-storage-bucket/index.html">a storage bucket is a row in storage.buckets, and public is a flag on it →</a></div>
+<div class="pn"><a href="../03-rls-select-policy/index.html">← open it up (read-only)</a><a href="../05-storage-bucket/index.html">a place for files →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

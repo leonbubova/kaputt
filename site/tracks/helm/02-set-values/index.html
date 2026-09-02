@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>helm owns the release: change it with upgrade, not kubectl — helm level 02 — kaputt</title>
-<meta name="description" content="helm exercise: helm owns the release: change it with upgrade, not kubectl. Fix a real broken helm system in your own terminal — level 02 of 20, with hints and a checker.">
+<title>scale it — the helm way — helm level 02 — kaputt</title>
+<meta name="description" content="helm exercise: scale it — the helm way. Fix a real broken helm system in your own terminal — level 02 of 20, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/helm/02-set-values/">
-<meta property="og:title" content="helm owns the release: change it with upgrade, not kubectl — helm level 02 — kaputt"><meta property="og:description" content="helm exercise: helm owns the release: change it with upgrade, not kubectl. Fix a real broken helm system in your own terminal — level 02 of 20, with hints and a checker.">
+<meta property="og:title" content="scale it — the helm way — helm level 02 — kaputt"><meta property="og:description" content="helm exercise: scale it — the helm way. Fix a real broken helm system in your own terminal — level 02 of 20, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">helm</a> / level 02</div>
-<h1 class="lvl">helm owns the release: change it with upgrade, not kubectl</h1>
+<h1 class="lvl">scale it — the helm way</h1>
 <p class="meta">helm · level 02 of 20 · <code>set-values</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: once a release exists, Helm remembers what it applied and the values it used. If you edit the live objects with <code>kubectl</code>, Helm does not know — and the next <code>helm upgrade</code> re-renders the chart from its own values and overwrites your change.</p>
-<p>So changes go through <code>helm upgrade</code>: same chart, same release name, new values. Every upgrade creates a new revision; <code>helm history</code> lists them and <code>helm get values</code> shows the overrides Helm currently knows for the release.</p>
-<p><code>--set</code> works on upgrade exactly like on install.</p>
-<pre>helm get values &lt;release&gt; -n wg-helm              overrides helm knows (empty = pure defaults)
-helm upgrade &lt;release&gt; &lt;chart&gt; -n wg-helm --set k=v    re-render with a new value, new revision
-helm history &lt;release&gt; -n wg-helm                 the revisions so far
-kubectl get deploy -n wg-helm                     what actually runs</pre>
-<p>Try it first: <code>helm get values web -n wg-helm</code> — nothing is set, the release runs on chart defaults.</p>
-<p>Your task: &quot;Release <code>web</code> in <code>wg-helm</code> runs 1 replica. We need 2. Do it through Helm so the next <code>helm upgrade</code> doesn&#x27;t silently scale it back.&quot;</p>
-<p>Chart copy: <code>~/.k8s-wargame/helm/02-set-values/web</code>. Goal: <code>web</code> has 2 available replicas and <code>helm get values web -n wg-helm</code> shows <code>replicas: 2</code>.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Ticket: &quot;Release <code>web</code> in <code>wg-helm</code> runs 1 replica. We need 2. Do it through Helm so the next <code>helm upgrade</code> doesn&#x27;t silently scale it back.&quot; Chart copy: <code>~/.k8s-wargame/helm/02-set-values/web</code>. Goal: <code>web</code> has 2 available replicas and <code>helm get values web -n wg-helm</code> shows <code>replicas: 2</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track helm
@@ -36,7 +26,7 @@ wg level 2
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/helm/02-set-values">level source on github</a>.</p>
-<div class="pn"><a href="../01-create-install/index.html">← a chart is a folder of templates plus values; install turns it into a release</a><a href="../03-values-file/index.html">a values file overrides only the keys it contains; render before you install →</a></div>
+<div class="pn"><a href="../01-create-install/index.html">← first chart</a><a href="../03-values-file/index.html">prod config in a file →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>seed.sql gives every rebuilt database its starting rows — supabase level 02 — kaputt</title>
-<meta name="description" content="supabase exercise: seed.sql gives every rebuilt database its starting rows. Fix a real broken supabase system in your own terminal — level 02 of 18, with hints and a checker.">
+<title>seed it — supabase level 02 — kaputt</title>
+<meta name="description" content="supabase exercise: seed it. Fix a real broken supabase system in your own terminal — level 02 of 18, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/supabase/02-seed-data/">
-<meta property="og:title" content="seed.sql gives every rebuilt database its starting rows — supabase level 02 — kaputt"><meta property="og:description" content="supabase exercise: seed.sql gives every rebuilt database its starting rows. Fix a real broken supabase system in your own terminal — level 02 of 18, with hints and a checker.">
+<meta property="og:title" content="seed it — supabase level 02 — kaputt"><meta property="og:description" content="supabase exercise: seed it. Fix a real broken supabase system in your own terminal — level 02 of 18, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,19 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">supabase</a> / level 02</div>
-<h1 class="lvl">seed.sql gives every rebuilt database its starting rows</h1>
+<h1 class="lvl">seed it</h1>
 <p class="meta">supabase · level 02 of 18 · <code>seed-data</code></p>
-<div class="brief"><h2>the ticket</h2><p>Lesson: migrations describe structure, not content. After <code>supabase db reset</code> rebuilds the database from all migrations, the tables are empty — and a dev with an empty <code>notes</code> table cannot see whether the frontend works.</p>
-<p><code>supabase/seed.sql</code> fixes that. It is plain SQL that the CLI runs once, after the last migration, on every reset (<code>[db.seed] enabled = true</code> in <code>config.toml</code>). Test data lives there, never in a migration: a migration runs on production too, a seed does not.</p>
-<p>Reset is the only thing that runs the seed, and it drops the local database first — that is fine locally, that is what CI does on every run.</p>
-<p>One detail: <code>id</code> is a generated identity column. Insert only the columns you own (<code>body</code>); Postgres fills the rest.</p>
-<pre>insert into public.notes (body) values (&#x27;a&#x27;), (&#x27;b&#x27;);     several rows in one statement
-supabase db reset                                        rebuild from all migrations + seed.sql (~45 s)
-select count(*) from public.notes;                       count rows (in wg shell)</pre>
-<p>Try it first: <code>cat ~/.k8s-wargame/supabase/project/supabase/config.toml | grep -A2 &#x27;db.seed&#x27;</code> — the seed is enabled and points at seed.sql.</p>
-<p>Your task: &quot;Every dev gets an empty <code>notes</code> table after <code>supabase db reset</code>. Add <code>supabase/seed.sql</code> (in <code>~/.k8s-wargame/supabase/project/</code>) inserting at least 3 notes, and make sure it&#x27;s actually loaded.&quot;</p>
-<p>Goal: <code>seed.sql</code> exists and <code>public.notes</code> has ≥ 3 rows.</p>
-<p>Check yourself:  wg check      stuck?  wg hint</p></div>
+<div class="brief"><h2>the ticket</h2><p>Ticket: &quot;Every dev gets an empty <code>notes</code> table after <code>supabase db reset</code>. Add <code>supabase/seed.sql</code> (in <code>~/.k8s-wargame/supabase/project/</code>) inserting at least 3 notes, and make sure it&#x27;s actually loaded.&quot; Goal: <code>seed.sql</code> exists and <code>public.notes</code> has ≥ 3 rows.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track supabase
@@ -36,7 +26,7 @@ wg level 2
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/supabase/02-seed-data">level source on github</a>.</p>
-<div class="pn"><a href="../01-first-migration/index.html">← a migration is a versioned SQL file the CLI applies and remembers</a><a href="../03-rls-select-policy/index.html">with RLS on, a policy says who may do which command on which rows →</a></div>
+<div class="pn"><a href="../01-first-migration/index.html">← first migration</a><a href="../03-rls-select-policy/index.html">open it up (read-only) →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>
