@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# wargame CLI — tracks: k8s linux docker helm supabase
+# wargame CLI — break/fix levels across tracks (k8s linux docker git helm postgres …)
 set -euo pipefail
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
-STATE=${WG_STATE:-$HOME/.k8s-wargame}; mkdir -p "$STATE"
+# WG_PLAYER scopes all state (progress, streaks, current level) per player — foundation for multiplayer.
+STATE=${WG_STATE:-$HOME/.k8s-wargame${WG_PLAYER:+/players/$WG_PLAYER}}; mkdir -p "$STATE"
 export KUBECONFIG=${KUBECONFIG:-$HOME/.kube/config}
 export WG_ROOT=$ROOT
 
@@ -10,17 +11,20 @@ usage() { cat <<U
 wg — break/fix wargame          tracks: $(tracks | tr '\n' ' ')
 
   wg track NAME       switch track (default k8s)
+  wg primer           the ~10 commands this track uses — read this first if you're new
   wg start            bring up the environment of the current track
   wg stop             tear it down
   wg shell            enter the broken machine (tracks that have one)
   wg list             levels of the current track + status
   wg level N          load level N (something is now broken)
+  wg random           load a random level you haven't solved yet
+  wg speedrun         random unsolved level, hints disabled, timed
   wg brief            briefing again
   wg check            am i done?
-  wg hint             next hint (3 per level, counted)
+  wg hint             next hint (3 per level, counted; off during speedrun)
   wg spoil            solution (marks level spoiled)
   wg reset / wg next
-  wg progress         scoreboard (all tracks)
+  wg progress         scoreboard, streak, achievements (all tracks)
 U
 }
 tracks() { ls -d "$ROOT"/levels/*/ | xargs -n1 basename; }
@@ -31,46 +35,99 @@ levels() { ls -d "$TDIR"/[0-9]* | xargs -n1 basename | sort; }
 level_dir() { ls -d "$TDIR"/$(printf '%02d' "$1")-* 2>/dev/null | head -1; }
 cur() { cat "$STATE/$TRACK.current" 2>/dev/null || { echo "no level loaded — wg level 1" >&2; exit 1; }; }
 need_env() { track_ready || { echo "$TRACK environment not ready — wg start" >&2; exit 1; }; }
-key() { echo "$TRACK/$1"; }
+solved() { grep -q "^$TRACK/$1 " "$STATE/progress" 2>/dev/null; }
+today() { date +%Y-%m-%d; }
 
-cmd_track() { [ -d "$ROOT/levels/$1" ] || { echo "no track $1"; exit 1; }; echo "$1" > "$STATE/track"; echo "track: $1"; }
-cmd_start() { track_start; echo "ready. → wg level 1"; }
+cmd_track() { [ -d "$ROOT/levels/$1" ] || { echo "no track $1"; exit 1; }; echo "$1" > "$STATE/track"; echo "track: $1"; [ -f "$ROOT/levels/$1/PRIMER.md" ] && echo "new to $1? → wg primer"; }
+cmd_primer() {
+  if [ -f "$TDIR/PRIMER.md" ]; then cat "$TDIR/PRIMER.md"; else
+    echo "no primer for '$TRACK' yet. the hints teach as you go: hint 1 = where to look, hint 3 = the command. → wg level 1"; fi
+}
+cmd_start() { track_start; echo "ready. → wg level 1"; [ -f "$TDIR/PRIMER.md" ] && echo "   new here? read the commands first: wg primer"; }
 cmd_stop()  { track_stop; }
 cmd_shell() { need_env; type track_shell >/dev/null 2>&1 || { echo "track $TRACK has no shell — use your normal terminal"; exit 1; }; track_shell; }
-cmd_level() {
+
+load_level() { # N [speedrun]
   need_env; local d; d=$(level_dir "$1") || true; [ -n "$d" ] || { echo "no level $1 in $TRACK"; exit 1; }
   local prev; prev=$(cat "$STATE/$TRACK.current" 2>/dev/null || true)
   [ -n "$prev" ] && [ -f "$TDIR/$prev/clean.sh" ] && (cd "$TDIR/$prev" && bash clean.sh >/dev/null 2>&1 || true)
   local l; l=$(basename "$d"); echo "loading $TRACK/${l}…"; track_wipe
   (cd "$d" && bash break.sh)
   echo "$l" > "$STATE/$TRACK.current"; date +%s > "$STATE/$TRACK.$l.start"; : > "$STATE/$TRACK.$l.hints"
-  echo; cat "$d/README.md"; echo; echo "→ fix it, then: wg check   (stuck? wg hint)"
+  rm -f "$STATE/$TRACK.$l.speed" "$STATE/$TRACK.$l.spoiled"; [ "${2:-}" = speedrun ] && touch "$STATE/$TRACK.$l.speed"
+  echo
+  if [ "$(( 10#${l%%-*} ))" = 1 ] && [ -f "$TDIR/PRIMER.md" ] && [ "${2:-}" != speedrun ]; then
+    printf '\033[2m── first level of %s — the commands you will need ──\033[0m\n' "$TRACK"; cat "$TDIR/PRIMER.md"; echo; printf '\033[2m── your ticket ──\033[0m\n'
+  fi
+  cat "$d/README.md"; echo
+  if [ "${2:-}" = speedrun ]; then printf '\033[35m⏱ SPEEDRUN — hints disabled, clock running.\033[0m → wg check\n'
+  else echo "→ fix it, then: wg check   (stuck? wg hint)"; fi
 }
+cmd_level() { load_level "$1"; }
+pick_unsolved() { local u=(); for l in $(levels); do solved "$l" || u+=("$l"); done; [ ${#u[@]} -gt 0 ] || return 1; echo "${u[$((RANDOM % ${#u[@]}))]}"; }
+cmd_random()   { local l; l=$(pick_unsolved) || { echo "every level in $TRACK is solved — wg track <other>"; exit 0; }; load_level "$(( 10#${l%%-*} ))"; }
+cmd_speedrun() { local l; l=$(pick_unsolved) || { echo "every level in $TRACK is solved — wg track <other>"; exit 0; }; load_level "$(( 10#${l%%-*} ))" speedrun; }
 cmd_brief() { cat "$TDIR/$(cur)/README.md"; }
+
+bump_streak() { # called on solve; returns current streak
+  local f="$STATE/streak" last=0 n=0 t; t=$(today)
+  [ -f "$f" ] && { last=$(sed -n 1p "$f"); n=$(sed -n 2p "$f"); }
+  if [ "$last" = "$t" ]; then :;
+  elif [ "$last" = "$(date -v-1d +%Y-%m-%d 2>/dev/null || date -d yesterday +%Y-%m-%d 2>/dev/null)" ]; then n=$((n+1));
+  else n=1; fi
+  printf '%s\n%s\n' "$t" "$n" > "$f"; echo "$n"
+}
 cmd_check() {
   need_env; local l; l=$(cur); echo "checking $TRACK/${l}…"
   if (cd "$TDIR/$l" && bash check.sh); then
-    local s h sp start; start=$(cat "$STATE/$TRACK.$l.start"); s=$(( $(date +%s) - start ))
+    local s h sp start speed=""; start=$(cat "$STATE/$TRACK.$l.start"); s=$(( $(date +%s) - start ))
     h=$(wc -l < "$STATE/$TRACK.$l.hints" | tr -d ' '); sp=""; [ -f "$STATE/$TRACK.$l.spoiled" ] && sp=" spoiled"
+    [ -f "$STATE/$TRACK.$l.speed" ] && speed=" speedrun"
     grep -v "^$TRACK/$l " "$STATE/progress" 2>/dev/null > "$STATE/progress.tmp" || true
-    echo "$TRACK/$l solved ${s}s hints=$h$sp" >> "$STATE/progress.tmp"; mv "$STATE/progress.tmp" "$STATE/progress"
-    printf '\n\033[1;32mLEVEL SOLVED\033[0m  %ss, %s hints%s\n→ wg next\n' "$s" "$h" "$sp"
+    echo "$TRACK/$l solved ${s}s hints=$h$sp$speed" >> "$STATE/progress.tmp"; mv "$STATE/progress.tmp" "$STATE/progress"
+    local streak; streak=$(bump_streak)
+    printf '\n\033[1;32mLEVEL SOLVED\033[0m  %ss, %s hints%s%s   🔥 streak %s day%s\n→ wg next\n' "$s" "$h" "$sp" "$speed" "$streak" "$([ "$streak" = 1 ] || echo s)"
   else printf '\n\033[1;31mnot yet.\033[0m\n'; exit 1; fi
 }
 cmd_hint() {
-  local l; l=$(cur); local n; n=$(( $(wc -l < "$STATE/$TRACK.$l.hints" | tr -d ' ') + 1 ))
+  local l; l=$(cur)
+  [ -f "$STATE/$TRACK.$l.speed" ] && { printf '\033[35m⏱ speedrun — no hints. finish it or wg reset to leave speedrun.\033[0m\n'; exit 1; }
+  local n; n=$(( $(wc -l < "$STATE/$TRACK.$l.hints" | tr -d ' ') + 1 ))
   local txt; txt=$(awk -v n="$n" '/^## /{c++} c==n && !/^## /' "$TDIR/$l/hints.md")
   [ -n "$txt" ] || { echo "no more hints. → wg spoil"; exit 0; }
   echo "$n" >> "$STATE/$TRACK.$l.hints"; printf '\033[33mhint %s:\033[0m%s\n' "$n" "$txt"
 }
 cmd_spoil() { local l; l=$(cur); touch "$STATE/$TRACK.$l.spoiled"; cat "$TDIR/$l/solution.md"; }
-cmd_reset() { local l; l=$(cur); cmd_level "$(( 10#${l%%-*} ))"; }
-cmd_next()  { local l; l=$(cur); cmd_level "$(( 10#${l%%-*} + 1 ))"; }
-cmd_list()  { echo "track: $TRACK"; for l in $(levels); do local st="  "; grep -q "^$TRACK/$l " "$STATE/progress" 2>/dev/null && st="✔ "; [ "$l" = "$(cat "$STATE/$TRACK.current" 2>/dev/null)" ] && st="▶ "; printf '%s%s  %s\n' "$st" "$l" "$(head -1 "$TDIR/$l/README.md" | sed 's/^# //')"; done; }
-cmd_progress() { [ -f "$STATE/progress" ] && sort "$STATE/progress" || echo "nothing solved yet"; echo; for t in $(tracks); do printf '%-9s %s / %s\n' "$t" "$(grep -c "^$t/" "$STATE/progress" 2>/dev/null || echo 0)" "$(ls -d "$ROOT"/levels/$t/[0-9]* | wc -l | tr -d ' ')"; done; }
+cmd_reset() { local l; l=$(cur); load_level "$(( 10#${l%%-*} ))"; }
+cmd_next()  { local l; l=$(cur); load_level "$(( 10#${l%%-*} + 1 ))"; }
+cmd_list()  { echo "track: $TRACK"; for l in $(levels); do local st="  "; solved "$l" && st="✔ "; [ "$l" = "$(cat "$STATE/$TRACK.current" 2>/dev/null)" ] && st="▶ "; printf '%s%s  %s\n' "$st" "$l" "$(head -1 "$TDIR/$l/README.md" | sed 's/^# //')"; done; }
+
+achievements() {
+  local p="$STATE/progress"; [ -f "$p" ] || return 0
+  local total nohint speed done_tracks=0 t n have
+  total=$(wc -l < "$p" | tr -d ' '); nohint=$(grep -c 'hints=0' "$p" || true); speed=$(grep -c ' speedrun' "$p" || true)
+  for t in $(tracks); do n=$(ls -d "$ROOT"/levels/$t/[0-9]* 2>/dev/null | wc -l | tr -d ' '); have=$(grep -c "^$t/" "$p" || true); [ "$n" -gt 0 ] && [ "$have" -ge "$n" ] && done_tracks=$((done_tracks+1)); done
+  echo "achievements:"
+  [ "$total" -ge 1 ]   && echo "  ✔ first blood — solved your first level"
+  [ "$total" -ge 10 ]  && echo "  ✔ getting warm — 10 levels"
+  [ "$total" -ge 50 ]  && echo "  ✔ operator — 50 levels"
+  [ "$nohint" -ge 5 ]  && echo "  ✔ no training wheels — 5 levels with zero hints"
+  [ "$nohint" -ge 25 ] && echo "  ✔ muscle memory — 25 levels with zero hints"
+  [ "$speed" -ge 1 ]   && echo "  ✔ under pressure — first speedrun"
+  [ "$done_tracks" -ge 1 ] && echo "  ✔ track complete — finished a whole track"
+  [ "$done_tracks" -ge 5 ] && echo "  ✔ polymath — 5 tracks complete"
+}
+cmd_progress() {
+  if [ -f "$STATE/progress" ]; then sort "$STATE/progress"; else echo "nothing solved yet"; fi; echo
+  for t in $(tracks); do printf '%-11s %s / %s\n' "$t" "$(grep -c "^$t/" "$STATE/progress" 2>/dev/null || echo 0)" "$(ls -d "$ROOT"/levels/$t/[0-9]* | wc -l | tr -d ' ')"; done; echo
+  if [ -f "$STATE/streak" ]; then local last n; last=$(sed -n 1p "$STATE/streak"); n=$(sed -n 2p "$STATE/streak")
+    if [ "$last" = "$(today)" ] || [ "$last" = "$(date -v-1d +%Y-%m-%d 2>/dev/null || date -d yesterday +%Y-%m-%d 2>/dev/null)" ]; then echo "🔥 streak: $n day$([ "$n" = 1 ] || echo s) (last solve $last)"; else echo "streak: broken (last solve $last) — solve one today to restart"; fi; fi
+  achievements
+  [ -n "${WG_PLAYER:-}" ] && echo "player: $WG_PLAYER"
+}
 
 case "${1:-}" in
-  start|stop|shell|brief|check|hint|spoil|reset|next|list|progress) "cmd_$1" ;;
+  start|stop|shell|brief|check|hint|spoil|reset|next|list|progress|primer|random|speedrun) "cmd_$1" ;;
   level) cmd_level "${2:?level number}" ;;
   track) cmd_track "${2:?track name}" ;;
   *) usage ;;

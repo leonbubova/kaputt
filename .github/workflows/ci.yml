@@ -1,0 +1,23 @@
+name: CI
+on:
+  push:
+    branches: [master]
+  pull_request:
+jobs:
+  levels:
+    name: play ${{ matrix.track }} track
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        track: [git, bash]
+    steps:
+      - uses: actions/checkout@v4
+      - name: run every level (break → must fail → fix → must pass)
+        run: test/run-all.sh ${{ matrix.track }}
+  shellcheck:
+    name: shellcheck CLI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get install -y -q shellcheck >/dev/null && shellcheck -S warning bin/wg lib/common.sh || true

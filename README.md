@@ -1,5 +1,8 @@
 # kaputt — a break/fix wargame
 
+[![CI](https://github.com/leonbubova/kaputt/actions/workflows/ci.yml/badge.svg)](https://github.com/leonbubova/kaputt/actions/workflows/ci.yml) [![site](https://img.shields.io/badge/site-live-c4b5fd)](https://leonbubova.github.io/kaputt/) ![license](https://img.shields.io/badge/license-MIT-lightgrey)
+
+
 **Something is broken. You fix it.** No slides, no multiple-choice. Each level spins up a real
 environment, quietly sabotages one thing, and hands you the incident the way a teammate would report
 it. You debug it with the actual tools — `kubectl`, `docker`, `psql`, `git`, `helm` — in your own
@@ -19,6 +22,17 @@ wg hint                 # stuck? 3 hints per level, counted
 wg progress             # scoreboard across every track
 wg stop                 # tear the environment down
 ```
+
+## 60-second quickstart
+
+```
+git clone https://github.com/leonbubova/kaputt && cd kaputt
+./install.sh && exec $SHELL     # docker/k3d/kubectl/helm + PATH
+wg track git                    # no Docker needed for this one
+wg level 1                      # read the ticket, fix it, then:
+wg check
+```
+New to a tool? `wg primer` shows the ~10 commands a track uses before you start. Stuck? `wg hint` (3 per level), then `wg spoil`.
 
 ## Tracks
 
