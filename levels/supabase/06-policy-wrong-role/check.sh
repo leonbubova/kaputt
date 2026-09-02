@@ -1,0 +1,6 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/supabase/lib.sh"
+rls_on faq || fail "RLS on faq is off"
+body=$(rest_anon GET "/rest/v1/faq?select=id") || fail "API unreachable"
+[ "$(rest_code)" = 200 ] || fail "GET /rest/v1/faq → $(rest_code): $body"
+[ "$(json_len "$body")" -ge 3 ] || fail "anon GET /rest/v1/faq returns $(json_len "$body") rows (want 3)"
+ok "anon reads the FAQ"

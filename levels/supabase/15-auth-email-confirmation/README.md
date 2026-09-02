@@ -1,0 +1,2 @@
+# new users can't log in
+"Signup (`POST /auth/v1/signup`) returns 200 but no session, and the following password sign-in fails with `400 email_not_confirmed`. This is the local dev stack — nobody reads the dev mailbox, sign-in must just work." Goal: a fresh signup can immediately sign in with `grant_type=password` and gets an `access_token`. Note: auth settings live in `supabase/config.toml` and are only read at start → `supabase stop && supabase start`.

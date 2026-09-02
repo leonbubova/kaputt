@@ -1,0 +1,2 @@
+# `supabase db reset` is red
+"CI runs `supabase db reset` against the migrations in `~/.k8s-wargame/supabase/project/supabase/migrations/`. Since the tags feature was merged it fails and nothing after it gets applied. The reviewer says they "fixed the obvious thing" and it still fails." Goal: `supabase db reset` succeeds, `tags` and `article_tags` exist with their seed rows, `tags.name` stays NOT NULL. Fix the migration — don't delete it.

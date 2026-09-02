@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/supabase/lib.sh"
+[ -f "$SB_PROJECT/supabase/seed.sql" ] || fail "no supabase/seed.sql"
+grep -qi 'notes' "$SB_PROJECT/supabase/seed.sql" || fail "seed.sql does not touch notes"
+n=$(sql "select count(*) from public.notes"); [ "$n" -ge 3 ] || fail "notes has $n rows (want ≥ 3)"
+ok "seed.sql present, $n notes seeded"
