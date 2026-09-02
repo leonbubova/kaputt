@@ -1,0 +1,6 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/git/gitlib.sh"
+[ -d "$REPO/.git" ] || fail "no repository in $REPO (git init)"
+h HEAD >/dev/null || fail "no commit yet"
+g cat-file -e HEAD:README.md 2>/dev/null && g cat-file -e HEAD:app.py 2>/dev/null || fail "README.md and app.py must both be committed"
+clean_tree || fail "uncommitted changes remain: $(g status --porcelain)"
+ok "repository created, first commit done"
