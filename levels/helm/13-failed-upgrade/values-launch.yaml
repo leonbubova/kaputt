@@ -1,0 +1,6 @@
+# launch day config
+replicas: 3
+environment: prod
+domain: shop.example.com
+image:
+  tag: 1.27-alpine-perl-slim

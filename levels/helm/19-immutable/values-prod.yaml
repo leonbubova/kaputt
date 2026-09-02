@@ -1,0 +1,4 @@
+environment: prod
+domain: shop.example.com
+replicas: 2
+tier: frontend

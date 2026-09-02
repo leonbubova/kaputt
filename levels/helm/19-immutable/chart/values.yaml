@@ -1,0 +1,7 @@
+replicas: 1
+image:
+  repository: nginx
+  tag: 1.27-alpine
+environment: dev
+domain: ""
+tier: web

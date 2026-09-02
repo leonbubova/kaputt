@@ -1,0 +1,5 @@
+apiVersion: v2
+name: web
+description: static frontend served by nginx
+type: application
+appVersion: "1.27"

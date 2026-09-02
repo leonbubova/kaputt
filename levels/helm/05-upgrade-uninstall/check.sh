@@ -1,0 +1,10 @@
+source ../../../lib/common.sh; source ../lib.sh
+[ "$(rel_status web)" = deployed ] || fail "release web is not deployed"
+$K get secret sh.helm.release.v1.web.v1 >/dev/null 2>&1 || fail "revision 1 is gone — upgrade, don't reinstall"
+[ "$(rel_revs web)" -ge 2 ] || fail "helm history web shows only 1 revision"
+helm history web -n $NS -o json 2>/dev/null | grep -o '{[^}]*}' | grep '"status":"deployed"' | grep -q '"chart":"web-0.2.0"' || fail "deployed revision is not chart web-0.2.0"
+wait_available web 1 60 || fail "web has no available replica"
+in_cluster_get http://web.wg-helm.svc/ | grep -q "env=staging" || fail "page does not show env=staging"
+helm status wg-legacy -n $NS >/dev/null 2>&1 && fail "release wg-legacy still exists"
+$K get deploy wg-legacy >/dev/null 2>&1 && fail "deployment wg-legacy still exists"
+ok "web at 0.2.0 rev 2, wg-legacy gone"

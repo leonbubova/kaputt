@@ -1,0 +1,11 @@
+replicas: 1
+image:
+  repository: nginx
+  tag: 1.27-alpine
+environment: dev
+domain: ""
+db:
+  host: postgres.wg-helm.svc
+  # set existingSecret to use a Secret managed outside of helm (key: password)
+  existingSecret: ""
+  password: "s3cret-hunter2"
