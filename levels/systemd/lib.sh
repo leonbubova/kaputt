@@ -1,5 +1,5 @@
 # helpers for systemd levels — sourced after lib/common.sh. Everything runs on the remote box via ssh + sudo.
-H=${WG_SYSTEMD_HOST:-station44}
+H=${WG_SYSTEMD_HOST:?set WG_SYSTEMD_HOST to an ssh host: a remote Ubuntu box with systemd + passwordless sudo}
 SSH="ssh -o BatchMode=yes -o ConnectTimeout=10 -o LogLevel=ERROR -o ControlMaster=auto -o ControlPath=$HOME/.ssh/wg-cm-%C -o ControlPersist=300"
 X()  { $SSH "$H" sudo -n "$@"; }                  # run a command as root on the box (args must not contain spaces)
 XI() { $SSH "$H" sudo -n bash -s; }               # run a root shell script from stdin (heredoc)

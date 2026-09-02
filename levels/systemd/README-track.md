@@ -1,13 +1,13 @@
 # systemd track — how the environment works
 
 systemd needs to be PID 1 — that rules out plain Docker containers and macOS. The track therefore runs on a real
-Linux box over ssh (default `station44`, Ubuntu 24.04, systemd 255, passwordless sudo). Override with
+Linux box over ssh (set `WG_SYSTEMD_HOST`, e.g. Ubuntu 24.04, systemd 255, passwordless sudo). Override with
 `WG_SYSTEMD_HOST=<host>`.
 
 - `bin/wg` runs on the Mac. `track.sh`, `break.sh`, `check.sh`, `solutions.sh` execute everything remotely via
   `ssh <host> sudo -n bash -s` (helpers in `lib.sh`: `X`, `XS`, `XI`, `prop`, `unit_file`, `script`). ssh ControlMaster keeps one
   connection alive so per-call latency is small.
-- **Why system manager + sudo, not `systemctl --user`:** the user session works on station44, but `Linger=no` (it can be torn down
+- **Why system manager + sudo, not `systemctl --user`:** the user session works on such a box, but `Linger=no` (it can be torn down
   between ssh calls) and several levels need `User=`, file ownership and `/etc/systemd/system` semantics that only exist for the
   system manager.
 - Play area: units `/etc/systemd/system/wg-*.{service,timer,target}`, scripts/data under `/opt/wg/<name>/`, configs `/etc/wg/`,

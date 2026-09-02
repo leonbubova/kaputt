@@ -1,6 +1,7 @@
 # track: helm on the same k3d cluster as the k8s track; play area = namespace wg-helm
 source "$WG_ROOT/levels/k8s/track.sh"
 track_wipe() {  # before each level
+  assert_wargame_ctx
   local ns=wg-helm r i=0
   for r in $(helm list -n $ns -q --deployed --failed --pending --uninstalled --uninstalling --superseded 2>/dev/null); do helm uninstall "$r" -n $ns --no-hooks >/dev/null 2>&1 || true; done
   kubectl delete ns $ns --ignore-not-found --wait=true >/dev/null 2>&1 || true

@@ -42,7 +42,7 @@ pod), `stable_for selector seconds` (restart counter unchanged). `WG_FAST=1` shr
 | helm | same k3d cluster, namespace `wg-helm` | uninstall releases + recreate ns | helm needs a real API server; reuse the cluster |
 | linux | one container `wg-linux` from a pre-built image | recreate container (~2 s) | a "machine" to ssh into, without a VM |
 | docker | the host Docker daemon, everything prefixed `wg-` | `compose down -v`, rm by prefix | the subject *is* the daemon |
-| supabase | `supabase start` local stack (12 containers) | `db reset` / wipe.sql | the real thing, locally; heavy, so station44 |
+| supabase | `supabase start` local stack (12 containers) | `db reset` / wipe.sql | the real thing, locally; heavy, so a bigger remote host |
 | trigger | node project in `~/.k8s-wargame/trigger/app`, shared `node_modules` | rm + copy template (~0.1 s) | Trigger.dev has no offline runtime; judge = tsc + vitest with the SDK's own mock task context + fake API (see `levels/trigger/README-track.md`) |
 | nestjs | NestJS 11 app in `~/.k8s-wargame/nestjs/app`, shared `node_modules` installed once | rm + copy template (~0.1 s), kill port 3200 | the subject is the framework wiring; no container needed, checks boot the app on 3299 |
 
@@ -62,11 +62,11 @@ runs on a real cluster — that is the point; it is not a unit test.
 ## Setup steps that were done (2026-09-02)
 1. Mac: `brew install k3d helm` (Docker via colima already present). `k3d cluster create wargame …`.
 2. Wrote CLI, 18 k8s levels, harness; ran the harness until ALL GREEN.
-3. station44 (Ubuntu 24.04, 62 GB RAM, `leon` has passwordless sudo):
+3. a remote Ubuntu host (set `WG_SYSTEMD_HOST`; needs Docker + passwordless sudo for the systemd track):
    `install.sh` → `get.docker.com` installs Docker CE and adds `leon` to group `docker`;
    kubectl from `dl.k8s.io`; k3d from its install script; helm from its install script;
    PATH line appended to `~/.bashrc`/`~/.zshrc`.
-4. `wg start` on station44 → cluster up, images pre-pulled, level 1 loaded.
+4. `wg start` on the remote host → cluster up, images pre-pulled, level 1 loaded.
 5. Refactor into tracks; four agents built linux / docker / helm / supabase against `docs/track-spec.md`.
 
 ## Gotchas learned

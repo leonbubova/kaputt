@@ -1,4 +1,4 @@
-# track: real systemd on a remote Ubuntu box (default: station44) — units wg-*.service, dirs /opt/wg, /etc/wg. See README-track.md
+# track: real systemd on a remote Ubuntu box (set WG_SYSTEMD_HOST) — units wg-*.service, dirs /opt/wg, /etc/wg. See README-track.md
 source "$WG_ROOT/levels/systemd/lib.sh"
 track_start() {
   $SSH "$H" true 2>/dev/null || { echo "cannot ssh to $H (set WG_SYSTEMD_HOST or fix ~/.ssh/config)" >&2; return 1; }

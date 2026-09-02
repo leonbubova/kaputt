@@ -1,3 +1,11 @@
+# refuse any destructive kubectl op unless we are really on the throwaway cluster
+assert_wargame_ctx() {
+  local c; c=$(kubectl config current-context 2>/dev/null || true)
+  case "$c" in
+    k3d-wargame) : ;;
+    *) echo "REFUSING: current kubectl context is '$c', not 'k3d-wargame'. wg only operates on its own disposable cluster. Run 'wg start' or switch context." >&2; exit 1 ;;
+  esac
+}
 # track: kubernetes on k3d
 CLUSTER=wargame
 track_start() {
@@ -11,6 +19,7 @@ track_start() {
 track_stop() { k3d cluster delete $CLUSTER; }
 track_ready() { kubectl cluster-info >/dev/null 2>&1; }
 track_wipe() {  # before each level
+  assert_wargame_ctx
   kubectl delete ns wg --ignore-not-found --wait=true >/dev/null 2>&1 || true
   local i=0; while kubectl get ns wg >/dev/null 2>&1; do sleep 1; i=$((i+1)); [ $i -gt 90 ] && { echo "namespace wg stuck terminating" >&2; exit 1; }; done
   kubectl create ns wg >/dev/null; kubectl config set-context --current --namespace=wg >/dev/null

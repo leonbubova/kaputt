@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# one-shot setup for Ubuntu (station44) or macOS. Idempotent.
+# one-shot setup for Ubuntu or macOS. Idempotent.
 set -euo pipefail
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 if [ "$(uname)" = Darwin ]; then

@@ -32,7 +32,7 @@ Researched 2026-09-02 (docs: self-hosting/docker, cli-dev, config-file; SDK 4.5.
   pushes an image to the registry (minutes)**. A `wg check` that triggers a run and reads its
   status within 60 s after *each level's code edit* would depend on that dev process staying
   attached to the right project — fragile, and it would put the whole judge behind a network
-  service on station44. Not provable within the 2-hour budget, so (a) was rejected.
+  service on a remote box. Not provable within the 2-hour budget, so (a) was rejected.
 - The CLI has no offline/dry-run mode: every command (`dev`, `deploy`, `list`) requires a
   logged-in profile and a reachable API. Verified in docs (`cli-dev`) — no `--dry-run` exists.
 - The SDK ships its own test harness (`runInMockTaskContext`, `StandardResourceCatalog`), which
