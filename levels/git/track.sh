@@ -8,3 +8,6 @@ track_stop()  { rm -rf "$WGGIT"; }
 track_ready() { command -v git >/dev/null; }
 track_wipe()  { rm -rf "$WGGIT"; mkdir -p "$WGGIT"; }
 track_shell() { mkdir -p "$WGGIT/repo"; cd "$WGGIT/repo" && exec "${SHELL:-bash}"; }
+
+# where the player works — lets a shell wrapper cd there after wg level/next
+track_workdir() { echo "$WGGIT/repo"; }

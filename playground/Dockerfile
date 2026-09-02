@@ -1,8 +1,11 @@
 # kaputt playground — the browser demo image. Only the Docker-free tracks (shell, git, bash).
 FROM debian:bookworm-slim
-RUN apt-get update -q && apt-get install -y -q --no-install-recommends \
-      bash git coreutils findutils grep sed gawk less nano vim-tiny ca-certificates procps python3 \
-    && rm -rf /var/lib/apt/lists/* \
+# debian-slim strips man pages; the shell track teaches `man`, so put them back
+RUN rm -f /etc/dpkg/dpkg.cfg.d/docker \
+    && apt-get update -q && apt-get install -y -q --no-install-recommends \
+      bash git coreutils findutils grep sed gawk less nano vim-tiny ca-certificates procps python3 man-db manpages \
+    && apt-get install -y -q --reinstall --no-install-recommends coreutils grep sed findutils bash \
+    && mandb -q 2>/dev/null; rm -rf /var/lib/apt/lists/* \
     && useradd -m -s /bin/bash player
 # the game, read-only; only the light tracks
 COPY --chown=root:root bin/ /opt/kaputt/bin/

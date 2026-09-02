@@ -8,3 +8,5 @@ track_stop()  { rm -rf "$WGBASH"; }
 track_ready() { command -v bash >/dev/null; }
 track_wipe()  { rm -rf "$WORK"; mkdir -p "$WORK"; }
 track_shell() { mkdir -p "$WORK"; cd "$WORK" && exec "${SHELL:-bash}"; }
+
+track_workdir() { echo "$HOME/.k8s-wargame/bash/app"; }
