@@ -29,6 +29,8 @@ U
 }
 tracks() { ls -d "$ROOT"/levels/*/ | xargs -n1 basename; }
 TRACK=${WG_TRACK:-$(cat "$STATE/track" 2>/dev/null || echo k8s)}
+if [ ! -f "$ROOT/levels/$TRACK/track.sh" ] && [ -z "${WG_TRACK:-}" ]; then   # default missing (slim image)? first installed track
+  for _d in "$ROOT"/levels/*/; do [ -f "$_d/track.sh" ] && { TRACK=$(basename "$_d"); break; }; done; fi
 TDIR="$ROOT/levels/$TRACK"; [ -f "$TDIR/track.sh" ] || { echo "unknown track $TRACK" >&2; exit 1; }
 source "$TDIR/track.sh"
 levels() { ls -d "$TDIR"/[0-9]* | xargs -n1 basename | sort; }
