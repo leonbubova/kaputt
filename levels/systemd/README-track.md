@@ -18,4 +18,4 @@ Linux box over ssh (set `WG_SYSTEMD_HOST`, e.g. Ubuntu 24.04, systemd 255, passw
   then `systemctl daemon-reload && systemctl restart wg-x`; `systemctl status`, `journalctl -u`, `systemd-analyze verify/calendar`.
 - `check.sh` asserts outcomes remotely: `systemctl is-active/is-enabled`, `systemctl show -p Result/NRestarts/MainPID/LastTriggerUSec`,
   files written by the services, sha256 of provided scripts (recorded in `/opt/wg/.expect` by break.sh) where the story forbids changing them.
-- Test from the Mac: `test/run-all.sh systemd`. Timer levels (05, 13) wait up to ~75 s for the first trigger.
+- Test from the Mac: `test/run-all.sh systemd`. Timer level (07) waits up to ~75 s for the first trigger.

@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>secret as a file — k8s level 06 — kaputt</title>
-<meta name="description" content="k8s exercise: secret as a file. Fix a real broken k8s system in your own terminal — level 06 of 25, with hints and a checker.">
+<meta name="description" content="k8s exercise: secret as a file. Fix a real broken k8s system in your own terminal — level 06 of 33, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/k8s/06-secret-volume/">
-<meta property="og:title" content="secret as a file — k8s level 06 — kaputt"><meta property="og:description" content="k8s exercise: secret as a file. Fix a real broken k8s system in your own terminal — level 06 of 25, with hints and a checker.">
+<meta property="og:title" content="secret as a file — k8s level 06 — kaputt"><meta property="og:description" content="k8s exercise: secret as a file. Fix a real broken k8s system in your own terminal — level 06 of 33, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -17,7 +17,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">k8s</a> / level 06</div>
 <h1 class="lvl">secret as a file</h1>
-<p class="meta">k8s · level 06 of 25 · <code>secret-volume</code></p>
+<p class="meta">k8s · level 06 of 33 · <code>secret-volume</code></p>
 <div class="brief"><h2>the ticket</h2><p>Ticket: &quot;The reader service loads its API key from a file, not from env. Create a Secret <code>api-key</code> in <code>wg</code> with key <code>token</code> = <code>abc123</code>, and a pod <code>reader</code> (image <code>busybox:1.36</code>, keep it running) that mounts the secret at <code>/etc/secret</code>.&quot; Goal: <code>kubectl exec reader -- cat /etc/secret/token</code> prints <code>abc123</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>

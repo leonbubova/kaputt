@@ -34,7 +34,7 @@ wg track shell                  # never used a terminal? start here (no Docker n
 wg level 1                      # read the ticket, fix it, then:
 wg check
 ```
-New to a tool? `wg primer` shows the ~10 commands a track uses before you start. Stuck? `wg hint` (3 per level), then `wg spoil`.
+New to a tool? `wg help` shows the ~10 commands a track uses before you start. Stuck? `wg hint` (3 per level), then `wg spoil`.
 
 ## Tracks
 
@@ -44,24 +44,24 @@ create the table), then incidents from easy to hard, with the last levels chaini
 | Track | Levels | You learn |
 |---|---|---|
 | `shell` | 14 | **start here if you have never used a terminal** — prompt, paths, files, pipes, permissions |
-| `k8s` | 25 | pods, deployments, services, probes, RBAC, network policy, ingress, rollouts, nodes, PVCs |
-| `linux` | 23 | the shell, permissions, processes, disk, cron, a box that won't behave |
-| `git` | 22 | branching, merge conflicts, reflog rescue, rebase, bisect, history surgery |
-| `docker` | 22 | images, containers, volumes, networks, compose, healthchecks |
-| `nestjs` | 21 | NestJS dependency injection, modules, pipes, guards, HTTP |
-| `nextjs` | 21 | Next.js 15 App Router, server/client components, actions, caching |
-| `helm` | 20 | charts, values, templates, upgrades, rollbacks |
-| `trigger` | 18 | Trigger.dev tasks, retries, schedules, idempotency |
-| `supabase` | 18 | Postgres, row-level security, auth, storage, migrations |
-| `postgres` | 14 | schema, constraints, indexes, locks, query plans |
-| `pentest` | 12 | find **and fix** web-app vulnerabilities (defensive) |
-| `nginx` | 12 | reverse proxy, upstreams, TLS, redirects, body limits |
-| `networking` | 12 | DNS, ports, routes, bind addresses, firewalls |
-| `redis` | 12 | keys, hashes, lists, TTLs, eviction, queues |
-| `bash` | 12 | quoting, comparisons, subshells, pipefail, the classic traps |
-| `terraform` | 12 | resources, variables, outputs, count/for_each, drift |
-| `systemd` | 8 | units, services, timers, ordering, restart policy |
-| `tls` | 10 | certificates, chains, SANs, openssl |
+| `k8s` | 33 | pods, deployments, services, probes, RBAC, network policy, ingress, rollouts, nodes, PVCs |
+| `linux` | 29 | the shell, permissions, processes, disk, cron, a box that won't behave |
+| `git` | 28 | branching, merge conflicts, reflog rescue, rebase, bisect, history surgery |
+| `docker` | 27 | images, containers, volumes, networks, compose, healthchecks |
+| `nestjs` | 27 | NestJS dependency injection, modules, pipes, guards, HTTP |
+| `nextjs` | 28 | Next.js 15 App Router, server/client components, actions, caching |
+| `helm` | 25 | charts, values, templates, upgrades, rollbacks |
+| `trigger` | 24 | Trigger.dev tasks, retries, schedules, idempotency |
+| `supabase` | 24 | Postgres, row-level security, auth, storage, migrations |
+| `postgres` | 20 | schema, constraints, indexes, locks, query plans |
+| `pentest` | 16 | find **and fix** web-app vulnerabilities (defensive) |
+| `nginx` | 17 | reverse proxy, upstreams, TLS, redirects, body limits |
+| `networking` | 17 | DNS, ports, routes, bind addresses, firewalls |
+| `redis` | 18 | keys, hashes, lists, TTLs, eviction, queues |
+| `bash` | 18 | quoting, comparisons, subshells, pipefail, the classic traps |
+| `terraform` | 16 | resources, variables, outputs, count/for_each, drift |
+| `systemd` | 12 | units, services, timers, ordering, restart policy |
+| `tls` | 15 | certificates, chains, SANs, openssl |
 
 Run `wg list` for the tracks on your machine and your status in each.
 

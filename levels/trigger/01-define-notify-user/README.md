@@ -1,0 +1,2 @@
+# ticket: implement the notify-user task
+"`src/api/campaign.ts` and `src/trigger/send-campaign.ts` import `notifyUser` from `src/trigger/notify-user.ts` — the file doesn't exist yet, `tsc` is red." Goal: create task id `notify-user` with payload `{ userId: string, campaign: string }`; `run` sends the mail via `sendEmail(`${userId}@example.com`, campaign)` from `src/lib/db.ts` and returns `{ notified: userId }`.

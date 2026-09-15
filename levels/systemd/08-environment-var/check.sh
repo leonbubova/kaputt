@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/systemd/lib.sh"
+unchanged /opt/wg/banner/banner.sh banner || fail "banner.sh was modified"
+active wg-banner.service || fail "wg-banner.service is not active ($(prop wg-banner.service Result))"
+X grep -qx 'site=berlin-1' /opt/wg/banner/state 2>/dev/null || fail "/opt/wg/banner/state does not say site=berlin-1"
+ok "wg-banner runs with SITE_NAME from the unit"

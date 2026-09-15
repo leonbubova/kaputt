@@ -1,0 +1,6 @@
+name: wg
+services:
+  notes:
+    image: alpine:3.20
+    container_name: wg-notes
+    command: sleep infinity

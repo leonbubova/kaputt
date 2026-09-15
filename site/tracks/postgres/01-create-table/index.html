@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>no customers table yet — postgres level 01 — kaputt</title>
-<meta name="description" content="postgres exercise: no customers table yet. Fix a real broken postgres system in your own terminal — level 01 of 14, with hints and a checker.">
+<meta name="description" content="postgres exercise: no customers table yet. Fix a real broken postgres system in your own terminal — level 01 of 20, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/postgres/01-create-table/">
-<meta property="og:title" content="no customers table yet — postgres level 01 — kaputt"><meta property="og:description" content="postgres exercise: no customers table yet. Fix a real broken postgres system in your own terminal — level 01 of 14, with hints and a checker.">
+<meta property="og:title" content="no customers table yet — postgres level 01 — kaputt"><meta property="og:description" content="postgres exercise: no customers table yet. Fix a real broken postgres system in your own terminal — level 01 of 20, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -17,7 +17,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">postgres</a> / level 01</div>
 <h1 class="lvl">no customers table yet</h1>
-<p class="meta">postgres · level 01 of 14 · <code>create-table</code></p>
+<p class="meta">postgres · level 01 of 20 · <code>create-table</code></p>
 <div class="brief"><h2>the ticket</h2><p>&quot;The CRM is a blank database. First thing the app needs is a <code>customers</code> table.&quot; DB: <code>psql postgres://postgres:wg@localhost:5433/wg</code> (no psql? <code>docker exec -it wg-pg psql -U postgres -d wg</code>). Work = run SQL. Goal: table <code>customers</code> with columns <code>id</code> (integer), <code>name</code> (text), <code>email</code> (text), <code>created_at</code> (timestamp with time zone).</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>

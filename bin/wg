@@ -11,7 +11,7 @@ usage() { cat <<U
 wg — break/fix wargame          tracks: $(tracks | tr '\n' ' ')
 
   wg track NAME       switch track (default k8s)
-  wg primer           the ~10 commands this track uses — read this first if you're new
+  wg help             the ~10 commands this track uses — quick refresh, any time
   wg start            bring up the environment of the current track
   wg stop             tear it down
   wg shell            enter the broken machine (tracks that have one)
@@ -44,12 +44,12 @@ today() { date +%Y-%m-%d; }
 total() { levels | wc -l | tr -d ' '; }
 lvnum() { printf '%d' "$(( 10#${1%%-*} ))"; }
 
-cmd_track() { [ -d "$ROOT/levels/$1" ] || { echo "no track $1"; exit 1; }; echo "$1" > "$STATE/track"; echo "track: $1"; [ -f "$ROOT/levels/$1/PRIMER.md" ] && echo "new to $1? → wg primer"; }
+cmd_track() { [ -d "$ROOT/levels/$1" ] || { echo "no track $1"; exit 1; }; echo "$1" > "$STATE/track"; echo "track: $1"; [ -f "$ROOT/levels/$1/PRIMER.md" ] && echo "new to $1? → wg help"; }
 cmd_primer() {
   if [ -f "$TDIR/PRIMER.md" ]; then cat "$TDIR/PRIMER.md"; else
     echo "no primer for '$TRACK' yet. the hints teach as you go: hint 1 = where to look, hint 3 = the command. → wg level 1"; fi
 }
-cmd_start() { track_start; echo "ready. → wg level 1"; [ -f "$TDIR/PRIMER.md" ] && echo "   new here? read the commands first: wg primer"; }
+cmd_start() { track_start; echo "ready. → wg level 1"; [ -f "$TDIR/PRIMER.md" ] && echo "   new here? read the commands first: wg help"; }
 cmd_stop()  { track_stop; }
 cmd_shell() { need_env; type track_shell >/dev/null 2>&1 || { echo "track $TRACK has no shell — use your normal terminal"; exit 1; }; track_shell; }
 
@@ -139,6 +139,7 @@ cmd_progress() {
 
 case "${1:-}" in
   start|stop|shell|brief|check|hint|spoil|reset|next|list|progress|primer|random|speedrun|pwd) "cmd_$1" ;;
+  help) cmd_primer ;;
   status) cmd_status "${2:-}" ;;
   level) cmd_level "${2:?level number}" ;;
   track) cmd_track "${2:?track name}" ;;

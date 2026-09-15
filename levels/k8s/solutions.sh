@@ -27,21 +27,45 @@ Y
 s07(){ kubectl create namespace team-a; kubectl -n team-a create deployment web --image=nginx:1.27-alpine; kubectl config set-context --current --namespace=team-a; }
 s08(){ kubectl -n $NS set env deploy/api DB_HOST=postgres.wg.svc DB_HOTS-; }
 s09(){ kubectl -n $NS set image deploy/web nginx=nginx:1.27-alpine; }
-s10(){ kubectl -n $NS set resources deploy/worker --requests=cpu=100m,memory=64Mi --limits=cpu=200m,memory=128Mi; }
-s11(){ kubectl -n $NS set resources deploy/cache --limits=memory=128Mi; }
-s12(){ kubectl -n $NS patch svc web -p '{"spec":{"selector":{"app":"web"}}}'; }
-s13(){ kubectl -n $NS patch svc web -p '{"spec":{"ports":[{"port":80,"targetPort":80}]}}'; }
-s14(){ kubectl -n $NS create secret generic db-credentials --from-literal=password=s3cret; }
-s15(){ kubectl -n $NS get cm web-config -o yaml | sed 's/lissen/listen/' | kubectl apply -f -; kubectl -n $NS rollout restart deploy/web; }
-s16(){ kubectl -n $NS patch deploy web --type=json -p='[{"op":"replace","path":"/spec/template/spec/containers/0/livenessProbe/httpGet/path","value":"/"}]'; }
-s17(){ kubectl -n $NS patch deploy web --type=json -p='[{"op":"replace","path":"/spec/template/spec/containers/0/readinessProbe/tcpSocket/port","value":80}]'; }
-s18(){ kubectl -n $NS patch rolebinding reporter-reads-pods --type=json -p='[{"op":"replace","path":"/subjects/0/namespace","value":"wg"}]'; kubectl -n $NS rollout restart deploy/reporter; }
-s19(){ kubectl -n $NS patch netpol allow-frontend-to-backend --type=json -p='[{"op":"replace","path":"/spec/ingress/0/from/0/podSelector/matchLabels/role","value":"frontend"}]'; }
-s20(){ kubectl -n $NS patch ingress web --type=json -p='[{"op":"replace","path":"/spec/rules/0/http/paths/0/backend/service/name","value":"web"}]'; }
-s21(){ kubectl -n $NS rollout undo deploy/web; kubectl -n $NS rollout status deploy/web --timeout=90s; }
-s22(){ kubectl label node k3d-wargame-agent-0 disktype=ssd --overwrite; }
-s23(){ kubectl drain k3d-wargame-agent-1 --ignore-daemonsets --delete-emptydir-data --timeout=120s; }
-s24(){ kubectl -n $NS delete pod db --wait=true; kubectl -n $NS delete pvc db-data --wait=true; kubectl -n $NS apply -f - <<'Y'
+s10(){ kubectl -n $NS set resources deploy/web --requests=cpu=100m,memory=64Mi --limits=cpu=200m,memory=128Mi; }
+s11(){ kubectl -n $NS set resources deploy/worker --requests=cpu=100m,memory=64Mi --limits=cpu=200m,memory=128Mi; }
+s12(){ kubectl -n $NS set resources deploy/cache --limits=memory=128Mi; }
+s13(){ kubectl -n $NS patch svc web -p '{"spec":{"selector":{"app":"web"}}}'; }
+s14(){ kubectl -n $NS expose deployment web --port=8080 --target-port=80; }
+s15(){ kubectl -n $NS patch svc web -p '{"spec":{"ports":[{"port":80,"targetPort":80}]}}'; }
+s16(){ kubectl -n $NS create secret generic db-credentials --from-literal=password=s3cret; kubectl -n $NS apply -f - <<'Y'
+apiVersion: v1
+kind: Pod
+metadata: {name: api}
+spec:
+  containers:
+  - {name: api, image: busybox:1.36, command: [sleep, "3600"], env: [{name: DB_PASSWORD, valueFrom: {secretKeyRef: {name: db-credentials, key: password}}}]}
+Y
+}
+s17(){ kubectl -n $NS create secret generic db-credentials --from-literal=password=s3cret; }
+s18(){ kubectl -n $NS rollout restart deploy/web; kubectl -n $NS rollout status deploy/web --timeout=90s; }
+s19(){ kubectl -n $NS get cm web-config -o yaml | sed 's/lissen/listen/' | kubectl apply -f -; kubectl -n $NS rollout restart deploy/web; }
+s20(){ kubectl -n $NS patch deploy web -p '{"spec":{"template":{"spec":{"containers":[{"name":"nginx","livenessProbe":{"httpGet":{"path":"/","port":80},"periodSeconds":5}}]}}}}'; }
+s21(){ kubectl -n $NS patch deploy web --type=json -p='[{"op":"replace","path":"/spec/template/spec/containers/0/livenessProbe/httpGet/path","value":"/"}]'; }
+s22(){ kubectl -n $NS patch deploy web --type=json -p='[{"op":"replace","path":"/spec/template/spec/containers/0/readinessProbe/tcpSocket/port","value":80}]'; }
+s23(){ kubectl -n $NS create serviceaccount reporter; kubectl -n $NS create role pod-reader --verb=get,list --resource=pods; kubectl -n $NS create rolebinding reporter-reads-pods --role=pod-reader --serviceaccount=wg:reporter; }
+s24(){ kubectl -n $NS patch rolebinding reporter-reads-pods --type=json -p='[{"op":"replace","path":"/subjects/0/namespace","value":"wg"}]'; kubectl -n $NS rollout restart deploy/reporter; }
+s25(){ kubectl -n $NS apply -f - <<'Y'
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: default-deny-ingress}
+spec:
+  podSelector: {}
+  policyTypes: [Ingress]
+Y
+}
+s26(){ kubectl -n $NS patch netpol allow-frontend-to-backend --type=json -p='[{"op":"replace","path":"/spec/ingress/0/from/0/podSelector/matchLabels/role","value":"frontend"}]'; }
+s27(){ kubectl -n $NS create ingress web --rule="web.wg.local/*=web:80"; }
+s28(){ kubectl -n $NS patch ingress web --type=json -p='[{"op":"replace","path":"/spec/rules/0/http/paths/0/backend/service/name","value":"web"}]'; }
+s29(){ kubectl -n $NS rollout undo deploy/web; kubectl -n $NS rollout status deploy/web --timeout=90s; }
+s30(){ kubectl label node k3d-wargame-agent-0 disktype=ssd --overwrite; }
+s31(){ kubectl drain k3d-wargame-agent-1 --ignore-daemonsets --delete-emptydir-data --timeout=120s; }
+s32(){ kubectl -n $NS delete pod db --wait=true; kubectl -n $NS delete pvc db-data --wait=true; kubectl -n $NS apply -f - <<'Y'
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata: {name: db-data}
@@ -56,4 +80,4 @@ spec:
   volumes: [{name: data, persistentVolumeClaim: {claimName: db-data}}]
 Y
 }
-s25(){ helm rollback shop 1 -n $NS --wait --timeout 90s; }
+s33(){ helm rollback shop 1 -n $NS --wait --timeout 90s; }

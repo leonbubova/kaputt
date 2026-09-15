@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>api.internal doesn&#x27;t resolve — scripts can&#x27;t find the API host — networking level 02 — kaputt</title>
-<meta name="description" content="networking exercise: api.internal doesn&#x27;t resolve — scripts can&#x27;t find the API host. Fix a real broken networking system in your own terminal — level 02 of 12, with hints and a checker.">
+<meta name="description" content="networking exercise: api.internal doesn&#x27;t resolve — scripts can&#x27;t find the API host. Fix a real broken networking system in your own terminal — level 02 of 17, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/networking/02-hosts-entry/">
-<meta property="og:title" content="api.internal doesn&#x27;t resolve — scripts can&#x27;t find the API host — networking level 02 — kaputt"><meta property="og:description" content="networking exercise: api.internal doesn&#x27;t resolve — scripts can&#x27;t find the API host. Fix a real broken networking system in your own terminal — level 02 of 12, with hints and a checker.">
+<meta property="og:title" content="api.internal doesn&#x27;t resolve — scripts can&#x27;t find the API host — networking level 02 — kaputt"><meta property="og:description" content="networking exercise: api.internal doesn&#x27;t resolve — scripts can&#x27;t find the API host. Fix a real broken networking system in your own terminal — level 02 of 17, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -17,7 +17,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">networking</a> / level 02</div>
 <h1 class="lvl">api.internal doesn&#x27;t resolve — scripts can&#x27;t find the API host</h1>
-<p class="meta">networking · level 02 of 12 · <code>hosts-entry</code></p>
+<p class="meta">networking · level 02 of 17 · <code>hosts-entry</code></p>
 <div class="brief"><h2>the ticket</h2><p>Internal tooling refers to the host <code>api.internal</code>, which should point at this box (127.0.0.1). Right now the name doesn&#x27;t resolve at all. Add a hosts entry so it maps to 127.0.0.1.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
@@ -26,7 +26,7 @@ wg level 2
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/networking/02-hosts-entry">level source on github</a>.</p>
-<div class="pn"><a href="../01-start-service/index.html">← the API isn&#x27;t answering on port 8080 — nothing is listening</a><a href="../03-listen-8080/index.html">nginx is running but serves nothing on 8080 — the API vhost is missing →</a></div>
+<div class="pn"><a href="../01-start-service/index.html">← the API isn&#x27;t answering on port 8080 — nothing is listening</a><a href="../03-change-response/index.html">the API answers &quot;hello&quot; — clients expect &quot;api ok&quot; →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

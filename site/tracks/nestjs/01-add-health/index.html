@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ticket: add a health endpoint — nestjs level 01 — kaputt</title>
-<meta name="description" content="nestjs exercise: ticket: add a health endpoint. Fix a real broken nestjs system in your own terminal — level 01 of 21, with hints and a checker.">
+<meta name="description" content="nestjs exercise: ticket: add a health endpoint. Fix a real broken nestjs system in your own terminal — level 01 of 27, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nestjs/01-add-health/">
-<meta property="og:title" content="ticket: add a health endpoint — nestjs level 01 — kaputt"><meta property="og:description" content="nestjs exercise: ticket: add a health endpoint. Fix a real broken nestjs system in your own terminal — level 01 of 21, with hints and a checker.">
+<meta property="og:title" content="ticket: add a health endpoint — nestjs level 01 — kaputt"><meta property="og:description" content="nestjs exercise: ticket: add a health endpoint. Fix a real broken nestjs system in your own terminal — level 01 of 27, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -17,7 +17,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nestjs</a> / level 01</div>
 <h1 class="lvl">ticket: add a health endpoint</h1>
-<p class="meta">nestjs · level 01 of 21 · <code>add-health</code></p>
+<p class="meta">nestjs · level 01 of 27 · <code>add-health</code></p>
 <div class="brief"><h2>the ticket</h2><p>&quot;The load balancer needs <code>GET /health</code> → 200 <code>{ &quot;status&quot;: &quot;ok&quot; }</code>. Put it in a new <code>HealthController</code> (<code>src/health/</code>) and register it in <code>AppModule</code>.&quot; Goal: <code>curl localhost:3200/health</code> answers with <code>status: ok</code>. App: ~/.k8s-wargame/nestjs/app · <code>npm run start:dev</code> · <code>npm test</code> · <code>npx tsc --noEmit</code></p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>

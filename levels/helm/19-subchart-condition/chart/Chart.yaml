@@ -1,0 +1,10 @@
+apiVersion: v2
+name: shop
+description: static frontend served by nginx
+type: application
+version: 0.1.0
+appVersion: "1.27"
+dependencies:
+  - name: cache
+    version: 0.1.0
+    repository: "file://charts/cache"

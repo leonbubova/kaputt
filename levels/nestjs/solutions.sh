@@ -13,13 +13,19 @@ s08(){ nest_restore users/users.module.ts; }
 s09(){ nest_restore app.module.ts; }
 s10(){ nest_restore users/users.controller.ts; }
 s11(){ nest_restore users/users.service.ts; }
-s12(){ nest_restore users/users.controller.ts; }
-s13(){ nest_restore users/dto/create-user.dto.ts; }
-s14(){ nest_restore admin/api-key.guard.ts; }
-s15(){ nest_restore app.module.ts; }
-s16(){ nest_restore common/http-exception.filter.ts; }
-s17(){ nest_restore app.module.ts; }
-s18(){ nest_restore main.ts; }
-s19(){ nest_restore users/users.service.ts; }
-s20(){ nest_restore users/users.module.ts orders/orders.module.ts users/users.service.ts orders/orders.service.ts; }
-s21(){ nest_restore orders/orders.service.spec.ts; }
+s12(){ nest_restore users/users.service.ts; }
+s13(){ nest_restore users/users.controller.ts; }
+s14(){ nest_restore users/dto/create-user.dto.ts; }
+s15(){ nest_restore admin/api-key.guard.ts admin/admin.controller.ts admin/admin.module.ts; }
+s16(){ nest_restore admin/api-key.guard.ts app.module.ts; }
+s17(){ nest_restore admin/api-key.guard.ts; }
+s18(){ nest_restore app.module.ts; }
+s19(){ nest_restore common/http-exception.filter.ts app.module.ts; }
+s20(){ nest_restore common/http-exception.filter.ts; }
+s21(){ nest_restore app.module.ts; }
+s22(){ nest_restore main.ts; }
+s23(){ nest_restore main.ts; }
+s24(){ nest_restore users/users.service.ts; }
+s25(){ nest_restore users/users.module.ts users/users.service.ts; }
+s26(){ nest_restore users/users.module.ts orders/orders.module.ts users/users.service.ts orders/orders.service.ts; }
+s27(){ nest_restore orders/orders.service.spec.ts; }

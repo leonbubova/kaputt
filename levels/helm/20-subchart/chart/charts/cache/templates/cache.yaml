@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-cache
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: {{ .Release.Name }}-cache}}
+  template:
+    metadata: {labels: {app: {{ .Release.Name }}-cache}}
+    spec:
+      containers:
+        - {name: cache, image: {{ .Values.image }}, ports: [{containerPort: 80}]}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-cache
+spec:
+  selector: {app: {{ .Release.Name }}-cache}
+  ports: [{port: 6379, targetPort: 80}]

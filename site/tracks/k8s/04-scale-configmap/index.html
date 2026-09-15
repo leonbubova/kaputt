@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>scale up and write it down — k8s level 04 — kaputt</title>
-<meta name="description" content="k8s exercise: scale up and write it down. Fix a real broken k8s system in your own terminal — level 04 of 25, with hints and a checker.">
+<meta name="description" content="k8s exercise: scale up and write it down. Fix a real broken k8s system in your own terminal — level 04 of 33, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/k8s/04-scale-configmap/">
-<meta property="og:title" content="scale up and write it down — k8s level 04 — kaputt"><meta property="og:description" content="k8s exercise: scale up and write it down. Fix a real broken k8s system in your own terminal — level 04 of 25, with hints and a checker.">
+<meta property="og:title" content="scale up and write it down — k8s level 04 — kaputt"><meta property="og:description" content="k8s exercise: scale up and write it down. Fix a real broken k8s system in your own terminal — level 04 of 33, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -17,7 +17,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">k8s</a> / level 04</div>
 <h1 class="lvl">scale up and write it down</h1>
-<p class="meta">k8s · level 04 of 25 · <code>scale-configmap</code></p>
+<p class="meta">k8s · level 04 of 33 · <code>scale-configmap</code></p>
 <div class="brief"><h2>the ticket</h2><p>Ticket: &quot;Traffic doubled. Scale <code>web</code> in <code>wg</code> to 4 replicas. Then record the new count for the ops wiki: create a ConfigMap <code>notes</code> with the key <code>podcount</code> set to <code>4</code>.&quot; Goal: <code>web</code> has 4 available replicas, ConfigMap <code>notes</code> has <code>podcount=4</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>

@@ -42,12 +42,15 @@ machine, queues, schedules, idempotency, batching, triggerAndWait misuse, wait.f
 v3→v4 hook signatures). Not covered: dashboard/UI, deployment pipeline, realtime streams.
 
 ## Levels
-Build (01–05): define `charge-card` with schema · retry policy on `sync-crm` · `daily-digest` cron in
-Europe/Berlin · `send-campaign` fan-out via batchTrigger · `onFailure` alert on `payout`.
-Debug (06–18): dirs misconfigured → no tasks found · duplicate task id · schemaTask payload rejected ·
-task-level retry set to 1 · maxDuration seconds vs minutes · OOM → machine preset · wrong queue → no
-concurrency limit · webhook without idempotency key · loop of trigger() → batchTrigger · triggerAndWait
-outside a task · setTimeout instead of wait.for · metadata never updated · v3 onFailure signature in v4.
+Build (01–08): plain `notify-user` task · `charge-card` with schema · project-wide `retries.default` · retry policy on
+`sync-crm` · `daily-digest` cron in Europe/Berlin · `signup()` triggers a run from API code · `send-campaign` fan-out
+via batchTrigger · `onFailure` alert on `payout`.
+Debug (09–24), each new option practised in a build-it level right before the incident that needs it:
+dirs misconfigured → no tasks found · duplicate task id · schemaTask payload rejected · task-level retry set to 1 ·
+[13 build: `maxDuration` on `import-csv`] maxDuration seconds vs minutes · [15 build: `machine` on `generate-report`]
+OOM → machine preset · [17 build: `queue()` shopify-api] wrong queue → no concurrency limit · webhook without
+idempotency key · loop of trigger() → batchTrigger · triggerAndWait outside a task · setTimeout instead of wait.for ·
+metadata never updated · v3 onFailure signature in v4.
 
 ## Test
-`test/run-all.sh trigger` — ~2.5 min, ALL GREEN on 2026-09-02 (node 25, @trigger.dev/sdk 4.5.15).
+`test/run-all.sh trigger` — 24 levels, ~3.5 min, ALL GREEN on 2026-09-02 (node 25, @trigger.dev/sdk 4.5.15).

@@ -19,6 +19,7 @@ levels/<track>/NN-slug/
 ## Design rules
 - **Beginner → pro.** Every track opens with a "build it" block (levels 01–0N, ~⅓ of the track): the ticket asks to ADD or CREATE something small (a manifest, a route, a config), `break.sh` removes it from the template/env, `check.sh` verifies it exists and works. Hints there teach the concept and the command, not debugging. Then the incident levels, easy → hard. The last 2–3 levels chain two causes.
 - Symptom first, like an incident ticket. Never name the cause in README.
+- **One new thing per level, practised before it is needed.** The ticket is the only input a player gets; hints are the fallback, not the curriculum. A level may only require commands and concepts that an earlier level of the same track already made the player use (or that `PRIMER.md` lists). If a ticket needs something new, add a smaller build-it level in front of it that practises exactly that one thing. Many small steps beat one big one.
 - One root cause per level, realistic (typo, wrong name, wrong port, missing permission, resource limit…). Ordered easy → hard; later levels may chain two causes.
 - `check.sh` verifies from the outside (curl, exec, query) and guards against cheating shortcuts where the story forbids them (e.g. "don't change the image").
 - 12–18 levels. Everything self-contained: no internet at play time beyond pulling small public images. Prefer alpine/busybox/nginx.

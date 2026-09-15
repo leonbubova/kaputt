@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>first chart — helm level 01 — kaputt</title>
-<meta name="description" content="helm exercise: first chart. Fix a real broken helm system in your own terminal — level 01 of 20, with hints and a checker.">
+<meta name="description" content="helm exercise: first chart. Fix a real broken helm system in your own terminal — level 01 of 25, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/helm/01-create-install/">
-<meta property="og:title" content="first chart — helm level 01 — kaputt"><meta property="og:description" content="helm exercise: first chart. Fix a real broken helm system in your own terminal — level 01 of 20, with hints and a checker.">
+<meta property="og:title" content="first chart — helm level 01 — kaputt"><meta property="og:description" content="helm exercise: first chart. Fix a real broken helm system in your own terminal — level 01 of 25, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -17,7 +17,7 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">helm</a> / level 01</div>
 <h1 class="lvl">first chart</h1>
-<p class="meta">helm · level 01 of 20 · <code>create-install</code></p>
+<p class="meta">helm · level 01 of 25 · <code>create-install</code></p>
 <div class="brief"><h2>the ticket</h2><p>Ticket: &quot;We&#x27;re moving to Helm. Scaffold a chart called <code>hello</code> in <code>~/.k8s-wargame/helm/01-create-install/</code> and install it as release <code>wg-hello</code> into namespace <code>wg-helm</code>. The scaffold defaults to an nginx tag we don&#x27;t mirror — run it with image tag <code>1.27-alpine</code>.&quot; Goal: release <code>wg-hello</code> is <code>deployed</code>, its Deployment has 1 available pod running <code>nginx:1.27-alpine</code>.</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>

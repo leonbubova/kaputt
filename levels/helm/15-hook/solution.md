@@ -1,0 +1,2 @@
+    printf 'apiVersion: batch/v1\nkind: Job\nmetadata:\n  name: {{ .Release.Name }}-migrate\n  annotations:\n    "helm.sh/hook": pre-install\nspec:\n  template:\n    spec:\n      restartPolicy: Never\n      containers:\n        - name: migrate\n          image: busybox:1.36\n          command: ["sh", "-c", "echo running schema migrations"]\n' > web/templates/migrate-job.yaml
+    helm install web ./web -n wg-helm

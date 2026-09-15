@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/bash/bashlib.sh"
+have error-count.sh || fail "no error-count.sh in the sandbox"
+have app.log || fail "app.log missing (environment problem)"
+out=$(run error-count.sh app.log); [ "$(trim "$out")" = 3 ] || fail "error-count.sh app.log → '$out', want 3"
+ok "error-count.sh counts the errors"

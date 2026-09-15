@@ -1,0 +1,6 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/systemd/lib.sh"
+unchanged /opt/wg/exporter/app/exporter.sh exporter || fail "exporter.sh was modified"
+prop wg-exporter.service ExecStart | grep -q 'path=/opt/wg/exporter/app/exporter.sh' || fail "ExecStart must run /opt/wg/exporter/app/exporter.sh directly — no shell wrapper"
+active wg-exporter.service || fail "wg-exporter.service is not active ($(prop wg-exporter.service Result))"
+X grep -qx 'targets=3' /opt/wg/exporter/app/status 2>/dev/null || fail "/opt/wg/exporter/app/status missing or wrong"
+ok "wg-exporter runs from its app directory"

@@ -1,0 +1,1 @@
+`UsersModule` imports `forwardRef(() => OrdersModule)`; `UsersService` injects `@Inject(forwardRef(() => OrdersService))` and `findOne` returns `{ ...user, orderCount: this.orders.countForUser(id) }`. Without `forwardRef` the users ↔ orders cycle fails at boot.
