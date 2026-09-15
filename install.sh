@@ -12,6 +12,6 @@ else
   command -v k3d >/dev/null || curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
   command -v helm >/dev/null || curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 fi
-grep -q "k8s-wargame/bin" ~/.zshrc 2>/dev/null || echo "export PATH=\"$ROOT/bin:\$PATH\"" >> ~/.zshrc
-grep -q "k8s-wargame/bin" ~/.bashrc 2>/dev/null || echo "export PATH=\"$ROOT/bin:\$PATH\"" >> ~/.bashrc
+grep -qF "$ROOT/bin" ~/.zshrc 2>/dev/null || echo "export PATH=\"$ROOT/bin:\$PATH\"" >> ~/.zshrc
+grep -qF "$ROOT/bin" ~/.bashrc 2>/dev/null || echo "export PATH=\"$ROOT/bin:\$PATH\"" >> ~/.bashrc
 echo "done. open a new shell, then: wg start && wg level 1"

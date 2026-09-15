@@ -5,7 +5,7 @@ FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
 RUN rm -f /etc/dpkg/dpkg.cfg.d/docker; apt-get update -q && apt-get install -y -q --no-install-recommends \
       ca-certificates curl gnupg lsb-release bash git sudo procps iproute2 iputils-ping dnsutils netcat-openbsd openssl \
-      less nano vim-tiny man-db manpages jq python3 unzip xz-utils postgresql-client redis-tools rsync file \
+      less nano vim-tiny man-db manpages jq python3 unzip xz-utils postgresql-client redis-tools rsync file openjdk-17-jdk-headless \
     && apt-get install -y -q --reinstall --no-install-recommends coreutils grep sed findutils bash && mandb -q 2>/dev/null; \
     install -m 0755 -d /etc/apt/keyrings && curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc \
     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu noble stable" > /etc/apt/sources.list.d/docker.list \
