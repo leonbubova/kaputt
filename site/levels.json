@@ -691,123 +691,6 @@
    ]
   },
   {
-   "track": "kotlin",
-   "blurb": "Kotlin language gotchas: null safety, data classes, coroutines",
-   "count": 22,
-   "levels": [
-    {
-     "n": "01",
-     "slug": "add-product",
-     "title": "ticket: model a product"
-    },
-    {
-     "n": "02",
-     "slug": "add-to-euro",
-     "title": "ticket: format cents as euro"
-    },
-    {
-     "n": "03",
-     "slug": "add-discount",
-     "title": "ticket: percentage discount with a default"
-    },
-    {
-     "n": "04",
-     "slug": "add-find",
-     "title": "ticket: look up a product, or nothing"
-    },
-    {
-     "n": "05",
-     "slug": "add-order-result",
-     "title": "ticket: ordering with a typed outcome"
-    },
-    {
-     "n": "06",
-     "slug": "add-low-stock",
-     "title": "ticket: low-stock list for purchasing"
-    },
-    {
-     "n": "07",
-     "slug": "add-fetch-price",
-     "title": "ticket: read one price from the supplier feed"
-    },
-    {
-     "n": "08",
-     "slug": "add-fetch-all",
-     "title": "ticket: fetch every price at once"
-    },
-    {
-     "n": "09",
-     "slug": "npe-on-unknown-sku",
-     "title": "NullPointerException on the describe endpoint"
-    },
-    {
-     "n": "10",
-     "slug": "duplicate-customers",
-     "title": "customers appear twice in the daily mail"
-    },
-    {
-     "n": "11",
-     "slug": "restock-does-not-stick",
-     "title": "restock is a no-op"
-    },
-    {
-     "n": "12",
-     "slug": "report-prints-product-dot-name",
-     "title": "the stock mail is full of \"Product(sku=\u2026).name\""
-    },
-    {
-     "n": "13",
-     "slug": "backorder-shows-error",
-     "title": "backordered items come out as \"error\""
-    },
-    {
-     "n": "14",
-     "slug": "discount-is-zero",
-     "title": "the 25 % promo charges full price"
-    },
-    {
-     "n": "15",
-     "slug": "crash-on-first-order",
-     "title": "UninitializedPropertyAccessException on the first order"
-    },
-    {
-     "n": "16",
-     "slug": "audit-snapshot-drifts",
-     "title": "the audit snapshot changes after it was taken"
-    },
-    {
-     "n": "17",
-     "slug": "report-crashes-without-orders",
-     "title": "NoSuchElementException on a quiet day"
-    },
-    {
-     "n": "18",
-     "slug": "lookup-fails-with-spaces",
-     "title": "lookups fail when the sku comes from the scanner"
-    },
-    {
-     "n": "19",
-     "slug": "price-sync-takes-a-second",
-     "title": "nightly price sync is 5x slower than before"
-    },
-    {
-     "n": "20",
-     "slug": "one-bad-sku-kills-the-sync",
-     "title": "one retired sku fails the whole price sync"
-    },
-    {
-     "n": "21",
-     "slug": "checkout-wrong-for-scanner-skus",
-     "title": "checkout: null for scanned skus and no discount for the rest"
-    },
-    {
-     "n": "22",
-     "slug": "price-sync-slow-and-brittle",
-     "title": "price sync: slow, and dead as soon as one sku is retired"
-    }
-   ]
-  },
-  {
    "track": "linux",
    "blurb": "The command line and a broken box",
    "count": 29,
@@ -2291,6 +2174,6 @@
    ]
   }
  ],
- "total": 430,
- "ntracks": 20
+ "total": 408,
+ "ntracks": 19
 }

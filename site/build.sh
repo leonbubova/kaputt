@@ -14,7 +14,6 @@ BLURB={
  'postgres':'SQL, schema, performance','redis':'Keys, queues, eviction',
  'networking':'DNS, ports, routes, firewalls','tls':'Certificates and openssl',
  'nextjs':'Next.js 15 App Router','nestjs':'NestJS dependency injection and HTTP',
- 'kotlin':'Kotlin language gotchas: null safety, data classes, coroutines',
  'trigger':'Trigger.dev background tasks','supabase':'Postgres, RLS, auth, storage',
  'systemd':'Units, services, timers','terraform':'Infrastructure as code',
  'bash':'Shell scripting gotchas','pentest':'Find and fix web-app vulnerabilities (defensive)',
