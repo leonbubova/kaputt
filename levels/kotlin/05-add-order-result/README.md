@@ -1,0 +1,3 @@
+# ticket: ordering with a typed outcome
+"Add `sealed class OrderResult` to `src/Models.kt` with four data-class subtypes: `Ok(product, qty)`, `Insufficient(sku, available)`, `Backordered(sku, eta: String)`, `Unknown(sku)`. Then `Inventory.order(sku, qty): OrderResult`: unknown sku → `Unknown`; stock 0 → `Backordered(sku, "2 weeks")`; qty above stock → `Insufficient`; else reduce the stock via `copy`, append `"order SKU xN"` to `log` and return `Ok`." Goal: the four outcomes come back as their own type and a successful order reduces stock.
+App: ~/.k8s-wargame/kotlin/app · `./run.sh` (compile + demo) · `wg check` compiles src/ with a hidden check

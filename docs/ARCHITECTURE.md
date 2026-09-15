@@ -45,6 +45,7 @@ pod), `stable_for selector seconds` (restart counter unchanged). `WG_FAST=1` shr
 | supabase | `supabase start` local stack (12 containers) | `db reset` / wipe.sql | the real thing, locally; heavy, so a bigger remote host |
 | trigger | node project in `~/.k8s-wargame/trigger/app`, shared `node_modules` | rm + copy template (~0.1 s) | Trigger.dev has no offline runtime; judge = tsc + vitest with the SDK's own mock task context + fake API (see `levels/trigger/README-track.md`) |
 | nestjs | NestJS 11 app in `~/.k8s-wargame/nestjs/app`, shared `node_modules` installed once | rm + copy template (~0.1 s), kill port 3200 | the subject is the framework wiring; no container needed, checks boot the app on 3299 |
+| kotlin | small Kotlin project in `~/.k8s-wargame/kotlin/app`; `kotlinc` zip + coroutines jar downloaded once into `~/.k8s-wargame/kotlin`, no Gradle | rm + copy template (~0.1 s) | the subject is the language; judge = compile `src/` together with the level's hidden `check.kt` (~3 s) and run it — a compile error is a failed check |
 
 ### 4. Levels
 Each `break.sh` applies a manifest / runs commands that produce a realistic, single-cause failure
