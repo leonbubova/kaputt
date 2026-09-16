@@ -49,7 +49,7 @@ create the table), then incidents from easy to hard, with the last levels chaini
 | `git` | 28 | branching, merge conflicts, reflog rescue, rebase, bisect, history surgery |
 | `docker` | 27 | images, containers, volumes, networks, compose, healthchecks |
 | `nestjs` | 27 | NestJS dependency injection, modules, pipes, guards, HTTP |
-| `kotlin` | 22 | Kotlin on the JVM: data classes, null safety, sealed types, collections, coroutines |
+| `kotlin` | 30 | **complete-beginner ramp (1–8)**, then Kotlin on the JVM: data classes, null safety, sealed types, collections, coroutines |
 | `nextjs` | 28 | Next.js 15 App Router, server/client components, actions, caching |
 | `helm` | 25 | charts, values, templates, upgrades, rollbacks |
 | `trigger` | 24 | Trigger.dev tasks, retries, schedules, idempotency |

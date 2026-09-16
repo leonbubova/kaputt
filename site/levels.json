@@ -693,115 +693,155 @@
   {
    "track": "kotlin",
    "blurb": "Kotlin language gotchas: null safety, data classes, coroutines",
-   "count": 22,
+   "count": 30,
    "levels": [
     {
      "n": "01",
+     "slug": "first-run",
+     "title": "your first program"
+    },
+    {
+     "n": "02",
+     "slug": "values",
+     "title": "remembering things: val"
+    },
+    {
+     "n": "03",
+     "slug": "numbers",
+     "title": "numbers and arithmetic"
+    },
+    {
+     "n": "04",
+     "slug": "functions",
+     "title": "a function: name a piece of work"
+    },
+    {
+     "n": "05",
+     "slug": "decisions",
+     "title": "if and else: deciding"
+    },
+    {
+     "n": "06",
+     "slug": "lists-and-loops",
+     "title": "lists and loops"
+    },
+    {
+     "n": "07",
+     "slug": "classes",
+     "title": "a class: several values that belong together"
+    },
+    {
+     "n": "08",
+     "slug": "nothing",
+     "title": "null: when there is no value"
+    },
+    {
+     "n": "09",
      "slug": "add-product",
      "title": "ticket: model a product"
     },
     {
-     "n": "02",
+     "n": "10",
      "slug": "add-to-euro",
      "title": "ticket: format cents as euro"
     },
     {
-     "n": "03",
+     "n": "11",
      "slug": "add-discount",
      "title": "ticket: percentage discount with a default"
     },
     {
-     "n": "04",
+     "n": "12",
      "slug": "add-find",
      "title": "ticket: look up a product, or nothing"
     },
     {
-     "n": "05",
+     "n": "13",
      "slug": "add-order-result",
      "title": "ticket: ordering with a typed outcome"
     },
     {
-     "n": "06",
+     "n": "14",
      "slug": "add-low-stock",
      "title": "ticket: low-stock list for purchasing"
     },
     {
-     "n": "07",
+     "n": "15",
      "slug": "add-fetch-price",
      "title": "ticket: read one price from the supplier feed"
     },
     {
-     "n": "08",
+     "n": "16",
      "slug": "add-fetch-all",
      "title": "ticket: fetch every price at once"
     },
     {
-     "n": "09",
+     "n": "17",
      "slug": "npe-on-unknown-sku",
      "title": "NullPointerException on the describe endpoint"
     },
     {
-     "n": "10",
+     "n": "18",
      "slug": "duplicate-customers",
      "title": "customers appear twice in the daily mail"
     },
     {
-     "n": "11",
+     "n": "19",
      "slug": "restock-does-not-stick",
      "title": "restock is a no-op"
     },
     {
-     "n": "12",
+     "n": "20",
      "slug": "report-prints-product-dot-name",
      "title": "the stock mail is full of \"Product(sku=\u2026).name\""
     },
     {
-     "n": "13",
+     "n": "21",
      "slug": "backorder-shows-error",
      "title": "backordered items come out as \"error\""
     },
     {
-     "n": "14",
+     "n": "22",
      "slug": "discount-is-zero",
      "title": "the 25 % promo charges full price"
     },
     {
-     "n": "15",
+     "n": "23",
      "slug": "crash-on-first-order",
      "title": "UninitializedPropertyAccessException on the first order"
     },
     {
-     "n": "16",
+     "n": "24",
      "slug": "audit-snapshot-drifts",
      "title": "the audit snapshot changes after it was taken"
     },
     {
-     "n": "17",
+     "n": "25",
      "slug": "report-crashes-without-orders",
      "title": "NoSuchElementException on a quiet day"
     },
     {
-     "n": "18",
+     "n": "26",
      "slug": "lookup-fails-with-spaces",
      "title": "lookups fail when the sku comes from the scanner"
     },
     {
-     "n": "19",
+     "n": "27",
      "slug": "price-sync-takes-a-second",
      "title": "nightly price sync is 5x slower than before"
     },
     {
-     "n": "20",
+     "n": "28",
      "slug": "one-bad-sku-kills-the-sync",
      "title": "one retired sku fails the whole price sync"
     },
     {
-     "n": "21",
+     "n": "29",
      "slug": "checkout-wrong-for-scanner-skus",
      "title": "checkout: null for scanned skus and no discount for the rest"
     },
     {
-     "n": "22",
+     "n": "30",
      "slug": "price-sync-slow-and-brittle",
      "title": "price sync: slow, and dead as soon as one sku is retired"
     }
@@ -2291,6 +2331,6 @@
    ]
   }
  ],
- "total": 430,
+ "total": 438,
  "ntracks": 20
 }

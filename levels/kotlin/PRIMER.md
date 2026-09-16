@@ -1,5 +1,6 @@
 # kotlin — the commands & constructs you'll actually use
 App: ~/.k8s-wargame/kotlin/app (`wg shell`). Kotlin 2.1 on JVM 17, plain kotlinc, no Gradle. Reset every level.
+Never programmed before? Skip this list — levels 1–8 teach it one piece at a time. It comes back any time with `wg help`.
 
   ./run.sh                                compile src/ + run main() — the FIRST "error:" line is the answer
   source ../env.sh; kotlinc src -cp "$WG_KT_CP" -d build/app.jar     manual compile

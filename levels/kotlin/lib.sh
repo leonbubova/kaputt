@@ -15,7 +15,7 @@ kt_compile() {
   [ -f "$BUILD/check.jar" ] || { echo "$out" | grep -E 'error:' | sed "s#$APP/##" | head -8; fail "src/ does not compile (see ./run.sh)"; }
 }
 # run the check's entry point; its output is the verdict
-kt_run() { java -cp "$BUILD/check.jar:$WG_KT_CP" WgCheck 2>&1 | grep -v 'JAVA_TOOL_OPTIONS'; return "${PIPESTATUS[0]}"; }
+kt_run() { java -Dwg.app="$APP" -cp "$BUILD/check.jar:$WG_KT_CP" WgCheck 2>&1 | grep -v 'JAVA_TOOL_OPTIONS'; return "${PIPESTATUS[0]}"; }
 kt_check() { kt_compile; kt_run || fail "see above"; }
 # guard: a source file must still contain a construct (the story forbids a shortcut)
 must_contain() { grep -q -- "$2" "$APP/src/$1" || fail "$1 must still use $2"; }
