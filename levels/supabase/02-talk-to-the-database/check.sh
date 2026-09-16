@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/supabase/lib.sh"
+[ "$(sql "select to_regclass('public.hello') is not null")" = t ] || fail "no table public.hello yet — create it in psql (wg shell)"
+[ "$(sql "select count(*) from information_schema.columns where table_schema='public' and table_name='hello' and column_name='word'")" = 1 ] || fail "public.hello has no column 'word'"
+n=$(sql "select count(*) from public.hello where word='hi'"); [ "$n" -ge 1 ] || fail "public.hello has no row with word = 'hi' (insert one)"
+ok "public.hello exists and says hi — you ran SQL against the database"

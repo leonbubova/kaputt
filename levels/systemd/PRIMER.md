@@ -1,5 +1,6 @@
 # systemd — the commands you'll actually use
 `wg shell` = root on the box. Your units: /etc/systemd/system/wg-*.service (and .timer); scripts under /opt/wg/<name>/, configs in /etc/wg/.
+Never used systemd? Skip this list — levels 1–7 teach it step by step. It comes back any time with `wg help`.
 
   systemctl status wg-x                    active? failed? last log lines + exit status (203/EXEC = bad ExecStart path, 200/CHDIR = bad WorkingDirectory)
   journalctl -u wg-x -n 50                 what the service itself printed

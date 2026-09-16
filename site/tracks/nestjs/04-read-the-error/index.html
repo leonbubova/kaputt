@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>a typo stops the server — read the error — nestjs level 04 — kaputt</title>
+<meta name="description" content="nestjs exercise: a typo stops the server — read the error. Fix a real broken nestjs system in your own terminal — level 04 of 34, with hints and a checker.">
+<link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nestjs/04-read-the-error/">
+<meta property="og:title" content="a typo stops the server — read the error — nestjs level 04 — kaputt"><meta property="og:description" content="nestjs exercise: a typo stops the server — read the error. Fix a real broken nestjs system in your own terminal — level 04 of 34, with hints and a checker.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../style.css?v=6">
+<style>.crumbs{color:var(--faint);font-size:13px;margin:36px 0 18px}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--ink)}
+.meta{color:var(--muted);font-size:14px;margin:-10px 0 28px}.brief{max-width:620px;font-size:17px;color:var(--ink)}.brief p{margin:0 0 16px}
+.lvls{list-style:none;padding:0;margin:0;max-width:680px}.lvls li{border-top:1px solid var(--line);padding:12px 0;display:grid;grid-template-columns:34px 1fr;gap:12px}
+.lvls .ln{color:var(--faint);font-variant-numeric:tabular-nums}.lvls a{color:var(--ink)}.lvls a:hover{color:var(--accent)}.lvls .sl{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.pn{display:flex;justify-content:space-between;gap:20px;margin-top:40px;font-size:14px}.pn a{color:var(--muted)}.pn a:hover{color:var(--ink)}
+h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
+<body><div class="wrap">
+<nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
+<div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nestjs</a> / level 04</div>
+<h1 class="lvl">a typo stops the server — read the error</h1>
+<p class="meta">nestjs · level 04 of 34 · <code>read-the-error</code></p>
+<div class="brief"><h2>the ticket</h2><p>Lesson: every save restarts the server. If a file cannot be understood, the server does not start at all — and it prints why. Look in terminal 1 for the first line that names a file: src/health/health.controller.ts(10,27): error TS1005: &#x27;,&#x27; expected. Read it as: file <code>src/health/health.controller.ts</code>, line 10, column 27, problem: a comma is expected there. Everything below (the long list of <code>at …</code> lines) is noise — where inside node the error was noticed. Ignore it. Fix the named line, save, and the server starts again by itself. Until then curl gets no answer. Try it — the app is currently broken this way. Start the server and read what it prints: cd ~/.k8s-wargame/nestjs/app npm run start:dev Your task: find the line the error names, repair it, and make <code>curl -s localhost:3200/health</code> answer <code>status: ok</code> again. The log tells you the file, the line and what is missing — nothing else needs changing. Work in ~/.k8s-wargame/nestjs/app (<code>wg shell</code> takes you there). Server: <code>npm run start:dev</code> in that folder, in its own terminal — every <code>wg level</code> stops it, start it again. Check yourself:  wg check      stuck?  wg hint</p></div>
+<h2 style="margin-top:36px">play it</h2>
+<pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
+wg track nestjs
+wg level 4
+<span class="c"># investigate with the real tools, fix it, then</span>
+wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
+<p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nestjs/04-read-the-error">level source on github</a>.</p>
+<div class="pn"><a href="../03-return-json/index.html">← the answer is JSON: return an object</a><a href="../05-boot-log-routes/index.html">the boot log lists every route →</a></div>
+<footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
+<div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
+</div></body></html>

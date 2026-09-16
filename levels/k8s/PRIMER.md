@@ -1,4 +1,5 @@
 # k8s — the commands you'll actually use
+Never used Kubernetes? Skip this list — levels 1–8 teach it step by step. It comes back any time with `wg help`.
 Everything is "get → describe → logs → fix → check". Learn these ten and every level is reachable.
 
   kubectl get pods                         what's running, and its STATUS (Running / CrashLoopBackOff / Pending…)

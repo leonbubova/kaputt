@@ -14,7 +14,31 @@ terraform {
 T
 }
 
-s01(){ wf main.tf <<'T'
+# lessons 01–07 (beginner block): the literal commands / edits a player does
+s01(){ tfinit; }
+s02(){ tfinit; tfq apply -auto-approve -input=false; }
+s03(){ wf main.tf <<'T'
+resource "local_file" "note" {
+  filename = "${path.module}/out/note.txt"
+  content  = "a better note\n"
+}
+T
+tfq apply -auto-approve -input=false; }
+s04(){ tfq apply -auto-approve -input=false; }
+s05(){ tfq destroy -auto-approve -input=false; }
+s06(){ tfq apply -auto-approve -input=false -var=color=red; }
+s07(){ wf main.tf <<'T'
+resource "local_file" "note" {
+  filename = "${path.module}/out/note.txt"
+  content  = "a note\n"
+}
+output "note_path" {
+  value = local_file.note.filename
+}
+T
+tfq apply -auto-approve -input=false; }
+
+s08(){ wf main.tf <<'T'
 resource "local_file" "hello" {
   filename = "${path.module}/out/hello.txt"
   content  = "hello, terraform\n"
@@ -22,7 +46,7 @@ resource "local_file" "hello" {
 T
 }
 
-s02(){ wf main.tf <<'T'
+s09(){ wf main.tf <<'T'
 variable "greeting" {
   type    = string
   default = "hi"
@@ -34,7 +58,7 @@ resource "local_file" "greet" {
 T
 }
 
-s03(){ wf main.tf <<'T'
+s10(){ wf main.tf <<'T'
 variable "word" {
   type    = string
   default = "hello"
@@ -46,7 +70,7 @@ resource "local_file" "shout" {
 T
 }
 
-s04(){ wf main.tf <<'T'
+s11(){ wf main.tf <<'T'
 resource "local_file" "hello" {
   filename = "${path.module}/out/hello.txt"
   content  = "hello, world\n"
@@ -57,7 +81,7 @@ output "file_content" {
 T
 }
 
-s05(){ wf main.tf <<'T'
+s12(){ wf main.tf <<'T'
 resource "random_pet" "n" {
   length = 2
 }
@@ -71,7 +95,7 @@ output "pet" {
 T
 }
 
-s06(){ wf main.tf <<'T'
+s13(){ wf main.tf <<'T'
 resource "local_file" "node" {
   count    = 3
   filename = "${path.module}/out/node-${count.index}.txt"
@@ -80,7 +104,7 @@ resource "local_file" "node" {
 T
 }
 
-s07(){ wf main.tf <<'T'
+s14(){ wf main.tf <<'T'
 resource "local_file" "node" {
   count    = 3
   filename = "${path.module}/out/node-${count.index}.txt"
@@ -92,7 +116,7 @@ output "last_node" {
 T
 }
 
-s08(){ tf_versions; wf main.tf <<'T'
+s15(){ tf_versions; wf main.tf <<'T'
 resource "random_pet" "p" {
   length = 2
 }
@@ -103,7 +127,7 @@ resource "local_file" "name" {
 T
 }
 
-s09(){ tf_versions; wf main.tf <<'T'
+s16(){ tf_versions; wf main.tf <<'T'
 resource "random_pet" "p" {
   length = 2
 }
@@ -114,7 +138,7 @@ resource "local_file" "name" {
 T
 }
 
-s10(){ wf main.tf <<'T'
+s17(){ wf main.tf <<'T'
 resource "random_pet" "n" {
   length = 2
 }
@@ -128,7 +152,7 @@ output "pet" {
 T
 }
 
-s11(){ wf main.tf <<'T'
+s18(){ wf main.tf <<'T'
 resource "local_file" "node" {
   count    = 2
   filename = "${path.module}/out/n-${count.index}.txt"
@@ -140,7 +164,7 @@ output "first" {
 T
 }
 
-s12(){ wf main.tf <<'T'
+s19(){ wf main.tf <<'T'
 resource "local_file" "region" {
   for_each = { eu = "Europe", us = "United States" }
   filename = "${path.module}/out/${each.key}.txt"
@@ -149,7 +173,7 @@ resource "local_file" "region" {
 T
 }
 
-s13(){ wf main.tf <<'T'
+s20(){ wf main.tf <<'T'
 variable "envs" {
   type    = list(string)
   default = ["dev", "prod"]
@@ -162,7 +186,7 @@ resource "local_file" "env" {
 T
 }
 
-s14(){ wf main.tf <<'T'
+s21(){ wf main.tf <<'T'
 resource "local_file" "app" {
   filename = "${path.module}/out/a.txt"
   content  = "a\n"
@@ -174,7 +198,7 @@ resource "local_file" "app2" {
 T
 }
 
-s15(){ wf main.tf <<'T'
+s22(){ wf main.tf <<'T'
 variable "port" {
   type    = number
   default = 8080
@@ -186,7 +210,7 @@ resource "local_file" "cfg" {
 T
 }
 
-s16(){ tf_versions; wf main.tf <<'T'
+s23(){ tf_versions; wf main.tf <<'T'
 resource "random_pet" "p" {
   length = 2
 }

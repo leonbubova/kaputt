@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/postgres/lib.sh"
+has_table pets || fail "the pets table is gone"
+[ "$(sql "select count(*) from pets")" = 7 ] || fail "the 7 pets must stay"
+[ "$(sql "select count(*) from pg_indexes where schemaname='public' and tablename='pets' and indexdef ilike '%(name)%'")" -ge 1 ] || fail "no index on pets (name) yet — create index NAME on pets (name);"
+ok "pets (name) has an index — \\d pets shows it"

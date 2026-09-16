@@ -1,4 +1,5 @@
 # supabase — the commands you'll actually use
+Never used supabase? Skip this list — levels 1–8 teach it step by step. It comes back any time with `wg help`.
 Project: ~/.k8s-wargame/supabase/project. Keys: `source ~/.k8s-wargame/supabase/env` (API_URL, ANON_KEY, SERVICE_ROLE_KEY, DB_URL). Studio: http://127.0.0.1:54323.
 
   wg shell                                    psql as postgres (= docker exec -it supabase_db_project psql -U postgres)

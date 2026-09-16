@@ -1,5 +1,6 @@
 # tls — the commands you'll actually use
 Config: ~/.k8s-wargame/tls/app/conf.d/default.conf, certs in ~/.k8s-wargame/tls/app/certs/ (= /etc/nginx/certs inside wg-tls). Site: https://127.0.0.1:9443, http://127.0.0.1:9080.
+Never used certificates or openssl? Skip this list — levels 1–8 teach it step by step. It comes back any time with `wg help`.
 
   curl -k https://127.0.0.1:9443/                 does TLS answer at all? (-k = skip cert verification)
   curl -skI https://127.0.0.1:9443/               headers only — e.g. is Strict-Transport-Security there?

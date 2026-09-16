@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>a component: a function that returns HTML — nextjs level 03 — kaputt</title>
+<meta name="description" content="nextjs exercise: a component: a function that returns HTML. Fix a real broken nextjs system in your own terminal — level 03 of 36, with hints and a checker.">
+<link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nextjs/03-a-component/">
+<meta property="og:title" content="a component: a function that returns HTML — nextjs level 03 — kaputt"><meta property="og:description" content="nextjs exercise: a component: a function that returns HTML. Fix a real broken nextjs system in your own terminal — level 03 of 36, with hints and a checker.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../style.css?v=6">
+<style>.crumbs{color:var(--faint);font-size:13px;margin:36px 0 18px}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--ink)}
+.meta{color:var(--muted);font-size:14px;margin:-10px 0 28px}.brief{max-width:620px;font-size:17px;color:var(--ink)}.brief p{margin:0 0 16px}
+.lvls{list-style:none;padding:0;margin:0;max-width:680px}.lvls li{border-top:1px solid var(--line);padding:12px 0;display:grid;grid-template-columns:34px 1fr;gap:12px}
+.lvls .ln{color:var(--faint);font-variant-numeric:tabular-nums}.lvls a{color:var(--ink)}.lvls a:hover{color:var(--accent)}.lvls .sl{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.pn{display:flex;justify-content:space-between;gap:20px;margin-top:40px;font-size:14px}.pn a{color:var(--muted)}.pn a:hover{color:var(--ink)}
+h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
+<body><div class="wrap">
+<nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
+<div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nextjs</a> / level 03</div>
+<h1 class="lvl">a component: a function that returns HTML</h1>
+<p class="meta">nextjs · level 03 of 36 · <code>a-component</code></p>
+<div class="brief"><h2>the ticket</h2><p>Lesson: open <code>src/app/hello/page.tsx</code>. A page is a JavaScript function that returns what to show. The return value looks like HTML written straight into the code — that is called JSX. The smallest possible page: export default function Hello() { return &lt;h1&gt;Hello&lt;/h1&gt;; } <code>function Hello()</code> names the piece (always a capital letter). <code>export default</code> tells Next.js &quot;this is the page&quot;. Two rules of JSX: the function returns exactly ONE outer element — to show several things, put them inside one <code>&lt;section&gt;…&lt;/section&gt;</code>. And when the JSX spans several lines, wrap it in round brackets: export default function Hello() { return ( &lt;section&gt; &lt;h1&gt;Hello&lt;/h1&gt; &lt;/section&gt; ); } Your task: replace everything in <code>src/app/hello/page.tsx</code> with your own component: a <code>&lt;section&gt;</code> that holds <code>&lt;h1&gt;Hello&lt;/h1&gt;</code> and, below it, <code>&lt;p&gt;I wrote this myself.&lt;/p&gt;</code>. Save, reload http://localhost:3100/hello. App: ~/.k8s-wargame/nextjs/app — <code>cd</code> there (or <code>wg shell</code>). Editor: any (VS Code: <code>code ~/.k8s-wargame/nextjs/app</code>). Keep <code>npm run dev</code> in one terminal, work in a second. Every level resets the app and stops the server: run <code>npm run dev</code> again after <code>wg next</code>. Check yourself:  wg check      stuck?  wg hint</p></div>
+<h2 style="margin-top:36px">play it</h2>
+<pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
+wg track nextjs
+wg level 3
+<span class="c"># investigate with the real tools, fix it, then</span>
+wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
+<p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nextjs/03-a-component">level source on github</a>.</p>
+<div class="pn"><a href="../02-folder-is-url/index.html">← a folder is a web address</a><a href="../04-curly-braces/index.html">curly braces: JavaScript inside JSX →</a></div>
+<footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
+<div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
+</div></body></html>

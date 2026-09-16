@@ -1,0 +1,1 @@
+`greeting() { return 'hello from the service'; }` in `HealthService`; `@Get('greeting') greeting() { return this.health.greeting(); }` in `HealthController` — the constructor injection already gives the controller `this.health`.

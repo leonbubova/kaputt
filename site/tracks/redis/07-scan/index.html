@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>finding keys safely: SCAN instead of KEYS — redis level 07 — kaputt</title>
+<meta name="description" content="redis exercise: finding keys safely: SCAN instead of KEYS. Fix a real broken redis system in your own terminal — level 07 of 26, with hints and a checker.">
+<link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/redis/07-scan/">
+<meta property="og:title" content="finding keys safely: SCAN instead of KEYS — redis level 07 — kaputt"><meta property="og:description" content="redis exercise: finding keys safely: SCAN instead of KEYS. Fix a real broken redis system in your own terminal — level 07 of 26, with hints and a checker.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../style.css?v=6">
+<style>.crumbs{color:var(--faint);font-size:13px;margin:36px 0 18px}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--ink)}
+.meta{color:var(--muted);font-size:14px;margin:-10px 0 28px}.brief{max-width:620px;font-size:17px;color:var(--ink)}.brief p{margin:0 0 16px}
+.lvls{list-style:none;padding:0;margin:0;max-width:680px}.lvls li{border-top:1px solid var(--line);padding:12px 0;display:grid;grid-template-columns:34px 1fr;gap:12px}
+.lvls .ln{color:var(--faint);font-variant-numeric:tabular-nums}.lvls a{color:var(--ink)}.lvls a:hover{color:var(--accent)}.lvls .sl{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.pn{display:flex;justify-content:space-between;gap:20px;margin-top:40px;font-size:14px}.pn a{color:var(--muted)}.pn a:hover{color:var(--ink)}
+h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
+<body><div class="wrap">
+<nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
+<div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">redis</a> / level 07</div>
+<h1 class="lvl">finding keys safely: SCAN instead of KEYS</h1>
+<p class="meta">redis · level 07 of 26 · <code>scan</code></p>
+<div class="brief"><h2>the ticket</h2><p>Lesson: <code>KEYS *</code> looks harmless, but Redis handles one command at a time — while it lists a million keys, every other client waits. On a real server that is a short outage. The safe way is <code>SCAN</code>: it returns a small batch of keys plus a number (a *cursor*), and you call it again with that number to get the next batch. Cursor <code>0</code> means &quot;start&quot;; when the answer&#x27;s cursor is <code>0</code> again, you have seen everything. SCAN 0                        first batch: a cursor, then some key names SCAN 0 MATCH note:*           only names matching the pattern (still batch by batch — a batch can be empty) SCAN 0 MATCH note:* COUNT 500 ask for bigger batches, fewer calls Rule: <code>KEYS</code> on a laptop for learning, <code>SCAN</code> anywhere people depend on the server. Try it: wg shell SCAN 0 SCAN 0 MATCH note:* COUNT 500 Your task: among a few hundred <code>log:*</code> keys hides one key whose name starts with <code>note:</code>. Find its full name and store the VALUE of that key as a string under <code>found</code> — so <code>GET found</code> answers what <code>GET note:…</code> answers. Where: inside <code>wg shell</code>. Check yourself:  wg check      stuck?  wg hint</p></div>
+<h2 style="margin-top:36px">play it</h2>
+<pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
+wg track redis
+wg level 7
+<span class="c"># investigate with the real tools, fix it, then</span>
+wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
+<p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/redis/07-scan">level source on github</a>.</p>
+<div class="pn"><a href="../06-type/index.html">← every key has one type: TYPE</a><a href="../08-info-memory/index.html">how much memory does Redis use? INFO memory →</a></div>
+<footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
+<div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
+</div></body></html>

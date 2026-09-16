@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>dashboard is a 500 — nextjs level 08 — kaputt</title>
-<meta name="description" content="nextjs exercise: dashboard is a 500. Fix a real broken nextjs system in your own terminal — level 08 of 21, with hints and a checker.">
+<title>&quot;use client&quot;: a component that reacts in the browser — nextjs level 08 — kaputt</title>
+<meta name="description" content="nextjs exercise: &quot;use client&quot;: a component that reacts in the browser. Fix a real broken nextjs system in your own terminal — level 08 of 36, with hints and a checker.">
 <link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nextjs/08-use-client/">
-<meta property="og:title" content="dashboard is a 500 — nextjs level 08 — kaputt"><meta property="og:description" content="nextjs exercise: dashboard is a 500. Fix a real broken nextjs system in your own terminal — level 08 of 21, with hints and a checker.">
+<meta property="og:title" content="&quot;use client&quot;: a component that reacts in the browser — nextjs level 08 — kaputt"><meta property="og:description" content="nextjs exercise: &quot;use client&quot;: a component that reacts in the browser. Fix a real broken nextjs system in your own terminal — level 08 of 36, with hints and a checker.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../style.css?v=6">
@@ -16,9 +16,9 @@ h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
 <body><div class="wrap">
 <nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
 <div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nextjs</a> / level 08</div>
-<h1 class="lvl">dashboard is a 500</h1>
-<p class="meta">nextjs · level 08 of 21 · <code>use-client</code></p>
-<div class="brief"><h2>the ticket</h2><p>&quot;<code>/dashboard</code> shows the red Next.js error overlay since the counter widget was &#x27;cleaned up&#x27;. Every other page works.&quot; App: <code>~/.k8s-wargame/nextjs/app</code>. Goal: <code>GET /dashboard</code> renders 200 with the counter widget (<code>data-testid=&quot;counter&quot;</code>) still interactive.</p></div>
+<h1 class="lvl">&quot;use client&quot;: a component that reacts in the browser</h1>
+<p class="meta">nextjs · level 08 of 36 · <code>use-client</code></p>
+<div class="brief"><h2>the ticket</h2><p>Lesson: a server component (lesson 7) produces its HTML once and is done — it cannot react to a click, because by then it has finished running. Anything that changes while you look at it has to run in the browser. You mark such a component with the line <code>&quot;use client&quot;;</code> as the very first line of its file. Then it may use <code>useState</code>: a value the component remembers, and when the value changes the component draws itself again. &quot;use client&quot;; import { useState } from &quot;react&quot;; export function Counter() { const [count, setCount] = useState(0); return &lt;button onClick={() =&gt; setCount(count + 1)}&gt;clicked {count} times&lt;/button&gt;; } <code>useState(0)</code> gives a pair: the current value (starts at 0) and a function that changes it. <code>onClick={…}</code> runs the code on every click. Such components live in <code>src/components/</code> (that folder is not a web address) and are exported with a plain <code>export</code>; a page brings one in with <code>import { Counter } from &quot;@/components/Counter&quot;;</code> and uses it as a tag: <code>&lt;Counter /&gt;</code>. The page itself stays a server component — only the file that needs clicks gets <code>&quot;use client&quot;</code>. Try it: open <code>src/components/Counter.tsx</code> — this component is on http://localhost:3100/dashboard. Click it. Your task: create <code>src/components/WormCounter.tsx</code>: line 1 <code>&quot;use client&quot;;</code>, a <code>useState(0)</code>, a <code>&lt;p data-testid=&quot;worm-count&quot;&gt;{count}&lt;/p&gt;</code> and a button <code>+1 worm</code> that adds one to count. Export it as <code>WormCounter</code>. In <code>src/app/hello/page.tsx</code> import it and put <code>&lt;WormCounter /&gt;</code> into the section. Click the button on /hello — the number goes up. App: ~/.k8s-wargame/nextjs/app — <code>cd</code> there (or <code>wg shell</code>). Editor: any (VS Code: <code>code ~/.k8s-wargame/nextjs/app</code>). Keep <code>npm run dev</code> in one terminal, work in a second. Every level resets the app and stops the server: run <code>npm run dev</code> again after <code>wg next</code>. Check yourself:  wg check      stuck?  wg hint</p></div>
 <h2 style="margin-top:36px">play it</h2>
 <pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
 wg track nextjs
@@ -26,7 +26,7 @@ wg level 8
 <span class="c"># investigate with the real tools, fix it, then</span>
 wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
 <p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nextjs/08-use-client">level source on github</a>.</p>
-<div class="pn"><a href="../07-api-405/index.html">← health endpoint answers 405</a><a href="../09-metadata/index.html">browser tab shows no title →</a></div>
+<div class="pn"><a href="../07-server-reads-data/index.html">← a page runs on the server and can read data</a><a href="../09-add-page/index.html">add an /about page →</a></div>
 <footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
 <div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
 </div></body></html>

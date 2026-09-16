@@ -1,4 +1,5 @@
 # linux — the commands you'll actually use
+Never used a Linux box? Skip this list — levels 1–8 teach it step by step. It comes back any time with `wg help`.
   ls -la                    list everything incl. hidden files and permissions
   cd / pwd                  move around / where am i
   cat / less <file>         read a file (less = scrollable, q to quit)

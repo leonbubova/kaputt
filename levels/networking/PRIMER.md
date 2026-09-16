@@ -1,5 +1,6 @@
 # networking — the commands you'll actually use
 Everything happens inside the wg-net box (`wg shell`). The API is an nginx vhost in /etc/nginx/sites-enabled/api.conf and belongs on :8080.
+Never used a network tool before? Skip this list — levels 1–7 teach it step by step. It comes back any time with `wg help`.
 
   ss -ltnp                                  who listens on which port and address (and which pid)
   curl -s localhost:8080                    does the API answer? hangs = firewall, refused = nobody listening

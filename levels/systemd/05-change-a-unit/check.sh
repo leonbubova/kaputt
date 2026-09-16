@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/systemd/lib.sh"
+loaded wg-hello.service || fail "wg-hello.service not loaded — wg reset"
+prop wg-hello.service ExecStart | grep -q 'hello again' || fail "systemd still holds the old ExecStart (no 'hello again' in it) — edited the file? then systemctl daemon-reload"
+got=$(X cat /opt/wg/hello/out 2>/dev/null); [ "$got" = "hello again" ] || fail "/opt/wg/hello/out says '$got', want 'hello again' — after daemon-reload: systemctl start wg-hello"
+ok "wg-hello runs the changed command"

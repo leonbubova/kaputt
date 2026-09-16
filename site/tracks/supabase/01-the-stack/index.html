@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>what is supabase? — the local stack — supabase level 01 — kaputt</title>
+<meta name="description" content="supabase exercise: what is supabase? — the local stack. Fix a real broken supabase system in your own terminal — level 01 of 32, with hints and a checker.">
+<link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/supabase/01-the-stack/">
+<meta property="og:title" content="what is supabase? — the local stack — supabase level 01 — kaputt"><meta property="og:description" content="supabase exercise: what is supabase? — the local stack. Fix a real broken supabase system in your own terminal — level 01 of 32, with hints and a checker.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../style.css?v=6">
+<style>.crumbs{color:var(--faint);font-size:13px;margin:36px 0 18px}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--ink)}
+.meta{color:var(--muted);font-size:14px;margin:-10px 0 28px}.brief{max-width:620px;font-size:17px;color:var(--ink)}.brief p{margin:0 0 16px}
+.lvls{list-style:none;padding:0;margin:0;max-width:680px}.lvls li{border-top:1px solid var(--line);padding:12px 0;display:grid;grid-template-columns:34px 1fr;gap:12px}
+.lvls .ln{color:var(--faint);font-variant-numeric:tabular-nums}.lvls a{color:var(--ink)}.lvls a:hover{color:var(--accent)}.lvls .sl{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.pn{display:flex;justify-content:space-between;gap:20px;margin-top:40px;font-size:14px}.pn a{color:var(--muted)}.pn a:hover{color:var(--ink)}
+h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
+<body><div class="wrap">
+<nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
+<div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">supabase</a> / level 01</div>
+<h1 class="lvl">what is supabase? — the local stack</h1>
+<p class="meta">supabase · level 01 of 32 · <code>the-stack</code></p>
+<div class="brief"><h2>the ticket</h2><p>Lesson: Supabase is a ready-made backend: a Postgres database plus small web services around it (an API for tables, one for users/logins, one for files). <code>wg start</code> already started a private copy of all of it on your machine, in the folder <code>~/.k8s-wargame/supabase/project</code>. Each service listens on a local address: http://127.0.0.1:54321     the API — programs and curl talk to this http://127.0.0.1:54323     Studio — a web page to look at your data (open it in a browser) Every request to the API needs a key. The stack made two: the anon key (for the public, &quot;anonymous&quot;) and the service role key (for admins, skips all checks). <code>wg start</code> wrote the addresses and keys into one file: ~/.k8s-wargame/supabase/env Try it — look at the stack, then load the file into your shell and read one value: cd ~/.k8s-wargame/supabase/project supabase status source ~/.k8s-wargame/supabase/env echo $API_URL <code>source FILE</code> runs the lines of the file in your shell, so from now on <code>$API_URL</code> and <code>$ANON_KEY</code> mean those values. Your task: put the API address into a file. After the <code>source</code> line above, type exactly: echo $API_URL &gt; ~/.k8s-wargame/supabase/api-url.txt The file must contain just the address, <code>http://127.0.0.1:54321</code>. Check yourself:  wg check      stuck?  wg hint</p></div>
+<h2 style="margin-top:36px">play it</h2>
+<pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
+wg track supabase
+wg level 1
+<span class="c"># investigate with the real tools, fix it, then</span>
+wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
+<p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/supabase/01-the-stack">level source on github</a>.</p>
+<div class="pn"><span></span><a href="../02-talk-to-the-database/index.html">talking to the database: psql and Studio →</a></div>
+<footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
+<div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
+</div></body></html>

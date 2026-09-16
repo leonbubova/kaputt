@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/systemd/lib.sh"
+want=$(exp word); [ -n "$want" ] || fail "no expected word recorded — reload the level"
+got=$(X cat /opt/wg/greeter/word 2>/dev/null | tr -d '[:space:]'); [ -n "$got" ] || fail "/opt/wg/greeter/word missing or empty"
+[ "$got" = "$want" ] || fail "/opt/wg/greeter/word says '$got' — not the word wg-greeter printed. journalctl -u wg-greeter"
+ok "you read the journal of wg-greeter"

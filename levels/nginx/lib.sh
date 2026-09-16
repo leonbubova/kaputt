@@ -1,5 +1,5 @@
 # nginx-track helpers — sourced by break.sh / check.sh after lib/common.sh (cwd = level dir)
-WG_NGX=$HOME/.k8s-wargame/nginx; APP=$WG_NGX/app; CONF=$APP/conf.d/default.conf
+WG_NGX=$HOME/.k8s-wargame/nginx; APP=$WG_NGX/app; CONF=$APP/conf.d/default.conf; NOTES=$WG_NGX/notes
 URL=http://127.0.0.1:8082; SURL=https://127.0.0.1:8443
 sedi() { if sed --version >/dev/null 2>&1; then sed -i "$@"; else sed -i '' "$@"; fi; }
 # insert a line after the first line matching PATTERN (BRE) in $CONF

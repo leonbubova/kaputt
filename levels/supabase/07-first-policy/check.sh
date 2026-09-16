@@ -1,0 +1,7 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/supabase/lib.sh"
+rls_on fruits || fail "RLS on public.fruits is off — switch it back on and add a policy instead"
+[ "$(sql "select count(*) from pg_policies where schemaname='public' and tablename='fruits' and cmd='SELECT'")" -ge 1 ] || fail "no select policy on public.fruits yet — create policy … for select to anon using (true)"
+body=$(rest_anon GET "/rest/v1/fruits?select=id,name") || fail "API unreachable"
+[ "$(rest_code)" = 200 ] || fail "GET /rest/v1/fruits → $(rest_code): $body"
+[ "$(json_len "$body")" -ge 3 ] || fail "anon GET /rest/v1/fruits returns $(json_len "$body") rows (want 3) — the policy must be for select, to anon, using (true)"
+ok "policy in place: anon reads the fruits through the API, RLS on"

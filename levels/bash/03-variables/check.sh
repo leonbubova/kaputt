@@ -1,0 +1,7 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/bash/bashlib.sh"
+have vars.sh || fail "no vars.sh in ~/.k8s-wargame/bash/work yet"
+grep -q '^ *city=' "$WORK/vars.sh" || fail "vars.sh has no line that stores the value: city=Berlin (no spaces around =)"
+grep -q '\$city\|\${city}' "$WORK/vars.sh" || fail "vars.sh never uses \$city — the printed line must take the word from the variable"
+[ "$(grep -c Berlin "$WORK/vars.sh")" = 1 ] || fail "Berlin appears more than once in vars.sh — write it only in the city= line, the echo uses \$city"
+out=$(run vars.sh 2>&1); [ "$out" = "I live in Berlin" ] || fail "vars.sh printed '$out' — it should print exactly: I live in Berlin (double quotes around the string?)"
+ok "vars.sh prints the value through the variable"

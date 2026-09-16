@@ -1,5 +1,6 @@
 # nextjs — the commands & files you'll actually use
 App: ~/.k8s-wargame/nextjs/app (`wg shell` puts you there). Next 15, App Router, TypeScript.
+Never used Next.js? Skip this list — levels 1–8 teach it step by step. It comes back any time with `wg help`.
 
   npm run dev                        http://localhost:3100 — its terminal shows the real error with file + line
   npm run build  /  npm run typecheck   the production build type-checks; `next dev` does NOT

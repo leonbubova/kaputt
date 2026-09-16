@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/systemd/lib.sh"
+loaded wg-clock.service || fail "wg-clock.service is gone — wg reset"
+active wg-clock.service || fail "wg-clock is not running (Active: $(prop wg-clock.service ActiveState)) — systemctl start wg-clock"
+sleep 3; a=$(age /opt/wg/clock/now); [ -n "$a" ] && [ "$a" -le 4 ] || fail "/opt/wg/clock/now is not being refreshed (age: ${a:-missing}s)"
+ok "wg-clock runs and the time ticks"

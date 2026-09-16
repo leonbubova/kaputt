@@ -1,0 +1,6 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/systemd/lib.sh"
+loaded wg-clock.service || fail "wg-clock.service not loaded — wg reset"
+enabled wg-clock.service || fail "is-enabled says: $(X systemctl is-enabled wg-clock.service 2>&1 | head -1) — systemctl enable wg-clock"
+XS 'ls /etc/systemd/system/multi-user.target.wants/wg-clock.service' >/dev/null 2>&1 || fail "no symlink in multi-user.target.wants — enabled how?"
+active wg-clock.service || fail "wg-clock is enabled but not running — systemctl start wg-clock"
+ok "wg-clock is enabled: it will come back after a reboot"

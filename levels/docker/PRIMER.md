@@ -1,4 +1,5 @@
 # docker — the commands you'll actually use
+Never used docker? Skip this list — levels 1–8 teach it step by step. It comes back any time with `wg help`.
   docker ps -a                       all containers (incl. stopped) and their STATUS
   docker logs <name>                 what the container printed — read this first when it exits
   docker inspect <name>              full config: ports, mounts, env, network

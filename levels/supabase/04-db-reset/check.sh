@@ -1,0 +1,7 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/supabase/lib.sh"
+f=$(ls "$SB_PROJECT"/supabase/migrations/*todos*.sql 2>/dev/null | head -1); [ -n "$f" ] || fail "the migration file supabase/migrations/*_todos.sql is gone — it must stay, edited"
+grep -qi 'done' "$f" || fail "$(basename "$f") does not mention a 'done' column — edit the file, then reset"
+sb_wait_ready 60 || fail "database is still restarting (db reset takes ~45 s) — wait, then check again"
+[ "$(sql "select to_regclass('public.todos') is not null")" = t ] || fail "public.todos does not exist — did the reset fail? read its error, fix the file, reset again"
+[ "$(sql "select count(*) from information_schema.columns where table_schema='public' and table_name='todos' and column_name='done' and data_type='boolean'")" = 1 ] || fail "public.todos has no boolean column 'done' yet — after editing the file, run: supabase db reset"
+ok "todos rebuilt from the edited migration — done column present"

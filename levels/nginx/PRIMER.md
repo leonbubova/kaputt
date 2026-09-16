@@ -1,4 +1,5 @@
 # nginx — the commands you'll actually use
+Never used nginx? Skip this list — levels 1–7 teach it step by step. It comes back any time with `wg help`.
 Config lives on your machine: ~/.k8s-wargame/nginx/app/conf.d/default.conf (mounted into the wg-nginx container). Edit there, then reload.
 
   docker exec wg-nginx nginx -t                       is the config valid? the error names the line

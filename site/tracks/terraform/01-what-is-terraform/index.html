@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>what terraform is — and `terraform init` — terraform level 01 — kaputt</title>
+<meta name="description" content="terraform exercise: what terraform is — and `terraform init`. Fix a real broken terraform system in your own terminal — level 01 of 23, with hints and a checker.">
+<link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/terraform/01-what-is-terraform/">
+<meta property="og:title" content="what terraform is — and `terraform init` — terraform level 01 — kaputt"><meta property="og:description" content="terraform exercise: what terraform is — and `terraform init`. Fix a real broken terraform system in your own terminal — level 01 of 23, with hints and a checker.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../style.css?v=6">
+<style>.crumbs{color:var(--faint);font-size:13px;margin:36px 0 18px}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--ink)}
+.meta{color:var(--muted);font-size:14px;margin:-10px 0 28px}.brief{max-width:620px;font-size:17px;color:var(--ink)}.brief p{margin:0 0 16px}
+.lvls{list-style:none;padding:0;margin:0;max-width:680px}.lvls li{border-top:1px solid var(--line);padding:12px 0;display:grid;grid-template-columns:34px 1fr;gap:12px}
+.lvls .ln{color:var(--faint);font-variant-numeric:tabular-nums}.lvls a{color:var(--ink)}.lvls a:hover{color:var(--accent)}.lvls .sl{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.pn{display:flex;justify-content:space-between;gap:20px;margin-top:40px;font-size:14px}.pn a{color:var(--muted)}.pn a:hover{color:var(--ink)}
+h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
+<body><div class="wrap">
+<nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
+<div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">terraform</a> / level 01</div>
+<h1 class="lvl">what terraform is — and `terraform init`</h1>
+<p class="meta">terraform · level 01 of 23 · <code>what-is-terraform</code></p>
+<div class="brief"><h2>the ticket</h2><p>Lesson: terraform is a program that builds things from a description. You write, in a text file ending in <code>.tf</code>, what should exist (a file, a server, a database — in this game: only files on your disk). Terraform compares that with what really exists and does whatever is missing. You never say &quot;do this, then that&quot; — you say &quot;this is how it should look&quot; and terraform works out the steps. The description is called the configuration; the &quot;how it should look&quot; is the desired state. Before terraform can work in a folder it needs its helpers, called providers (the <code>local</code> provider knows how to create files). Fetching them is <code>terraform init</code> — once per folder, and this game gives you a fresh folder every level. Try it: wg shell ls cat versions.tf <code>versions.tf</code> lists the providers this folder uses. There is nothing else yet. Your task: run <code>terraform init</code> inside ~/.k8s-wargame/terraform/app. It ends with &quot;Terraform has been successfully initialized!&quot; and creates a hidden folder <code>.terraform</code> plus a file <code>.terraform.lock.hcl</code> — see them with <code>ls -a</code>. Work in ~/.k8s-wargame/terraform/app — <code>wg shell</code> drops you there with terraform ready (type <code>exit</code> to come back; <code>wg check</code> works inside too). Check yourself:  wg check      stuck?  wg hint</p></div>
+<h2 style="margin-top:36px">play it</h2>
+<pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
+wg track terraform
+wg level 1
+<span class="c"># investigate with the real tools, fix it, then</span>
+wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
+<p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/terraform/01-what-is-terraform">level source on github</a>.</p>
+<div class="pn"><span></span><a href="../02-first-apply/index.html">one resource, one apply →</a></div>
+<footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
+<div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
+</div></body></html>

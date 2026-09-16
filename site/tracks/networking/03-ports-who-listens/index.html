@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ports — who is listening? — networking level 03 — kaputt</title>
+<meta name="description" content="networking exercise: ports — who is listening?. Fix a real broken networking system in your own terminal — level 03 of 24, with hints and a checker.">
+<link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/networking/03-ports-who-listens/">
+<meta property="og:title" content="ports — who is listening? — networking level 03 — kaputt"><meta property="og:description" content="networking exercise: ports — who is listening?. Fix a real broken networking system in your own terminal — level 03 of 24, with hints and a checker.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../style.css?v=6">
+<style>.crumbs{color:var(--faint);font-size:13px;margin:36px 0 18px}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--ink)}
+.meta{color:var(--muted);font-size:14px;margin:-10px 0 28px}.brief{max-width:620px;font-size:17px;color:var(--ink)}.brief p{margin:0 0 16px}
+.lvls{list-style:none;padding:0;margin:0;max-width:680px}.lvls li{border-top:1px solid var(--line);padding:12px 0;display:grid;grid-template-columns:34px 1fr;gap:12px}
+.lvls .ln{color:var(--faint);font-variant-numeric:tabular-nums}.lvls a{color:var(--ink)}.lvls a:hover{color:var(--accent)}.lvls .sl{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.pn{display:flex;justify-content:space-between;gap:20px;margin-top:40px;font-size:14px}.pn a{color:var(--muted)}.pn a:hover{color:var(--ink)}
+h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
+<body><div class="wrap">
+<nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
+<div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">networking</a> / level 03</div>
+<h1 class="lvl">ports — who is listening?</h1>
+<p class="meta">networking · level 03 of 24 · <code>ports-who-listens</code></p>
+<div class="brief"><h2>the ticket</h2><p>Lesson: an address reaches a machine, but a machine runs many programs. So every conversation also names a port — a number from 1 to 65535. A program that wants to be talked to &quot;listens&quot; on a port; if nobody listens on a port, a connection to it is refused. Address plus port is the full destination: <code>127.0.0.1:8080</code>. <code>ss -ltnp</code> lists every listening port and the program behind it (l = listening, t = tcp, n = numbers, p = program): ss -ltnp One line per listener. <code>Local Address:Port</code> says where it listens: <code>0.0.0.0:22</code> means port 22 on every address, <code>127.0.0.1:22</code> would mean only from this machine. At the end, <code>users:((&quot;NAME&quot;,pid=…))</code> names the program. Your task: one program named <code>nc</code> is listening in this box. Find its port number and write only that number into the file <code>/root/port.txt</code>. Work inside the box (<code>wg shell</code>). Check yourself:  wg check      stuck?  wg hint</p></div>
+<h2 style="margin-top:36px">play it</h2>
+<pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
+wg track networking
+wg level 3
+<span class="c"># investigate with the real tools, fix it, then</span>
+wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
+<p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/networking/03-ports-who-listens">level source on github</a>.</p>
+<div class="pn"><a href="../02-ping/index.html">← is anyone there? — ping</a><a href="../04-curl-and-the-status/index.html">talk to a port — curl and the status code →</a></div>
+<footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
+<div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
+</div></body></html>

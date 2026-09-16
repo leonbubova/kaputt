@@ -1,4 +1,5 @@
 # redis — the commands you'll actually use
+Never used Redis? Skip this list — levels 1–8 teach it step by step. It comes back any time with `wg help`.
 Everything runs in redis-cli (`wg shell`, or `docker exec -it wg-redis redis-cli`). No files, no restarts — just commands.
 
   KEYS *  /  TYPE key                  what's there / which type a key holds (string, hash, list, set)

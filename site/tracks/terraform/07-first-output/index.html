@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>outputs — reading a value back — terraform level 07 — kaputt</title>
+<meta name="description" content="terraform exercise: outputs — reading a value back. Fix a real broken terraform system in your own terminal — level 07 of 23, with hints and a checker.">
+<link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/terraform/07-first-output/">
+<meta property="og:title" content="outputs — reading a value back — terraform level 07 — kaputt"><meta property="og:description" content="terraform exercise: outputs — reading a value back. Fix a real broken terraform system in your own terminal — level 07 of 23, with hints and a checker.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../style.css?v=6">
+<style>.crumbs{color:var(--faint);font-size:13px;margin:36px 0 18px}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--ink)}
+.meta{color:var(--muted);font-size:14px;margin:-10px 0 28px}.brief{max-width:620px;font-size:17px;color:var(--ink)}.brief p{margin:0 0 16px}
+.lvls{list-style:none;padding:0;margin:0;max-width:680px}.lvls li{border-top:1px solid var(--line);padding:12px 0;display:grid;grid-template-columns:34px 1fr;gap:12px}
+.lvls .ln{color:var(--faint);font-variant-numeric:tabular-nums}.lvls a{color:var(--ink)}.lvls a:hover{color:var(--accent)}.lvls .sl{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.pn{display:flex;justify-content:space-between;gap:20px;margin-top:40px;font-size:14px}.pn a{color:var(--muted)}.pn a:hover{color:var(--ink)}
+h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
+<body><div class="wrap">
+<nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
+<div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">terraform</a> / level 07</div>
+<h1 class="lvl">outputs — reading a value back</h1>
+<p class="meta">terraform · level 07 of 23 · <code>first-output</code></p>
+<div class="brief"><h2>the ticket</h2><p>Lesson: an <code>output</code> block tells terraform to print a value after apply, and to keep it so scripts can ask for it later. The value usually points at a resource: <code>&lt;type&gt;.&lt;name&gt;.&lt;attribute&gt;</code> — for example <code>local_file.note.filename</code> is the <code>filename</code> of the resource block named <code>note</code>. Any argument you wrote in the block can be read back this way. output &quot;note_path&quot; { value = local_file.note.filename } After apply, terraform prints <code>Outputs:</code> with <code>note_path = &quot;./out/note.txt&quot;</code>. One output alone, without quotes: terraform output -raw note_path This level is already applied with one resource, <code>local_file.note</code> (<code>out/note.txt</code>). <code>main.tf</code> has no output yet. Try it: wg shell cat main.tf terraform output Your task: add the <code>output &quot;note_path&quot;</code> block shown above to the end of <code>main.tf</code> (a new block, below the resource). Save, <code>terraform apply -auto-approve</code>, then <code>terraform output -raw note_path</code> must print <code>./out/note.txt</code>. File: ~/.k8s-wargame/terraform/app/main.tf — open it in any editor (VS Code: <code>code ~/.k8s-wargame/terraform/app</code>). Commands: inside <code>wg shell</code>. Check yourself:  wg check      stuck?  wg hint</p></div>
+<h2 style="margin-top:36px">play it</h2>
+<pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
+wg track terraform
+wg level 7
+<span class="c"># investigate with the real tools, fix it, then</span>
+wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
+<p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/terraform/07-first-output">level source on github</a>.</p>
+<div class="pn"><a href="../06-variable-override/index.html">← variables — a value you pass in</a><a href="../08-first-file/index.html">we need terraform to drop a marker file →</a></div>
+<footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
+<div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
+</div></body></html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>the config file: server and location — nginx level 03 — kaputt</title>
+<meta name="description" content="nginx exercise: the config file: server and location. Fix a real broken nginx system in your own terminal — level 03 of 24, with hints and a checker.">
+<link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/nginx/03-the-config-file/">
+<meta property="og:title" content="the config file: server and location — nginx level 03 — kaputt"><meta property="og:description" content="nginx exercise: the config file: server and location. Fix a real broken nginx system in your own terminal — level 03 of 24, with hints and a checker.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../style.css?v=6">
+<style>.crumbs{color:var(--faint);font-size:13px;margin:36px 0 18px}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--ink)}
+.meta{color:var(--muted);font-size:14px;margin:-10px 0 28px}.brief{max-width:620px;font-size:17px;color:var(--ink)}.brief p{margin:0 0 16px}
+.lvls{list-style:none;padding:0;margin:0;max-width:680px}.lvls li{border-top:1px solid var(--line);padding:12px 0;display:grid;grid-template-columns:34px 1fr;gap:12px}
+.lvls .ln{color:var(--faint);font-variant-numeric:tabular-nums}.lvls a{color:var(--ink)}.lvls a:hover{color:var(--accent)}.lvls .sl{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.pn{display:flex;justify-content:space-between;gap:20px;margin-top:40px;font-size:14px}.pn a{color:var(--muted)}.pn a:hover{color:var(--ink)}
+h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
+<body><div class="wrap">
+<nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
+<div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">nginx</a> / level 03</div>
+<h1 class="lvl">the config file: server and location</h1>
+<p class="meta">nginx · level 03 of 24 · <code>the-config-file</code></p>
+<div class="brief"><h2>the ticket</h2><p>Lesson: everything nginx does that is not &quot;hand out a file&quot; is written in its config file. Yours is <code>~/.k8s-wargame/nginx/app/conf.d/default.conf</code>. It is plain text with two kinds of blocks, braces <code>{ }</code> around each: server {                         one site. server_name says which Host names belong to it. listen 80;                   the port it answers on root /usr/share/nginx/html;  the folder from lesson 2, as nginx sees it inside its box location = /health {         one path. &quot;= /health&quot; means exactly that path. return 200 &quot;ok\n&quot;;       the fixed answer for it: status 200 and the text } location /api/ { ... }       &quot;/api/&quot; without = means: every path starting with /api/ } Every setting line ends with <code>;</code>. A request first picks the server by Host name, then the best-matching location, then does what that location says. If no location fits, <code>location /</code> catches it. Try it: cat ~/.k8s-wargame/nginx/app/conf.d/default.conf Find the <code>location = /health</code> block — it is why lesson 1&#x27;s /health answered <code>ok</code>. Find <code>location = /new</code> too. Your task: list all location lines of the file with their line numbers into a notes file: grep -n location ~/.k8s-wargame/nginx/app/conf.d/default.conf &gt; ~/.k8s-wargame/nginx/notes/locations.txt Read the result: five blocks, five paths. Just reading — nothing changes. Check yourself:  wg check      stuck?  wg hint</p></div>
+<h2 style="margin-top:36px">play it</h2>
+<pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
+wg track nginx
+wg level 3
+<span class="c"># investigate with the real tools, fix it, then</span>
+wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
+<p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/nginx/03-the-config-file">level source on github</a>.</p>
+<div class="pn"><a href="../02-serve-a-file/index.html">← serving a file: the html folder</a><a href="../04-change-and-reload/index.html">change the config — then reload →</a></div>
+<footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
+<div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
+</div></body></html>

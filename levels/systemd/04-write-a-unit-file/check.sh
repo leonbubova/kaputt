@@ -1,0 +1,6 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/systemd/lib.sh"
+X test -f /etc/systemd/system/wg-hello.service || fail "no file /etc/systemd/system/wg-hello.service yet"
+loaded wg-hello.service || fail "the file exists but systemd has not read it (LoadState: $(prop wg-hello.service LoadState)) — systemctl daemon-reload"
+[ "$(prop wg-hello.service Type)" = oneshot ] || fail "Type is '$(prop wg-hello.service Type)', want oneshot — compare your file with the five lines in the lesson, then daemon-reload"
+prop wg-hello.service ExecStart | grep -q '/bin/echo' || fail "ExecStart does not run /bin/echo — compare your file with the lesson, then daemon-reload"
+ok "wg-hello.service exists and systemd knows it"

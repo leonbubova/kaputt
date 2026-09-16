@@ -1,4 +1,5 @@
 # git — the commands you'll actually use
+Never used git? Skip this list — levels 1–7 teach it step by step. It comes back any time with `wg help`.
   git status                 what changed, what's staged
   git log --oneline          history, one line per commit
   git add <file> / git commit -m "msg"     stage, then record

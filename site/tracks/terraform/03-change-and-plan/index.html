@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>change a value, read the plan — terraform level 03 — kaputt</title>
+<meta name="description" content="terraform exercise: change a value, read the plan. Fix a real broken terraform system in your own terminal — level 03 of 23, with hints and a checker.">
+<link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/terraform/03-change-and-plan/">
+<meta property="og:title" content="change a value, read the plan — terraform level 03 — kaputt"><meta property="og:description" content="terraform exercise: change a value, read the plan. Fix a real broken terraform system in your own terminal — level 03 of 23, with hints and a checker.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../style.css?v=6">
+<style>.crumbs{color:var(--faint);font-size:13px;margin:36px 0 18px}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--ink)}
+.meta{color:var(--muted);font-size:14px;margin:-10px 0 28px}.brief{max-width:620px;font-size:17px;color:var(--ink)}.brief p{margin:0 0 16px}
+.lvls{list-style:none;padding:0;margin:0;max-width:680px}.lvls li{border-top:1px solid var(--line);padding:12px 0;display:grid;grid-template-columns:34px 1fr;gap:12px}
+.lvls .ln{color:var(--faint);font-variant-numeric:tabular-nums}.lvls a{color:var(--ink)}.lvls a:hover{color:var(--accent)}.lvls .sl{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.pn{display:flex;justify-content:space-between;gap:20px;margin-top:40px;font-size:14px}.pn a{color:var(--muted)}.pn a:hover{color:var(--ink)}
+h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
+<body><div class="wrap">
+<nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
+<div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">terraform</a> / level 03</div>
+<h1 class="lvl">change a value, read the plan</h1>
+<p class="meta">terraform · level 03 of 23 · <code>change-and-plan</code></p>
+<div class="brief"><h2>the ticket</h2><p>Lesson: to change something, you do not touch the file in <code>out/</code> — you change the description in <code>main.tf</code> and apply again. Terraform sees the difference and does only that. <code>terraform plan</code> shows the difference WITHOUT doing anything — read it before every apply. Its symbols: + create      - destroy      ~ change in place      -/+ replace (destroy, then create anew) A file&#x27;s content cannot be edited in place by terraform, so a changed <code>content</code> shows as <code>-/+</code> &quot;must be replaced&quot;, with the old line marked <code>-</code> and the new one <code>+</code>. Plan ends with a count: &quot;Plan: 1 to add, 0 to change, 1 to destroy.&quot; This level is already initialized and applied: <code>out/note.txt</code> says <code>a note</code>. Try it: wg shell terraform plan It says &quot;No changes.&quot; — the description and reality agree. Your task: in <code>main.tf</code> change the content from <code>a note\n</code> to <code>a better note\n</code> (keep the <code>\n</code>). Save. Run <code>terraform plan</code> and find the <code>-</code> and <code>+</code> lines. Then <code>terraform apply -auto-approve</code>. <code>cat out/note.txt</code> must show <code>a better note</code>. File: ~/.k8s-wargame/terraform/app/main.tf — open it in any editor (VS Code: <code>code ~/.k8s-wargame/terraform/app</code>). Commands: inside <code>wg shell</code>. Check yourself:  wg check      stuck?  wg hint</p></div>
+<h2 style="margin-top:36px">play it</h2>
+<pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
+wg track terraform
+wg level 3
+<span class="c"># investigate with the real tools, fix it, then</span>
+wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
+<p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/terraform/03-change-and-plan">level source on github</a>.</p>
+<div class="pn"><a href="../02-first-apply/index.html">← one resource, one apply</a><a href="../04-state-and-drift/index.html">the state file — what terraform remembers →</a></div>
+<footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
+<div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
+</div></body></html>

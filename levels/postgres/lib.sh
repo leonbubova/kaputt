@@ -22,3 +22,13 @@ has_table() { [ "$(sql "select count(*) from pg_tables where schemaname='public'
 has_constraint() { [ "$(sql "select count(*) from pg_constraint where conrelid='public.$1'::regclass and contype='$2'")" -ge 1 ]; }
 # does the statement fail? (expected for constraint tests)
 rejects() { ! sql "$1" >/dev/null 2>&1; }
+ANSWER=$WG_PG_DIR/answer.txt                # lessons that ask for a one-word answer
+answer() { [ -f "$ANSWER" ] && tr -d '[:space:]' < "$ANSWER" | tr 'A-Z' 'a-z'; }   # lowercased, no whitespace
+# fixture for the lesson levels: a small pets table (ids 1..7)
+pets_fixture() {
+  sqlf <<'SQL' >/dev/null
+drop table if exists public.visits cascade; drop table if exists public.vets cascade; drop table if exists public.pets cascade;
+create table public.pets (id serial primary key, name text not null, species text not null, age integer not null);
+insert into public.pets (name, species, age) values ('Rex', 'dog', 3), ('Milo', 'cat', 5), ('Bella', 'dog', 2), ('Nala', 'cat', 7), ('Coco', 'parrot', 12), ('Simba', 'cat', 1), ('Daisy', 'rabbit', 4);
+SQL
+}

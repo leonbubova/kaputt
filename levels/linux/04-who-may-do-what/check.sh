@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/linux/lib.sh"
+X test -f /srv/notes/plan.txt 2>/dev/null || fail "/srv/notes/plan.txt is gone — wg reset gives you a fresh one"
+X grep -q 'ship on friday' /srv/notes/plan.txt 2>/dev/null || fail "plan.txt text changed — only the mode should change"
+m=$(X stat -c %a /srv/notes/plan.txt 2>/dev/null); [ "$m" = 644 ] || fail "plan.txt mode is ${m} — wanted 644 (-rw-r--r--)"
+ok "plan.txt is -rw-r--r-- — you set a mode with three digits"

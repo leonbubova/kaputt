@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/linux/lib.sh"
+X test -f /srv/notes/todo.txt 2>/dev/null || fail "/srv/notes/todo.txt is gone — wg reset gives you a fresh one"
+X grep -q 'buy milk' /srv/notes/todo.txt 2>/dev/null || fail "todo.txt text changed — only the owner should change"
+s=$(X stat -c %U:%G /srv/notes/todo.txt 2>/dev/null); [ "$s" = alice:dev ] || fail "todo.txt is owned by '${s}' — wanted alice:dev"
+ok "todo.txt is alice:dev — you changed owner and group"

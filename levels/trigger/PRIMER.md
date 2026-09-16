@@ -1,4 +1,5 @@
 # trigger — the commands & files you'll actually use
+Never used Trigger.dev? Skip this list — levels 1–7 teach it step by step. It comes back any time with `wg help`.
 App: ~/.k8s-wargame/trigger/app (`wg shell`). Trigger.dev v4 task code, no cloud: you edit files, `wg check` type-checks and runs the tasks in the SDK's own mock context.
 
   npx tsc --noEmit                   your local feedback loop — run it after every edit

@@ -1,0 +1,6 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/bash/bashlib.sh"
+have run-me.sh || fail "no run-me.sh in ~/.k8s-wargame/bash/work yet"
+head -1 "$WORK/run-me.sh" | grep -q '^#!.*bash' || fail "line 1 of run-me.sh is '$(head -1 "$WORK/run-me.sh")' — it must be the shebang: #!/usr/bin/env bash"
+[ -x "$WORK/run-me.sh" ] || fail "run-me.sh is not allowed to run yet — chmod +x run-me.sh"
+out=$(cd "$WORK" && ./run-me.sh 2>&1); [ "$out" = "it runs" ] || fail "./run-me.sh printed '$out' — it should print exactly: it runs"
+ok "./run-me.sh runs on its own — shebang plus chmod +x"

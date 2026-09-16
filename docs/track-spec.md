@@ -17,7 +17,7 @@ levels/<track>/NN-slug/
 `track.sh` must define: `track_start` (idempotent), `track_stop`, `track_ready` (exit 0 if env usable), `track_wipe` (reset the play area before each level, fast), optional `track_shell` (interactive shell into the broken machine).
 
 ## Design rules
-- **Beginner → pro.** Every track opens with a "build it" block (levels 01–0N, ~⅓ of the track): the ticket asks to ADD or CREATE something small (a manifest, a route, a config), `break.sh` removes it from the template/env, `check.sh` verifies it exists and works. Hints there teach the concept and the command, not debugging. Then the incident levels, easy → hard. The last 2–3 levels chain two causes.
+- **Beginner → pro.** Every track opens with a lesson block (levels 01–0N, 6–8 levels) for someone who has never used the tool: `Lesson:` what it is, the commands shown literally, `Try it:`, `Your task:` — see `levels/shell/` and `levels/kotlin/01..08`. Then a "build it" block (levels 01–0N, ~⅓ of the track): the ticket asks to ADD or CREATE something small (a manifest, a route, a config), `break.sh` removes it from the template/env, `check.sh` verifies it exists and works. Hints there teach the concept and the command, not debugging. Then the incident levels, easy → hard. The last 2–3 levels chain two causes.
 - Symptom first, like an incident ticket. Never name the cause in README.
 - **One new thing per level, practised before it is needed.** The ticket is the only input a player gets; hints are the fallback, not the curriculum. A level may only require commands and concepts that an earlier level of the same track already made the player use (or that `PRIMER.md` lists). If a ticket needs something new, add a smaller build-it level in front of it that practises exactly that one thing. Many small steps beat one big one.
 - One root cause per level, realistic (typo, wrong name, wrong port, missing permission, resource limit…). Ordered easy → hard; later levels may chain two causes.
@@ -30,4 +30,4 @@ levels/<track>/NN-slug/
 `test/run-all.sh <track> [NN]` — for each level: load → `WG_FAST=1 wg check` must fail → `sNN` → `wg check` must pass. Must end with `ALL GREEN`. Do not edit bin/wg, lib/, or test/ while a run is in progress. Do not touch other tracks. Do not git commit.
 
 ## Reference
-`levels/k8s/` is the finished example (25 levels: 01–07 build-it, 08–25 incidents). Read 01, 03, 08, 12, 18, 23, 25 and `track.sh` before starting.
+`levels/k8s/` is the finished example (41 levels: 01–08 lessons, 09–15 build-it, 16–41 incidents). Read 01, 09, 11, 16, 20, 26, 33, 41 and `track.sh` before starting.

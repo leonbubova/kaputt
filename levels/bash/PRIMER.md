@@ -1,4 +1,5 @@
 # bash — what bites everyone
+Never used bash? Skip this list — levels 1–7 teach it step by step. It comes back any time with `wg help`.
   "$var"  not  $var              always quote — unquoted vars split on spaces
   [[ "$a" == "$b" ]]              string compare;   (( a == b )) / -eq for numbers
   set -euo pipefail               fail fast: on error, unset var, or a failing pipe stage

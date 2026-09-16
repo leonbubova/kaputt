@@ -1,3 +1,2 @@
-# static site returns 403
-"`wg-web` should serve our landing page from `~/.k8s-wargame/docker/12-bind-mount/site/` so designers can edit it live. `curl localhost:18011` → 403 Forbidden."
-Goal: `http://localhost:18011/` shows the landing page and edits in `site/` are visible without rebuild or copy (keep it a bind mount).
+# live-edit the page without rebuilding
+"Designers iterate on `~/.k8s-wargame/docker/12-bind-mount/site/` all day; rebuilding an image per change is too slow." Goal: container `wg-web` (`nginx:1.27-alpine`, host port 18004 → 80) serving that folder directly, so a change to `site/index.html` on the host shows up on `curl localhost:18004` immediately.

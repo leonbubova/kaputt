@@ -1,0 +1,12 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/nextjs/lib.sh"
+snapshot
+[ -f src/components/WormCounter.tsx ] || fail "no src/components/WormCounter.tsx yet"
+head -1 src/components/WormCounter.tsx | grep -q 'use client' || fail "src/components/WormCounter.tsx must start with \"use client\"; on line 1 — it uses useState"
+grep -q 'useState' src/components/WormCounter.tsx || fail "WormCounter has no useState — the count must be remembered state, not a fixed number"
+head -1 src/app/hello/page.tsx | grep -q 'use client' && fail "the page must stay a server component — \"use client\" belongs only in WormCounter.tsx"
+grep -q 'WormCounter' src/app/hello/page.tsx || fail "src/app/hello/page.tsx does not use <WormCounter /> — import it from \"@/components/WormCounter\""
+dev_up; get /hello; want 200 "/hello"
+sed 's/<!-- -->//g' "$BODY" > "$BODY.s" && mv "$BODY.s" "$BODY"
+body_has 'data-testid="worm-count">0<' "/hello does not show the worm-count paragraph with 0"
+body_has 'data-testid="catalogue">3 products' "the server-side catalogue paragraph must stay — the page reads data, the counter clicks"
+ok "server page + client counter — the split every Next.js app is built on"

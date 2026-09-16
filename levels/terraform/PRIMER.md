@@ -1,4 +1,5 @@
 # terraform — the commands you'll actually use
+Never used terraform? Skip this list — levels 1–7 teach it step by step. It comes back any time with `wg help`.
 Play area: ~/.k8s-wargame/terraform/app (`wg shell`). Providers local/random/null come from an offline mirror; files you create land in out/.
 
   terraform init                          fetch/verify providers — fails on an impossible version constraint

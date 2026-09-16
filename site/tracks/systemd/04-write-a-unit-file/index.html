@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>a service is a text file — the unit file — systemd level 04 — kaputt</title>
+<meta name="description" content="systemd exercise: a service is a text file — the unit file. Fix a real broken systemd system in your own terminal — level 04 of 19, with hints and a checker.">
+<link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/systemd/04-write-a-unit-file/">
+<meta property="og:title" content="a service is a text file — the unit file — systemd level 04 — kaputt"><meta property="og:description" content="systemd exercise: a service is a text file — the unit file. Fix a real broken systemd system in your own terminal — level 04 of 19, with hints and a checker.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../style.css?v=6">
+<style>.crumbs{color:var(--faint);font-size:13px;margin:36px 0 18px}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--ink)}
+.meta{color:var(--muted);font-size:14px;margin:-10px 0 28px}.brief{max-width:620px;font-size:17px;color:var(--ink)}.brief p{margin:0 0 16px}
+.lvls{list-style:none;padding:0;margin:0;max-width:680px}.lvls li{border-top:1px solid var(--line);padding:12px 0;display:grid;grid-template-columns:34px 1fr;gap:12px}
+.lvls .ln{color:var(--faint);font-variant-numeric:tabular-nums}.lvls a{color:var(--ink)}.lvls a:hover{color:var(--accent)}.lvls .sl{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.pn{display:flex;justify-content:space-between;gap:20px;margin-top:40px;font-size:14px}.pn a{color:var(--muted)}.pn a:hover{color:var(--ink)}
+h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
+<body><div class="wrap">
+<nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
+<div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">systemd</a> / level 04</div>
+<h1 class="lvl">a service is a text file — the unit file</h1>
+<p class="meta">systemd · level 04 of 19 · <code>write-a-unit-file</code></p>
+<div class="brief"><h2>the ticket</h2><p>Lesson: where does systemd know <code>wg-clock</code> from? From a small text file, the *unit file*. Yours live in <code>/etc/systemd/system/</code> and are named <code>NAME.service</code>. Look at the one you have been using: cat /etc/systemd/system/wg-clock.service Two sections, each starting with a name in square brackets: [Unit]                    who this is: Description= is free text [Service]                 what to run: ExecStart= is the program, with its full path starting at / Type=simple               &quot;the program keeps running&quot; (the clock). Type=oneshot means &quot;it runs, finishes, done&quot; systemd reads these files only when you tell it to. After creating or changing one, always: systemctl daemon-reload   re-read all unit files. Forget it and systemd keeps using the old version Your task: create the file <code>/etc/systemd/system/wg-hello.service</code> with exactly these five lines, then run <code>systemctl daemon-reload</code>. (Shell track: <code>nano /etc/systemd/system/wg-hello.service</code>, type, Ctrl+O Enter saves, Ctrl+X leaves.) [Unit] Description=my first unit [Service] Type=oneshot ExecStart=/bin/echo hello from my first unit Afterwards <code>systemctl status wg-hello</code> says <code>Loaded: loaded</code> instead of <code>could not be found</code>. Work in <code>wg shell</code>. Check yourself:  wg check      stuck?  wg hint</p></div>
+<h2 style="margin-top:36px">play it</h2>
+<pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
+wg track systemd
+wg level 4
+<span class="c"># investigate with the real tools, fix it, then</span>
+wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
+<p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/systemd/04-write-a-unit-file">level source on github</a>.</p>
+<div class="pn"><a href="../03-read-its-log/index.html">← what did the service print? — journalctl</a><a href="../05-change-a-unit/index.html">change a unit file — daemon-reload, then restart →</a></div>
+<footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
+<div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
+</div></body></html>

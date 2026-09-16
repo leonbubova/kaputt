@@ -1,0 +1,6 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/bash/bashlib.sh"
+have door.sh || fail "no door.sh in ~/.k8s-wargame/bash/work yet"
+out=$(run door.sh open 2>&1);   [ "$out" = "come in" ] || fail "door.sh open printed '$out' — wanted: come in"
+out=$(run door.sh closed 2>&1); [ "$out" = "go away" ] || fail "door.sh closed printed '$out' — wanted: go away"
+out=$(run door.sh 2>&1);        [ "$out" = "go away" ] || fail "door.sh with no argument printed '$out' — wanted: go away (quotes around \$1 in the test?)"
+ok "door.sh decides — if, else, fi"

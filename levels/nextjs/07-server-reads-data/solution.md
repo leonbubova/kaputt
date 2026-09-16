@@ -1,0 +1,1 @@
+`import { getProducts } from "@/lib/products";`, `const products = getProducts();` before `return`, and `<p data-testid="catalogue">{products.length} products, first: {products[0].name}</p>` — server components read data directly.

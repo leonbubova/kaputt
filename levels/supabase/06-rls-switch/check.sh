@@ -1,0 +1,8 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/supabase/lib.sh"
+[ "$(sql "select to_regclass('public.secrets') is not null")" = t ] || fail "public.secrets is gone — the table must stay, only RLS changes"
+[ "$(sql "select count(*) from public.secrets")" -ge 2 ] || fail "rows were deleted from public.secrets — keep the data, switch RLS on instead"
+rls_on secrets || fail "RLS on public.secrets is still off — alter table … enable row level security"
+body=$(rest_anon GET "/rest/v1/secrets?select=id") || fail "API unreachable"
+[ "$(rest_code)" = 200 ] || fail "GET /rest/v1/secrets → $(rest_code): $body (expected 200 with an empty list)"
+[ "$(json_len "$body")" = 0 ] || fail "anon still reads $(json_len "$body") secrets through the API"
+ok "RLS on: the API gets [] for secrets, the rows are still in the database"

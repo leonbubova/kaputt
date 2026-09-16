@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/linux/lib.sh"
+X test -f /answer 2>/dev/null || fail "no /answer on the box yet"
+X grep -q 'ERROR db: connection refused' /answer 2>/dev/null || fail "/answer does not hold the ERROR line — grep ERROR /var/log/app/app.log shows it"
+n=$(X grep -c . /answer 2>/dev/null); [ "${n:-0}" -le 1 ] || fail "/answer has ${n} lines — only the one ERROR line belongs there"
+ok "the ERROR line is in /answer — you read a service log"

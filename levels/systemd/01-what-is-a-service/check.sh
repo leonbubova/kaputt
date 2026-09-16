@@ -1,0 +1,5 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/systemd/lib.sh"
+loaded wg-clock.service || fail "wg-clock.service is gone — reload the level (wg reset); the task is to stop it, not to delete it"
+active wg-clock.service && fail "wg-clock is still running — systemctl status wg-clock says active. Stop it."
+[ "$(prop wg-clock.service ActiveState)" = inactive ] || fail "wg-clock is $(prop wg-clock.service ActiveState), want inactive"
+ok "wg-clock is stopped — you gave systemd your first order"

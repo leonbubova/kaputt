@@ -1,4 +1,5 @@
 # postgres — the SQL you'll actually use
+Never used a database? Skip this list — levels 1–8 teach it step by step. It comes back any time with `wg help`.
   \dt  \d <table>  \di               list tables / describe one / list indexes   (psql meta-commands)
   SELECT … FROM t WHERE … ORDER BY … LIMIT n
   INSERT INTO t (cols) VALUES (…)

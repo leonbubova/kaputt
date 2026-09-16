@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>a Service: one stable name for many pods — k8s level 08 — kaputt</title>
+<meta name="description" content="k8s exercise: a Service: one stable name for many pods. Fix a real broken k8s system in your own terminal — level 08 of 41, with hints and a checker.">
+<link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/k8s/08-service-name/">
+<meta property="og:title" content="a Service: one stable name for many pods — k8s level 08 — kaputt"><meta property="og:description" content="k8s exercise: a Service: one stable name for many pods. Fix a real broken k8s system in your own terminal — level 08 of 41, with hints and a checker.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../style.css?v=6">
+<style>.crumbs{color:var(--faint);font-size:13px;margin:36px 0 18px}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--ink)}
+.meta{color:var(--muted);font-size:14px;margin:-10px 0 28px}.brief{max-width:620px;font-size:17px;color:var(--ink)}.brief p{margin:0 0 16px}
+.lvls{list-style:none;padding:0;margin:0;max-width:680px}.lvls li{border-top:1px solid var(--line);padding:12px 0;display:grid;grid-template-columns:34px 1fr;gap:12px}
+.lvls .ln{color:var(--faint);font-variant-numeric:tabular-nums}.lvls a{color:var(--ink)}.lvls a:hover{color:var(--accent)}.lvls .sl{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.pn{display:flex;justify-content:space-between;gap:20px;margin-top:40px;font-size:14px}.pn a{color:var(--muted)}.pn a:hover{color:var(--ink)}
+h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
+<body><div class="wrap">
+<nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
+<div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">k8s</a> / level 08</div>
+<h1 class="lvl">a Service: one stable name for many pods</h1>
+<p class="meta">k8s · level 08 of 41 · <code>service-name</code></p>
+<div class="brief"><h2>the ticket</h2><p>Lesson: the pods of a Deployment come and go, and each new one gets a new random name — nothing can rely on those names. A Service is a fixed name in front of them: talk to the Service, it forwards to whichever pods belong to it. Inside the cluster the name works like a website address: <code>http://web/</code> reaches the Service <code>web</code>. kubectl get services           NAME, TYPE, its fixed cluster IP, PORT(S) Try it — Deployment <code>web</code> (2 copies of the nginx web server), a Service <code>web</code>, and the pod <code>box</code> exist: kubectl get services kubectl get pods kubectl exec -it box -- sh wget -qO- http://web/ exit <code>wget -qO- ADDRESS</code> fetches a web page and prints it (<code>-q</code> quiet, <code>-O-</code> to the screen). You see nginx&#x27;s welcome page — served by one of the two <code>web-…</code> pods, through the Service. Your task: inside <code>box</code>, save that page into the file <code>/tmp/page.html</code>: the same <code>wget</code> line with <code>&gt; /tmp/page.html</code> behind it, typed at the <code>/ #</code> prompt. Then <code>exit</code>. Where: your normal terminal. <code>wg start</code> already pointed <code>kubectl</code> at the wargame cluster, and namespace <code>wg</code> is your default — no extra flags needed. Check yourself:  wg check      stuck?  wg hint</p></div>
+<h2 style="margin-top:36px">play it</h2>
+<pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
+wg track k8s
+wg level 8
+<span class="c"># investigate with the real tools, fix it, then</span>
+wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
+<p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/k8s/08-service-name">level source on github</a>.</p>
+<div class="pn"><a href="../07-exec-inside/index.html">← go inside a pod: exec</a><a href="../09-run-a-pod/index.html">run a pod →</a></div>
+<footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
+<div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
+</div></body></html>

@@ -1,4 +1,5 @@
 # nestjs — the commands & files you'll actually use
+Never used NestJS? Skip this list — levels 1–7 teach it step by step. It comes back any time with `wg help`.
 App: ~/.k8s-wargame/nestjs/app (`wg shell`). NestJS 11, in-memory data, reset every level.
 
   npm run start:dev                  http://localhost:3200, restarts on save — the FIRST red line at boot is the answer

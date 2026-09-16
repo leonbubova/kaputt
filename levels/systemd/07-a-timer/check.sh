@@ -1,0 +1,11 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/systemd/lib.sh"
+X test -f /etc/systemd/system/wg-tick.timer || fail "no file /etc/systemd/system/wg-tick.timer yet"
+loaded wg-tick.timer || fail "wg-tick.timer not loaded ($(prop wg-tick.timer LoadState)) — systemctl daemon-reload"
+active wg-tick.timer || fail "wg-tick.timer is not active — systemctl start wg-tick.timer"
+prop wg-tick.timer Triggers | grep -q '^wg-tick.service$' || fail "timer triggers '$(prop wg-tick.timer Triggers)', not wg-tick.service"
+gap=$(XS 'n=$(systemctl show wg-tick.timer -p NextElapseUSecRealtime --value); [ -n "$n" ] && echo $(( $(date -d "$n" +%s) - $(date +%s) ))')
+[ -n "$gap" ] && [ "$gap" -le 90 ] || fail "next run is ${gap:-n/a}s away — OnCalendar=*:*:00 fires once a minute"
+info "waiting for the first tick (up to a minute)…"
+wait_ok 80 '[ "$(systemctl show wg-tick.timer -p LastTriggerUSecMonotonic --value)" != 0 ]' || fail "timer never fired"
+a=$(age /opt/wg/tick/last); [ -n "$a" ] && [ "$a" -lt 120 ] || fail "/opt/wg/tick/last not written by the service"
+ok "wg-tick.timer fires wg-tick.service every minute"

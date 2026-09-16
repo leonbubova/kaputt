@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>a certificate is a name, a key and a signature — tls level 01 — kaputt</title>
+<meta name="description" content="tls exercise: a certificate is a name, a key and a signature. Fix a real broken tls system in your own terminal — level 01 of 23, with hints and a checker.">
+<link rel="canonical" href="https://leonbubova.github.io/kaputt/tracks/tls/01-read-a-cert/">
+<meta property="og:title" content="a certificate is a name, a key and a signature — tls level 01 — kaputt"><meta property="og:description" content="tls exercise: a certificate is a name, a key and a signature. Fix a real broken tls system in your own terminal — level 01 of 23, with hints and a checker.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../style.css?v=6">
+<style>.crumbs{color:var(--faint);font-size:13px;margin:36px 0 18px}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--ink)}
+.meta{color:var(--muted);font-size:14px;margin:-10px 0 28px}.brief{max-width:620px;font-size:17px;color:var(--ink)}.brief p{margin:0 0 16px}
+.lvls{list-style:none;padding:0;margin:0;max-width:680px}.lvls li{border-top:1px solid var(--line);padding:12px 0;display:grid;grid-template-columns:34px 1fr;gap:12px}
+.lvls .ln{color:var(--faint);font-variant-numeric:tabular-nums}.lvls a{color:var(--ink)}.lvls a:hover{color:var(--accent)}.lvls .sl{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.pn{display:flex;justify-content:space-between;gap:20px;margin-top:40px;font-size:14px}.pn a{color:var(--muted)}.pn a:hover{color:var(--ink)}
+h1.lvl{font-size:clamp(30px,4.6vw,44px);line-height:1.15}</style></head>
+<body><div class="wrap">
+<nav><a class="brand" href="../../../index.html" style="color:var(--ink)">kaputt</a><div class="links"><a href="../../../tracks/index.html">all tracks</a><a href="../../../index.html#play">play</a></div></nav>
+<div class="crumbs"><a href="../../../index.html">home</a> / <a href="../../index.html">tracks</a> / <a href="../index.html">tls</a> / level 01</div>
+<h1 class="lvl">a certificate is a name, a key and a signature</h1>
+<p class="meta">tls · level 01 of 23 · <code>read-a-cert</code></p>
+<div class="brief"><h2>the ticket</h2><p>Lesson: a certificate is a small file a server shows to prove who it is. Inside are three things: a name (the subject — which website this is for), a public key (more on keys in lesson 3), and a signature from an issuer — someone else who vouches &quot;this name and this key belong together&quot;. The file is text (<code>-----BEGIN CERTIFICATE-----</code>…), but the inside is encoded; <code>openssl</code> reads it for you. <code>openssl x509</code> is the command for certificates. <code>-in FILE</code> names the file, <code>-noout</code> means &quot;don&#x27;t print the encoded blob&quot;, and a flag per field says what you want: <code>-subject</code> (the name), <code>-issuer</code> (who signed it). Try it — a certificate is waiting in the lab folder: cd ~/.k8s-wargame/tls/lab cat shop.crt openssl x509 -noout -subject -in shop.crt openssl x509 -noout -issuer -in shop.crt <code>CN=shop.local</code> is the name (CN = common name). The issuer is <code>WG-Intermediate-CA</code> — a CA is a certificate authority: an issuer whose job is signing other people&#x27;s certificates. Your task: put both lines — the subject line and the issuer line, exactly as openssl prints them — into the file <code>~/.k8s-wargame/tls/lab/who.txt</code>. (<code>&gt;</code> writes into a file, <code>&gt;&gt;</code> adds to the end of it.) Work in ~/.k8s-wargame/tls/lab (cd there first — every file name in these lessons is inside that folder). Check yourself:  wg check      stuck?  wg hint</p></div>
+<h2 style="margin-top:36px">play it</h2>
+<pre class="term"><span class="c"># in your terminal, after ./install.sh</span>
+wg track tls
+wg level 1
+<span class="c"># investigate with the real tools, fix it, then</span>
+wg check        <span class="c"># green = solved · stuck? wg hint</span></pre>
+<p class="meta" style="margin-top:22px">you get three escalating hints, then the full solution — and the level resets clean so you can repeat it until it's muscle memory. <a href="https://github.com/leonbubova/kaputt/tree/master/levels/tls/01-read-a-cert">level source on github</a>.</p>
+<div class="pn"><span></span><a href="../02-expiry/index.html">a certificate expires →</a></div>
+<footer class="foot"><a href="../../../index.html">home</a><a href="../../../tracks/index.html">all tracks & levels</a><a href="https://github.com/leonbubova/kaputt">github</a>
+<div class="fine">kaputt — a break/fix wargame. break it. fix it. understand it.</div></footer>
+</div></body></html>

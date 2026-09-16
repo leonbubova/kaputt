@@ -1,0 +1,10 @@
+source "$WG_ROOT/lib/common.sh"; source "$WG_ROOT/levels/nextjs/lib.sh"
+snapshot
+[ -f src/app/hello/page.tsx ] || fail "src/app/hello/page.tsx is gone"
+grep -q 'function Greeting' src/app/hello/page.tsx || fail "no 'function Greeting' in src/app/hello/page.tsx — define the helper component above the page"
+grep -q '<Greeting' src/app/hello/page.tsx || fail "Greeting is defined but never used — <Greeting name=\"Ada\" /> inside the section"
+dev_up; get /hello; want 200 "/hello"
+sed 's/<!-- -->//g' "$BODY" > "$BODY.s" && mv "$BODY.s" "$BODY"
+body_has '<p>hello, Ada</p>' "/hello does not show 'hello, Ada'"
+body_has '<p>hello, Linus</p>' "/hello does not show 'hello, Linus' — use Greeting a second time with name=\"Linus\""
+ok "hello, Ada and hello, Linus — one component, two sets of props"

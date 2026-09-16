@@ -1,0 +1,1 @@
+`src/components/WormCounter.tsx` starting with `"use client";`, `useState(0)`, `<p data-testid="worm-count">{count}</p>` + button; page imports it and renders `<WormCounter />`. The page stays a server component.

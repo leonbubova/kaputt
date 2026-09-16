@@ -1,6 +1,6 @@
 ## 1
-403 from nginx with a bind mount usually means: directory is there but empty (no index.html). `docker exec wg-web ls /usr/share/nginx/html`.
+A bind mount maps a host directory into the container: `-v /host/path:/container/path`. Changes are visible on both sides instantly.
 ## 2
-Where does that mount come from? `docker inspect wg-web --format '{{json .Mounts}}'` — compare the host path with `ls ~/.k8s-wargame/docker/12-bind-mount/`. Docker silently creates a missing host dir.
+nginx serves `/usr/share/nginx/html`. Mount the `site/` folder there (`:ro` is fine — nginx only reads).
 ## 3
-`docker rm -f wg-web && docker run -d --name wg-web -p 18011:80 -v ~/.k8s-wargame/docker/12-bind-mount/site:/usr/share/nginx/html:ro nginx:1.27-alpine`
+`docker run -d --name wg-web -p 18004:80 -v ~/.k8s-wargame/docker/12-bind-mount/site:/usr/share/nginx/html:ro nginx:1.27-alpine` — then edit `site/index.html` and curl again.
