@@ -30,14 +30,19 @@ track_wipe() {  # before each level: fresh containers + template config
   rm -rf "$app" "$WG_NGX/backend"; mkdir -p "$app"
   cp -R "$tpl/conf.d" "$tpl/html" "$app/"; mkdir -p "$app/certs"; cp "$WG_NGX/certs/"* "$app/certs/"
   cp -R "$tpl/backend" "$WG_NGX/backend"
-  docker network create wg-nginx-net >/dev/null 2>&1
-  docker run -d --name wg-backend --network wg-nginx-net \
-    -v "$WG_NGX/backend:/etc/nginx/conf.d:ro" "$WG_NGX_IMG" >/dev/null
-  docker run -d --name wg-nginx --network wg-nginx-net \
-    -p 127.0.0.1:8082:80 -p 127.0.0.1:8443:443 \
-    -v "$app/conf.d:/etc/nginx/conf.d" -v "$app/html:/usr/share/nginx/html" \
-    -v "$app/certs:/etc/nginx/certs:ro" "$WG_NGX_IMG" >/dev/null
-  local i=0; while [ $i -lt 20 ]; do
-    curl -fsS -m 2 -H 'Host: shop.local' http://127.0.0.1:8082/health >/dev/null 2>&1 && return 0; sleep 0.5; i=$((i+1)); done
+  docker network create wg-nginx-net >/dev/null 2>&1 || true
+  local try=0 i
+  while [ $try -lt 3 ]; do   # retry: colima sometimes reports the just-recreated bind-mount source as missing
+    docker rm -f wg-nginx wg-backend >/dev/null 2>&1 || true
+    docker run -d --name wg-backend --network wg-nginx-net \
+      -v "$WG_NGX/backend:/etc/nginx/conf.d:ro" "$WG_NGX_IMG" >/dev/null 2>&1 || { try=$((try+1)); sleep 1; continue; }
+    docker run -d --name wg-nginx --network wg-nginx-net \
+      -p 127.0.0.1:8082:80 -p 127.0.0.1:8443:443 \
+      -v "$app/conf.d:/etc/nginx/conf.d" -v "$app/html:/usr/share/nginx/html" \
+      -v "$app/certs:/etc/nginx/certs:ro" "$WG_NGX_IMG" >/dev/null 2>&1 || { try=$((try+1)); sleep 1; continue; }
+    i=0; while [ $i -lt 20 ]; do
+      curl -fsS -m 2 -H 'Host: shop.local' http://127.0.0.1:8082/health >/dev/null 2>&1 && return 0; sleep 0.5; i=$((i+1)); done
+    try=$((try+1)); sleep 1
+  done
   echo "wg-nginx did not come up — docker logs wg-nginx" >&2; return 1
 }

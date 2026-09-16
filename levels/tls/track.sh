@@ -50,7 +50,7 @@ track_wipe() {  # fresh certs + good config + container
   while [ $try -lt 3 ]; do   # retry to absorb published-port release races
     docker rm -f wg-tls >/dev/null 2>&1 || true
     docker run -d --name wg-tls -p 127.0.0.1:9080:80 -p 127.0.0.1:9443:443 \
-      -v "$app/conf.d:/etc/nginx/conf.d" -v "$app/certs:/etc/nginx/certs:ro" "$WG_TLS_IMG" >/dev/null 2>&1
+      -v "$app/conf.d:/etc/nginx/conf.d" -v "$app/certs:/etc/nginx/certs:ro" "$WG_TLS_IMG" >/dev/null 2>&1 || { try=$((try+1)); sleep 1; continue; }   # mount-source race on colima: retry
     i=0; while [ $i -lt 20 ]; do
       curl -sk -m 2 https://127.0.0.1:9443/ >/dev/null 2>&1 && return 0; sleep 0.5; i=$((i+1)); done
     try=$((try+1)); sleep 1
